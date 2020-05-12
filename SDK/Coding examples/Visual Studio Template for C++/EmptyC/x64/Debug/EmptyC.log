@@ -1,0 +1,5 @@
+﻿  empty.c
+c:\voxon\sdk\coding examples\c++\visual studio development\emptyc\empty.c(103): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\voxon\sdk\coding examples\c++\visual studio development\emptyc\empty.c(105): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+c:\voxon\sdk\coding examples\c++\visual studio development\emptyc\empty.c(107): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+  EmptyC.vcxproj -> C:\Voxon\SDK\Coding examples\C++\Visual Studio development\x64\Debug\EmptyC.exe

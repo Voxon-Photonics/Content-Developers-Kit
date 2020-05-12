@@ -1,0 +1,5 @@
+{
+  "voxiebox.dll": { "BuildDate": 20200421 },
+  "C#-Runtime.dll": { "BuildDate": 20200206 },
+  "C#-bridge-interface.dll": { "BuildDate": 20200206 }
+}
