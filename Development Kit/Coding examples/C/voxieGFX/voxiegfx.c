@@ -15,7 +15,7 @@ voxieGfx.exe: voxieGfx.c; gcc voxieGfx.c -o voxieGfx.exe -pipe -O3 -s -m64
 #endif
 
 	//VoxieGfx
-	// Crudely written program i've used over time to learn various graphic and function calls for the Voxon hardware. 
+	//Crudely written program i've used over time to learn various graphic and function calls for the Voxon hardware. 
 	//You can use this as a development tool also - Matthew Vecchio 
 	
 #include "voxiebox.h"
@@ -194,7 +194,7 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 	pol_t pt[3];
 	double d, tim = 0.0, otim, dtim, avgdtim = 0.0, dlyTim, titleWaitTime;
 	int i, mousx = 256, mousy = 256, mousz = 0, x, y, r = 0xFF, g = 0xFF, b = 0xFF, col;
-	point3d ss, pp ={-0.5f,-0.5,-0.2f}, rr = {-0.1f,-0.1f,-0.1f}, dd = {0.5f,0.5f,0.2f}, ff, pos = {0.0f,0.0f,1.0f}, kk, inc = {0.3,0.2,0.1};
+	point3d ss, pp ={-0.5f,-0.5,-0.2f}, rr = {-0.1f,-0.1f,-0.1f}, dd = {0.5f,0.5f,0.2f}, ff = {0,0,0}, pos = {0.0f,0.0f,1.0f}, kk, inc = {0.3,0.2,0.1};
 	point3d nn ={0,0,0};
 	voxie_xbox_t vx[4];
 	int ovxbut[4], vxnplays, numframes = 0;
@@ -235,16 +235,11 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 	while (!voxie_breath(&in)) // Breath must mean as its updating loop
 	{
 		otim = tim; tim = voxie_klock(); dtim = tim-otim; // the timer
-		mousx += in.dmousx; mousy += in.dmousy; mousz += in.dmousz;
-		gbstat = -(in.bstat != 0);
-				for(vxnplays=0;vxnplays<4;vxnplays++)
+		mousx += in.dmousx; mousy += in.dmousy; mousz += in.dmousz; // mouse variables
+		gbstat = -(in.bstat != 0); // global button state
+				for(vxnplays=0;vxnplays<4;vxnplays++) // set up xbox controllers
 		{
 			ovxbut[vxnplays] = vx[vxnplays].but;
-#if (!USEMAG6D)
-			if (!voxie_xbox_read(vxnplays,&vx[vxnplays])) break; //but, lt, rt, tx0, ty0, tx1, ty1
-#else
-			memset(&vx[vxnplays],0,sizeof(vx[0]));
-#endif
 		}
 		// put controls here keys here
 		if (voxie_keystat(0x1)) { voxie_quitloop(); }
@@ -428,12 +423,12 @@ if (voxie_keystat(0x38)) { // if ALT is down move dd
  			if (voxie_keystat(0x22) || voxie_keystat(0xcd) ) { dd.x -= 0.005f * speed * dtim; buttonDelay = tim + 0.2; } // kb g
 
  			if (voxie_keystat(0x15) || voxie_keystat(0xd0) ) { dd.y += 0.005f * speed * dtim;  buttonDelay = tim + 0.2; } // kb y
-     		if (voxie_keystat(0x23) || voxie_keystat(0xc8) ) { dd.y -= 0.005f * speed * dtim; buttonDelay = tim + 0.2; } // kb h
+			if (voxie_keystat(0x23) || voxie_keystat(0xc8) ) { dd.y -= 0.005f * speed * dtim; buttonDelay = tim + 0.2; } // kb h
 
-     		if (voxie_keystat(0x16) || voxie_keystat(0x4e) || voxie_keystat(0x36)  ) { dd.z -= 0.005f * speed * dtim; buttonDelay = tim + 0.2; } // kb u
-     		if (voxie_keystat(0x24) || voxie_keystat(0x4a) || voxie_keystat(0x9d) ) { dd.z += 0.005f * speed * dtim; buttonDelay = tim + 0.2; } // kb j
+			if (voxie_keystat(0x16) || voxie_keystat(0x4e) || voxie_keystat(0x36)  ) { dd.z -= 0.005f * speed * dtim; buttonDelay = tim + 0.2; } // kb u
+			if (voxie_keystat(0x24) || voxie_keystat(0x4a) || voxie_keystat(0x9d) ) { dd.z += 0.005f * speed * dtim; buttonDelay = tim + 0.2; } // kb j
 
-     		if (voxie_keystat(0x2c) ) { dd.x = 0.f; dd.y = 0.0f; dd.z = 0.0f; } // ky z reset to zero
+			if (voxie_keystat(0x2c) ) { dd.x = 0.f; dd.y = 0.0f; dd.z = 0.0f; } // ky z reset to zero
 
 
 } else if (voxie_keystat(0x0f)) { // if tab is down move rr
@@ -442,12 +437,12 @@ if (voxie_keystat(0x38)) { // if ALT is down move dd
  			if (voxie_keystat(0x22) || voxie_keystat(0xcd) ) { kk.x -= 0.005f * speed * dtim; buttonDelay = tim + 0.2; } // kb g
 
  			if (voxie_keystat(0x15) || voxie_keystat(0xd0) ) { kk.y += 0.005f * speed * dtim; buttonDelay = tim + 0.2; } // kb y
-     		if (voxie_keystat(0x23) || voxie_keystat(0xc8) ) { kk.y -= 0.005f * speed * dtim; buttonDelay = tim + 0.2; } // kb h
+			if (voxie_keystat(0x23) || voxie_keystat(0xc8) ) { kk.y -= 0.005f * speed * dtim; buttonDelay = tim + 0.2; } // kb h
 
-     		if (voxie_keystat(0x16) || voxie_keystat(0x4e) ) { kk.z -= 0.005f * speed * dtim; buttonDelay = tim + 0.2; } // kb u
-     		if (voxie_keystat(0x24) || voxie_keystat(0x4a) ) { kk.z += 0.005f * speed * dtim; buttonDelay = tim + 0.2; } // kb j
+			if (voxie_keystat(0x16) || voxie_keystat(0x4e) ) { kk.z -= 0.005f * speed * dtim; buttonDelay = tim + 0.2; } // kb u
+			if (voxie_keystat(0x24) || voxie_keystat(0x4a) ) { kk.z += 0.005f * speed * dtim; buttonDelay = tim + 0.2; } // kb j
 
-     			if (voxie_keystat(0x2c) ) { kk.x = 0.f; kk.y = 0.0f; kk.z = 0.0f; } // ky z reset to zero
+			if (voxie_keystat(0x2c) ) { kk.x = 0.f; kk.y = 0.0f; kk.z = 0.0f; } // kb z reset to zero
 
 } else if (voxie_keystat(0x39)) { // if space is down rotate
 																	// RR and DD are X axis
@@ -667,46 +662,30 @@ i = 0;
 			case 5:
 		// draw texture map shape
 
-		//texture-mapped tetrahedron..
-		//poltex_t vtext[20]; int mesh[20]; 
-
 		i = 0;
-
-
-
-
-
 	  // how tall
 	  vtext[0].x = 0.0; vtext[0].y = 0.5; vtext[0].z = -0.35f; vtext[0].col = 0; vtext[0].u = 0; vtext[0].v = 0;           
-      vtext[1].x = 0.8; vtext[1].y = 0.5; vtext[1].z = -0.35f; vtext[1].col = 0; vtext[1].u = 1; vtext[1].v = 0;
-      vtext[2].x = 0.8; vtext[2].y = 0.5; vtext[2].z = 0.35f; vtext[2].col = 0; vtext[2].u = 1; vtext[2].v = 1;
-      vtext[3].x = 0.0; vtext[3].y = 0.5; vtext[3].z = 0.35f; vtext[3].col = 0; vtext[3].u = 0; vtext[3].v = 1;
+    vtext[1].x = 0.8; vtext[1].y = 0.5; vtext[1].z = -0.35f; vtext[1].col = 0; vtext[1].u = 1; vtext[1].v = 0;
+    vtext[2].x = 0.8; vtext[2].y = 0.5; vtext[2].z = 0.35f; vtext[2].col = 0; vtext[2].u = 1; vtext[2].v = 1;
+    vtext[3].x = 0.0; vtext[3].y = 0.5; vtext[3].z = 0.35f; vtext[3].col = 0; vtext[3].u = 0; vtext[3].v = 1;
 
 
 	
 		
 	  mesh[0] = 3; mesh[1] = 2; mesh[2] = 1; mesh[3] = 0; mesh[4] = -1;
 
-	
-
 	   // voxie_drawmeshtex(&vf,0,vtext,4,mesh,i,2,0x404040); // for custom colour
-
 		voxie_drawmeshtex(&vf,"voxon.png",vtext,4,mesh,5,2,0x404040); // for texture
 
 		break;
 		case 6:
 		// draw texture map shape
-
-		// This demo will show you how to 
-
 		i = 0;
 
 		// marker rotate
 
-if (voxie_keystat(0x39)) { // if space is down rotate
-																	// RR and DD are X axis
-
-	if (type == 1 && fillmode == 6) {
+	if (voxie_keystat(0x39)) { // if space is down rotate
+		if (type == 1 && fillmode == 6) {
 
 			if (voxie_keystat(0x14) || voxie_keystat(0xcb) ) { rotvex(rad,&dd,&ff); rotvex(rad,&rr,&pp);   } // kb t
 			if (voxie_keystat(0x22) || voxie_keystat(0xcd) ) { rotvex(-rad,&dd,&ff); rotvex(-rad,&rr,&pp); } // kb g
@@ -725,21 +704,12 @@ if (voxie_keystat(0x39)) { // if space is down rotate
 }
 
 
-
-
-
-
-	    vtext[0].x = pp.x; vtext[0].y = pp.y; vtext[0].z = pp.z; vtext[0].col = 0; vtext[0].u = 0; vtext[0].v = 0;           
-      vtext[1].x = rr.x; vtext[1].y = rr.y; vtext[1].z = rr.z; vtext[1].col = 0; vtext[1].u = 1; vtext[1].v = 0;
-      vtext[2].x = ff.x; vtext[2].y = ff.y; vtext[2].z = ff.z; vtext[2].col = 0; vtext[2].u = 1; vtext[2].v = 1;
-      vtext[3].x = dd.x; vtext[3].y = dd.y; vtext[3].z = dd.z; vtext[3].col = 0; vtext[3].u = 0; vtext[3].v = 1;
-
+		vtext[0].x = pp.x; vtext[0].y = pp.y; vtext[0].z = pp.z; vtext[0].col = 0; vtext[0].u = 0; vtext[0].v = 0;           
+		vtext[1].x = rr.x; vtext[1].y = rr.y; vtext[1].z = rr.z; vtext[1].col = 0; vtext[1].u = 1; vtext[1].v = 0;
+		vtext[2].x = ff.x; vtext[2].y = ff.y; vtext[2].z = ff.z; vtext[2].col = 0; vtext[2].u = 1; vtext[2].v = 1;
+		vtext[3].x = dd.x; vtext[3].y = dd.y; vtext[3].z = dd.z; vtext[3].col = 0; vtext[3].u = 0; vtext[3].v = 1;
 		
 	  mesh[0] = 3; mesh[1] = 2; mesh[2] = 1; mesh[3] = 0; mesh[4] = -1;
-
-	
-
-	   // voxie_drawmeshtex(&vf,0,vtext,4,mesh,i,2,0x404040); // for custom colour
 
 		voxie_drawmeshtex(&vf,"voxon.png",vtext,4,mesh,5,2,col); // for texture
 
@@ -747,89 +717,36 @@ if (voxie_keystat(0x39)) { // if space is down rotate
 		case 7:
 		// draw texture map shape
 
-		//texture-mapped tetrahedron..
-		//poltex_t vtext[20]; int mesh[20]; 
-
 		i = 0;
 
-
-
-
-
-	
-
-
 	  vtext[0].x = pp.x; vtext[0].y = pp.y; vtext[0].z = pp.z; vtext[0].col = 0; vtext[0].u = 0; vtext[0].v = 0;           
-      vtext[1].x = rr.x; vtext[1].y = rr.y; vtext[1].z = rr.z; vtext[1].col = 0; vtext[1].u = 1; vtext[1].v = 0;
-      vtext[2].x = ff.x; vtext[2].y = ff.y; vtext[2].z = ff.z; vtext[2].col = 0; vtext[2].u = 1; vtext[2].v = 1;
-      vtext[3].x = dd.x; vtext[3].y = dd.y; vtext[3].z = dd.z; vtext[3].col = 0; vtext[3].u = 0; vtext[3].v = 1;
-
-		
-	  mesh[0] = 3; mesh[1] = 2; mesh[2] = 1; mesh[3] = 0; mesh[4] = -1;
-
+		vtext[1].x = rr.x; vtext[1].y = rr.y; vtext[1].z = rr.z; vtext[1].col = 0; vtext[1].u = 1; vtext[1].v = 0;
+		vtext[2].x = ff.x; vtext[2].y = ff.y; vtext[2].z = ff.z; vtext[2].col = 0; vtext[2].u = 1; vtext[2].v = 1;
+		vtext[3].x = dd.x; vtext[3].y = dd.y; vtext[3].z = dd.z; vtext[3].col = 0; vtext[3].u = 0; vtext[3].v = 1;
 	
-
-	   // voxie_drawmeshtex(&vf,0,vtext,4,mesh,i,2,0x404040); // for custom colour
+	  mesh[0] = 3; mesh[1] = 2; mesh[2] = 1; mesh[3] = 0; mesh[4] = -1;
 
 		voxie_drawmeshtex(&vf,"usflag.png",vtext,4,mesh,5,2,col); // for texture 0x404040 for default
 		break;
-			
 case 8:
 		// draw texture map shape
-
-		//texture-mapped tetrahedron..
-		//poltex_t vtext[20]; int mesh[20]; 
-
 		i = 0;
 
-
-
-
-
-	
-
- vtext[0].x = -0.8; vtext[0].y = -0.5; vtext[0].z = 0.0f; vtext[0].col = 0; vtext[0].u = 0; vtext[0].v = 0;           
-      vtext[1].x = 0.8; vtext[1].y = -0.5; vtext[1].z = 0.0f; vtext[1].col = 0; vtext[1].u = 1; vtext[1].v = 0;
-      vtext[2].x = 0.8; vtext[2].y = 0.5; vtext[2].z = 0.0f; vtext[2].col = 0; vtext[2].u = 1; vtext[2].v = 1;
-      vtext[3].x = -0.8; vtext[3].y = 0.5; vtext[3].z = 0.0f; vtext[3].col = 0; vtext[3].u = 0; vtext[3].v = 1;
-
+		vtext[0].x = -0.8; vtext[0].y = -0.5; vtext[0].z = 0.0f; vtext[0].col = 0; vtext[0].u = 0; vtext[0].v = 0;           
+		vtext[1].x = 0.8; vtext[1].y = -0.5; vtext[1].z = 0.0f; vtext[1].col = 0; vtext[1].u = 1; vtext[1].v = 0;
+		vtext[2].x = 0.8; vtext[2].y = 0.5; vtext[2].z = 0.0f; vtext[2].col = 0; vtext[2].u = 1; vtext[2].v = 1;
+		vtext[3].x = -0.8; vtext[3].y = 0.5; vtext[3].z = 0.0f; vtext[3].col = 0; vtext[3].u = 0; vtext[3].v = 1;
 		
 	  mesh[0] = 3; mesh[1] = 2; mesh[2] = 1; mesh[3] = 0; mesh[4] = -1;
-
-	
-
-	   // voxie_drawmeshtex(&vf,0,vtext,4,mesh,i,2,0x404040); // for custom colour
 		voxie_drawmeshtex(&vf,charArray1,vtext,4,mesh,5,2,col); // for texture 0x404040 for default
 
-if (voxie_keystat(0x0f)) { 
-
-charArray1 = "usflag.png";
-
-} else {
-
-charArray1 = "voxon.png";
-}
-
+if (voxie_keystat(0x0f)) { charArray1 = "usflag.png"; } 
+else { charArray1 = "voxon.png"; }
 		break;
-
-  /*    pol_t pt[6];
-      pt[0].x = 0.0; pt[0].y = 0.0; pt[0].z = 0.0f; pt[0].p2 = 1;
-      pt[1].x = 0.5; pt[1].y = 0.0; pt[1].z = 0.0f; pt[1].p2 = 2;
-      pt[2].x = 0.5; pt[2].y = 0.8; pt[2].z = 0.0f; pt[2].p2 = 3;
-      pt[3].x = 0.0; pt[3].y = 0.8; pt[3].z = 0.0f; pt[3].p2 = 0;
-      pt[4].x = 0.2; pt[4].y = 1.2; pt[4].z = 0.3f; pt[4].p2 = 4;
-      pt[5].x = 0.6; pt[5].y = 0.8; pt[5].z = -0.6f; pt[5].p2 = 1;
-     voxie_drawpol(&vf,pt,4, col); 
-*/
-
+				}
+	
 	
 
-
-		}
-
-		
-
-	
 
 		break;
 		case 2:
@@ -1089,7 +1006,7 @@ voxie_drawlin (&vf, pp.x, pp.y, pp.z, dd.x, dd.y, dd.z,
 			voxie_drawspr(&vf,"chopper.kv6",&pp,&rr,&dd,&ff,col);
 			break;
 			case 3:
-						voxie_drawspr(&vf,"caco.kv6",&pp,&rr,&dd,&ff,col);
+			voxie_drawspr(&vf,"caco.kv6",&pp,&rr,&dd,&ff,col);
 
 		}
 		break;
@@ -1110,10 +1027,6 @@ voxie_drawlin (&vf, pp.x, pp.y, pp.z, dd.x, dd.y, dd.z,
 			rr2.x = 0.1f; dd2.x = 0.00f; pp2.x = +vw.aspx*-0.19f;
 			rr2.y = 0.00f;  dd2.y = 0.150f; pp2.y = vw.aspy*+.86f;
 			rr2.z = 0.00f;  dd2.z = 0.00f; pp2.z = vw.aspz-0.01f;
-			//voxie_printalph_(&vf,&pp2,&rr2,&dd2,0xffffff,"%8.5f  %.4f",vw.freq,vw.phase);
-
-
-
 			voxie_printalph_(&vf,&pp2,&rr2,&dd2,0xffffff,"BOTTOM RIGHT",1.0/avgdtim);
 
 			pp2.x = vw.aspx*-.99f;
@@ -1151,33 +1064,33 @@ voxie_drawlin (&vf, pp.x, pp.y, pp.z, dd.x, dd.y, dd.z,
 				voxie_debug_print6x8_(x+250,y,col,-1,"*** Selected Colour %x ***",col);
 
 		if (voxie_keystat(0x38)) { // Left Alt
-		voxie_debug_print6x8_(x-30,y-10,0x0000ff,-1,"T = dd.x up, G = dd.x down %5.3f",dd.x);
-		voxie_debug_print6x8_(x-30,y,		0x0000ff,-1,"Y = dd.y up, H = dd.y down %5.3f",dd.y);
-		voxie_debug_print6x8_(x-30,y+10,0x0000ff,-1,"U = dd.z down, J = dd.z up %5.3f",dd.z);
+		voxie_debug_print6x8_(x-30,y-10,0x0000ff,-1,"T = dd.x up, G = dd.x down %3.3f",dd.x);
+		voxie_debug_print6x8_(x-30,y,		0x0000ff,-1,"Y = dd.y up, H = dd.y down %3.3f",dd.y);
+		voxie_debug_print6x8_(x-30,y+10,0x0000ff,-1,"U = dd.z down, J = dd.z up %3.3f",dd.z);
 		} else  if (voxie_keystat(0x2a)) {  // Left Shift 
-		voxie_debug_print6x8_(x-30,y-10,0xff0000,-1,"T = rr.x up, G = rr.x down %5.3f",rr.x);
-		voxie_debug_print6x8_(x-30,y,		0xff0000,-1,"Y = rr.y up, H = rr.y down %5.3f",rr.y);
-		voxie_debug_print6x8_(x-30,y+10,0xff0000,-1,"U = rr.z down, J = rr.z up %5.3f",rr.z);
+		voxie_debug_print6x8_(x-30,y-10,0xff0000,-1,"T = rr.x up, G = rr.x down %3.3f",rr.x);
+		voxie_debug_print6x8_(x-30,y,		0xff0000,-1,"Y = rr.y up, H = rr.y down %3.3f",rr.y);
+		voxie_debug_print6x8_(x-30,y+10,0xff0000,-1,"U = rr.z down, J = rr.z up %3.3f",rr.z);
 
 		} else  if (voxie_keystat(0x0f)) {  // TAB
-		voxie_debug_print6x8_(x-30,y-10,	0xffff00,-1,"T = kk.x up, G = kk.x down %5.3f",kk.x);
-		voxie_debug_print6x8_(x-30,y,			0xffff00,-1,"Y = kk.y up, H = kk.y down %5.3f",kk.y);
-		voxie_debug_print6x8_(x-30,y+10,	0xffff00,-1,"U = kk.z down, J = kk.z up %5.3f",kk.z);
+		voxie_debug_print6x8_(x-30,y-10,	0xffff00,-1,"T = kk.x up, G = kk.x down %3.3f",kk.x);
+		voxie_debug_print6x8_(x-30,y,			0xffff00,-1,"Y = kk.y up, H = kk.y down %3.3f",kk.y);
+		voxie_debug_print6x8_(x-30,y+10,	0xffff00,-1,"U = kk.z down, J = kk.z up %3.3f",kk.z);
 
 		}else if (voxie_keystat(0x1d)) { // if L ctrl  is down move ff
-		voxie_debug_print6x8_(x-30,y-10,0xff00ff,-1,"T = ff.x up, G = ff.x down %5.3f",ff.x);
-		voxie_debug_print6x8_(x-30,y,   0xff00ff,-1,"Y = ff.y up, H = ff.y down %5.3f",ff.y);
-		voxie_debug_print6x8_(x-30,y+10,0xff00ff,-1,"U = ff.z down, J = ff.z up %5.3f",ff.z);
+		voxie_debug_print6x8_(x-30,y-10,0xff00ff,-1,"T = ff.x up, G = ff.x down %3.3f",ff.x);
+		voxie_debug_print6x8_(x-30,y,   0xff00ff,-1,"Y = ff.y up, H = ff.y down %3.3f",ff.y);
+		voxie_debug_print6x8_(x-30,y+10,0xff00ff,-1,"U = ff.z down, J = ff.z up %3.3f",ff.z);
 
 		} else  {
-		voxie_debug_print6x8_(x-30,y-10,0x00ff00,-1,"T = pp.x up, G = pp.x down %5.3f",pp.x);
-		voxie_debug_print6x8_(x-30,y,		0x00ff00,-1,"Y = pp.y up, H = pp.y down %5.3f",pp.y);
-		voxie_debug_print6x8_(x-30,y+10,0x00ff00,-1,"U = pp.z down, J = pp.z up %5.3f",pp.z);
+		voxie_debug_print6x8_(x-30,y-10,0x00ff00,-1,"T = pp.x up, G = pp.x down %3.3f",pp.x);
+		voxie_debug_print6x8_(x-30,y,		0x00ff00,-1,"Y = pp.y up, H = pp.y down %3.3f",pp.y);
+		voxie_debug_print6x8_(x-30,y+10,0x00ff00,-1,"U = pp.z down, J = pp.z up %3.3f",pp.z);
 
 		}
 
-		voxie_debug_print6x8_(x-30,y+20,0xffc080,-1,"I = radius 1 up, K = radius 1 down %5.3f", rad);
-		voxie_debug_print6x8_(x-30,y+30,0xffc080,-1,"O = radius 2 up, L = radius 2 down %5.3f", rad2);
+		voxie_debug_print6x8_(x-30,y+20,0xffc080,-1,"I = radius 1 up, K = radius 1 down %3.3f", rad);
+		voxie_debug_print6x8_(x-30,y+30,0xffc080,-1,"O = radius 2 up, L = radius 2 down %3.3f", rad2);
 			
 		voxie_debug_print6x8_(x-30,y+40,0xffc080,-1,"- = speed down, = = speed up %d", speed);
 		voxie_debug_print6x8_(x-30,y+50,0xffc080,-1,"Hold L Alt = Dd point3d, L Shift = rr point3d, L Ctrl = ff point3d");

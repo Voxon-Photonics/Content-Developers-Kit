@@ -87,7 +87,7 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 		return (-1);
 	}
 
-	while (!voxie_breath(&in)) // a breath is a complete volume sweep. a single breath renders the whole volume
+	while (!voxie_breath(&in)) // a breath is a complete volume sweep. A whole volume is rendrered in a single breath
 	{
 		otim = tim; // update the old timer to the last timers count
 		tim = voxie_klock(); // work out the timer's value

@@ -405,6 +405,9 @@ typedef struct { float x, y, z, u, v; int col; } poltex_t;
    //  fx,fy,fz: location
    //       col: 24-bit color
 void voxie_drawvox (voxie_frame_t *vf, float fx, float fy, float fz, int col);
+   //NOTE: The intensity of each color component in col is used for dithering, meaning a voxel might
+   //not plot if the intensity of the color component is less than 255. This is by design to allow
+   //shades. If you want the voxel to always plot, use 255's in each color component.
 
    //Draw filled rectangle.
    //  x0,y0,z0: top/left/up corner

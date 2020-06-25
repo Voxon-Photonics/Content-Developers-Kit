@@ -1,0 +1,42 @@
+{
+  "ProgramID": "2",
+  "FolderName": "Voxatron",
+  "Name": "Voxatron",
+  "Description": "A volumetric game engine. Discover, edit and play thousands of virtual 'carts' in this fantasy volumetric game console. A port of the popular Voxatron engine by Lexaloffle for the Voxon display.",
+  "ValidControls": [
+    "Keyboard",
+    "GamePad"
+  ],
+  "Type": "Platform",
+  "Developer": "Lexaloffle",
+  "Version": "0.35b7",
+  "BuildDate": "20191114",
+  "LocalExecutableFile": "vox.exe",
+  "LinkID": "NULL",
+  "Params": [
+    {
+      "Name": "Run",
+      "Values": "-rotate_controls 216",
+      "INIOverride": "",
+      "EXEOverride": ""
+    },
+    {
+      "Name": "Bloot - 4P",
+      "Values": "-rotate_controls 216 -vx_run :9",
+      "INIOverride": "",
+      "EXEOverride": ""
+    },
+    {
+      "Name": "Journey to the East - 1P",
+      "Values": "-rotate_controls 216 -vx_run carts/journey.png",
+      "INIOverride": "",
+      "EXEOverride": ""
+    },
+    {
+      "Name": "Arena - 2P",
+      "Values": "-rotate_controls 216 -vx_run :10",
+      "INIOverride": "",
+      "EXEOverride": ""
+    }
+  ]
+}

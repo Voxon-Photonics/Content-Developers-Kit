@@ -73,7 +73,7 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 		return (-1);
 	}
 
-	while (!voxie_breath(&in)) // a breath is a complete volume sweep. a single breath renders the whole volume
+	while (!voxie_breath(&in)) // a breath is a complete volume sweep. a whole volume is rendered in a single breath
 	{
 		otim = tim; 
 		tim = voxie_klock(); 

@@ -25,6 +25,7 @@ voxieInput.exe: voxieInput.c; gcc voxieInput.c -o voxieInput.exe -pipe -O3 -s -m
 	add keyboard
 	add space mouse
 	add leap motion controls
+	add VX coin slot
 	
 
 	// Matthew Vecchio 6/8/2019 for Voxon
@@ -49,7 +50,6 @@ static voxie_wind_t vw;
 voxie_frame_t vf;
 static int gcnti[2], gbstat = 0, disp = 1;
 
-
 enum {
 
 	MENU_TEST_JOY, MENU_TEST_MOUSE,
@@ -72,7 +72,6 @@ static void mouseClip() {
 	if (mousy < -MOUSE_MAX_Y) mousy = -MOUSE_MAX_Y;
 	if (mousz > MOUSE_MAX_Z) mousz = MOUSE_MAX_Z;
 	if (mousz < -MOUSE_MAX_Z) mousz = -MOUSE_MAX_Z;
-
 }
 
 // draw a circle
@@ -135,16 +134,16 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 
 		voxie_menu_reset(menu_voxieJoy_update,0,0);
 		voxie_menu_addtab("Settings",350,0,650,400);
-		voxie_menu_additem("Test", 135,25, 64, 64,0                 ,MENU_TEXT    ,0             ,0x00FF80,0.0,0.0,0.0,0.0,0.0); // adding menu text
-		voxie_menu_additem("Game Pad"	, 	40,	50,120,50,	MENU_TEST_JOY ,MENU_BUTTON+1,1,0x808080,0.0,0.0,0.0,0.0,0.0);
-		voxie_menu_additem("Mouse"	, 	170,	50,120,50,	MENU_TEST_MOUSE ,MENU_BUTTON+2,0,0x808080,0.0,0.0,0.0,0.0,0.0);
+		voxie_menu_additem("Test Input Type", 220,25, 64, 64,0                 ,MENU_TEXT    ,0             ,0x00FF80,0.0,0.0,0.0,0.0,0.0); 
+		voxie_menu_additem("Game Pad"	, 	55,	50,120,50,	MENU_TEST_JOY ,MENU_BUTTON+1,1,0x808080,0.0,0.0,0.0,0.0,0.0);
+		voxie_menu_additem("Mouse"	, 	185,	50,120,50,	MENU_TEST_MOUSE ,MENU_BUTTON+2,0,0x808080,0.0,0.0,0.0,0.0,0.0);
 
-		voxie_menu_additem("Game Pad Input", 210,150, 64, 64,0                 ,MENU_TEXT    ,0             ,0x00FF80,0.0,0.0,0.0,0.0,0.0); // adding menu text
-		voxie_menu_additem("Xinput"	, 	40,	170,150,50,	MENU_XINPUT ,MENU_BUTTON+1,0,0x008080,0.0,0.0,0.0,0.0,0.0);
-		voxie_menu_additem("JoyPosEx"		, 	210,	170,170,50,	MENU_JOYGETPOSEX ,MENU_BUTTON+2,0,0x800000,0.0,0.0,0.0,0.0,0.0);
-		voxie_menu_additem("Force Show All"		, 	410,	170,170,50,	MENU_FORCE_SHOW_ALL ,MENU_BUTTON+3,0,0x800080,0.0,0.0,0.0,0.0,0.0);
+		voxie_menu_additem("Game Pad Input Options"	, 	190,150, 64, 64,0                 ,MENU_TEXT    ,0             ,0x00FF80,0.0,0.0,0.0,0.0,0.0); 
+		voxie_menu_additem("Xinput"					, 	55,	170,150,50,	MENU_XINPUT ,MENU_BUTTON+1,0,0x00A0A0,0.0,0.0,0.0,0.0,0.0);
+		voxie_menu_additem("JoyPosEx"				, 	225,	170,170,50,	MENU_JOYGETPOSEX ,MENU_BUTTON+2,0,0xA00000,0.0,0.0,0.0,0.0,0.0);
+		voxie_menu_additem("Force Show All"			, 	425,	170,170,50,	MENU_FORCE_SHOW_ALL ,MENU_BUTTON+3,0,0xA000A0,0.0,0.0,0.0,0.0,0.0);
 
-
+		voxie_menu_additem("Voxon Input Test By Matthew Vecchio Voxon 28/5/2020"	, 	15,375, 0, 0,0                 ,MENU_TEXT    ,0             ,0x00FF80,0.0,0.0,0.0,0.0,0.0); 
 
 	while (!voxie_breath(&in)) 	{ // a voxie breath is a one complete volume being rendered 
 		otim = tim; tim = voxie_klock(); dtim = tim-otim; // the timer
@@ -249,6 +248,8 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 			if (y <= 0) voxie_printalph_(&vf,&pp,&rr,&dd,col[0],"No controllers found! vxnplays = %d", vxnplays);
 				
 			for (i = 0; i < y; i++) {
+
+			voxie_debug_print6x8_(32,100 + (i * 20 ),col[i],-1,"J %d X%d Y%d:  Y: But :%04d ", i, vx[i].tx0, vx[i].ty0, vx[i].but );	
 							
 			voxie_printalph_(&vf,&pp,&rr,&dd,col[i],"J %d X%d Y%d X2 %d Y2 %d", i, vx[i].tx0, vx[i].ty0, vx[i].tx1, vx[i].ty1);
 			pp.y -= -0.120f;
@@ -271,11 +272,12 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 			joyC.z = 0;
 			// draw circle for joystick
 			drawCir( joyC, 0.2, 	.02f, 0xFFFFFF);
-
-			if ((vx[i].but>>12)&1) voxie_drawsph(&vf,joyC.x - 0.2f , joyC.y + 0.2f, joyP.z , 0.05 , 1, 0x00ff00);	
-			if ((vx[i].but>>13)&1) voxie_drawsph(&vf,joyC.x + 0.2f , joyC.y + 0.2f, joyP.z , 0.05 , 1, 0xff0000);	
-			if ((vx[i].but>>14)&1) voxie_drawsph(&vf,joyC.x - 0.2f , joyC.y - 0.2f, joyP.z , 0.05 , 1, 0x0000ff);	
-			if ((vx[i].but>>15)&1) voxie_drawsph(&vf,joyC.x + 0.2f , joyC.y - 0.2f, joyP.z , 0.05 , 1, 0xffff00);	
+			if ((vx[i].but>>5)&1) voxie_drawsph(&vf,joyC.x - 0.2f , joyC.y - 0.2f, joyP.z , 0.05 , 1, 0xff00ff); 	// BACK
+			if ((vx[i].but>>4)&1) voxie_drawsph(&vf,joyC.x + 0.2f , joyC.y - 0.2f, joyP.z , 0.05 , 1, 0xffffff);	// START
+			if ((vx[i].but>>12)&1) voxie_drawsph(&vf,joyC.x - 0.2f , joyC.y + 0.2f, joyP.z , 0.05 , 1, 0x00ff00);	// A
+			if ((vx[i].but>>13)&1) voxie_drawsph(&vf,joyC.x + 0.2f , joyC.y + 0.2f, joyP.z , 0.05 , 1, 0xff0000);	// B
+			if ((vx[i].but>>14)&1) voxie_drawsph(&vf,joyC.x - 0.2f , joyC.y - 0.2f, joyP.z , 0.05 , 1, 0x0000ff);	// X
+			if ((vx[i].but>>15)&1) voxie_drawsph(&vf,joyC.x + 0.2f , joyC.y - 0.2f, joyP.z , 0.05 , 1, 0xffff00);	// Y
 
 			// vibrate controls (controller no, float for left motor 0..1, float for right motor 0..1)
 			if ((vx[i].but>>12)&1 || (vx[i].but>>13)&1 ) voxie_xbox_write(i, cos(tim), 0);
@@ -295,6 +297,9 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 
 			voxie_drawcone (&vf, joyP.x *.000005 + joyC.x, -joyP.y *.000005 + joyC.y, joyP.z, 0.02,
 							joyC.x , joyC.y, joyC.z, 0.02, 1, 0xFFFFFF);
+			
+		
+			
 			}
 
 		} 

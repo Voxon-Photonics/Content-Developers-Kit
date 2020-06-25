@@ -38,11 +38,11 @@ tally.exe: tally.c; gcc tally.c -o tally.exe -pipe -O3 -s -m64
 static voxie_wind_t vw;
 static voxie_frame_t vf; 
 
-
+poltex_t vtext[4]; int mesh[5]; 
 
 
 void tally( int tallyTotal, point3d pos, point2d boxSize, float scale, int ori) {
-poltex_t vtext[4]; int mesh[5]; 
+
 float halfScale = scale / 2;
 int i = 0;
 float offSetX = 0;
@@ -155,7 +155,7 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 	point2d boxSize = {1,1};
 	float scale = 0.2;
 	int ori = 0;
-	poltex_t vtext[4]; int mesh[4]; 
+	
 
 
 	if (voxie_load(&vw) < 0) //Load voxiebox.dll and get settings from voxiebox.ini. May override settings in vw structure here if desired.
@@ -277,12 +277,6 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 	if (voxie_keystat(0x2c) == 1) scale -= 0.0125;
 
 	/**************************
-	*   LOGIC                 *
-	*                         *
-	**************************/
-
-
-	/**************************
 	*   DRAW                  *
 	*                         *
 	**************************/
@@ -290,7 +284,7 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 	tally(noOfTally,pos,boxSize,scale,ori);
 
 
-	/* WACKY GFX */
+	/* DemoScene Code */
 /*
 	vtext[0].col = 0; vtext[0].u = cos(tim); 	vtext[0].v = sin(tim);           
 	vtext[1].col = 0; vtext[1].u = sin(tim); 	vtext[1].v = sin(tim);
@@ -306,37 +300,6 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 
 	mesh[0] = 0; mesh[1] = 1; mesh[2] = 2; mesh[3] = 3; mesh[4] = -1; 
 */
-/*
-
-// p1 ori
-	vtext[0].x = -scale;	vtext[0].y = -scale;	vtext[0].z = 0;       
-	vtext[1].x = scale; 	vtext[1].y = -scale; 	vtext[1].z = 0;
-	vtext[2].x = scale;		vtext[2].y =  scale;	vtext[2].z = 0;
-	vtext[3].x = -scale;	vtext[3].y =  scale; 	vtext[3].z = 0;
-
-
-// p2 ori
-	vtext[3].x = -scale;	vtext[3].y = -scale;	vtext[0].z = 0;       
-	vtext[2].x = scale; 	vtext[2].y = -scale; 	vtext[1].z = 0;
-	vtext[1].x = scale;		vtext[1].y =  scale;	vtext[2].z = 0;
-	vtext[0].x = -scale;	vtext[0].y =  scale; 	vtext[3].z = 0;
-
-// p3 ori
-	vtext[0].y = -scale;	vtext[0].x = -scale;	vtext[0].z = 0;       
-	vtext[1].y = scale; 	vtext[1].x = -scale; 	vtext[1].z = 0;
-	vtext[2].y = scale;		vtext[2].x =  scale;	vtext[2].z = 0;
-	vtext[3].y = -scale;	vtext[3].x =  scale; 	vtext[3].z = 0;
-
-// p4 ori
-	vtext[3].y = -scale;	vtext[3].x = -scale;	vtext[0].z = 0;       
-	vtext[2].y = scale; 	vtext[2].x = -scale; 	vtext[1].z = 0;
-	vtext[1].y = scale;		vtext[1].x =  scale;	vtext[2].z = 0;
-	vtext[0].y = -scale;	vtext[0].x =  scale; 	vtext[3].z = 0;
-
-
-	
-	voxie_drawmeshtex(&vf,"Tally.png",vtext,5,mesh,6,2,0xFFFFFF);
-	*/
 
 	/**************************
 	*   DEBUG                 *
