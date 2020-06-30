@@ -24,17 +24,10 @@ enum {
 
 /*
 This demo program is for moving an object from 2d to 3d and copying over its rotations
-
-
 */
 
 
 static float CIRCLE_RAD = 0.05;
-
-	//Voxiebox example for C. Requires voxiebox.dll to be in path.
-	//NOTE:voxiebox.dll is compiled as 64-bit mode. Be sure to compile for 64-bit target or else voxie_load() will fail.
-	//To compile, type "nmake voxiesimp.c" at a VC command prompt, or set up in environment using hints from makefile above.
-	//Code by Ken Silverman
 #include "voxiebox.h"
 #include <stdlib.h>
 #include <math.h>
@@ -79,7 +72,7 @@ typedef struct { point3d pos, vel, xrot, yrot, zrot; point2d tl, tr, bl, br; flo
 static object_t objects[OBJECT_MAX];
 static int objectNo = 0;
 
-static int gcnti[2], gbstat = 0, disp = 1, tics = 0, buttonDelay = 0;
+static int gcnti[2], gbstat = 0, disp = 1, buttonDelay = 0;
 poltex_t vtext[5]; int mesh[5]; 
 
 
@@ -119,7 +112,7 @@ void drawCir( voxie_frame_t *vf, point3d pos, float rad, float resolution, int c
 
 }
 
-// 3d rectangle colision check boxTLU = Top, Left, Up, boxBRD = bottom, right, down colision to check
+// 3d rectangle collision check boxTLU = Top, Left, Up, boxBRD = bottom, right, down collision to check
 bool boxColChk3d(point3d boxTLU, point3d boxBRD, point3d pos ) {
 
 	if (pos.x < boxBRD.x &&
@@ -137,11 +130,11 @@ bool boxColChk3d(point3d boxTLU, point3d boxBRD, point3d pos ) {
 	return false;
 }
 
-// Sphere colision check - checks weather a sphere is inside another sphere
+// Sphere collision check - checks weather a sphere is inside another sphere
 bool sphereColChk(point3d cir1, float cir1Rad,  point3d cir2, float cir2Rad) {
 
-    float sidea = abs(cir1.x - cir2.x);
-    float sideb = abs(cir1.y - cir2.y);
+    float sidea = fabs(cir1.x - cir2.x);
+    float sideb = fabs(cir1.y - cir2.y);
     sidea = sidea * sidea;
     sideb = sideb * sideb;
     float distance = (float) sqrt(sidea+sideb);
@@ -152,11 +145,11 @@ bool sphereColChk(point3d cir1, float cir1Rad,  point3d cir2, float cir2Rad) {
     return false;
 }
 
-// 2d circle colision check for a 3d sphere use sphereColChk
+// 2d circle collision check for a 3d sphere use sphereColChk
 bool circleColChk2d(point3d cir1, float cir1Rad,  point3d cir2, float cir2Rad){
 
-    float sidea = abs(cir1.x - cir2.x);
-    float sideb = abs(cir1.y - cir2.y);
+    float sidea = fabs(cir1.x - cir2.x);
+    float sideb = fabs(cir1.y - cir2.y);
     sidea = sidea * sidea;
     sideb = sideb * sideb;
     float distance = (float) sqrt(sidea+sideb);
@@ -301,8 +294,8 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 		float rad = 1,f, g, g2;
 	float angle = 0;
 	float resolution = 2;
-	float angleOFFSET = 1.5707963268f; // 90' offset due to where the objs face 
-	bool isShotLocked = false; // false for a shot CLOSE to invadership (for enemy fire) 
+	float angleOFFSET = 1.5707963268f; // 90' offset due to where the objs face (this is a quick hak to fix my .objs rotations)
+	bool isShotLocked = false; 
 	float enemyShotAccuracy = 2; 
 	float TL, TR, BL, BR;
 	float scale = 0.2f;
@@ -433,12 +426,12 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 	}
 
 
-			//draw wireframe box
+		//draw wireframe box
 		voxie_drawbox(&vf,-vw.aspx+1e-3,-vw.aspy+1e-3,-vw.aspz,+vw.aspx-1e-3,+vw.aspy-1e-3,+vw.aspz,1,0xffffff);
 		//voxie_drawvox(&vf,-vw.aspx+1e-3,-vw.aspy+1e-3,-vw.aspz,+vw.aspx-1e-3,+vw.aspy-1e-3,+vw.aspz,1,0xffffff);
 
 
-		// put stuff here
+
 
 	if (in.bstat == 1 && btnDly < tim || voxie_keystat(0x39) == 1) { // right click
 		for(i = 0; i < objectNo; i++) objects[i].view2d = !objects[i].view2d;
@@ -583,7 +576,7 @@ voxie_drawmeshtex(&vf,"2dCrab0.png",vtext,5,mesh,6,2,objects[i].col);
 	
 
 		voxie_frame_end(); voxie_getvw(&vw);
-		tics ++;
+	
 	}
 	
 	voxie_uninit(0); //Close window and unload voxiebox.dll
