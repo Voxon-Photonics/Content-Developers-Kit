@@ -1,0 +1,75 @@
+DEMView by Ken Silverman
+10/02/2016: Notes first written.
+10/18/2016: Notes updated.
+---------------
+DEMView command line:
+
+No options currently.
+
+---------------
+DEMView controls:
+
+General:
+   ESC: quit
+   Enter: toggle rendmode 2D/3D
+   1..~9: select tile server (mouse side of screen determines in 2D; always color/right side in 3D)
+   /: reset view to start location
+   ;/': cycle start location
+   Tab: Show image decoded cache status (debug)
+   Tab+Del: Delete a tile in cache (causing immediate reload) (debug)
+
+3D mode:
+   Arrows:fly left/right/forward/back
+   RCtrl/KP0, A/Z:fly up/down
+   Mouse: rotate view
+   Mouse+RMB: x tilts view instead of left/right
+   ,/.: rotate view left/right
+   PGUP/PGDN: rotate view up/down
+   LMB:hold to show lon/lat/alt of selected point; also use to mark corners of rectangular box. Drag edges/corners with mouse afterwords
+   C: cache selected rectangle. You will see a 2D grid of dots fill to white. Sometimes it takes a while before progress - that's normal. When fully cached, you'll see a ':)' appear.
+   KP*,/, S/X: adjust height exaggeration
+   -/+, KP-/KP+: adjust tile zoom offset. If marked box, adjusts marked zoom instead.
+   L/RShift:fly 16x slower/faster while held
+   {/}: change fly speed by 2x
+   Space Navigator implemented for Voxiebox mode
+   F12: save fully cached box (must select a rectangle and fully cache with 'C' first) to next HEI####.PNG/COL####.PNG files at marked zoom. See 'LMB' description.
+
+2D mode:
+   Arrows: move
+   RCtrl/KP0, A/Z: zoom
+   LMB: hold and drag mouse to move
+   L/RShift:fly 4x slower/faster while held
+   LCtrl: Hold to show tile borders (debug)
+   LAlt/RAlt: Hold to show only larger/smaller tile (debug)
+
+---------------
+DEMView.ini syntax:
+
+* Server List: You may specify your own web tile servers (WTS) in this file. Each server is specified on 1 line of text. Lines may be commented with a // in front of them. // may also be used to comment out the end of a line. The heightmap server must come first. The mapzen.com server is recommended for the heightmap. Fields must be in order and separated by commas. Strings must have quotes around them.
+
+Example:
+   serv=0,20,8,1,0,1,8,5,"cache/vir%d_%dx%dx%d.jpg","ecn.t0.tiles.virtualearth.net","/tiles/r%s.jpeg?g=5273" //Microsoft roads - runs pretty fast
+
+   int tilezmin; //minimum zoom level - usually 0, sometimes 1 if the root level doesn't exist.
+   int tilezmax; //maximum zoom level - have seen as low as 6, but usually 13-20; 20 (meaning 1048576 tiles across) for a good server.
+   int log2tilesiz; //must be 8 for 256x256 tiles (9 for 512x512, 10 for 1024x1024, but currently unsupported :/)
+   int iswebmerc; //1=standard web Mercator projection (earth on a square/greenland is large), 0=latitude/longitude: seen only with earthdata.nasa.gov and now no longer supported :/)
+   int ishttps; //0 if URL starts with http://, 1 if URL starts with https://. Please remove the "http(s)://" from the url string later.
+   int isquadtree; //0 for simple indexing, 1 for Microsoft-based quadtree indexing, where each group of 2 digits specifies a bit of x&y offset respectively.
+   int servnum; //Many servers have multiple URLs with a single character increasing (i.e. ecn.t0., ecn.t1., or tile-a, tile-b, ..). This determines the number of servers. Usually 3 if multiple. Sometimes 8. Set to 1. This probably doesn't have much effect on speed.
+   int servcharoffs; //This would be the offset into the url string (url_st) of the character which changes to specify a different server. First character is offset 0.
+   char cache_st[256]; //If a \cache subdirectory exists, tiles will be stored in this directory and use this prefix. Make sure your string has 4 %d's in it. These get replaced with the tile size, zoom level, x, and y respectively.
+   char url_st[256]; //Tile server address. Be sure to remove the http:// or https:// and also the suffix.
+   char tile_st[256]; //Suffix to URL. For normal servers, specify 3 %d's which get replaced with zoom level, x and y. For Microsoft quadtree servers, use 1 %s.
+
+* Location List. You may specify up to 256 locations as longitude and latitude coordinates in degrees, with West of the meridian or South of the equator as negative.
+
+Example:
+   loc=-109.357   ,-27.127   ,  0.0,"Easter Island"
+
+   double lon; //longitude in degrees. Eest of the prime meridian (i.e. Asia/Australia) is positive. West (Americas) is positive.
+   double lat; //latitude in degrees. North of the equator is positive. South is negative.
+   double ele; //elevation of the ground in meters.
+   char name[64]; //a caption associated with the place for display
+
+---------------
