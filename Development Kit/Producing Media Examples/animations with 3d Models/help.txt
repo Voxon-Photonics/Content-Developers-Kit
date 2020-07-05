@@ -1,8 +1,0 @@
-To make an animation viewable in VoxieOS 
-
-1) rename the 3d models (which can be .obj, .stl or .kv6) in sequence
-2) create a new file and call it info.ini
-3) edit info.ini to define parameters
-4) zip the files into a single archive
-
-For a full example unzip the fish.zip
