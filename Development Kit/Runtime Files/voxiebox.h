@@ -35,7 +35,6 @@ typedef struct
 	int isrecording, hacks, dispcur;                                                                                    //Misc.
 	double freq, phase;                                                                                                 //Obsolete
 
-		//New fields:
 	int thread_override_hack; //0:default thread behavior, 1..n:force n threads for voxie_drawspr()/voxie_drawheimap(); bound to: {1 .. #CPU cores (1 less on hw)}
 	int motortyp; //0=DCBrush+A*, 1=CP+FreqIn+A*, 2=BL_Airplane+A*, 3=VSpin1.0+CP+FreqIn, 4=VSpin1.0+BL+A4915, 5=VSpin1.0+BL+WS2408
 	int clipshape; //0=rectangle (vw.aspx,vw.aspy), 1=circle (vw.aspr)
@@ -43,7 +42,8 @@ typedef struct
 	int upndow; //0=sawtooth, 1=triangle
 	int nblades; //0=VX1 (not spinner), 1=/|, 2=/|/|, ..
 	int usejoy; //-1=none, 0=joyInfoEx, 1=XInput
-	int reserved1[2];
+	int dimcaps;
+	float emugam;
 	float asprmin;
 	float sync_usb_offset;
 	int sensemask[3], outcol[3];
@@ -120,26 +120,30 @@ TODO..
 #endif
 
 	//Frame (low level - double buffer)
+#define VOXIEFRAME_FLAGS_BUFFERED 0 //default (buffers voxie gfx commands internally for potential speedup)
+#define VOXIEFRAME_FLAGS_IMMEDIATE 1 //use this if calling voxie gfx from multiple threads (ex: custom user multithread)
 typedef struct { INT_PTR f, p, x, y; } tiletype;
 typedef struct
 {
-	INT_PTR f, p, fp; int x, y, usecol, drawplanes, x0, y0, x1, y1;
+	INT_PTR f, p, fp; int x, y, flags, drawplanes, x0, y0, x1, y1;
 	float xmul, ymul, zmul, xadd, yadd, zadd;
 	tiletype f2d;
 } voxie_frame_t;
 #if defined(_WIN32)
-void (__cdecl *voxie_doscreencap )(void);
+void (__cdecl *voxie_doscreencap )(int);
 void (__cdecl *voxie_setview     )(voxie_frame_t *vf, float x0, float y0, float z0, float x1, float y1, float z1);
 void (__cdecl *voxie_setmaskplane)(voxie_frame_t *vf, float x0, float y0, float z0, float nx, float ny, float nz);
 int  (__cdecl *voxie_frame_start )(voxie_frame_t *vf);
+void (__cdecl *voxie_flush       )(void);
 void (__cdecl *voxie_frame_end   )(void);
 void (__cdecl *voxie_setleds     )(int id, int r, int g, int b);
 void (__cdecl *voxie_project     )(int disp, int dir, float x, float y, int z, float *xo, float *yo);
 #else
-extern void voxie_doscreencap (void);
+extern void voxie_doscreencap (int);
 extern void voxie_setview     (voxie_frame_t *vf, float x0, float y0, float z0, float x1, float y1, float z1);
 extern void voxie_setmaskplane(voxie_frame_t *vf, float x0, float y0, float z0, float nx, float ny, float nz);
 extern int  voxie_frame_start (voxie_frame_t *vf);
+extern void voxie_flush       (void);
 extern void voxie_frame_end   (void);
 extern void voxie_setleds     (int id, int r, int g, int b);
 extern void voxie_project     (int disp, int dir, float x, float y, int z, float *xo, float *yo);
@@ -243,7 +247,7 @@ typedef struct
 } voxie_rec_t;
 #if defined(_WIN32)
 int   (__cdecl *voxie_rec_open)(voxie_rec_t *vr, char *fnam, char *port, int flags);
-int   (__cdecl *voxie_rec_play)(voxie_rec_t *vr, int domode);
+int   (__cdecl *voxie_rec_play)(voxie_rec_t *vr, voxie_frame_t *vf, int domode);
 void  (__cdecl *voxie_rec_close)(voxie_rec_t *vr);
 #else
 TODO..
@@ -262,10 +266,10 @@ void (__cdecl *kzsetfil       )(FILE *);
 INT_PTR (__cdecl *kzopen      )(const char *);
 void (__cdecl *kzfindfilestart)(const char *);
 int  (__cdecl *kzfindfile     )(char *);
-int  (__cdecl *kzread         )(void *, int);
-int  (__cdecl *kzfilelength   )();
+unsigned int (__cdecl *kzread )(void *, unsigned int);
+unsigned int (__cdecl *kzfilelength)();
 int  (__cdecl *kzseek         )(int, int);
-int  (__cdecl *kztell         )();
+unsigned int (__cdecl *kztell )();
 int  (__cdecl *kzgetc         )();
 int  (__cdecl *kzeof          )();
 void (__cdecl *kzclose        )();
@@ -282,10 +286,10 @@ extern void kzsetfil       (FILE *);
 extern INT_PTR kzopen      (const char *);
 extern void kzfindfilestart(const char *);
 extern int  kzfindfile     (char *);
-extern int  kzread         (void *, int);
-extern int  kzfilelength   ();
+extern unsigned int kzread (void *, unsigned int);
+extern unsigned int kzfilelength ();
 extern int  kzseek         (int, int);
-extern int  kztell         ();
+extern unsigned int kztell ();
 extern int  kzgetc         ();
 extern int  kzeof          ();
 extern void kzclose        ();
@@ -323,10 +327,11 @@ int voxie_load (voxie_wind_t *vw)
 	voxie_menu_addtab  = (  void (__cdecl *)(char*,int,int,int,int))GetProcAddress(hvoxie,"voxie_menu_addtab");
 	voxie_menu_additem = (  void (__cdecl *)(char*,int,int,int,int,int,int,int,int,double,double,double,double,double))GetProcAddress(hvoxie,"voxie_menu_additem");
 	voxie_menu_updateitem=( void (__cdecl *)(int,char*,int,double))GetProcAddress(hvoxie,"voxie_menu_updateitem");
-	voxie_doscreencap  = (  void (__cdecl *)(void          ))GetProcAddress(hvoxie,"voxie_doscreencap");
+	voxie_doscreencap  = (  void (__cdecl *)(int           ))GetProcAddress(hvoxie,"voxie_doscreencap");
 	voxie_setview      = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,float,float))GetProcAddress(hvoxie,"voxie_setview");
 	voxie_setmaskplane = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,float,float))GetProcAddress(hvoxie,"voxie_setmaskplane");
-	voxie_frame_start  = (   int (__cdecl *)(voxie_frame_t* ))GetProcAddress(hvoxie,"voxie_frame_start");
+	voxie_frame_start  = (   int (__cdecl *)(voxie_frame_t*))GetProcAddress(hvoxie,"voxie_frame_start");
+	voxie_flush        = (  void (__cdecl *)(void          ))GetProcAddress(hvoxie,"voxie_flush");
 	voxie_frame_end    = (  void (__cdecl *)(void          ))GetProcAddress(hvoxie,"voxie_frame_end");
 	voxie_setleds      = (  void (__cdecl *)(int,int,int,int))GetProcAddress(hvoxie,"voxie_setleds");
 	voxie_project      = (  void (__cdecl *)(int,int,float,float,int,float*,float*))GetProcAddress(hvoxie,"voxie_project");
@@ -355,7 +360,7 @@ int voxie_load (voxie_wind_t *vw)
 	voxie_setaudplaycb = (  void (__cdecl *)(void(*userplayfunc)(int*,int)))GetProcAddress(hvoxie,"voxie_setaudplaycb");
 	voxie_setaudreccb  = (  void (__cdecl *)(void(*userrecfunc)(int*,int)))GetProcAddress(hvoxie,"voxie_setaudreccb");
 	voxie_rec_open     = (   int (__cdecl *)(voxie_rec_t*,char*,char*,int))GetProcAddress(hvoxie,"voxie_rec_open");
-	voxie_rec_play     = (   int (__cdecl *)(voxie_rec_t*,int))            GetProcAddress(hvoxie,"voxie_rec_play");
+	voxie_rec_play     = (   int (__cdecl *)(voxie_rec_t*,voxie_frame_t*,int))GetProcAddress(hvoxie,"voxie_rec_play");
 	voxie_rec_close    = (  void (__cdecl *)(voxie_rec_t*))                GetProcAddress(hvoxie,"voxie_rec_close");
 	kpzload            = (  void (__cdecl *)(const char*,INT_PTR*,int*,int*,int*))        GetProcAddress(hvoxie,"kpzload");
 	kpgetdim           = (   int (__cdecl *)(const char*,int,int*,int*))                  GetProcAddress(hvoxie,"kpgetdim");
@@ -366,10 +371,10 @@ int voxie_load (voxie_wind_t *vw)
 	kzopen             = (INT_PTR(__cdecl *)(const char*))GetProcAddress(hvoxie,"kzopen");
 	kzfindfilestart    = (  void (__cdecl *)(const char*))GetProcAddress(hvoxie,"kzfindfilestart");
 	kzfindfile         = (   int (__cdecl *)(char*))      GetProcAddress(hvoxie,"kzfindfile");
-	kzread             = (   int (__cdecl *)(void*,int))  GetProcAddress(hvoxie,"kzread");
-	kzfilelength       = (   int (__cdecl *)(void))       GetProcAddress(hvoxie,"kzfilelength");
+	kzread             = (unsigned int (__cdecl *)(void*,unsigned int))GetProcAddress(hvoxie,"kzread");
+	kzfilelength       = (unsigned int (__cdecl *)(void)) GetProcAddress(hvoxie,"kzfilelength");
 	kzseek             = (   int (__cdecl *)(int,int))    GetProcAddress(hvoxie,"kzseek");
-	kztell             = (   int (__cdecl *)(void))       GetProcAddress(hvoxie,"kztell");
+	kztell             = (unsigned int (__cdecl *)(void)) GetProcAddress(hvoxie,"kztell");
 	kzgetc             = (   int (__cdecl *)(void))       GetProcAddress(hvoxie,"kzgetc");
 	kzeof              = (   int (__cdecl *)(void))       GetProcAddress(hvoxie,"kzeof");
 	kzclose            = (  void (__cdecl *)(void))       GetProcAddress(hvoxie,"kzclose");
