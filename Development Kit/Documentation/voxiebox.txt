@@ -50,16 +50,16 @@ Voxiedemo files:
    meathead.stl           Ken's silly mascot #2
 
 Voxon's own file formats:
-   *.rec               A recording of a sequence of Voxiebox graphics and audio commands. Can create a REC file in the runtime Voxiebox menu.
-   *.kv6; *.kvs        A 3D voxel model (surface voxels stored only)
-   *.kni               A movie file containing color images, depth images, infrared images, and audio. Used for depth cameras. See knife.exe/kniview.exe
+   *.rec                A recording of a sequence of Voxiebox graphics and audio commands. Can create a REC file in the runtime Voxiebox menu.
+   *.kv6; *.kvs         A 3D voxel model (surface voxels stored only)
+   *.kni                A movie file containing color images, depth images, infrared images, and audio. Used for depth cameras. See knife.exe/kniview.exe
 
 Standard file formats supported:
-   *.mol               Standard molecule format
-   *.stl; *.obj        Standard 3D polygon formats
-   *.wav; *.flac       Standard audio formats
-   *.png; *.jpg        Standard image formats
-   *.dcm               Standard DICOM (medical) format
+   *.mol                Standard molecule format
+   *.stl; *.obj; *.ply  Standard 3D polygon formats
+   *.wav; *.flac        Standard audio formats
+   *.png; *.jpg         Standard image formats
+   *.dcm                Standard DICOM (medical) format
 
 ----------------------------------------------------------------------------------------------------
 Window setup functions:
@@ -75,17 +75,35 @@ typedef struct
 } voxie_disp_t;
 typedef struct
 {
-   int useemu; float emuhang, emuvang, emudist;                                                             //Emulation
-   int xdim, ydim, projrate, framepervol, usecol, dispnum, reserved; voxie_disp_t disp[MAXDISP];            //Display
-   int hwsync_frame0, hwsync_phase, hwsync_amp[4], hwsync_pha[4], hwsync_levthresh, voxie_vol;              //Actuator
-   int drawstroke, dither, smear, usekeystone, flip, menu_on_voxie; float aspx, aspy, aspz, gamma, density; //Render
-   int sndfx_vol, voxie_aud, excl_audio, sndfx_aud[2], playsamprate, playnchans, recsamprate, recnchans;    //Audio
-   int isrecording, hacks, dispcur;                                                                         //Misc.
-   double freq, phase;                                                                                      //Obsolete
+   int useemu; float emuhang, emuvang, emudist;                                                                        //Emulation
+   int xdim, ydim, projrate, framepervol, usecol, dispnum, bitspervol; voxie_disp_t disp[MAXDISP];                     //Display
+   int hwsync_frame0, hwsync_phase, hwsync_amp[4], hwsync_pha[4], hwsync_levthresh, voxie_vol;                         //Actuator
+   int ilacemode, drawstroke, dither, smear, usekeystone, flip, menu_on_voxie; float aspx, aspy, aspz, gamma, density; //Render
+   int sndfx_vol, voxie_aud, excl_audio, sndfx_aud[2], playsamprate, playnchans, recsamprate, recnchans;               //Audio
+   int isrecording, hacks, dispcur;                                                                                    //Misc.
+   double freq, phase;                                                                                                 //Obsolete
 
-typedef struct
-{
-   int useemu;             //0=Voxiebox, 1=emulation in 2D window (representative of actual view on HW), 2=emulation in 2D window (made for 2D display)
+   int thread_override_hack; //0:default thread behavior, 1..n:force n threads for voxie_drawspr()/voxie_drawheimap(); bound to: {1 .. #CPU cores (1 less on hw)}
+   int motortyp; //0=DCBrush+A*, 1=CP+FreqIn+A*, 2=BL_Airplane+A*, 3=VSpin1.0+CP+FreqIn, 4=VSpin1.0+BL+A4915, 5=VSpin1.0+BL+WS2408
+   int clipshape; //0=rectangle (vw.aspx,vw.aspy), 1=circle (vw.aspr)
+   int goalrpm, cpmaxrpm, ianghak, ldotnum, reserved0;
+   int upndow; //0=sawtooth, 1=triangle
+   int nblades; //0=VX1 (not spinner), 1=/|, 2=/|/|, ..
+   int usejoy; //-1=none, 0=joyInfoEx, 1=XInput
+   int dimcaps;
+   float emugam;
+   float asprmin;
+   float sync_usb_offset;
+   int sensemask[3], outcol[3];
+   float aspr, sawtoothrat;
+} voxie_wind_t;
+
+voxie_wind_t fields:
+   int useemu;             //0=run on Voxiebox hardware
+                           //1= emulator: perspective view, looks like authentic hardware
+                           //2=simulator: perspective view, using standard rendering for 2D display
+                           //3= emulator: orthogonal view, looks like authentic hardware
+                           //4= emulator: orthogonal view, looks like authentic hardware (older/slower code)
    float emuhang;          //emulator horizontal angle (radians)
    float emuvang;          //emulator vertical   angle (radians)
    float emudist;          //emulator distance; minimum is 2000.0.
@@ -107,9 +125,9 @@ typedef struct
    int hwsync_levthresh;   //threshold ADC value for peak detection {0..1024, but typically in range: 256..512}
    int voxie_vol;          //amplitude scale when using sine wave audio output {0..100}
 
-   int ilacemode;          //interlace mode: 0=default, 1, 2, 3, 4, 5, 6, 7
+   int ilacemode;          //interlace mode: 0:default, 6:2/3 color mode;uses outcol[]) {0-7?}
    int drawstroke;         //1=draw on up stroke, 2=draw on down stroke, 3=draw on both up&down
-   int dither;             //0=dither off, 1=dither mono only, 2=dither RGB only, 3=dither both
+   int dither;             //0=no dither, 1=height dither, 2=time dither, 3=height&time dither
    int smear;              //1+=increase brightness in x-y at post processing (slower render), 0=not
    int usekeystone;        //0=no keystone compensation (for testing only), 1=keystone quadrilateral compensation (default) - see proj[]
    int flip;               //flip coordinate system in voxiebox.dll
@@ -140,17 +158,19 @@ typedef struct
    int clipshape;          //0=rectangle (vw.aspx,vw.aspy), 1=circle (vw.aspr). Can be changed at run-time.
    int goalrpm;            //desired rotation rate
    int cpmaxrpm;           //maximum rotation rate for CP.
-   int ianghak[MAXDISP];   //phase offset for rotation (0-65535)
+   int ianghak;            //phase offset for rotation (0-65535)
+   int ldotnum;            //Affects brightness. Range:{0..3}, 0=default
    int upndow;             //screen shape: 0=sawtooth, 1=triangle
    int nblades;            //screen shape: 0=VX1 (not spinner), 1=/| or /\, 2=/|/| or /\/\, ..
    int usejoy;             //which Joystick API to use in DLL: -1=none, 0=joyInfoEx, 1=XInput
-   int reserved2[2];
+   int dimcaps;            //Dim top & bottom by sine - up/dn mode only. 0 is default.
+   float emugam;           //gamma applied to emulator rendering mode #1. Typical range: 0.25-4.0
    float asprmin;          //minimum radius; typically 0.10
    float sync_usb_offset;  //offset to USB timing (see VoxieBox menu Stats..On:PDF)
-   int reserved3[6];
+   int sensemask[3];       //for multicolor/multiprojector modes: which data goes to projector. Ex (R/B mode): [0]=0xff0000, [1]=0x00ff00
+   int outcol[3];          //for multicolor/multiprojector modes: LED color of projector        Ex (R/B mode): [0]=0xff0000, [1]=0x00ff00
    float aspr;             //size of radius; typically 1.41 or sqrt(2) to circumscribe square
    float sawtoothrat;      //for /|/| or /| screens; typically: 0.875, range: ~0.5-1.0
-} voxie_wind_t;
 
    //Call this before voxie_init() to load the DLL and default settings from voxiebox.ini
 void voxie_loadini_int (voxie_wind_t *vw);
@@ -333,14 +353,16 @@ void voxie_menu_updateitem (int id, char *st, int down, double v);
 ----------------------------------------------------------------------------------------------------
 Graphics, low level (direct frame access):
 
+#define VOXIEFRAME_FLAGS_BUFFERED 0 //default: buffers voxie gfx commands internally for potential speedup
+#define VOXIEFRAME_FLAGS_IMMEDIATE 1 //do not buffer - 'or' this flag when calling voxie rendering functions from multiple threads
 typedef struct
 {
    INT_PTR f;              //Pointer to top-left-up of current frame to draw
    INT_PTR p;              //Number of bytes per horizontal line (x)
    INT_PTR fp;             //Number of bytes per 24-plane frame (1/3 of screen)
    int x, y;               //Width and height of viewport
-   int usecol;             //Tells whether color mode is selected
-   int drawplanes;         //Tells how many planes to draw
+   int flags;              //See VOXIEFRAME_FLAGS_* above.
+   int drawplanes;         //Number of bit planes used for drawing
    int x0, y0, x1, y1;     //Viewport extents
    float xmul, ymul, zmul; //Transform for medium and high level graphics functions..
    float xadd, yadd, zadd; //Transform is: actual_x = passed_x * xmul + xadd
@@ -349,7 +371,8 @@ typedef struct
 
    //Causes a screen capture of the volumetric buffer to occur on the next frame. Writes to the
    //next available nonexistent numbered file: VOXIE0000.PNG, VOXIE0001.PNG, ..
-void voxie_doscreencap (void);
+   // captyp: 1:PNG, 2:PLY
+void voxie_doscreencap (int captyp);
 
    //You may call this any number of times during rendering.
    //x0, y0, z0, x1, y1, z1: 3D coordinates of upper-left-top and lower-right-bottom corners.
@@ -367,6 +390,11 @@ void voxie_setmaskplane (voxie_frame_t *vf, float x0, float y0, float z0, float 
    //voxie_frame_start(). You may use the vf structure if you wish to do your own low-level drawing.
    //Otherwise, just pass it to the drawing functions as is.
 int voxie_frame_start (voxie_frame_t *vf);
+
+   //For advanced users only: flush all graphics commands on internal buffer, causing all graphics commands
+   //to actually execute and complete. This might be used if one wanted to do some low level access to the
+   //voxel buffer.
+void voxie_flush (void);
 
    //You must call this once after done drawing. The blitter will flip to it when it finishes
    //rendering the current frame.
@@ -449,7 +477,7 @@ void voxie_drawpol (voxie_frame_t *vf, pol_t *pt, int n, int col);
    //   voxie_drawmeshtex(&vf,0,vt,4,0,0,0,0xffffff);
    //
    //      //Example for fillmode 1 (line list): wireframe 'X'
-   //   poltex_t vt[4]; int mesh[4]; i = 0;
+   //   poltex_t vt[4]; int mesh[6]; i = 0;
    //   vt[0].x =-0.8; vt[0].y =-0.8; vt[0].z = 0.0; vt[0].col = 0xffffff;
    //   vt[1].x =+0.8; vt[1].y =+0.8; vt[1].z = 0.0; vt[1].col = 0xffffff;
    //   vt[2].x =-0.8; vt[2].y =+0.8; vt[2].z = 0.0; vt[2].col = 0xffffff;
@@ -459,7 +487,7 @@ void voxie_drawpol (voxie_frame_t *vf, pol_t *pt, int n, int col);
    //   voxie_drawmeshtex(&vf,0,vt,4,mesh,i,1,0xffffff);
    //
    //      //Example for fillmode 2 (polygon list) or fillmode 3 (solid filled): tetrahedron
-   //   poltex_t vt[4]; int mesh[12], i = 0;
+   //   poltex_t vt[4]; int mesh[16], i = 0;
    //   vt[0].x =-0.4; vt[0].y =-0.4; vt[0].z =-0.4; vt[0].col = 0xffffff;
    //   vt[1].x =-0.4; vt[1].y =+0.4; vt[1].z =+0.4; vt[1].col = 0xffffff;
    //   vt[2].x =+0.4; vt[2].y =-0.4; vt[2].z =+0.4; vt[2].col = 0xffffff;
@@ -498,17 +526,22 @@ void voxie_drawcone (voxie_frame_t *vf, float x0, float y0, float z0, float r0,
                                         int fillmode, int col);
 
    //Draw sprite (voxel model).
-   //      fnam: filename. Cached internally. Currently supported:KV6,STL. May be supported: KVX,KVS
+   //      fnam: filename. Cached internally. Currently supported:KV6,STL,OBJ,PLY.
+   //                                         May be supported: KVX,KVS
    //         p: position of center of model (pivot)
    //     r,d,f: right, down, forward vectors (respectively)
-   //forcescale: for STL files, forces scale factor (for alignment inside ZIP animations) Leave this
-   //            0.f typically.
    //       col: color multiplier. 24-bit color, each 8 bits scales intensity of respective
    //            component. 64=1.0 or no scale. Use 0x404040 for no change; 0x808080 to draw as
    //            double brightness, etc.. (currently ignored)
+   //forcescale: for STL files, forces scale factor (for alignment inside ZIP animations) Leave this
+   //            0.f typically.
+   //fdrawratio: fraction of model to draw (hack for animation)
+   //     flags: Bit 0:0=normal, 1:wireframe
    //   returns: 1=found file&valid, 0=bad file
-int voxie_drawspr (voxie_frame_t *vf, const char *fnam, point3d *p, point3d *r, point3d *d,
-                   point3d *f, float forcescale, int col);
+int voxie_drawspr     (voxie_frame_t *vf, const char *fnam, point3d *p, point3d *r, point3d *d,
+                       point3d *f, int col);
+int voxie_drawspr_ext (voxie_frame_t *vf, const char *fnam, point3d *p, point3d *r, point3d *d,
+                       point3d *f, int col, float forcescale, float fdrawratio, int flags);
 
 ----------------------------------------------------------------------------------------------------
 Graphics, high level:
@@ -553,6 +586,58 @@ void voxie_drawcube (voxie_frame_t *vf, point3d *p, point3d *r, point3d *d, poin
 void voxie_drawheimap (voxie_frame_t *vf, char *filnam,
                        point3d *p, point3d *r, point3d *d, point3d *f,
                        int colorkey, int reserved, int flags)
+----------------------------------------------------------------------------------------------------
+Graphics, 2D debug functions (draws simple stuff to window background)
+
+NOTE: The top 64 rows are typically occupied by the menu, which means you should use a y of at least
+      64 in order for your graphics to be visible. An exception to this is the top-right corner when
+      you are running in emulation mode, however please note that this corner would be off screen on
+      the small 7" LCD display on the VX1/VX2 hardware (which has a resolution of 1024x600).
+
+   //Draw 6x8 monospace text to window
+   // x,y: top-left corner of start position
+   //fcol: foreground color (-1 to indicate transparent)
+   //bcol: background color (-1 to indicate transparent)
+   //  st: ASCII null terminated text string (must be pre-formatted by caller). \n is supported as a
+   //      convenience to write multiple lines in a single call.
+void voxie_debug_print6x8 (int x, int y, int fcol, int bcol, const char *st);
+   //Same as above with printf-style formatting (C/C++ only; a cover-up function in VOXIEBOX.H)
+void voxie_debug_print6x8_ (int x, int y, int fcol, int bcol, const char *fmt, ...);
+
+   //Draw single pixel.
+   //  x,y: pixel location
+   //  col: 24-bit RGB color
+void voxie_debug_drawpix (int x, int y, int col);
+
+   //Draw horizontal line:
+   //x0,x1: x extents, x0 < x1
+   //    y: row
+   //  col: 24-bit RGB color
+void voxie_debug_drawhlin (int x0, int x1, int y, int col);
+
+   //Draw line
+   //x0,y0: 1st point
+   //x1,y1: 2nd point
+   //  col: 24-bit RGB color
+void voxie_debug_drawline (float x0, float y0, float x1, float y1, int col);
+
+   //Draw circle
+   //xc,yc: pixel center
+   //    r: radius
+   //  col: 24-bit RGB color
+void voxie_debug_drawcirc (int xc, int yc, int r, int col);
+
+   //Draw filled rectangle
+   //x0,y0: top-left corner
+   //x1,y1: bot-right corner
+   //  col: 24-bit RGB color
+void voxie_debug_drawrectfill (int x0, int y0, int x1, int y1, int col);
+
+   //Draw filled circle
+   //  x,y: pixel center
+   //    r: radius
+   //  col: 24-bit RGB color
+void voxie_debug_drawcircfill (int x, int y, int r, int col);
 
 ----------------------------------------------------------------------------------------------------
 Sound:
@@ -562,10 +647,14 @@ Sound:
    //volperc0: % of full volume to left  channel {0..100, although may exceed 100}
    //volperc1: % of full volume to right channel {0..100, although may exceed 100}
    //  frqmul: frequency scaling. use 1.0 for default sample rate, 2.0 for 1 octave up, etc..
-   //returns: a low integer value. Use this as a handle passed to voxie_playsound_update().
+   //returns:
+   //   0..MAX-1 if success. Use this as a handle passed to voxie_playsound_update().
+   //   -1 if file not found or other error related to loading.
+   //   -2 if none of the MAX audio voice slots were free. New sounds don't play if list is full.
 int voxie_playsound (const char *filnam, int chan, int volperc0, int volperc1, float frqmul);
 
    //Update parameters of a sound while playing. To turn off sound, set volperc0 & volperc1 to 0's.
+   //To turn off all sounds, use a handle of -1. Example: voxie_playsound_update(-1,-1,0,0,0.f);
 void voxie_playsound_update (int handle, int chan, int volperc0, int volperc1, float frqmul);
 
    //Register custom audio mixer callback function. If used, this function will be called from a
@@ -603,7 +692,7 @@ int voxie_rec_open (voxie_rec_t *vr, char *filnam, char *port, int flags);
     //    0=seek only (no render/sound)
     //    1=render w/no sound
     //    2=render w/sound
-int voxie_rec_play (voxie_rec_t *vr, int domode);
+int voxie_rec_play (voxie_rec_t *vr, voxie_frame_t *vf, int domode);
 
    //Close file handle and free buffers
 void voxie_rec_close (voxie_rec_t *vr);
