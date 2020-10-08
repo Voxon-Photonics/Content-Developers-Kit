@@ -204,7 +204,7 @@ void loadObj3D() {
 	if (result != 0) {
 		obj3DCreate(gFilepath, pp, size, 0x404040);
 	} else {
-			MessageBox(0, "File must be .obj, .kv6, .ply or .stl", "", MB_OK); 
+			MessageBox(0, "File must be .obj, .kv6, .ply or .stl", "Error: invalid file", MB_OK); 
 	}
 	
 }
@@ -413,10 +413,31 @@ bool saveScene() {
 bool loadScene() {
 	int i = 0, j = 0;
 	long eof;
+	int result = 0;
 
 	openFileDialog();
 
 	if (gFilepath == NULL || gFilepath[0] == '\0') return false;
+
+
+	// check if file is of the right exention
+	for (i = 0; i < MAX_FILE; ++i) {
+		if (gFilepath[i] == '\0'
+		 	&& tolower(gFilepath[i - 1]) == 'n' 
+			&& tolower(gFilepath[i - 2]) == 'c'
+			&& tolower(gFilepath[i - 3]) == 's'
+			&& gFilepath[i - 4] == '.')  {	
+			result = 1;
+			break;
+		}
+	}
+
+
+	if (result == 0) {
+
+			MessageBox(0, "File must be a valid .scn file", "Error: invalid file", MB_OK); 
+			return false;
+	}
 
 	FILE* f;
 	if (!(f = fopen(gFilepath, "rb"))) return false;
