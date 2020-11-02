@@ -1,8 +1,35 @@
-To make an animation viewable in VoxieOS 
+A zipped file of models named in sequence can be played in VoxieOS as an animation.
+
+steps to make an animations playable in VoxieOS 
 
 1) rename the 3d models (which can be .obj, .stl or .kv6) in sequence
+
+Example : if your filenames are ‘fish’ you could name them as Fish00.kv6,Fish01.kv6
+Fish02.kv6,Fish03.kv6,Fish04.kv6 this would play the five frames in sequence.
+
 2) create a new file and call it info.ini
 3) edit info.ini to define parameters
 4) zip the files into a single archive
 
-For a full example unzip the fish.zip
+For a full example unzip the fish.zip and have a look at the contents.
+
+----------------------------------------------------------------------------------------------------
+Parameters for edit Info
+
+
+animfile=fish%02d.kv6           //limited printf-style formatting to select files in order. Typically: file%d.ext or file%0#d.ext
+animsnd=undwat.flac             //audio file to play
+animscale=2.0;				//default scale
+animmode=1;                     //0=forward, 1=pingpong
+animfps=20.0;                   //frames per second (default is 15)
+animforcescale=1.0;             //set a forced scale - useful when animation frames vary in size
+anim_autocycle_loops=1;         //in autocycle mode, tells how many loops to play before next file
+//anim_autocycle_seconds=5;     //in autocycle mode, tells how long seconds to play before next file
+//anim_autocycle_nokillsound=0; //continue audio playback after changing animation
+anim_reset_posori=1;            //reset pos & ori?
+anim_showtim[0]=0.5;            //custom animation sequence. Ttime in seconds.
+anim_showrat[0]=0.2;            //ratio from 1st to last frame:{0.0..1.0}
+anim_showtim[1]=1.5;            //"
+anim_showrat[1]=0.4;            //"
+
+

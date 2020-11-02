@@ -1,0 +1,106 @@
+GRAPHCALC by Ken Silverman.
+
+Description:
+   Graphcalc is a switch-based expression compiler, optimized using heavy use of AVX2 assembly
+   language to operate on 8 functions at a time (similar to a GPU shader), and full use of multiple
+   cores. Further optimization is achieved by treating t (time), y, (and z if applicable) as
+   constants, and letting the optimizater evalulate as much as it can to eliminate some expressions
+   per line/plane/volume.
+
+   There are 2 graphing modes:
+      2D: script returns a height for each x/y coordinate, with z scaled to range {-1..+1} to fit
+          display. Higher values are drawn as red, while lower values as blue, with green/yellow in
+          the middle.
+
+      3D: script returns >0 for solid voxel, or <=0 for transparent voxel. To activate 3D mode, just
+          read a 'z' variable somewhere in your script. Output in 3D mode is cubic aspect - so z is
+          in range -aspz..+aspz (a variable which depends on the height of your volume, usually
+          ranging from .25 to .50).
+
+   The last expression in a script is the return value.
+   Graphing always occurs in the range {-1..+1} for x and y.
+
+Script syntax:
+
+      //Functions (all behave same as C/C++ unless otherwise noted)
+   floor(x) ceil(x) int(x) fmod(x,y)   //int() rounds towards 0
+   cos(x) sin(x) tan(x) acos(x) asin(x) atan(x) atan2(y,x)
+   sqrt(x) exp(x) log(x) pow(x,y)
+   rcp(x) rsqrt(x)  //approximations to 1/x and 1/sqrt(x) (respectively)
+   sgn(x) unit(x)   //sgn() returns: <0:+1, 0:0, >0:0. unit() returns: <0:0, 0:.5, >0:+1
+   abs(x) fabs(x)   //abs() is alias for fabs() - works as floating point
+   min(x,y) max(x,y)
+
+      //Variables:
+   x y z t        //function inputs. If standlone 'z' is found in script, 3D graphing mode is used
+   PI rnd nrnd    //other built-ins. rnd: uniform random {0<=x<1}, nrnd: normal random: mean=0/std=1
+   A-Z/a-z/0-9/_  //user variables. NOTE:can't start with x/y/z/t or use numbers in first char.
+
+      //Operators:
+   + - * / % ^             //arithmetic operators. %:unsigned modulo (continuous at 0), ^:power
+   < > <= >= == != && ||   //boolean operators
+   = += -= *= /= %= ++ --  //variable assignment/update
+   Numeric constants support decimal point and exponentials with 'E'/'e'
+
+      //Flow control, etc..
+   if (..) { .. } else { .. }  //else clause optional
+   /*comment*/                 //in-line comment
+   //comment                   //end of line comment
+   , ;                         //statement separator/terminator
+   return(x);                  //planned but not currently implemented (to support early exit)
+
+GRAPHCALC.INI information:
+   usecol=1;     //1=RGB, 0=mono white, -1..-6=mono non white
+   autocycle=0;  //0=edit text, 1=non interactive animation mode
+   sxres3=256;   //x resolution of temp volume buffer (128=fast&lo-res, 256=slow&hi-res)
+   syres3=256;   //y "
+   initindex=-1; //initial script index
+   script[0..95]=.. //whole script must be on 1 line; use \r for newline
+   scripttim[0..95]=number;  //use 0 to not include in autocycle
+
+Update history:
+   12/19/2013: GRAPHCALC.KC:start. Works as interpreter.
+   12/20/2013: GRAPHCALC.KC:Try converting to compiler;don't finish.
+   12/21/2013: GRAPHCALC.KC:Finish compiler.
+   12/22/2013: GRAPHCALC.KC:Optimize&clean compiler:substitute const for t&y.
+   12/23/2013: GRAPHCALC.KC:Add heightmap.
+   12/25/2013: GRAPHCALC.KC->GRAPHCALC.C.
+   12/26/2013: GRAPHCALC.C:Optimize funcs using SSE. Port EXPAPRX.C->EXPAPRX.KC; Write FASTTRIG.KC.
+   12/27/2013: EXPAPRX.KC:Rewrite klog() & kexp() w/Cheby. GRAPHCALC.C:Rewrite kpow().
+   12/28/2013: EXPAPRX.KC->FCALCPOW.KC; FASTTRIG.KC->FCALCOSIN.KC. GRAPHCALC.C:Finish 1-param funcs&
+               optimize.
+   12/29/2013: GRAPHCALC.C:Port to 64-bit (no ASM :/) for VOXILIB.
+   12/30/2013: GRAPHCALC.C:Continue 64-bit port by starting GRAPHCALC_64.ASM.
+   12/31/2013: GRAPHCALC.C:Finish GRAPHCALC_64.ASM;VOXILIB port works.
+   01/01/2014: GRAPHCALC.C:Improve editor/internals. Add 2-parm funcs:min&max. Write 12 interesting
+               functions on VoxieBox, including ~oo~ :P
+   01/06/2014: GRAPHCALC.KC:Update to C functionality.
+   01/08/2014: Start PARSIMP.KC.
+   01/12/2014: GRAPHCALC.KC:Clean parser slightly.
+   01/13/2014: GRAPHCALC.KC:Clean parser more.
+   01/14/2014: GRAPHCALC.KC:Do rest of functions and add custom variables.
+   01/15/2014: GRAPHCALC.C:Port latest from GRAPHCALC.KC. Start RANDTEST.C.
+   01/16/2014: GRAPHCALC_64.ASM: implement rnd&nrnd.
+   01/19/2014: GRAPHCALC.C/"_64.ASM:IF works in asm;ELSE almost works in parser.
+   01/20/2014: GRAPHCALC.C:ELSE fully debugged.
+   01/21/2014: GRAPHCALC.C:Do solve at mousx/y;2D text array for VOXILIB mode.
+   07/15/2014: GRAPHCALC.C:Do brute xyzt graphs using 256x256x64&voxie_drawvox().
+   07/16/2014: GRAPHCALC.C:Implement reverse map for f(x,y,z,t) but slow.
+   07/17/2014: GRAPHCALC.C:Debug/optimize/clean 4D graphing mode.
+   07/18/2014: GRAPHCALC.INI:add script[?]/scripttim[?]/usecol/autocycle.
+   07/20/2014: GRAPHCALC.C:Optimize memory&clean.
+   07/21/2014: GRAPHCALC.C:Try reorder for's:no faster.
+   02/14/2015: GRAPHCALC.C:Add Ctrl+A to toggle autocycle.
+   02/16/2015: GRAPHCALC.C:Fix for VC12_64.
+   02/22/2015: Start GRAPHCALC_64->GRAPHCALC_AVX.ASM.
+   02/23/2015: GRAPHCALC_AVX.ASM:works but not much faster than SSE2 due to kcalc_optimize() and
+               rendering.
+   02/25/2015: GRAPHCALC:optimize non-voxiebox renderer, both SSE2&AVX2.
+   02/27/2015: GRAPHCALC_AVX.ASM:optimize.
+   03/01/2015: GRAPHCALC_AVX.ASM:optimize.
+   08/27/2015: GRAPHCALC.C:Add [/] for phase. Now RMenu+[/] for fine phase adjust.
+   01/23/2017: GRAPHCALC.C:Add Ctrl+Up/Dn to cycle mode manually.
+   05/04/2017: GRAPHCALC.C:Add TCP code:works in localhost only?
+   08/10/2018: GRAPHCALC.C:show script on 2D window.
+   09/28/2018: GRAPHCALC.C:Fix volume mode.
+   05/14/2019: Write GRAPHCALC.TXT

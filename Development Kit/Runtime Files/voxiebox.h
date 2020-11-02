@@ -38,7 +38,7 @@ typedef struct
 	int thread_override_hack; //0:default thread behavior, 1..n:force n threads for voxie_drawspr()/voxie_drawheimap(); bound to: {1 .. #CPU cores (1 less on hw)}
 	int motortyp; //0=DCBrush+A*, 1=CP+FreqIn+A*, 2=BL_Airplane+A*, 3=VSpin1.0+CP+FreqIn, 4=VSpin1.0+BL+A4915, 5=VSpin1.0+BL+WS2408
 	int clipshape; //0=rectangle (vw.aspx,vw.aspy), 1=circle (vw.aspr)
-	int goalrpm, cpmaxrpm, ianghak, reserved0[2];
+	int goalrpm, cpmaxrpm, ianghak, ldotnum, reserved0;
 	int upndow; //0=sawtooth, 1=triangle
 	int nblades; //0=VX1 (not spinner), 1=/|, 2=/|/|, ..
 	int usejoy; //-1=none, 0=joyInfoEx, 1=XInput
@@ -110,11 +110,19 @@ extern int    voxie_laser_read (int id, voxie_laser_t *las);
 
 	//Menus:
 #if defined(_WIN32)
-enum {MENU_TEXT=0,MENU_LINE,MENU_BUTTON,MENU_HSLIDER=MENU_BUTTON+4,MENU_VSLIDER,MENU_EDIT,MENU_EDIT_DO};
+enum {MENU_TEXT=0, MENU_LINE, MENU_BUTTON, MENU_HSLIDER=MENU_BUTTON+4, MENU_VSLIDER, MENU_EDIT, MENU_EDIT_DO, MENU_TOGGLE, MENU_PICKFILE};
 void (__cdecl *voxie_menu_reset)(int (*menu_update)(int id, char *st, double val, int how, void *userdata), void *userdata, char *bkfilnam);
 void (__cdecl *voxie_menu_addtab)(char *st, int x, int y, int xs, int ys);
 void (__cdecl *voxie_menu_additem)(char *st, int x, int y, int xs, int ys, int id, int type, int down, int col, double v, double v0, double v1, double vstp0, double vstp1);
 void (__cdecl *voxie_menu_updateitem)(int id, char *st, int down, double v);
+#else
+TODO..
+#endif
+
+	//Touch controls:
+typedef struct { char *st; int x0, y0, xs, ys, fcol, bcol, keycode; } touchkey_t;
+#if defined(_WIN32)
+void (__cdecl *voxie_touch_custom)(const touchkey_t *touchkey, int num);
 #else
 TODO..
 #endif
@@ -165,7 +173,7 @@ void (__cdecl *voxie_drawmeshtex)(voxie_frame_t *vf, char *fnam, poltex_t *vt, i
 void (__cdecl *voxie_drawsph    )(voxie_frame_t *vf, float fx, float fy, float fz, float rad, int issol, int col);
 void (__cdecl *voxie_drawcone   )(voxie_frame_t *vf, float x0, float y0, float z0, float r0, float x1, float y1, float z1, float r1, int fillmode, int col);
 int  (__cdecl *voxie_drawspr    )(voxie_frame_t *vf, const char *fnam, point3d *p, point3d *r, point3d *d, point3d *f, int col);
-int  (__cdecl *voxie_drawspr_ext)(voxie_frame_t *vf, const char *fnam, point3d *p, point3d *r, point3d *d, point3d *f, int col, float forcescale, float fdrawratio);
+int  (__cdecl *voxie_drawspr_ext)(voxie_frame_t *vf, const char *fnam, point3d *p, point3d *r, point3d *d, point3d *f, int col, float forcescale, float fdrawratio, int flags);
 #else
 extern void voxie_drawvox    (voxie_frame_t *vf, float fx, float fy, float fz, int col);
 extern void voxie_drawbox    (voxie_frame_t *vf, float x0, float y0, float z0, float x1, float y1, float z1, int fillmode, int col);
@@ -175,21 +183,21 @@ extern void voxie_drawmeshtex(voxie_frame_t *vf, char *fnam, poltex_t *vt, int v
 extern void voxie_drawsph    (voxie_frame_t *vf, float fx, float fy, float fz, float rad, int issol, int col);
 extern void voxie_drawcone   (voxie_frame_t *vf, float x0, float y0, float z0, float r0, float x1, float y1, float z1, float r1, int fillmode, int col);
 extern int  voxie_drawspr    (voxie_frame_t *vf, const char *fnam, point3d *p, point3d *r, point3d *d, point3d *f, int col);
-extern int  voxie_drawspr_ext(voxie_frame_t *vf, const char *fnam, point3d *p, point3d *r, point3d *d, point3d *f, int col, float forcescale, float fdrawratio);
+extern int  voxie_drawspr_ext(voxie_frame_t *vf, const char *fnam, point3d *p, point3d *r, point3d *d, point3d *f, int col, float forcescale, float fdrawratio, int flags);
 #endif
 
 	//Graphics (high level)
-#define VOXIE_DICOM_MIPS 4 //NOTE:limited to 6 by dicom_gotz
+#define VOXIE_DICOM_MIPS 4 //NOTE:limited to 6 by voxie_dicom_t:gotz bit mask trick
 typedef struct
 {
-	unsigned short   *mip[VOXIE_DICOM_MIPS]; //3D grid for each mip level; x lsb .. z msb
+	signed short *mip[VOXIE_DICOM_MIPS]; //3D grid for each mip level; x lsb .. z msb
 	int *gotz;                       //bit array holding which z slices have loaded so far
 	point3d rulerpos[3];
 	point3d slicep, slicer, sliced, slicef;
 	float reserved, timsincelastmove, detail, level[2];
 	int xsiz, ysiz, zsiz;            //Dimensions
 	int zloaded;                     //number of Z slices loaded so far
-	int color[2], autodetail, usedmip, slicemode, drawstats, ruler;
+	int color[2], autodetail, usedmip, slicemode, drawstats, ruler, flags;
 	int defer_load_posori, gotzip;
 	int forcemip, lockmip; //0=not locked, 1-4 = lock mip 0-3
 	int saveasstl; //usually 0, set to +1 or -1 to write current levels to STL, function sets this back to 0 when done.
@@ -253,46 +261,52 @@ void  (__cdecl *voxie_rec_close)(voxie_rec_t *vr);
 TODO..
 #endif
 
+enum { ATTRIB_ISDIR=1, ATTRIB_INZIP=2, ATTRIB_RDONLY=4, ATTRIB_HIDDEN=8 };
+typedef struct { __int64 size; int year; char month, day, dayofweek, hour, minute, second; short attrib; char name[MAX_PATH]; } kzfileinfo_t;
 #if defined(_WIN32)
 	//High-level (easy) picture loading function:
-void (__cdecl *kpzload        )(const char *, INT_PTR *, int *, int *, int *);
+int  (__cdecl *kpzload        )(const char *, INT_PTR *, INT_PTR *, INT_PTR *, INT_PTR *);
 	//Low-level PNG/JPG functions:
 int  (__cdecl *kpgetdim       )(const char *, int, int *, int *);
 int  (__cdecl *kprender       )(const char *, int, INT_PTR, int, int, int, int, int);
 	//Ken's ZIP functions:
 int  (__cdecl *kzaddstack     )(const char *);
-void (__cdecl *kzuninit       )();
-void (__cdecl *kzsetfil       )(FILE *);
-INT_PTR (__cdecl *kzopen      )(const char *);
-void (__cdecl *kzfindfilestart)(const char *);
-int  (__cdecl *kzfindfile     )(char *);
-unsigned int (__cdecl *kzread )(void *, unsigned int);
-unsigned int (__cdecl *kzfilelength)();
-int  (__cdecl *kzseek         )(int, int);
-unsigned int (__cdecl *kztell )();
-int  (__cdecl *kzgetc         )();
-int  (__cdecl *kzeof          )();
-void (__cdecl *kzclose        )();
+void (__cdecl *kzuninit       )(void);
+struct kzfind_t;
+kzfind_t *(__cdecl *kzfindfilestart)(const char *st); //pass wildcard string
+int (__cdecl *kzfindfile)(kzfind_t *find, kzfileinfo_t *fileinfo); //returns 1:found, 0:~found, NOTE:keep calling until ret 0 else mem leak ;P
+struct kzfile_t;
+void *(__cdecl *kzsetfil       )(FILE *);
+kzfile_t *(__cdecl *kzopen      )(const char *);
+unsigned int (__cdecl *kzread )(kzfile_t *, void *, unsigned int);
+unsigned int (__cdecl *kzfilelength)(kzfile_t *);
+int  (__cdecl *kzseek         )(kzfile_t *, int, int);
+unsigned int (__cdecl *kztell )(kzfile_t *);
+int  (__cdecl *kzgetc         )(kzfile_t *);
+int  (__cdecl *kzeof          )(kzfile_t *);
+void (__cdecl *kzclose        )(kzfile_t *);
 #else
 	//High-level (easy) picture loading function:
-extern void kpzload        (const char *, INT_PTR *, int *, int *, int *);
+extern int  kpzload        (const char *, INT_PTR *, INT_PTR *, INT_PTR *, INT_PTR *);
 	//Low-level PNG/JPG functions:
 extern int  kpgetdim       (const char *, int, int *, int *);
 extern int  kprender       (const char *, int, INT_PTR, int, int, int, int, int);
 	//Ken's ZIP functions:
 extern int  kzaddstack     (const char *);
-extern void kzuninit       ();
-extern void kzsetfil       (FILE *);
-extern INT_PTR kzopen      (const char *);
-extern void kzfindfilestart(const char *);
-extern int  kzfindfile     (char *);
-extern unsigned int kzread (void *, unsigned int);
-extern unsigned int kzfilelength ();
-extern int  kzseek         (int, int);
-extern unsigned int kztell ();
-extern int  kzgetc         ();
-extern int  kzeof          ();
-extern void kzclose        ();
+extern void kzuninit       (void);
+struct kzfind_t;
+extern kzfind_t *(__cdecl *kzfindfilestart)(const char *st); //pass wildcard string
+extern int (__cdecl *kzfindfile)(kzfind_t *find, kzfileinfo_t *fileinfo); //returns 1:found, 0:~found, NOTE:keep calling until ret 0 else mem leak ;P
+struct kzfile_t;
+extern kzfile_t *kzsetfil      (FILE *);
+extern kzfile_t *kzopen        (const char *);
+extern unsigned int kzread (kzfile_t *, void *, unsigned int);
+extern unsigned int kzfilelength (kzfile_t *);
+extern int  kzseek         (kzfile_t *, int, int);
+extern unsigned int kztell (kzfile_t *);
+extern int  kzgetc         (kzfile_t *);
+extern int  kzeof          (kzfile_t *);
+extern void kzclose        (kzfile_t *);
 #endif
 
 
@@ -327,6 +341,7 @@ int voxie_load (voxie_wind_t *vw)
 	voxie_menu_addtab  = (  void (__cdecl *)(char*,int,int,int,int))GetProcAddress(hvoxie,"voxie_menu_addtab");
 	voxie_menu_additem = (  void (__cdecl *)(char*,int,int,int,int,int,int,int,int,double,double,double,double,double))GetProcAddress(hvoxie,"voxie_menu_additem");
 	voxie_menu_updateitem=( void (__cdecl *)(int,char*,int,double))GetProcAddress(hvoxie,"voxie_menu_updateitem");
+	voxie_touch_custom = (  void (__cdecl *)(const touchkey_t *,int))GetProcAddress(hvoxie,"voxie_touch_custom");
 	voxie_doscreencap  = (  void (__cdecl *)(int           ))GetProcAddress(hvoxie,"voxie_doscreencap");
 	voxie_setview      = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,float,float))GetProcAddress(hvoxie,"voxie_setview");
 	voxie_setmaskplane = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,float,float))GetProcAddress(hvoxie,"voxie_setmaskplane");
@@ -343,7 +358,7 @@ int voxie_load (voxie_wind_t *vw)
 	voxie_drawsph      = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,int,int))GetProcAddress(hvoxie,"voxie_drawsph");
 	voxie_drawcone     = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,float,float,float,float,int,int))GetProcAddress(hvoxie,"voxie_drawcone");
 	voxie_drawspr      = (   int (__cdecl *)(voxie_frame_t*,const char*,point3d*,point3d*,point3d*,point3d*,int))GetProcAddress(hvoxie,"voxie_drawspr");
-	voxie_drawspr_ext  = (   int (__cdecl *)(voxie_frame_t*,const char*,point3d*,point3d*,point3d*,point3d*,int,float,float))GetProcAddress(hvoxie,"voxie_drawspr_ext");
+	voxie_drawspr_ext  = (   int (__cdecl *)(voxie_frame_t*,const char*,point3d*,point3d*,point3d*,point3d*,int,float,float,int))GetProcAddress(hvoxie,"voxie_drawspr_ext");
 	voxie_printalph    = (  void (__cdecl *)(voxie_frame_t*,point3d*,point3d*,point3d*,int,const char*))GetProcAddress(hvoxie,"voxie_printalph");
 	voxie_drawcube     = (  void (__cdecl *)(voxie_frame_t*,point3d*,point3d*,point3d*,point3d*,int,int))GetProcAddress(hvoxie,"voxie_drawcube");
 	voxie_drawheimap   = ( float (__cdecl *)(voxie_frame_t*,char*,point3d*,point3d*,point3d*,point3d*,int,int,int))GetProcAddress(hvoxie,"voxie_drawheimap");
@@ -362,22 +377,22 @@ int voxie_load (voxie_wind_t *vw)
 	voxie_rec_open     = (   int (__cdecl *)(voxie_rec_t*,char*,char*,int))GetProcAddress(hvoxie,"voxie_rec_open");
 	voxie_rec_play     = (   int (__cdecl *)(voxie_rec_t*,voxie_frame_t*,int))GetProcAddress(hvoxie,"voxie_rec_play");
 	voxie_rec_close    = (  void (__cdecl *)(voxie_rec_t*))                GetProcAddress(hvoxie,"voxie_rec_close");
-	kpzload            = (  void (__cdecl *)(const char*,INT_PTR*,int*,int*,int*))        GetProcAddress(hvoxie,"kpzload");
+	kpzload            = (   int (__cdecl *)(const char*,INT_PTR*,INT_PTR*,INT_PTR*,INT_PTR*)) GetProcAddress(hvoxie,"kpzload");
 	kpgetdim           = (   int (__cdecl *)(const char*,int,int*,int*))                  GetProcAddress(hvoxie,"kpgetdim");
 	kprender           = (   int (__cdecl *)(const char*,int,INT_PTR,int,int,int,int,int))GetProcAddress(hvoxie,"kprender");
 	kzaddstack         = (   int (__cdecl *)(const char*))GetProcAddress(hvoxie,"kzaddstack");
 	kzuninit           = (  void (__cdecl *)(void))       GetProcAddress(hvoxie,"kzuninit");
-	kzsetfil           = (  void (__cdecl *)(FILE*))      GetProcAddress(hvoxie,"kzsetfil");
-	kzopen             = (INT_PTR(__cdecl *)(const char*))GetProcAddress(hvoxie,"kzopen");
-	kzfindfilestart    = (  void (__cdecl *)(const char*))GetProcAddress(hvoxie,"kzfindfilestart");
-	kzfindfile         = (   int (__cdecl *)(char*))      GetProcAddress(hvoxie,"kzfindfile");
-	kzread             = (unsigned int (__cdecl *)(void*,unsigned int))GetProcAddress(hvoxie,"kzread");
-	kzfilelength       = (unsigned int (__cdecl *)(void)) GetProcAddress(hvoxie,"kzfilelength");
-	kzseek             = (   int (__cdecl *)(int,int))    GetProcAddress(hvoxie,"kzseek");
-	kztell             = (unsigned int (__cdecl *)(void)) GetProcAddress(hvoxie,"kztell");
-	kzgetc             = (   int (__cdecl *)(void))       GetProcAddress(hvoxie,"kzgetc");
-	kzeof              = (   int (__cdecl *)(void))       GetProcAddress(hvoxie,"kzeof");
-	kzclose            = (  void (__cdecl *)(void))       GetProcAddress(hvoxie,"kzclose");
+	kzsetfil           = (void * (__cdecl *)(FILE*))      GetProcAddress(hvoxie,"kzsetfil");
+	kzopen             = (kzfile_t * (__cdecl *)(const char*))GetProcAddress(hvoxie,"kzopen");
+	kzfindfilestart    = (kzfind_t * (__cdecl *)(const char*))GetProcAddress(hvoxie,"kzfindfilestart");
+	kzfindfile         = (   int (__cdecl *)(kzfind_t*,kzfileinfo_t*))GetProcAddress(hvoxie,"kzfindfile");
+	kzread             = (unsigned int (__cdecl *)(kzfile_t*,void*,unsigned int))GetProcAddress(hvoxie,"kzread");
+	kzfilelength       = (unsigned int (__cdecl *)(kzfile_t*))  GetProcAddress(hvoxie,"kzfilelength");
+	kzseek             = (   int (__cdecl *)(kzfile_t*,int,int))GetProcAddress(hvoxie,"kzseek");
+	kztell             = (unsigned int (__cdecl *)(kzfile_t*)) GetProcAddress(hvoxie,"kztell");
+	kzgetc             = (   int (__cdecl *)(kzfile_t*))       GetProcAddress(hvoxie,"kzgetc");
+	kzeof              = (   int (__cdecl *)(kzfile_t*))       GetProcAddress(hvoxie,"kzeof");
+	kzclose            = (  void (__cdecl *)(kzfile_t*))       GetProcAddress(hvoxie,"kzclose");
 #endif
 
 	voxie_loadini_int(vw);

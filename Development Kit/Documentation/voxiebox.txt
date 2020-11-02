@@ -50,16 +50,21 @@ Voxiedemo files:
    meathead.stl           Ken's silly mascot #2
 
 Voxon's own file formats:
-   *.rec                A recording of a sequence of Voxiebox graphics and audio commands. Can create a REC file in the runtime Voxiebox menu.
-   *.kv6; *.kvs         A 3D voxel model (surface voxels stored only)
+   *.kv6; *.kvs         Ken Silverman's 3D voxel formats (KV6 from Voxlap; KVS for surface voxel octrees)
    *.kni                A movie file containing color images, depth images, infrared images, and audio. Used for depth cameras. See knife.exe/kniview.exe
+   *.rec                A recording of a sequence of Voxiebox graphics and audio commands. Can create a REC file in the runtime Voxiebox menu.
 
 Standard file formats supported:
    *.mol                Standard molecule format
    *.stl; *.obj; *.ply  Standard 3D polygon formats
-   *.wav; *.flac        Standard audio formats
-   *.png; *.jpg         Standard image formats
    *.dcm                Standard DICOM (medical) format
+
+   *.png; *.jpg; *.gif  Standard image formats
+   *.bmp; *.tga; *.pcx
+
+   *.wav; *.flac        Standard audio formats
+   *.mp3; *.m4a; *.wma  Additional audio formats provided by Windows Media (IMFSourceReader) - others supported.
+
 
 ----------------------------------------------------------------------------------------------------
 Window setup functions:
@@ -283,7 +288,8 @@ int voxie_nav_read (int id, voxie_nav_t *nav);
 ----------------------------------------------------------------------------------------------------
 Menus:
 
-enum {MENU_TEXT=0,MENU_LINE, MENU_BUTTON,MENU_HSLIDER=MENU_BUTTON+4,MENU_VSLIDER,MENU_EDIT,MENU_EDIT_DO};
+enum {MENU_TEXT=0, MENU_LINE, MENU_BUTTON, MENU_HSLIDER=MENU_BUTTON+4, MENU_VSLIDER, MENU_EDIT,
+   MENU_EDIT_DO, MENU_TOGGLE, MENU_PICKFILE};
 
    //Start building menu (call once per menu)
    //menu_update: callback function to handle interaction updates. See example user function below.
@@ -314,6 +320,9 @@ void voxie_menu_addtab (char *st, int x, int y, int xs, int ys);
    //       MENU_VSLIDER:  vertical slider
    //       MENU_EDIT:     edit text box
    //       MENU_EDIT_DO:  edit text box, click next item on 'Enter'
+   //       MENU_TOGGLE:   combo box (w/o the drop down). Useful for saving space in dialog.
+   //                      Specify multiple strings in 'st' using \r as separator.
+   //       MENU_PICKFILE: file selector. Specify type in 2nd string. Ex: "Browse\r*.kv6"
    //  col: color of item (typically 0xffffff)
    //    v: starting value
    //v0,v1: min,max range of values (respectively)
@@ -349,7 +358,25 @@ void voxie_menu_additem (char *st, int x, int y, int xs, int ys, int id, int typ
    //it will be left alone. 'down' is the status of a button (0=up, 1=down), and 'v' is the value
    //for sliders. If a field is not applicable, just pass a 0.
 void voxie_menu_updateitem (int id, char *st, int down, double v);
+----------------------------------------------------------------------------------------------------
+Touch controls:
 
+   //Touch controls:
+   //st: string to display. Arrows use special string code: 0xcb,0xcd,0xc8,0xd0 (up,down,left,right respectively) following by null terminator.
+   //x0,y0: top-left coord of button rect
+   //xs,ys: size of button rect
+   //fcol,bcol: foreground/background color (24-bit). Use -1 for transparent background.
+   //keycode: keyboard scan code * 256 + ASCII code (0 if N/A). Examples: 'a':0x1d61, Enter:0x1c0d, Up arrow:0xc800, R.Shift:0x3600
+   //    Special keycodes for mouse: Mouse:0x0000, LBut:0x0001, RBut:0x0002, MBut:0x0003
+   //
+   //static const touchkey_t mytouchkey[] =
+   //{
+   //   "a",    24,348,100,100, 0x405060,      -1, 0x1d61,
+   //   "\xc8",156,348,100,100, 0x605040,0x202020, 0xc800,
+   //}
+typedef struct { char *st; int x0, y0, xs, ys, fcol, bcol, keycode; } touchkey_t;
+
+void voxie_touch_custom (const touchkey_t *touchkey, int num);
 ----------------------------------------------------------------------------------------------------
 Graphics, low level (direct frame access):
 
@@ -519,7 +546,7 @@ void voxie_drawsph (voxie_frame_t *vf, float fx, float fy, float fz, float rad, 
    //Draw cone with rounded ends (also draws cylinder/sphere)
    //  x0,y0,z0,r0: sphere 0 center&radius
    //  x1,y1,z1,r1: sphere 1 center&radius
-   //  fillmode: 0=shell, 1=solid filled (always solid filled currently)
+   //  fillmode: 0=shell, 1=solid filled
    //       col: 24-bit color
 void voxie_drawcone (voxie_frame_t *vf, float x0, float y0, float z0, float r0,
                                         float x1, float y1, float z1, float r1,
@@ -703,27 +730,41 @@ They are used by voxiedemo for various purposes. These functions can be used to 
 following image formats:
    JPG, PNG, GIF, PCX, TGA, BMP, DDS, CEL
 And they can be used as generic file loading functions for the following archive formats:
-   ZIP, GRP, and directories.
+   ZIP, TAR, GZ, GRP, and directories.
 
-   //High-level (easy) picture loading function:
-void (__cdecl *kpzload        )(const char *, INT_PTR *, int *, int *z, int *);
-   //Low-level image functions:
-int  (__cdecl *kpgetdim       )(const char *, int, int *, int *);
-int  (__cdecl *kprender       )(const char *, int, INT_PTR, int, int, int, int, int);
-   //Ken's ZIP functions:
-int  (__cdecl *kzaddstack     )(const char *);
-void (__cdecl *kzuninit       )();
-void (__cdecl *kzsetfil       )(FILE *);
-INT_PTR (__cdecl *kzopen      )(const char *);
-void (__cdecl *kzfindfilestart)(const char *);
-int  (__cdecl *kzfindfile     )(char *);
-int  (__cdecl *kzread         )(void *, int);
-int  (__cdecl *kzfilelength   )();
-int  (__cdecl *kzseek         )(int, int);
-int  (__cdecl *kztell         )();
-int  (__cdecl *kzgetc         )();
-int  (__cdecl *kzeof          )();
-void (__cdecl *kzclose        )();
+   NOTE: "filename.tar.gz" is not currently supported due to the requirement of having to load the entire archive in order to achieve random file access.
+                           (Yes, it does get better compression due to sharing the dictionary across files - what a shame.)
+         "filename.gz.tar" will work fine, but is wasteful due to stupidly large .TAR headers per file.
+         If you ever wondered why .ZIP was popular, now you know why ;-)
+
+   //Global functions (these 2 not multithread safe!):
+int (__cdecl *kzaddstack)(const char *filnam);
+void (__cdecl *kzuninit)(void);
+
+   //Find files
+struct kzfind_t; //<-- structure is private / used internally (similar to FILE structure)
+kzfind_t *(__cdecl *kzfindfilestart)(const char *st); //pass wildcard string
+int       (__cdecl *kzfindfile     )(kzfind_t *find, char *filnam, int filnamby); //returns 1:found, 0:~found, NOTE:keep calling until ret 0 else mem leak ;P
+
+   //File load (similar to fopen(),fread(),etc.., but can also load files inside ZIP/GZ/TAR/GRP)
+struct kzfile_t; //<-- structure is private / used internally (similar to FILE structure)
+kzfile_t *(__cdecl *kzsetfil)(FILE *fil);
+kzfile_t *(__cdecl *kzopen  )(const char *filnam);
+unsigned int (__cdecl *kzread      )(kzfile_t *kzfil, void *buffer, unsigned int leng);
+unsigned int (__cdecl *kzfilelength)(kzfile_t *kzfil);
+unsigned int (__cdecl *kztell      )(kzfile_t *kzfil);
+int          (__cdecl *kzseek      )(kzfile_t *kzfil, int offset, int whence);
+int          (__cdecl *kzgetc      )(kzfile_t *kzfil);
+int          (__cdecl *kzeof       )(kzfile_t *kzfil);
+void         (__cdecl *kzclose     )(kzfile_t *kzfil);
+
+   //Lo-level image decoding funcs:
+enum { KPLIB_NONE=0, KPLIB_PNG, KPLIB_JPG, KPLIB_GIF, KPLIB_CEL, KPLIB_BMP, KPLIB_PCX, KPLIB_DDS, KPLIB_TGA}; //kpgetdim() returns this
+int (__cdecl *kpgetdim) (const char *buf, int nby, int *xsiz, int *ysiz);
+int (__cdecl *kprender) (const char *buf, int nby, INT_PTR fptr, int bpl, int xsiz, int ysiz, int xoff, int yoff);
+
+   //Hi-level (easy) image decode (uses kzfile_t internally):
+int (__cdecl *kpzload) (const char *filnam, INT_PTR *fptr, INT_PTR *bpl, INT_PTR *xsiz, INT_PTR *ysiz);
 
 ----------------------------------------------------------------------------------------------------
 Additional utility functions in C header (voxiebox.h), intended for C code only:
