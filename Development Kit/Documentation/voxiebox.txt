@@ -525,11 +525,25 @@ void voxie_drawpol (voxie_frame_t *vf, pol_t *pt, int n, int col);
    //   mesh[i++] = 0; mesh[i++] = 2; mesh[i++] = 3; mesh[i++] = -1;
    //   voxie_drawmeshtex(&vf,0,vt,4,mesh,i,2 /*or 3*/,0xffffff);
    //
+   //      //Example for fillmode 2 (complex poly w/hole: 2-triangle donut)
+   //   poltex_t vt[6]; int mesh[8], i = 0;
+   //   vt[0].x =-0.75; vt[0].y =+0.50; vt[0].z = 0.0; vt[0].col = 0xffffff;  //     / \
+   //   vt[1].x = 0.00; vt[1].y =-0.75; vt[1].z = 0.0; vt[1].col = 0xffffff;  //    / . \
+   //   vt[2].x =+0.75; vt[2].y =+0.50; vt[2].z = 0.0; vt[2].col = 0xffffff;  //   / /_\ \
+   //   vt[3].x =-0.25; vt[3].y =+0.25; vt[3].z = 0.0; vt[3].col = 0xffffff;  //  /       \
+   //   vt[4].x = 0.00; vt[4].y =-0.25; vt[4].z = 0.0; vt[4].col = 0xffffff;  // /---------\
+   //   vt[5].x =+0.25; vt[5].y =+0.25; vt[5].z = 0.0; vt[5].col = 0xffffff;
+   //   mesh[i++] = 0; mesh[i++] = 1; mesh[i++] = 2; mesh[i++] = -2; /*-2 = end loop*/
+   //   mesh[i++] = 3; mesh[i++] = 4; mesh[i++] = 5; mesh[i++] = -1; /*-1 = end polygonal facet*/
+   //   voxie_drawmeshtex(&vf,0,vt,4,mesh,i,2 /*or 3*/,0xffffff);
+   //
    //  texnam: texture filename; pointer to tiletype structure if (flags&8); null for no texture
    //          Be sure to fill .u and .v fields of poltex_t when using a texture.
    //      vt: list of vertices
    //     vtn: number of vertices
    //    mesh: list of facets as vertex indices or -1 to end current primitive and start next one
+   //          For complex polygons, insert -2 at end of contour (if more loops on same plane).
+   //             Use -1 to end plane
    //   meshn: number of entries in mesh array
    //   flags: +0:dots, +1:lines, +2:surfaces, +3:solid, +8:texnam is tiletype * instead of filename
    //     col: 24-bit color
