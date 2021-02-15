@@ -63,13 +63,13 @@ enum
 	MENU_WHITE, MENU_RED, MENU_GREEN, MENU_BLUE, MENU_CYAN, MENU_MAGENTA, MENU_YELLOW,
 
 		//2 state switches
-	MENU_AUTOMOVE, MENU_AUTOCYCLE, MENU_WIREFRAME, MENU_TEXEL, MENU_SLICEDITHER, MENU_TEXTURE, MENU_SLICE, MENU_DRAWSTATS,
+	MENU_AUTOMOVE, MENU_PRESTORED, MENU_AUTOCYCLE, MENU_WIREFRAME, MENU_TEXEL, MENU_SLICEDITHER, MENU_TEXTURE, MENU_SLICE, MENU_DRAWSTATS,
 
 		//Other
 	MENU_AUTOROTATEOFF, MENU_AUTOROTATEX, MENU_AUTOROTATEY, MENU_AUTOROTATEZ, MENU_AUTOROTATESPD,
 	MENU_FRAME_PREV, MENU_FRAME_NEXT,
 	MENU_SOL0, MENU_SOL1, MENU_SOL2, MENU_SOL3,
-	MENU_HINT, MENU_DIFFICULTY, MENU_SPEED,
+	MENU_HINT, MENU_WHITEAI, MENU_BLACKAI, MENU_SPEED,
 	MENU_ZIGZAG, MENU_SINE, MENU_HUMP_LEVEL,
 	MENU_DISP_CUR, MENU_DISP_END=MENU_DISP_CUR+MAXDISP-1, MENU_DISP_ALL,
 	MENU_ROTLEFT5, MENU_ROTRIGHT5, MENU_ROTLEFT, MENU_ROTRIGHT, MENU_KEYSTONE_RESET,
@@ -262,19 +262,28 @@ static char gmyst[20+1] = {"Voxiebox by VOXON :)"};
 	//Chess globals
 static int gchesscol[2] = {0x808080,0x104010};
 static int gchessailev[2] = {0,5};
-static int gchess_automove = 0, gchess_hint = 0;
-static float gchesstime = 1.0;
+static const char *chess_piece_sound[] = {0,"zipguns.flac","shoot2.flac","shoot2.flac","shoot2.flac","shoot3.flac","warp.flac"};
+static int gchess_automove = 0, gchess_prestored = 0, gchess_hint = 0;
+static float gchesstime = 1.f, gchessgameendtime = 10.f;
+
+static char **gchessgame = 0;
+static int gchessgamen = 0, gchessgamemal = 0;
+static int gchessgame_curgame = 0, gchessgame_curchar = 0;
+
 static int menu_chess_update (int id, char *st, double v, int how, void *userdata)
 {
 	switch(id)
 	{
-		case MENU_HINT:       gchess_hint = 1; break;
-		case MENU_AUTOMOVE:   gchess_automove = !gchess_automove; break;
-		case MENU_DIFFICULTY: gchessailev[1] = (int)v; break;
-		case MENU_RESET:      ghitkey = 0x0e; break;
+		case MENU_HINT:     gchess_hint = 1; break;
+		case MENU_AUTOMOVE: gchess_automove = !gchess_automove; break;
+		case MENU_PRESTORED: gchess_prestored = !gchess_prestored; if (gchess_prestored) { gchessgame_curgame = 0; gchessgame_curchar = 0; ghitkey = 0x0e; } break;
+		case MENU_WHITEAI:  gchessailev[0] = (int)v; break;
+		case MENU_BLACKAI:  gchessailev[1] = (int)v; break;
+		case MENU_RESET:    ghitkey = 0x0e; break;
 	}
 	return(1);
 }
+
 //--------------------------------------------------------------------------------------------------
 	//Packer globals
 static int gpakrendmode = 4, gpakxdim = 6, gpakydim = 3;
@@ -1870,7 +1879,18 @@ static void loadini (void)
 			if (!memcmp(cptr,"chesscol2="  ,10))   { gchesscol[1] = strtoul(&cptr[10],&eptr,0); }
 			if (!memcmp(cptr,"chessailev1=",12))   { gchessailev[0] = min(max(strtoul(&cptr[12],&eptr,0),0),8); }
 			if (!memcmp(cptr,"chessailev2=",12))   { gchessailev[1] = min(max(strtoul(&cptr[12],&eptr,0),0),8); }
+			if (!memcmp(cptr,"chesswhiteai=",13))  { gchessailev[0] = min(max(strtoul(&cptr[13],&eptr,0),0),8); }
+			if (!memcmp(cptr,"chessblackai=",13))  { gchessailev[1] = min(max(strtoul(&cptr[13],&eptr,0),0),8); }
 			if (!memcmp(cptr,"chesstime="  ,10))   { gchesstime = strtod(&cptr[10],&eptr); }
+			if (!memcmp(cptr,"chessgameendtime=",17)) { gchessgameendtime = strtod(&cptr[17],&eptr); }
+			if (!memcmp(cptr,"chessmatch="  ,11))
+			{
+				i = (int)strlen(&cptr[11]);
+				if (gchessgamen >= gchessgamemal) { gchessgamemal = max(gchessgamemal*2,16); gchessgame = (char **)realloc(gchessgame,gchessgamemal*sizeof(char *)); }
+				gchessgame[gchessgamen] = (char *)malloc(i+1);
+				memcpy(gchessgame[gchessgamen],&cptr[11],i+1);
+				gchessgamen++;
+			}
 
 			if (!memcmp(cptr,"minplays="   , 9))   { gminplays = min(max(strtol(&cptr[9],&eptr,0),1),4); }
 			if (!memcmp(cptr,"dualnav="    , 8))   { gdualnav  = min(max(strtol(&cptr[8],&eptr,0),0),1); }
@@ -2298,11 +2318,19 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 					genpath_voxiedemo_media("voxiedemo_chess.jpg",tbuf,sizeof(tbuf));
 					voxie_menu_reset(menu_chess_update,0,tbuf);
 					voxie_menu_addtab("Chess",350,0,650,410);
-					voxie_menu_additem("Hint"      , 32, 32,586, 64,MENU_HINT       ,MENU_BUTTON+3,0                 ,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Auto move" ,172,156,128, 64,0               ,MENU_TEXT    ,0                 ,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Off\rOn"     ,300,132,128, 64,MENU_AUTOMOVE   ,MENU_TOGGLE  ,gchess_automove!=0,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Difficulty",128,222,400, 64,MENU_DIFFICULTY ,MENU_HSLIDER ,0                 ,0x908070,(double)gchessailev[1],1.0,6.0,1.0,1.0);
-					voxie_menu_additem("Reset game", 32,324,586, 64,MENU_RESET      ,MENU_BUTTON+3,0                 ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Hint"      , 32, 24,586, 64,MENU_HINT       ,MENU_BUTTON+3,0                 ,0x908070,0.0,0.0,0.0,0.0,0.0);
+
+					voxie_menu_additem("Play for\n  human:",40,116,240, 64,0        ,MENU_TEXT    ,0                 ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Off\rOn"   ,150,104,128, 64,MENU_AUTOMOVE   ,MENU_TOGGLE  ,gchess_automove   ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					if (gchessgamen > 0)
+					{
+						voxie_menu_additem("\tShow pre-\nstored game:",320,116,240, 64,0,MENU_TEXT    ,0               ,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Off\rOn"   ,475,104,128, 64,MENU_PRESTORED  ,MENU_TOGGLE  ,gchess_prestored,0x908070,0.0,0.0,0.0,0.0,0.0);
+					}
+
+					voxie_menu_additem("Black AI (0=human)",128,182,400, 64,MENU_BLACKAI,MENU_HSLIDER ,0              ,0x908070,(double)gchessailev[1],0.0,6.0,1.0,1.0);
+					voxie_menu_additem("White AI (0=human)",128,252,400, 64,MENU_WHITEAI,MENU_HSLIDER ,0              ,0x908070,(double)gchessailev[0],0.0,6.0,1.0,1.0);
+					voxie_menu_additem("Reset game", 32,324,586, 64,MENU_RESET      ,MENU_BUTTON+3,0                  ,0x908070,0.0,0.0,0.0,0.0,0.0);
 					break;
 
 				case RENDMODE_PACKER:
@@ -3062,11 +3090,12 @@ dofireworks:;
 			case RENDMODE_WAVYPLANE:
 				{
 					//wavy texture-mapped flag
-				poltex_t vt[4]; int mesh[5];
+				poltex_t vt[4]; int mesh[8];
 				#define XN 10
 				#define YN 8
 				voxie_setview(&vf,-vw.aspx,-vw.aspy,-vw.aspz,+vw.aspx,+vw.aspy,+vw.aspz);
-				mesh[0] = 0; mesh[1] = 1; mesh[2] = 2; mesh[3] = 3; mesh[4] = -1; /*-1 = end of polygonal facet*/
+				mesh[0] = 0; mesh[1] = 1; mesh[2] = 2; mesh[3] = -1; //-1 = end of polygonal facet
+				mesh[4] = 0; mesh[5] = 2; mesh[6] = 3; mesh[7] = -1;
 				for(y=0;y<YN;y++)
 					for(x=0;x<XN;x++)
 					{
@@ -3079,7 +3108,7 @@ dofireworks:;
 							vt[i].z = cos(vt[i].u*5.f + vt[i].v*5.f + tim*4.f)*vw.aspz*.95f;
 							vt[i].col = 0xffffff;
 						}
-						voxie_drawmeshtex(&vf,"usflag.png",vt,4,mesh,5,2,0x404040);
+						voxie_drawmeshtex(&vf,"usflag.png",vt,4,mesh,8,2,0x404040);
 					}
 				}
 				break;
@@ -3745,13 +3774,7 @@ chesselect:;        if ((fromx == cursx) && (fromy == cursy)) fromx = -1;
 					{
 						if (isvalmove(board,caststat,prevmove,fromx,fromy,cursx,cursy))
 						{
-							i = labs(board[fromy][fromx]);
-							if (i == 1) voxie_playsound("zipguns.flac",-1,100,100,1.f);
-							if (i == 2) voxie_playsound("shoot2.flac",-1,100,100,1.f);
-							if (i == 3) voxie_playsound("shoot2.flac",-1,100,100,1.f);
-							if (i == 4) voxie_playsound("shoot2.flac",-1,100,100,1.f);
-							if (i == 5) voxie_playsound("shoot3.flac",-1,100,100,1.f);
-							if (i == 6) voxie_playsound("warp.flac",-1,100,100,1.f);
+							voxie_playsound(chess_piece_sound[labs(board[fromy][fromx])],-1,100,100,1.f);
 							tox = cursx; toy = cursy; movetim = tim;
 						}
 						else
@@ -3770,24 +3793,46 @@ break2:;          }
 					}
 				}
 
-				if ((voxie_keystat(0x23) == 1) && (voxie_keystat(0x1d) || voxie_keystat(0x9d))) gchess_automove = !gchess_automove; //Ctrl+H
-				if (((gchessailev[turn]) || (gchess_automove) || ((voxie_keystat(0x23) == 1) || (gchess_hint))) && (fromx < 0) && (win < 0)) //H:hint
+				if ((gchess_prestored) && (tox < 0) && (gchessgame_curgame < gchessgamen))
 				{
-					gchess_hint = 0;
-					i = gchessailev[turn]; if (!i) i = gchessailev[turn^1];
-					if (!getcompmove(board,&caststat,&prevmove,turn,&fromx,&fromy,&tox,&toy,i)) goto dowin;
-					movetim = voxie_klock();
+					char *cptr = &gchessgame[gchessgame_curgame][gchessgame_curchar];
+					if (cptr[0] == ' ') { cptr++; gchessgame_curchar++; }
+					if ((cptr[0] != '/') && (strlen(cptr) >= 4))
+					{
+						fromx = (cptr[0]-'A')&7; fromy = (cptr[1]-'1')&7;
+						cursx = (cptr[2]-'A')&7; cursy = (cptr[3]-'1')&7;
+						if (isvalmove(board,caststat,prevmove,fromx,fromy,cursx,cursy))
+						{
+							voxie_playsound(chess_piece_sound[labs(board[fromy][fromx])],-1,100,100,1.f);
+							tox = cursx; toy = cursy; movetim = tim;
 
-					i = labs(board[fromy][fromx]);
-					if (i == 1) voxie_playsound("zipguns.flac",-1,100,100,1.f);
-					if (i == 2) voxie_playsound("shoot2.flac",-1,100,100,1.f);
-					if (i == 3) voxie_playsound("shoot2.flac",-1,100,100,1.f);
-					if (i == 4) voxie_playsound("shoot2.flac",-1,100,100,1.f);
-					if (i == 5) voxie_playsound("shoot3.flac",-1,100,100,1.f);
-					if (i == 6) voxie_playsound("warp.flac",-1,100,100,1.f);
+							gchessgame_curchar += 4;
+						}
+					}
 				}
-				if ((gchess_automove) && (win >= 0) && (tim >= movetim+10.0)) //restart in auto mode
-					{ inited = 0; break; }
+				else
+				{
+					if ((voxie_keystat(0x23) == 1) && (voxie_keystat(0x1d) || voxie_keystat(0x9d))) gchess_automove = !gchess_automove; //Ctrl+H
+					if (((gchessailev[turn]) || (gchess_automove) || ((voxie_keystat(0x23) == 1) || (gchess_hint))) && (fromx < 0) && (win < 0)) //H:hint
+					{
+						gchess_hint = 0;
+						i = gchessailev[turn]; if (!i) i = gchessailev[turn^1];
+						if (!getcompmove(board,&caststat,&prevmove,turn,&fromx,&fromy,&tox,&toy,i)) goto dowin;
+						movetim = voxie_klock();
+
+						voxie_playsound(chess_piece_sound[labs(board[fromy][fromx])],-1,100,100,1.f);
+					}
+				}
+
+				if (((gchess_automove) || (gchess_prestored)) && (win >= 0) && (tim >= movetim+gchessgameendtime)) //restart in auto mode
+				{
+					if (gchess_prestored)
+					{
+						gchessgame_curchar = 0;
+						gchessgame_curgame++; if (gchessgame_curgame >= gchessgamen) { gchessgame_curgame = 0; }
+					}
+					inited = 0; break;
+				}
 
 				n = getvalmoves(board,caststat,prevmove,turn,0);
 				if (n == 0)
@@ -3896,7 +3941,7 @@ foundking1:;}
 
 				if (win < 0)
 				{
-					if ((!gchessailev[turn]) && (tim >= movetim+gchesstime))
+					if ((!gchessailev[turn]) && (!gchess_prestored) && (tim >= movetim+gchesstime))
 					{
 						if (!gchess_automove)
 						{
@@ -3932,6 +3977,20 @@ foundking1:;}
 							  else strcpy(buf,"Stalemate");
 					f = (float)strlen(buf)*.5; pp.x -= rr.x*f; pp.y -= rr.y*f; //pp.z -= rr.z*f;
 					voxie_printalph_(&vf,&pp,&rr,&dd,0xffffff,"%s",buf);
+
+					if (gchess_prestored)
+					{
+						char *cptr = &gchessgame[gchessgame_curgame][gchessgame_curchar];
+						i = strlen(cptr);
+						if (i > 2)
+						{
+							cptr += 2; i -= 2;
+							pp.x =  0.00f; rr.x = min(vw.aspx*2.f/(float)i,0.16); dd.x = 0.00;
+							pp.y = +0.24f; rr.y = 0.00; dd.y = 0.24;
+							f = (float)i*.5f; pp.x -= rr.x*f; pp.y -= rr.y*f;
+							voxie_printalph_(&vf,&pp,&rr,&dd,0xffffff,"%s",cptr);
+						}
+					}
 				}
 
 				}

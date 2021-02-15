@@ -1,0 +1,42 @@
+{
+  "_id": "E9FDCD73-D19D-470C-AE1F-A1C7856FCA73",
+  "ProgramID": "4",
+  "FolderName": "GraphCalc",
+  "Name": "GraphCalc",
+  "Description": "Volumetric animated formulas powered by mathematics. Write your own formulas or browse over 30 presets",
+  "ValidControls": [
+    "Keyboard"
+  ],
+  "Type": "Application",
+  "Developer": "Ken Silverman",
+  "Version": "06/08/2020",
+  "BuildDate": "20210127",
+  "LocalExecutableFile": "graphcalc.exe",
+  "LinkID": "NULL",
+  "Params": [
+    {
+      "Name": "Run",
+      "Values": "",
+      "INIOverride": "",
+      "EXEOverride": ""
+    },
+    {
+      "Name": "",
+      "Values": "",
+      "INIOverride": "",
+      "EXEOverride": ""
+    },
+    {
+      "Name": "",
+      "Values": "",
+      "INIOverride": "",
+      "EXEOverride": ""
+    },
+    {
+      "Name": "",
+      "Values": "",
+      "INIOverride": "",
+      "EXEOverride": ""
+    }
+  ]
+}

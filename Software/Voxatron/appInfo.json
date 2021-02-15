@@ -1,4 +1,5 @@
 {
+  "_id": "EB761025-3C28-43BB-B3E2-7FBC5896DCA9",
   "ProgramID": "2",
   "FolderName": "Voxatron",
   "Name": "Voxatron",
@@ -10,32 +11,32 @@
   "Type": "Platform",
   "Developer": "Lexaloffle",
   "Version": "0.35b7",
-  "BuildDate": "20191114",
+  "BuildDate": "20210212",
   "LocalExecutableFile": "vox.exe",
   "LinkID": "NULL",
   "Params": [
     {
       "Name": "Run",
       "Values": "-rotate_controls 216",
-      "INIOverride": "",
+      "INIOverride": "usecolor=1;",
       "EXEOverride": ""
     },
     {
       "Name": "Bloot - 4P",
       "Values": "-rotate_controls 216 -vx_run :9",
-      "INIOverride": "",
+      "INIOverride": "usecolor=1;",
       "EXEOverride": ""
     },
     {
       "Name": "Journey to the East - 1P",
       "Values": "-rotate_controls 216 -vx_run carts/journey.png",
-      "INIOverride": "",
+      "INIOverride": "usecolor=1;",
       "EXEOverride": ""
     },
     {
       "Name": "Arena - 2P",
       "Values": "-rotate_controls 216 -vx_run :10",
-      "INIOverride": "",
+      "INIOverride": "usecolor=1;",
       "EXEOverride": ""
     }
   ]

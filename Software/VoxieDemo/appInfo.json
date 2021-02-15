@@ -1,4 +1,5 @@
 {
+  "_id": "88E23AB3-DED3-4BE4-B654-53AF7380083C",
   "ProgramID": "9",
   "FolderName": "VoxieDemo",
   "Name": "VoxieDemo",
@@ -12,8 +13,8 @@
   ],
   "Type": "Demo",
   "Developer": "Ken Silverman",
-  "Version": "02/04/2020",
-  "BuildDate": "20200402",
+  "Version": "21/10/2020",
+  "BuildDate": "20201021",
   "LocalExecutableFile": "voxiedemo.exe",
   "LinkID": "NULL",
   "Params": [

@@ -509,8 +509,8 @@ void voxie_drawpol (voxie_frame_t *vf, pol_t *pt, int n, int col);
    //   vt[1].x =+0.8; vt[1].y =+0.8; vt[1].z = 0.0; vt[1].col = 0xffffff;
    //   vt[2].x =-0.8; vt[2].y =+0.8; vt[2].z = 0.0; vt[2].col = 0xffffff;
    //   vt[3].x =+0.8; vt[3].y =-0.8; vt[3].z = 0.0; vt[3].col = 0xffffff;
-   //   mesh[i++] = 0; mesh[i++] = 1; mesh[i++] = -1; /*-1 = end of line sequence*/
-   //   mesh[i++] = 2; mesh[i++] = 3; mesh[i++] = -1;
+   //   mesh[i++] = 0; mesh[i++] = 1; mesh[i++] = -3; /*-3 = end line sequence as unconnected loop (-1 & -2 behave similar to fillmode 2 or 3 below)*/
+   //   mesh[i++] = 2; mesh[i++] = 3; mesh[i++] = -3;
    //   voxie_drawmeshtex(&vf,0,vt,4,mesh,i,1,0xffffff);
    //
    //      //Example for fillmode 2 (polygon list) or fillmode 3 (solid filled): tetrahedron

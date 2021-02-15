@@ -78,7 +78,7 @@ enum
 	MENU_HINT, MENU_DIFFICULTY, MENU_SPEED,
 	MENU_ZIGZAG, MENU_SINE, MENU_HUMP_LEVEL,
 	MENU_DISP_CUR, MENU_DISP_END=MENU_DISP_CUR+MAXDISP-1, MENU_DISP_ALL,
-	MENU_ROTLEFT5, MENU_ROTRIGHT5, MENU_ROTLEFT, MENU_ROTRIGHT,
+	MENU_ROTLEFT5, MENU_ROTRIGHT5, MENU_ROTLEFT, MENU_ROTRIGHT, MENU_KEYSTONE_RESET,
 	MENU_IANGHAK
 };
 
@@ -167,6 +167,32 @@ static int menu_keystonecal_update (int id, char *st, double v, int how, void *u
 		case MENU_ROTRIGHT5:ghitkey = 0x34; break;
 		case MENU_ROTLEFT:  ghitkey = 0xb3; break;
 		case MENU_ROTRIGHT: ghitkey = 0xb4; break;
+		case MENU_KEYSTONE_RESET:
+			if ((vw.nblades <= 0) && (vw.dispnum == 1))
+			{
+				vw.usekeystone = 1;
+				if (!(vw.hacks&(1<<3))) //VX1 detected
+				{
+					vw.flip = 0;
+					vw.disp[0].keyst[0].x = 149.55; vw.disp[0].keyst[0].y = 157.26; vw.disp[0].keyst[1].x = 571.38; vw.disp[0].keyst[1].y = 173.05;
+					vw.disp[0].keyst[3].x = 163.83; vw.disp[0].keyst[3].y = 939.29; vw.disp[0].keyst[2].x = 556.19; vw.disp[0].keyst[2].y = 945.55;
+					vw.disp[0].keyst[4].x = 108.32; vw.disp[0].keyst[4].y =  73.64; vw.disp[0].keyst[5].x = 599.60; vw.disp[0].keyst[5].y =  81.63;
+					vw.disp[0].keyst[7].x = 125.95; vw.disp[0].keyst[7].y = 972.12; vw.disp[0].keyst[6].x = 581.39; vw.disp[0].keyst[6].y = 969.23;
+					vw.disp[0].mirrorx = 1; vw.disp[0].mirrory = 0; //<-settings for Portrait (Flipped)
+				}
+				else //VX2 detected (bigger/brighter projector)
+				{
+					vw.flip = 0;
+					vw.disp[0].keyst[0].x = 737.74; vw.disp[0].keyst[0].y = 966.91; vw.disp[0].keyst[1].x = 304.48; vw.disp[0].keyst[1].y = 969.93;
+					vw.disp[0].keyst[3].x = 723.89; vw.disp[0].keyst[3].y = 102.83; vw.disp[0].keyst[2].x = 300.40; vw.disp[0].keyst[2].y =  99.76;
+					vw.disp[0].keyst[4].x = 775.68; vw.disp[0].keyst[4].y =1093.24; vw.disp[0].keyst[5].x = 273.02; vw.disp[0].keyst[5].y =1107.90;
+					vw.disp[0].keyst[7].x = 764.65; vw.disp[0].keyst[7].y =  78.60; vw.disp[0].keyst[6].x = 263.14; vw.disp[0].keyst[6].y =  86.79;
+					vw.disp[0].mirrorx = 0; vw.disp[0].mirrory = 0; //<-settings for Portrait (Flipped)
+				}
+				if (!(vw.hacks&(1<<4))) { vw.disp[0].mirrorx ^= 1; vw.disp[0].mirrory ^= 1; } //"Portrait" (as opposed to "Portrait (Flipped)")
+				voxie_init(&vw);
+			} //else { .. }
+			break;
 		case MENU_IANGHAK: vw.ianghak = ((int)v)&65535; voxie_init(&vw); break;
 		case MENU_DISP_CUR: case MENU_DISP_CUR+1: case MENU_DISP_CUR+2: vw.dispcur = id-MENU_DISP_CUR; grabdispall = 0; voxie_init(&vw); break;
 		case MENU_DISP_ALL: grabdispall = 1; break;
@@ -2171,24 +2197,26 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 
 					voxie_menu_additem("Drag 8 corners to calibrate keystone.", 32, 16, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 					if (vw.nblades > 0) voxie_menu_additem("Drag middle of grid to align rotation axis." , 32, 36, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("(Save button under File Menu)"         ,32, 56, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("(Save button under File Menu)"         ,32, 36, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 
-					voxie_menu_additem("Put Cursor on..", 64, 92,128, 64,0              ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Ceiling"        , 90,110, 96,80,MENU_CEILING   ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Floor"          , 90,200, 96,80,MENU_FLOOR     ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Put Cursor on..", 64, 72,128, 64,0              ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Ceiling"        , 90, 90, 96,80,MENU_CEILING   ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Floor"          , 90,180, 96,80,MENU_FLOOR     ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 					if (!vw.useemu)
 					{
-						voxie_menu_additem("Rotate keystone..",350, 92,128, 64,0           ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Left 5"           ,320,110,96,80,MENU_ROTLEFT5 ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Right 5"          ,430,110,96,80,MENU_ROTRIGHT5,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Left .1"          ,320,200,96,80,MENU_ROTLEFT ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Right .1"         ,430,200,96,80,MENU_ROTRIGHT,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Rotate keystone..",334, 72,128, 64,0           ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Left 5"           ,304, 90,112,80,MENU_ROTLEFT5 ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Right 5"          ,430, 90,112,80,MENU_ROTRIGHT5,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Left .1"          ,304,180,112,80,MENU_ROTLEFT ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Right .1"         ,430,180,112,80,MENU_ROTRIGHT,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 						if (vw.nblades > 0)
 						{
 							voxie_menu_additem("Vertical Offset",340,320,240, 64,MENU_IANGHAK ,MENU_HSLIDER ,0  ,0x908070,(double)vw.ianghak,0.0,65536.0,64.0,1024.0);
 						}
+
+						voxie_menu_additem("Reset keystone\nto safe default",250,320,208,64,MENU_KEYSTONE_RESET,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 					}
 
 					if (vw.dispnum > 1)
@@ -2851,7 +2879,6 @@ dofireworks:;
 					gx = (fx*.0025f + vx[0].tx0*+.0000001f + nav[0].dx*dtim*.01f)*(1.f/16.f);
 					gy = (fy*.0025f + vx[0].ty0*-.0000001f + nav[0].dy*dtim*.01f)*(1.f/16.f);
 
-						//FUKFUKFUKFUKFUKFUKFUKFUK
 					int i0, i1;
 					i0 = vw.dispcur; i1 = vw.dispcur+1;
 					if (voxie_keystat(0x38)|voxie_keystat(0xb8)|grabdispall) { i0 = 0; i1 = vw.dispnum; }

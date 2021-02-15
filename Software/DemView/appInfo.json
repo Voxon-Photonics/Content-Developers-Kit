@@ -1,0 +1,44 @@
+{
+  "_id": "84123DB9-2A7E-4C06-80E9-E1AE67FC8D35",
+  "ProgramID": "5",
+  "FolderName": "DemView",
+  "Name": "DemView",
+  "Description": "See the topography of planet Earth with our 3D world map browser. An internet connection is required for this software to work. SpaceMouse recommended.",
+  "ValidControls": [
+    "Keyboard",
+    "SpaceNavigator",
+    "InternetConnection"
+  ],
+  "Type": "Application",
+  "Developer": "Ken Silverman",
+  "Version": "7/1/2021",
+  "BuildDate": "20210107",
+  "LocalExecutableFile": "demview.exe",
+  "LinkID": "NULL",
+  "Params": [
+    {
+      "Name": "Run",
+      "Values": "",
+      "INIOverride": "",
+      "EXEOverride": ""
+    },
+    {
+      "Name": "",
+      "Values": "",
+      "INIOverride": "",
+      "EXEOverride": ""
+    },
+    {
+      "Name": "",
+      "Values": "",
+      "INIOverride": "",
+      "EXEOverride": ""
+    },
+    {
+      "Name": "",
+      "Values": "",
+      "INIOverride": "",
+      "EXEOverride": ""
+    }
+  ]
+}

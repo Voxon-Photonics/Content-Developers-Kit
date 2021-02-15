@@ -1,0 +1,5 @@
+﻿  main.cpp
+d:\matdev\dev\development visual studio\vs2017 template for c++\vs2017 template for c++\main.cpp(44): warning C4305: 'initializing': truncation from 'double' to 'float'
+d:\matdev\dev\development visual studio\vs2017 template for c++\vs2017 template for c++\main.cpp(45): warning C4305: 'initializing': truncation from 'double' to 'float'
+d:\matdev\dev\development visual studio\vs2017 template for c++\vs2017 template for c++\main.cpp(54): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  VS2017 Template for C++.vcxproj -> D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VS2017 Template for C++\x64\Debug\EmptyCPP.exe

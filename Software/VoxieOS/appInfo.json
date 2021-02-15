@@ -1,16 +1,18 @@
 {
+  "_id": "3A541994-9C2C-4C42-917B-D161DD327EA5",
   "ProgramID": "1",
   "FolderName": "VoxieOS",
   "Name": "VoxieOS",
-  "Description": "Voxon's Operating System for browsing 3d content, viewing media and running Voxon applications.",
+  "Description": "Voxon's Operating System for browsing 3D content, viewing media and running Voxon applications.",
   "ValidControls": [
     "Keyboard",
-    "SpaceNavigator"
+    "SpaceNavigator",
+    "Mouse"
   ],
   "Type": "Application",
   "Developer": "Ken Silverman",
-  "Version": "07/05/2020",
-  "BuildDate": 20200507,
+  "Version": "21/1/2021",
+  "BuildDate": "20210121",
   "LocalExecutableFile": "voxieos.exe",
   "LinkID": "NULL",
   "Params": [
