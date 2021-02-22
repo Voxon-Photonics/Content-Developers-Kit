@@ -545,7 +545,8 @@ void voxie_drawpol (voxie_frame_t *vf, pol_t *pt, int n, int col);
    //          For complex polygons, insert -2 at end of contour (if more loops on same plane).
    //             Use -1 to end plane
    //   meshn: number of entries in mesh array
-   //   flags: +0:dots, +1:lines, +2:surfaces, +3:solid, +8:texnam is tiletype * instead of filename
+   //   flags: +0:dots, +1:lines, +2:surfaces, +3:solid, +8:texnam is tiletype * instead of filename,
+   //          +16:scale col by vt[i].col for surfaces
    //     col: 24-bit color
 void voxie_drawmeshtex (voxie_frame_t *vf, char *texnam, poltex_t *vt, int vtn, int *mesh, int meshn,
                         int flags, int col);
