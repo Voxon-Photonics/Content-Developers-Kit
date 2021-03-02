@@ -1,3 +1,22 @@
+# Version 1.1.0.2 (2021-03-02)
+
+## Minor Changes
+### Features
+* Updated to the latest Unity Plugin (b8314d)
+* Added DinnerBalls and VoxieMesh as C coding examples (c19c28)
+* Added DemView Voxon App (b79a36)
+* Added python example (2dc567)
+* Added Moxie C coding examples (340a26)
+* Added MovToPoint C coding example (bee5af)
+
+### Tweaks
+* voxiebox.dll updated to (17th of Feb 2021) (7946ce)
+* voxiebox.txt updated to (17th of Feb 2021) (7946ce)
+* Updated voxiebox.dll to 17/12/20 build (77fb74)
+* Updated voxieos.exe to 04/12/20 build (77fb74)
+* Updated voxiebox.txt to 17/11/20 version (77fb74)
+* Extended VoxieInput.c to include Keyboard and Space Navigator examples (d4429e)
+
 # Version 0 - 1.0.0.1 (2020-07-07)
 
 ## Features
