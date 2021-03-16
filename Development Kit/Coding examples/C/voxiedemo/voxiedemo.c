@@ -59,7 +59,7 @@ enum
 {
 		//Generic names
 	MENU_RESET, MENU_PAUSE, MENU_PREV, MENU_NEXT, MENU_ENTER, MENU_LOAD, MENU_SAVE,
-	MENU_LEFT, MENU_RIGHT, MENU_UP, MENU_DOWN, MENU_CEILING, MENU_FLOOR,
+	MENU_LEFT, MENU_RIGHT, MENU_UP, MENU_DOWN, MENU_CEILING, MENU_FLOOR, MENU_MIRRORX, MENU_MIRRORY,
 	MENU_WHITE, MENU_RED, MENU_GREEN, MENU_BLUE, MENU_CYAN, MENU_MAGENTA, MENU_YELLOW,
 
 		//2 state switches
@@ -188,8 +188,18 @@ static int menu_keystonecal_update (int id, char *st, double v, int how, void *u
 			} //else { .. }
 			break;
 		case MENU_IANGHAK: vw.ianghak = ((int)v)&65535; voxie_init(&vw); break;
-		case MENU_DISP_CUR: case MENU_DISP_CUR+1: case MENU_DISP_CUR+2: vw.dispcur = id-MENU_DISP_CUR; grabdispall = 0; voxie_init(&vw); break;
+		case MENU_DISP_CUR: case MENU_DISP_CUR+1: case MENU_DISP_CUR+2:
+			vw.dispcur = id-MENU_DISP_CUR; grabdispall = 0;
+			voxie_init(&vw);
+			voxie_menu_updateitem(MENU_MIRRORX,0,vw.disp[vw.dispcur].mirrorx!=0,0.0);
+			voxie_menu_updateitem(MENU_MIRRORY,0,vw.disp[vw.dispcur].mirrory!=0,0.0);
+			break;
 		case MENU_DISP_ALL: grabdispall = 1; break;
+		case MENU_MIRRORX: case MENU_MIRRORY:
+				  if (id == MENU_MIRRORX) { vw.disp[vw.dispcur].mirrorx = !vw.disp[vw.dispcur].mirrorx; }
+			else if (id == MENU_MIRRORY) { vw.disp[vw.dispcur].mirrory = !vw.disp[vw.dispcur].mirrory; }
+			voxie_init(&vw);
+			break;
 	}
 	return(1);
 }
@@ -2202,21 +2212,21 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 					voxie_menu_reset(menu_keystonecal_update,&keystone,tbuf);
 					voxie_menu_addtab("Keystone",350,0,650,466);
 
-					voxie_menu_additem("Drag 8 corners to calibrate keystone.", 32, 16, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-					if (vw.nblades > 0) voxie_menu_additem("Drag middle of grid to align rotation axis." , 32, 36, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-										else voxie_menu_additem("(Save button under File Menu)"         ,32, 36, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Drag 8 corners to calibrate keystone.", 16, 16, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					if (vw.nblades > 0) voxie_menu_additem("Drag middle of grid to align rotation axis." , 16, 36, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+										else voxie_menu_additem("(Save button under File Menu)"         ,16, 36, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 
-					voxie_menu_additem("Put Cursor on..", 64, 72,128, 64,0             ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Ceiling"        , 90, 90, 96,80,MENU_CEILING   ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Floor"          , 90,180, 96,80,MENU_FLOOR     ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Put Cursor on..", 16, 72,128, 64,0             ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Ceiling"        , 42, 90, 96,80,MENU_CEILING   ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Floor"          , 42,180, 96,80,MENU_FLOOR     ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 					if (!vw.useemu)
 					{
-						voxie_menu_additem("Rotate keystone..",334, 72,128, 64,0           ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Left 5"           ,304, 90,112,80,MENU_ROTLEFT5 ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Right 5"          ,430, 90,112,80,MENU_ROTRIGHT5,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Left .1"          ,304,180,112,80,MENU_ROTLEFT ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Right .1"         ,430,180,112,80,MENU_ROTRIGHT,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Rotate keystone..",224, 72,128, 64,0           ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Left 5"           ,194, 90,112,80,MENU_ROTLEFT5 ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Right 5"          ,320, 90,112,80,MENU_ROTRIGHT5,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Left .1"          ,194,180,112,80,MENU_ROTLEFT ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Right .1"         ,320,180,112,80,MENU_ROTRIGHT,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 						if (vw.nblades > 0)
 						{
@@ -2224,6 +2234,11 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 						}
 
 						voxie_menu_additem("Reset to safe defaults\rReset to safe defaults",180,408,288,48,MENU_KEYSTONE_RESET,MENU_TOGGLE,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+
+						voxie_menu_additem("Mirror X:", 494, 80, 64, 64,0                   ,MENU_TEXT    ,0                                ,0x908070, 0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Off\rOn"  , 486, 98,128, 64,MENU_MIRRORX        ,MENU_TOGGLE  ,(vw.disp[vw.dispcur].mirrorx!=0) ,0x908070, 0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Mirror Y:", 494,170, 64, 64,0                   ,MENU_TEXT    ,0                                ,0x908070, 0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Off\rOn"  , 486,188,128, 64,MENU_MIRRORY        ,MENU_TOGGLE  ,(vw.disp[vw.dispcur].mirrory!=0) ,0x908070, 0.0,0.0,0.0,0.0,0.0);
 					}
 
 					if (vw.dispnum > 1)
@@ -3618,7 +3633,7 @@ dofireworks:;
 				break;
 			case RENDMODE_FLYINGSTUFF: //Rotating text & flying crap
 				{
-				point3d pp, rr, dd, ff, pp2;
+				point3d pp, rr, dd, ff, dd2, pp2;
 				static float ha = 0.f, va = 0.f;
 				static int platcol24[5] = {0x010000,0x000100,0x010100,0x010001,0x000101};
 
@@ -3663,21 +3678,29 @@ dofireworks:;
 					rr.x *= f; rr.y *= f; rr.z *= f;
 					dd.x *= f; dd.y *= f; dd.z *= f;
 					ff.x *= f; ff.y *= f; ff.z *= f;
-					f = 2.65; dd.x *= f; dd.y *= f; dd.z *= f;
+					f = 2.65; dd2.x = dd.x*f; dd2.y = dd.y*f; dd2.z = dd.z*f;
 					f = 0.5; pp.x -= rr.x*f; pp.y -= rr.y*f; pp.z -= rr.z*f;
-					f = 0.5; pp.x -= dd.x*f; pp.y -= dd.y*f; pp.z -= dd.z*f;
+					f = 0.5; pp.x -= dd2.x*f; pp.y -= dd2.y*f; pp.z -= dd2.z*f;
 
-					//pp.z += 0.01f;
-					//voxie_printalph_(&vf,&pp,&rr,&dd,0xffffff,"%c",gmyst[i]);
-					//pp.z -= 0.02f;
 					j = (i%5)+2; j = ((j>>2)&1)*0xff0000 + ((j>>1)&1)*0xff00 + (j&1)*0xff;
-					for(f=-.5f;f<=.5f;f+=1.f/32.f)
+#if 0
+					for(f=-.5f;f<=.5f;f+=1.f/32.f) //Simple translational sweep
 					{
 						pp2.x = pp.x + ff.x*f;
 						pp2.y = pp.y + ff.y*f;
 						pp2.z = pp.z + ff.z*f;
-						voxie_printalph_(&vf,&pp2,&rr,&dd,j,"%c",gmyst[i]);
+						voxie_printalph_(&vf,&pp2,&rr,&dd2,j,"%c",gmyst[i]);
 					}
+#else
+					for(k=32-1;k>=0;k--) //Circular (~cylindrical) sweep
+					{
+						float c, s; f = (float)k*(PI*2/32.f); c = cos(f); s = sin(f);
+						pp2.x = (ff.x*c + dd.x*s)*.1f + pp.x;
+						pp2.y = (ff.y*c + dd.y*s)*.1f + pp.y;
+						pp2.z = (ff.z*c + dd.z*s)*.1f + pp.z;
+						voxie_printalph_(&vf,&pp2,&rr,&dd2,j,"%c",gmyst[i]);
+					}
+#endif
 				}
 
 				//draw_platonic(1,0.0,0.0,0.0,0.2,tim*1.0,3,((int)(sin(tim*2.6)*127+128)) + ((int)(cos(tim*2.3)*127+128))*256 + ((int)(sin(tim*2.1)*127+128))*65536);
