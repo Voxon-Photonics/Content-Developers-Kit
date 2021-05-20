@@ -231,6 +231,18 @@ void display2dNum(voxie_frame_t *vf, int value, float x, float y, float z, int o
 	if (ori == 2) {sizeX = -sizeX; fontLetterSpace = -fontLetterSpace; }
 	if (ori == 3) {sizeY = -sizeY;  }
 
+/*	// Ken's optimised version -- my old version is below -- using printf -- but doesn't put it in  the right position so will have to fix this later
+	for(i=0;i<4;i++) { vtext[i].x = x + sizeX*vtext[i].u; vtext[i].y = y + sizeY*vtext[i].v*1.53; vtext[i].z = z; }
+	char st[16]; sprintf(st,"%d",value);
+	for(j=0;st[j];j++)
+	{
+			voxie_drawmeshtex(vf,font2d[st[j]-'0'],vtext,4,mesh,5,2,col);
+		for(i=0;i<4;i++) vtext[i].x += fontLetterSpace;
+	}
+*/	
+
+
+ // my old way of doing sizes
 	for (j = 0; j < SCORE_SIZE; j++) {
 
 		if (ori < 2) {
@@ -250,33 +262,33 @@ void display2dNum(voxie_frame_t *vf, int value, float x, float y, float z, int o
 			case 0:
 			if ((value / 10000) % 10 > 0) 
 			{
-				voxie_drawmeshtex(vf,font2d[(value / 10000) % 10],vtext,5,mesh,6,2,col);
+				voxie_drawmeshtex(vf,font2d[(value / 10000) % 10],vtext,4,mesh,5,2,col);
 				i = 1;
 			}
 			break;
 			case 1:
 			if ((value / 1000) % 10 > 0 || i == 1) 
 			{
-				voxie_drawmeshtex(vf,font2d[(value / 1000) % 10],vtext,5,mesh,6,2,col);
+				voxie_drawmeshtex(vf,font2d[(value / 1000) % 10],vtext,4,mesh,5,2,col);
 				i = 1;
 			}
 			break;
 			case 2:
 			if ((value / 100) % 10 > 0 || i == 1) 
 			{
-				voxie_drawmeshtex(vf,font2d[(value / 100) % 10],vtext,5,mesh,6,2,col);
+				voxie_drawmeshtex(vf,font2d[(value / 100) % 10],vtext,4,mesh,5,2,col);
 				i = 1;
 			}
 			break;
 			case 3:
 			if ((value / 10) % 10 > 0 || i == 1) 
 			{
-				voxie_drawmeshtex(vf,font2d[(value / 10) % 10],vtext,5,mesh,6,2,col);
+				voxie_drawmeshtex(vf,font2d[(value / 10) % 10],vtext,4,mesh,5,2,col);
 				i = 1;
 			}
 			break;
 			case 4:
-			if (value % 10 > 0 || i == 1 || value == 0 )	voxie_drawmeshtex(vf,font2d[value % 10],vtext,5,mesh,6,2,col);
+			if (value % 10 > 0 || i == 1 || value == 0 )	voxie_drawmeshtex(vf,font2d[value % 10],vtext,4,mesh,5,2,col);
 			break;
 		}
 
