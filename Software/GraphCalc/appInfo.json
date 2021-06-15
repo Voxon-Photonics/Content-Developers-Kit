@@ -10,7 +10,7 @@
   "Type": "Application",
   "Developer": "Ken Silverman",
   "Version": "06/08/2020",
-  "BuildDate": "20210127",
+  "BuildDate": "20210217",
   "LocalExecutableFile": "graphcalc.exe",
   "LinkID": "NULL",
   "Params": [

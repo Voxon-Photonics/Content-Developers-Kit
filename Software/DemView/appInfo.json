@@ -12,7 +12,7 @@
   "Type": "Application",
   "Developer": "Ken Silverman",
   "Version": "7/1/2021",
-  "BuildDate": "20210107",
+  "BuildDate": "20210217",
   "LocalExecutableFile": "demview.exe",
   "LinkID": "NULL",
   "Params": [

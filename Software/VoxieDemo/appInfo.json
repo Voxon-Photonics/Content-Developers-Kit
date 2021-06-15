@@ -13,8 +13,8 @@
   ],
   "Type": "Demo",
   "Developer": "Ken Silverman",
-  "Version": "21/10/2020",
-  "BuildDate": "20201021",
+  "Version": "16/3/2021",
+  "BuildDate": "20210608",
   "LocalExecutableFile": "voxiedemo.exe",
   "LinkID": "NULL",
   "Params": [
