@@ -1,0 +1,162 @@
+Voxon Runtime Readme.
+8/7/2021 - Matthew Vecchio for VOXON PHOTONICS
+
+By default, the Voxon Runtime files are located at C:\Voxon\System\Runtime. These are the files needed to run the Voxon 
+environment. 
+
+
+
+### File List:
+
+c#-bridge-interface.dll			The interface library for the C# bridge – used by the Unity Plugin
+c#-Runtime.dll				C# bridge which works which wraps the voxiebox.dll 
+grab.flac				Sound file when using the Voxie Menu
+typeKey.flac				Sound file when using the Voxie Menu
+voxiebox.dll				The core library. Essential to running any VX software
+voxiebox.ini				Voxiebox.dll’s System settings configuration file – human editable
+voxiebox_menu_0.ini			Voxiebox.dll’s User settings configuration
+voxiebox_menu_1.ini			Backup of default settings for a VX1 with Keynote projector 
+voxiebox_menu_2.ini			Backup of default settings for a VX1 with Anhua projector
+runtimeinfo.json			Human readable file which contains the version numbers of files. Used by Vertex
+voxiebox.log				Log file amended to whenever a voxiebox.dll  is executed or terminated. 
+vxCpp.dll				Library for VX apps using the VX++ / C++ framework. 
+VoxonRuntime.txt			This file
+
+
+
+### Setting Path Variable and Registry Settings  
+
+On Voxon hardware systems (and recommended on Developers Kit installs) a user environment path variable is set up give 
+path access to the runtime files. For the Voxon Unity Plugin to correctly work some registry keys need to be created.
+
+To setup your path or registry, run the batch file ‘Set Path and Registry.bat’ located under "..\Voxon\System” which 
+will set things up for you.  
+
+
+
+###VoxieBox.ini
+
+The voxiebox.ini is a human readable / editable configuration file. The voxiebox.ini contains system and hardware 
+settings which define the voxie window and hardware setup. In general, the settings within voxiebox.ini are set once and
+does not need to be reconfigured unless there is a system or hardware change. 
+
+ESSENTAIL SETTINGS
+* Default values are expressed after the = 
+
+useemulation=0;         //If running on Voxon Hardware this setting can force launching in the emulator 
+                          0=Launch on Voxon Hardware, 1=Launch in emulator (perspective), 
+                          2=Launch in emulator (perspective)
+voxie_aud=-1;   	//audio channel index dedicated for the motor. 
+sndfx_aud0=0;           //audio channel index of left speaker for sound effects.
+sndfx_aud1=1;           //audio channel index of right speaker for sound effects.
+menu_on_voxie=0;        //1=draw menu on same display as Voxiebox (for single monitor system), 0=else
+excl_audio=0;           //1=exclusive (faster & more stable), 0=shared (if audio access to other programs is required)
+excl_samprate=48000;    //set exclusive audio's sample rate 
+                        //commonly supported sample rates: 16000, 22050, 32000, 44100, 48000, 88200, 96000, 192000
+excl_bitspersamp=24;    //set exclusive audio's bit depth. commonly supported bit depths: 16, 24, 32 (float)
+excl_mouse=1;           //1=exclusive mouse (many demos require it, otherwise mouse button presses could defocus window. 
+                          Can always bring up menu ' \ '  to get mouse cursor)
+usejoy=0;               //set USB game controller API, 0=joyGetPosEx (directInput), 1=XInput
+showhelp=-1;            //Shows extra infomation on the secondary screen for some Voxon Apps (VoxieOS, VoxieDemo) 
+                          -1= shows help on hardware but not when using emulator, 1= always on, 0= always off
+showadvancedmenu=0;     //Enables more settings on the VoxieMenu when a VX app is running. 1=enable, 0=disable
+openmenubyslashonly=0;  //if enabled only pressing the ' \ ' key will open the Voxie Menu. 1=enable, 0=disable 
+
+logfile=voxiebox.log    //the name of the log file to write everytime the voxiebox.dll is accessed. No ';' at end of 
+                          value. Output is in the same directory as the voxiebox.dll
+//loginterval=60.0;     //While a VX app is running how often the log file should be amended
+//logusecsv=0;          //If set to 1 log file is in csv format.
+
+voxie_vol_limit=70;     //HW only the maximum value the motor coils can extrude. value is usually between 60...85
+                          value is different with each device to tune the hardware to run at a 8cm volume  
+                          WARNING : Setting this value to high can damage the resonator or coils     
+celcius_warning=35;     //HW only tempeture warning displayed on the touch screen when the Voxon Motherboard 
+                          reaches this tempeture
+celcius_shutdown=45;        //HW only system shutdown when the Voxon Motherboard reaches this tempeture
+noheartbeat_shutdown=10.0;  //HW only if VX app doesn't update (usually due to a CPU freeze or CPU working too hard) 
+                            within the value's amount in seconds the motors will stop. 
+
+vsync_usb_offset=+30; // % HW only offset to add to USB packet timing into 120Hz vsync frame - try to keep arrow centered 
+                         between 2 marks in show stats
+
+
+phase_shutdown_sensitivity=8192; //HW how much the coils are out of sync before the system shutdown 
+                                 768:insanely sensitive, 2048:sensitive, 8192:default, 32768:max/disabled
+
+#include "voxiebox_menu0.ini" // this line needs to be in the voxiebox.ini file otherwise 
+                              the user settings won't get loaded in
+
+
+OPTIONAL SETTINGS: 
+
+volcapdir=C:\Voxon\Media\MyCaptures\ // set a custom directory to put volume captures
+
+port=8081                   //set default port number for networking
+join=192.168.201.53         //set default join ip address for networking
+
+touchcontrols=0; //When launched touch screen keyboard is enabled, 1=enabled, 0=disable
+
+lock_touch_pw=1234                  // Set a password for the touch screen. Usefull when using the VX1 in public places
+                                      numeric only, no ';' at the end of the value.
+lock_touch_message=Enter passkey    //Custom message when entering passkey. no ';' at the end of the value.
+
+xdim=912;        //set the x resolution for the volumetric display, default 912;
+ydim=1140;       //set the y resolution for the volumetric display, default 1140;
+projrate=120;    //set projector refresh rate in hertz. 
+flipmode=2;      //voxieBox.dll uses Direct3D this option switches the DXGI_SWAP_EFFECT_DISCARD flag. 
+                   Changing this value may fix graphical glitches on the volume. 0=DXGI_SWAP_EFFECT_DISCARD, 
+                   1/2/3=DXGI_SWAP_EFFECT_SEQUENTIAL using 1/2/3 backbuffers
+
+rgbswapingame=? // (0...5) Swaps the order of each group of 8 bits in the 24-bit color that is interpreted by 
+                // the LC4500 firmware
+swaponexit=? // (0...5) Swaps OS's Desktop colours being wrong on the proj display upon exit of a VX app this should only exist if there is some hardware issue
+usbswaphak=?, hdmisawphak=? //(both 0...5) swaps USB or HDMI projector configerations if using multiple projectors
+
+user_dispnum1;  //(.. setting user_col0r=0xff0000; ) defines a user set colour mode using the LED's and projector can set it to r,g,b
+                   example 'user_disnum1; user_col0b=0x000066;' will make a user custom colour mode of the blue LED from projector 0 set to 0x000066
+
+                user_dispnum=1; user_col0r=0xff0000; // red user colour
+                user_dispnum=1; user_col0g=0x00ff00; // green user colour
+                user_dispnum=1; user_col0b=0x0000ff; // blue user colour
+
+user_dispnum=3; // user_col0r=0xff0000; user_col1g=0x00ff00; user_col2b=0x0000ff; //multi projector call
+
+                user_dispnum=3; user_col0r=0xff0000; user_col1g=0x00ff00; user_col2b=0x0000ff; //R,G,B :)
+                user_dispnum=3; user_col0b=0x0000ff; user_col1r=0xff0000; user_col2g=0x00ff00; //R,G,B wrong!
+                user_dispnum=3; user_col0g=0x00ff00; user_col1b=0x0000ff; user_col2r=0xff0000; //R,G,B wrong!
+                user_dispnum=3; user_col0g=0xff0000; user_col1b=0x00ff00; user_col2r=0x0000ff; //B,R,G swap w/below!
+                user_dispnum=3; user_col0b=0xff0000; user_col1r=0x00ff00; user_col2g=0x0000ff; //G,B,R swap w/above!
+
+
+
+### Voxiebox_menu_0.ini
+
+The voxie_menu_0.ini file is a human readable / editable configuration file. It contains most of the user settings.
+An interesting setting to note is that the keystone configuration is stored in the voxie_menu_0.ini. So, if the 
+voxiebox_menu_0.ini is absent from the runtime nothing will display on the hardware when a VX app is launched. 
+
+When ‘Save Settings’ is pressed from the ‘File’ tab in voxie menu a new voxie_menu_0.ini is written with the new 
+settings. 
+
+
+
+### Keystone Settings & Keystone Calibration -- for hardware only
+
+As the VX1 achieves its 3D imagery by projecting a stack of 2D image frames unto a moving reciprocating screen. 
+Naturally, as the screen physically moves further away from the projector’s image will spread out further. 
+This technical problem is solved via a software keystone calibration.
+
+To ensure that the projector’s image is not warped. Software used to make the image appear even. For the software to 
+make this correction accurately; the outer points of the volume must be defined. This allows the software to scale the
+voxels within the volume appropriately and 3D geometry is not distorted. 
+
+This process is called “Keystone Calibration” and can be conducted on your VX1 by choosing ‘keystone calibration’ 
+located under the ‘aspect’ tab in Vertex’s Settings panel. Alternatively, it can be run by loading *Voxiedemo* and 
+choosing ‘Keystone Cal’.
+
+
+
+### Updates 
+
+New versions of the Voxon Runtime (and Voxon Developers Kit) can be obtained by downloading the Voxon Installer from 
+our website www.voxon.co
