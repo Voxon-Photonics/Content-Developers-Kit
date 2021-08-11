@@ -1,0 +1,1 @@
+kniview /v media\exampleCapture.kni

@@ -1,0 +1,44 @@
+{
+  "_id": "A7032D97-A482-410A-861D-424B79C67DF4",
+  "ProgramID": "6",
+  "FolderName": "KniView",
+  "Name": "KniView",
+  "Description": "Depth camera capture software for creating depth camera video content. Supports Intel RealSense D415, Microsoft Kinect 2 or Microsoft Azure.",
+  "ValidControls": [
+    "Keyboard",
+    "SpaceNavigator",
+    "RealSense"
+  ],
+  "Type": "Media",
+  "Developer": "Ken Silverman",
+  "Version": "2/1/2021",
+  "BuildDate": "20210610",
+  "LocalExecutableFile": "kniview.exe",
+  "LinkID": "NULL",
+  "Params": [
+    {
+      "Name": "Run RealSense D415",
+      "Values": "/r /v",
+      "INIOverride": "",
+      "EXEOverride": ""
+    },
+    {
+      "Name": "Run Kinect 2",
+      "Values": "/k /v",
+      "INIOverride": "",
+      "EXEOverride": "kniview_kinect.exe"
+    },
+    {
+      "Name": "Run Azure",
+      "Values": "/z /v",
+      "INIOverride": "",
+      "EXEOverride": "kniview_azure.exe"
+    },
+    {
+      "Name": "Play Example",
+      "Values": "/v media/juggler.kni",
+      "INIOverride": "",
+      "EXEOverride": ""
+    }
+  ]
+}

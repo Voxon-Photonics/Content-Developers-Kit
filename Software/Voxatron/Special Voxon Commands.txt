@@ -25,3 +25,10 @@ cart ids:
 :9  bloot
 :11  the jelly room
 :15 gallery of curiosities
+
+
+Exit Script
+-----------
+Voxatron uses a scripting language called LUA, this allows for developers to script in custom events and features for their Voxatron game.
+
+You can script in an exit state using extcmd("shutdown") within one of your scripts.
