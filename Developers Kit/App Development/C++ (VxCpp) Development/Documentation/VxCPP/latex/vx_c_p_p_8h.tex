@@ -1,0 +1,56 @@
+\hypertarget{vx_c_p_p_8h}{}\doxysection{vx\+CPP.\+h File Reference}
+\label{vx_c_p_p_8h}\index{vxCPP.h@{vxCPP.h}}
+
+
+Header file for Vx\+Cpp.\+dll outlines the \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} class and the \mbox{\hyperlink{class_i_voxie_box}{IVoxie\+Box}} interface.  
+
+
+{\ttfamily \#include \char`\"{}vx\+Data\+Types.\+h\char`\"{}}\newline
+{\ttfamily \#include \char`\"{}vx\+Input\+Types.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include \char`\"{}vx\+Interfaces.\+h\char`\"{}}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_i_voxie_box}{IVoxie\+Box}}
+\begin{DoxyCompactList}\small\item\em Interface for \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} class. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} class. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{vx_c_p_p_8h_a79d54165510020f6c4817f804220f663}\label{vx_c_p_p_8h_a79d54165510020f6c4817f804220f663}} 
+\#define {\bfseries EXTEND\+\_\+\+API}~\+\_\+\+\_\+declspec(dllimport)
+\item 
+\mbox{\Hypertarget{vx_c_p_p_8h_a598a3330b3c21701223ee0ca14316eca}\label{vx_c_p_p_8h_a598a3330b3c21701223ee0ca14316eca}} 
+\#define {\bfseries PI}~3.\+14159265358979323
+\item 
+\mbox{\Hypertarget{vx_c_p_p_8h_ac6afabdc09a49a433ee19d8a9486056d}\label{vx_c_p_p_8h_ac6afabdc09a49a433ee19d8a9486056d}} 
+\#define {\bfseries min}(a,  b)~(((a) $<$ (b)) ? (a) \+: (b))
+\item 
+\mbox{\Hypertarget{vx_c_p_p_8h_affe776513b24d84b39af8ab0930fef7f}\label{vx_c_p_p_8h_affe776513b24d84b39af8ab0930fef7f}} 
+\#define {\bfseries max}(a,  b)~(((a) $<$ (b)) ? (a) \+: (b))
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{vx_c_p_p_8h_a8f8bd56808eed503adec8b1e45447c84}\label{vx_c_p_p_8h_a8f8bd56808eed503adec8b1e45447c84}} 
+typedef \mbox{\hyperlink{class_i_voxie_box}{IVoxie\+Box}} $\ast$($\ast$ \mbox{\hyperlink{vx_c_p_p_8h_a8f8bd56808eed503adec8b1e45447c84}{CREATE\+\_\+\+VOXIEBOX}}) ()
+\begin{DoxyCompactList}\small\item\em Function pointer declaration of \mbox{\hyperlink{vx_c_p_p_8h_aeea189ac49fd2dd6fdad2e2d0e4d2008}{Create\+Voxie\+Box\+Object()}}. (the entry point function used to create the \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} object) \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{vx_c_p_p_8h_aeea189ac49fd2dd6fdad2e2d0e4d2008}\label{vx_c_p_p_8h_aeea189ac49fd2dd6fdad2e2d0e4d2008}} 
+EXTEND\+\_\+\+API \mbox{\hyperlink{class_i_voxie_box}{IVoxie\+Box}} $\ast$\+\_\+cdecl \mbox{\hyperlink{vx_c_p_p_8h_aeea189ac49fd2dd6fdad2e2d0e4d2008}{Create\+Voxie\+Box\+Object}} ()
+\begin{DoxyCompactList}\small\item\em \textquotesingle{}Factory\textquotesingle{} function that will return the new object\textquotesingle{}s instance. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Header file for Vx\+Cpp.\+dll outlines the \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} class and the \mbox{\hyperlink{class_i_voxie_box}{IVoxie\+Box}} interface. 
+
+main header file for VX++ development. Requires \mbox{\hyperlink{vx_data_types_8h}{vx\+Data\+Types.\+h}} and \mbox{\hyperlink{vx_input_types_8h}{vx\+Input\+Types.\+h}} to work. \begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_voxie_box_a06195dca9603ea448f72d502808384b2}{Voxie\+Box\+::\+Voxie\+Box()}} 
+
+\mbox{\hyperlink{class_i_voxie_box}{IVoxie\+Box}} 
+\end{DoxySeeAlso}

@@ -1,0 +1,63 @@
+\hypertarget{struct_touchkey__t}{}\doxysection{Touchkey\+\_\+t Struct Reference}
+\label{struct_touchkey__t}\index{Touchkey\_t@{Touchkey\_t}}
+
+
+Manages custom touch keys displayed on the 2D secondary (touch) screen.  
+
+
+
+
+{\ttfamily \#include $<$vx\+Data\+Types.\+h$>$}
+
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{struct_touchkey__t_a992fc7359a23013f4a188bac9ae0021c}\label{struct_touchkey__t_a992fc7359a23013f4a188bac9ae0021c}} 
+char $\ast$ \mbox{\hyperlink{struct_touchkey__t_a992fc7359a23013f4a188bac9ae0021c}{st}}
+\begin{DoxyCompactList}\small\item\em string to display. Arrows use special string code\+: 0xcb,0xcd,0xc8,0xd0 (up,down,left,right respectively) following by null terminator. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_touchkey__t_a2921dd26746f73136f22421ca255edd2}\label{struct_touchkey__t_a2921dd26746f73136f22421ca255edd2}} 
+int \mbox{\hyperlink{struct_touchkey__t_a2921dd26746f73136f22421ca255edd2}{x0}}
+\begin{DoxyCompactList}\small\item\em left most pixel position of button\textquotesingle{}s rectangle \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_touchkey__t_ab2052cbc7a191d39c266b31a10d3ae4e}\label{struct_touchkey__t_ab2052cbc7a191d39c266b31a10d3ae4e}} 
+int \mbox{\hyperlink{struct_touchkey__t_ab2052cbc7a191d39c266b31a10d3ae4e}{y0}}
+\begin{DoxyCompactList}\small\item\em top most pixel position of button\textquotesingle{}s rectangle \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_touchkey__t_ad946dc18f4f1b63605529f737af93bf2}\label{struct_touchkey__t_ad946dc18f4f1b63605529f737af93bf2}} 
+int \mbox{\hyperlink{struct_touchkey__t_ad946dc18f4f1b63605529f737af93bf2}{xs}}
+\begin{DoxyCompactList}\small\item\em size (how wide) in pixels for the button\textquotesingle{}s rectangle \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_touchkey__t_aec9def29892f7e480b2ce778bcb0500d}\label{struct_touchkey__t_aec9def29892f7e480b2ce778bcb0500d}} 
+int \mbox{\hyperlink{struct_touchkey__t_aec9def29892f7e480b2ce778bcb0500d}{ys}}
+\begin{DoxyCompactList}\small\item\em size (how tall) in pixels for the button\textquotesingle{}s rectangle \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_touchkey__t_a414e57299958fd306e381edd8163e472}\label{struct_touchkey__t_a414e57299958fd306e381edd8163e472}} 
+int \mbox{\hyperlink{struct_touchkey__t_a414e57299958fd306e381edd8163e472}{fcol}}
+\begin{DoxyCompactList}\small\item\em foreground color (24-\/bit hex 0x\+RBG value 0xff0000 = Red) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_touchkey__t_a6535692bdb5c9674d0f700fa5fe12bd7}\label{struct_touchkey__t_a6535692bdb5c9674d0f700fa5fe12bd7}} 
+int \mbox{\hyperlink{struct_touchkey__t_a6535692bdb5c9674d0f700fa5fe12bd7}{bcol}}
+\begin{DoxyCompactList}\small\item\em background color (24-\/bit hex 0x\+RBG value 0xff0000 = Red). Use -\/1 for transparent background. \end{DoxyCompactList}\item 
+int \mbox{\hyperlink{struct_touchkey__t_ace052c556b4acc941bc3b8421ea6c6c0}{keycode}}
+\begin{DoxyCompactList}\small\item\em keyboard scan code of button. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Manages custom touch keys displayed on the 2D secondary (touch) screen. 
+
+To make use of this struct in Voxon development see \mbox{\hyperlink{class_voxie_box_ad87164717cc7cc8d9a63af3395c24a8a}{Voxie\+Box\+::touch\+Add\+Key}} 
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{struct_touchkey__t_ace052c556b4acc941bc3b8421ea6c6c0}\label{struct_touchkey__t_ace052c556b4acc941bc3b8421ea6c6c0}} 
+\index{Touchkey\_t@{Touchkey\_t}!keycode@{keycode}}
+\index{keycode@{keycode}!Touchkey\_t@{Touchkey\_t}}
+\doxysubsubsection{\texorpdfstring{keycode}{keycode}}
+{\footnotesize\ttfamily int Touchkey\+\_\+t\+::keycode}
+
+
+
+keyboard scan code of button. 
+
+\begin{DoxySeeAlso}{See also}
+input\+Types.\+h\+::\+Keys for list of scancodes. Special keycodes for mouse\+: Mouse\+:0x0000, LBut\+:0x0001, RBut\+:0x0002, MBut\+:0x0003 
+\end{DoxySeeAlso}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{vx_data_types_8h}{vx\+Data\+Types.\+h}}\end{DoxyCompactItemize}

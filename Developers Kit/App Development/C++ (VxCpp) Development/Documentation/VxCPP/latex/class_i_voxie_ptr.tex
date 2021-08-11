@@ -1,0 +1,42 @@
+\hypertarget{class_i_voxie_ptr}{}\doxysection{IVoxie\+Ptr Class Reference}
+\label{class_i_voxie_ptr}\index{IVoxiePtr@{IVoxiePtr}}
+
+
+\mbox{\hyperlink{class_i_voxie_ptr}{IVoxie\+Ptr}} classes which inherit this interface require access to \mbox{\hyperlink{class_i_voxie_box}{IVoxie\+Box}} pointer.  
+
+
+
+
+{\ttfamily \#include $<$vx\+Interfaces.\+h$>$}
+
+Inheritance diagram for IVoxie\+Ptr\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_i_voxie_ptr}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_i_voxie_ptr_a0e48ad40e54cdf2e0fac5887a08bf206}\label{class_i_voxie_ptr_a0e48ad40e54cdf2e0fac5887a08bf206}} 
+virtual void {\bfseries set\+IVoxie\+Box\+Ptr} (\mbox{\hyperlink{class_i_voxie_box}{IVoxie\+Box}} $\ast$voxie\+Ptr)
+\item 
+\mbox{\Hypertarget{class_i_voxie_ptr_ad31080d6b173950815dd469b45e7bda6}\label{class_i_voxie_ptr_ad31080d6b173950815dd469b45e7bda6}} 
+virtual \mbox{\hyperlink{class_i_voxie_box}{IVoxie\+Box}} $\ast$ {\bfseries get\+IVoxie\+Box\+Ptr} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_i_voxie_ptr_ac8cb1225bf34fa388d622ac737654ecc}\label{class_i_voxie_ptr_ac8cb1225bf34fa388d622ac737654ecc}} 
+\mbox{\hyperlink{class_i_voxie_box}{IVoxie\+Box}} $\ast$ {\bfseries voxie\+Ptr} = 0
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\mbox{\hyperlink{class_i_voxie_ptr}{IVoxie\+Ptr}} classes which inherit this interface require access to \mbox{\hyperlink{class_i_voxie_box}{IVoxie\+Box}} pointer. 
+
+Classes which need the voxie pointer object will usually use variables or functions from the \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} object Usually when these classes are constructed the \mbox{\hyperlink{class_i_voxie_box}{IVoxie\+Box}} pointer should be set. 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{vx_interfaces_8h}{vx\+Interfaces.\+h}}\end{DoxyCompactItemize}

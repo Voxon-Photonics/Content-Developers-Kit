@@ -1,0 +1,1296 @@
+
+<!-- saved from url=(0042)https://www.lexaloffle.com/vox_manual.html -->
+<html><script type="text/javascript">window["_gaUserPrefs"] = { ioo : function() { return true; } }</script><head><meta http-equiv="Content-Type" content="text/html; charset=windows-1252"><title>Voxatron Designer User Manual</title><style type="text/css">
+<!--	
+TD{font-size: 11pt; font-family : verdana}
+p{font-size: 11pt; font-family : Verdana; margin: 0px; padding: 0px}
+A { 
+	text-decoration: none;
+	color: #20a0ff;
+	text-style:bold;
+}
+-->
+</style>
+</head><body>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="40"></td><td><font style="font-size:23px"><b>Voxatron Designer User Manual
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="44"></td><td><p>Version 0.3.5b
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="44"></td><td><p>Author: <a href="https://www.lexaloffle.com/bbs/?uid=1&amp;mode=about">zep</a>
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="44"></td><td><p><a href="https://www.voxatron.com/">www.voxatron.com</a>
+</p></td></tr></tbody></table>
+
+<br><table width="800"><tbody><tr><td width="40"></td><td><h3>:: Contents</h3></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="40"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c1_0">1.0&nbsp; <font style="color:#202020">What is Voxatron?
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="40"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c2_0">2.0&nbsp; <font style="color:#202020">Concepts
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c2_1">2.1&nbsp; <font style="color:#202020">Voxel
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c2_2">2.2&nbsp; <font style="color:#202020">Cartridges
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c2_3">2.3&nbsp; <font style="color:#202020">Object Definitions and Resource Tree
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c2_4">2.4&nbsp; <font style="color:#202020">Props and Animations
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c2_5">2.5&nbsp; <font style="color:#202020">Actors
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c2_6">2.6&nbsp; <font style="color:#202020">Rooms and Object Instances
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c2_7">2.7&nbsp; <font style="color:#202020">Object IDs
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="40"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c3_0">3.0&nbsp; <font style="color:#202020">Designer Overview
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c3_1">3.1&nbsp; <font style="color:#202020">Object Editor
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c3_2">3.2&nbsp; <font style="color:#202020">Navigator
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c3_3">3.3&nbsp; <font style="color:#202020">Undo
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c3_4">3.4&nbsp; <font style="color:#202020">Disk Operations
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c3_5">3.5&nbsp; <font style="color:#202020">Running a Cartridge
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="40"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c4_0">4.0&nbsp; <font style="color:#202020">Controls
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c4_1">4.1&nbsp; <font style="color:#202020">Camera Control
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c4_2">4.2&nbsp; <font style="color:#202020">Resource Navigator Control
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c4_3">4.3&nbsp; <font style="color:#202020">Keyboard shortcuts
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c4_4">4.4&nbsp; <font style="color:#202020">Number Fields
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="40"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c5_0">5.0&nbsp; <font style="color:#202020">Room Editor
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c5_1">5.1&nbsp; <font style="color:#202020">Placing objects
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c5_2">5.2&nbsp; <font style="color:#202020">Tools
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c5_3">5.3&nbsp; <font style="color:#202020">Selections
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c5_4">5.4&nbsp; <font style="color:#202020">Object Instance Properties
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c5_5">5.5&nbsp; <font style="color:#202020">Groups
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c5_6">5.6&nbsp; <font style="color:#202020">Prop Properties
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c5_7">5.7&nbsp; <font style="color:#202020">Room Properties
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="40"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c6_0">6.0&nbsp; <font style="color:#202020">Prop Editor
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c6_1">6.1&nbsp; <font style="color:#202020">Tools
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c6_2">6.2&nbsp; <font style="color:#202020">Indicating Voxel Position
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c6_3">6.3&nbsp; <font style="color:#202020">Voxel Properties
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="40"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c7_0">7.0&nbsp; <font style="color:#202020">Custom Objects
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c7_1">7.1&nbsp; <font style="color:#202020">Animation
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c7_2">7.2&nbsp; <font style="color:#202020">Actor
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c7_3">7.3&nbsp; <font style="color:#202020">Monsters
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c7_4">7.4&nbsp; <font style="color:#202020">Pickups
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c7_5">7.5&nbsp; <font style="color:#202020">Inventory Items
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c7_6">7.6&nbsp; <font style="color:#202020">Players
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c7_7">7.7&nbsp; <font style="color:#202020">Bullets
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c7_8">7.8&nbsp; <font style="color:#202020">Emitter
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c7_9">7.9&nbsp; <font style="color:#202020">Door
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="40"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c8_0">8.0&nbsp; <font style="color:#202020">Actor Component Control
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c8_1">8.1&nbsp; <font style="color:#202020">Modifiers
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c8_2">8.2&nbsp; <font style="color:#202020">Property Value Functions
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c8_3">8.3&nbsp; <font style="color:#202020">Activation Controller
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="40"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c9_0">9.0&nbsp; <font style="color:#202020">Game Saving
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c9_1">9.1&nbsp; <font style="color:#202020">Saving Methods
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="40"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c10_0">10.0&nbsp; <font style="color:#202020">Microscripting
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c10_1">10.1&nbsp; <font style="color:#202020">Statements
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c10_2">10.2&nbsp; <font style="color:#202020">Selectors
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="80"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c10_3">10.3&nbsp; <font style="color:#202020">Events
+</font></a><p></p></td></tr></tbody></table>
+<table width="800"><tbody><tr><td width="40"></td><td><a href="https://www.lexaloffle.com/vox_manual.html#c11_0">11.0&nbsp; <font style="color:#202020">Lua Scripting API
+</font></a><p></p></td></tr></tbody></table>
+
+<title>Voxatron Designer User Manual</title><style type="text/css">
+<!--	
+TD{font-size: 11pt; font-family : verdana}
+p{font-size: 11pt; font-family : Verdana; margin: 0px; padding: 0px}
+A { 
+	text-decoration: none;
+	color: #20a0ff;
+	text-style:bold;
+}
+-->
+</style>
+
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="40"></td><td><font style="font-size:23px"><b><font style="color:#ff0080" id="c1_0">1.0&nbsp; </font>What is Voxatron?
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="44"></td><td><p>Voxatron is a fantasy console for making and playing volumetric games and other computer programs. It has an unusual display format: a 128x128x64 block of tiny holographic cubes that can light up in patterns to form scenery, characters, text and any other visible elements. The display can be visualised as an animated diorama placed on a table and viewed from any angle. Such displays already exist in the real world but are still very rare, so Voxatron also provides a simulated volumetric display that can be viewed on standard 2D monitors.
+</p></td></tr></tbody></table>
+
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="40"></td><td><font style="font-size:23px"><b><font style="color:#ff0080" id="c2_0">2.0&nbsp; </font>Concepts
+ </b></font><p></p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c2_1">2.1&nbsp; </font>Voxel
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>A voxel is the 3D version of a pixel. Anything that can be said about a pixel in 2D can be said about a voxel in 3D. For example, to the extent that pixels can be thought of as little coloured squares that make up a larger image, voxels can be thought of as little coloured cubes. They are more precisely described as points without any geometric properties beyond their position in a regular grid, but Voxatron's default renderer displays them as cubes.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c2_2">2.2&nbsp; </font>Cartridges
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>A Voxatron cartridge typically contains one playable game similar to a real-world console cartridge. Each cartridge is stored as a standard png image file that can be shared with other users.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c2_3">2.3&nbsp; </font>Object Definitions and Resource Tree
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Anything that might appear in the game world is an object. Objects include actors, pickups, rooms, music, sound and scripts. Object definitions are stored in a browsable tree (similar to a file system) referred to as the 'Resource Tree'.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c2_4">2.4&nbsp; </font>Props and Animations
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Props are the most basic type of object and consist of a single voxel model. An animation is a collection of frames (each one a prop) stored in a single folder along with additional properties such as how fast the animation should be played.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c2_5">2.5&nbsp; </font>Actors
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Objects that can move around in the game world and interact with each other are called actors. The most common actors are monsters, players and pickups. Like animations, they are also represented as a folder of components including animations, emitters -- you can double click on an actor in the resource navigator to see what's inside.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c2_6">2.6&nbsp; </font>Rooms and Object Instances
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>A room is a collection of props (typically arranged into scenery), actors and other object instances, each with their own XYZ position along with rules about when they should appear. Voxatron is a room-orientated engine; only one room is shown or simulated at one time.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c2_7">2.7&nbsp; </font>Object IDs
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Every object definition and every object instance each have a global integer id that is unique to the whole cartridge. This allows objects to refer to each other across rooms. For example, a door in one room might open when a switch in another room has been flipped, and would check this using the switch's instance id.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>It is important to understand the difference between definition ids and instance id. They are two separate indexing schemes:
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>- The definition id picks out a single object definition in the resource tree.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>- The instance id picks out a single instance of the object in the game world.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>For example, there might be a single flower model in the resource tree (with it's own definition id), but then many instances of that flower placed in a room, where each instance has its own instance id.
+</p></td></tr></tbody></table>
+
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="40"></td><td><font style="font-size:23px"><b><font style="color:#ff0080" id="c3_0">3.0&nbsp; </font>Designer Overview
+ </b></font><p></p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c3_1">3.1&nbsp; </font>Object Editor
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>The central section of the designer interface displays the object currently being edited. At the top right you can find the name of the object and its definition id number. (The name can be anything you like, and does not need to be unique unless you are using it to pick out object definition by name in a Lua script.)
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c3_2">3.2&nbsp; </font>Navigator
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Object definitions are accessed via the resource navigator at the bottom right. While it is in focus, a thin pink border is shown to indicate that some operations (undo, copy, paste) apply to the resource tree. The navigator is used both to select which object to edit, and also which object to place in a room. 
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c3_3">3.3&nbsp; </font>Undo
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Undo / Redo with Ctrl+Z and CTRL+Y. Some undo operations are unlimited (e.g. adding voxels to a prop), but some are limited by the context (you can not undo structural changes in the resource tree once the navigator loses focus).
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c3_4">3.4&nbsp; </font>Disk Operations
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>To save or load a cartridge, use the buttons at the very top right or CTRL-S to quick-save / CTRL-L to load. A complete cartridge is simply the whole resource tree saved as a single .png, but it is also possible to save any branch of the tree separately using 'Load Item' and 'Save Item' on the resource navigator tool bar. 'Load Item' can also import several other formats into the tree: .p8 PICO-8 cartridges, regular 2d .png files and .qb Qubicle Constructor scenes.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c3_5">3.5&nbsp; </font>Running a Cartridge
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Press the play button or press CTRL-R to run the cartridge from the most recently viewed room. You can then exit back to the editor from the in-game menu.
+</p></td></tr></tbody></table>
+
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="40"></td><td><font style="font-size:23px"><b><font style="color:#ff0080" id="c4_0">4.0&nbsp; </font>Controls
+ </b></font><p></p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c4_1">4.1&nbsp; </font>Camera Control
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Hold 'Alt', 'C' or middle mouse button to use the camera tool.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Click and drag to rotate the view.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Click and drag the second mouse button (or use scroll wheel) to adjust viewing distance.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Hold 'Ctrl' or 'X' to pan.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>If you get lost, use the camera reset button at the bottom left.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c4_2">4.2&nbsp; </font>Resource Navigator Control
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Always present at the bottom right of the screen is the navigator. This allows you to browse and organise object definitions as if they were files on a disk. There are five tabs; the room and objects tabs are for objects that belong to the cartridge, and the last one ('Internal') is for browsing built-in objects that can not be edited. The Metadata tab is for addition additional information about the cartridge [in development -- but you could try drawing a 60x32 label for later].
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="2"><tbody><tr><td width="99"></td><td><p></p><li> To open a folder: double-click (or select and click the open button)
+ </li><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="2"><tbody><tr><td width="99"></td><td><p></p><li> To edit an item:  control-click (or select and click the edit button)
+ </li><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="2"><tbody><tr><td width="99"></td><td><p></p><li> To set the cursor position in a tab: click between objects
+ </li><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="2"><tbody><tr><td width="99"></td><td><p></p><li> To select an item: click on it
+ </li><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="2"><tbody><tr><td width="99"></td><td><p></p><li> To select multiple: hold shift while clicking or draging
+ </li><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="2"><tbody><tr><td width="99"></td><td><p></p><li> To move selected items: click and drag, either to a cursor position (insert) or to another item (drop at that absolute position)
+ </li><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="2"><tbody><tr><td width="99"></td><td><p></p><li> To move selected items between folders: Copy (Ctrl-C) or cut (Ctrl-X) the item, move into the desired folder and then paste (Ctrl-V). Alternatively, drag the item or selected items into a folder as you would with a typical file browser.
+ </li><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Check the descriptions on the navigator buttons to see which operations are possible. If an operation can not be performed (e.g. loading an item into a read-only folder) it is grayed out.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Compound objects such as animations are actually just folders. To see the contents of the object (e.g. animation frames), double click on it as you would a folder. To edit the properties of the animation, click the edit button OR click on the object's button in the crumb navigation.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Navigator operations (move, cut, delete etc.) can be undone and redone as usual, but the undo stack is cleared when the navigator loses focus. To check if something can be undone, look at the UNDO/REDO buttons at the top right. If they apply to a navigator operation, the icon changes to include a little grid of squares to indicate this).
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>A history of edited items can be navigated using Alt-Left and Alt-Right, similar to a web browser. [experimental]
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c4_3">4.3&nbsp; </font>Keyboard shortcuts
+ </b></font><p></p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c4_3">4.3.1&nbsp; </font>Common
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>P        Play the current room
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Shift-P  Play, and show the timeline and other debugging information
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Ctrl-S   Save cartridge
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Ctrl-L   Load cartridge
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Ctrl-Z   Undo
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Ctrl-Y   Redo
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Cursors  Move selected object/voxels in X, Y*
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>A,Z      Move selected objects in Z (up and down) *
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>[ ]      Move selected objects in time *
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Shift-R  Rotate selected objects
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>r        Rotate the cursor object
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>d        Delete selected
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Tab      Hide/Show the menus on the right
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Escape ~ Toggle console
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Ctrl-X   Cut
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Ctrl-C   Copy
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Ctrl-V   Paste
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Ctrl-A   Select All
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Ctrl-I   Invert Section
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Enter    Select None
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>-/+      Edit previous/next item *
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>m        drag to move selected objects *
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>&nbsp;
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>&nbsp; * Hold shift to move faster
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>&nbsp;
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c4_3">4.3.2&nbsp; </font>Object Editor
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>f       Flip X
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Shift-F Flip Y
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>r       Rotate around Z
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Shift-R Rotate around X
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c4_3">4.3.3&nbsp; </font>Room Editor
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>f        Bring selected objects to the front
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Shift-F  Push selected objects to the back
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>g        Set selection to group
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>shift-G  Turn selected objects into a group
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>h        Hide selected objects
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>H        Unhide all
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c4_4">4.4&nbsp; </font>Number Fields
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Numbers can be edited either by clicking once to type in the desired value, or by click and dragging up and down.
+</p></td></tr></tbody></table>
+
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="40"></td><td><font style="font-size:23px"><b><font style="color:#ff0080" id="c5_0">5.0&nbsp; </font>Room Editor
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="44"></td><td><p>A new room can be created by opening the 'Rooms' tab in the navigator, and selecting 'New Room'. Use the Objects tabs to select which objects to place in the room as instances.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c5_1">5.1&nbsp; </font>Placing objects
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>An object has a position in space and a time.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>To create an object instance, click on the ground or in the timeline. In the first case, the currently selected time is used for that object (click at the bottom of the timeline to set the time).
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>If a previous object is selected, the properties of that object will be used as defaults for the newly placed object. Press Enter to clear the current selection.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c5_2">5.2&nbsp; </font>Tools
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Room editing tools appear at the top center of Designer while viewing a room.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Place objects
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>The currently selected object is placed with the center of the bottom at your cursor. Hold LEFT SHIFT to indicate that the object should instead be placed at the voxel under your cursor, rather than on top or to the side of it. Press r to rotate the object you're about to place.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Pick up object
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Selects the object definition under the cursor.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Stamp
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Stamps a copy of whatever objects you last copied (Control-C)
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>The shift key modifier works the same way.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Select
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Select objects (see next section).
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Pan
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Change which part of the room is viewed (the display only shows a 128x128x64 area)
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>When an object is selected, it shows up on the right in an object properties box. If multiple object objects are selected, only one of them is shown but changes can effect all of them at once using the "edit all" toggle button.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c5_3">5.3&nbsp; </font>Selections
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>While using the selection tool, draw a loop to select everything inside it (or click to select whatever is at that point).
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="2"><tbody><tr><td width="99"></td><td><p></p><li> To add to a selection, hold control.
+ </li><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="2"><tbody><tr><td width="99"></td><td><p></p><li> To remove from a selection, hold shift.
+ </li><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="2"><tbody><tr><td width="99"></td><td><p></p><li> To select all, Control-A
+ </li><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="2"><tbody><tr><td width="99"></td><td><p></p><li> To invert selection, Control-I
+ </li><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="2"><tbody><tr><td width="99"></td><td><p></p><li> To select none, Enter, or click outside
+ </li><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Selected object/voxels can be:
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="2"><tbody><tr><td width="99"></td><td><p></p><li> Deleted: backspace, or d
+ </li><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="2"><tbody><tr><td width="99"></td><td><p></p><li> Move: use the cursor keys, or A &amp; Z for up and down
+ </li><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="2"><tbody><tr><td width="99"></td><td><p></p><li> Move fast: hold shift to move 8x speed
+ </li><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>For room objects, press [ and ] to move in time or Shift-R to rotate.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c5_4">5.4&nbsp; </font>Object Instance Properties
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Objects have a set of per-instance properties that can be edited in the selected object box on the right.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>To simultanrously edit properties of all selected objects rather than just one, use the 'Edit All Selected' toggle button at the top right of the object properties box.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_4">5.4.1&nbsp; </font>Position
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>XYZ
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Appear at that particular point in the room.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>CLOSE
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Appear close to a player.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>FAR
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Appear far away from a player.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>RANDOM
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Appear at a random point in the room.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_4">5.4.2&nbsp; </font>Time
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Indicates when the object should appear (provided the object's trigger condition is also satisfied).
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_4">5.4.3&nbsp; </font>Trigger
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Specifies some condition that must be true for the object to spawn. Triggers are a single microscripting statement that can be true or false. An object spawns when the condition is true and the current time is greater or equal to the object's time. See the microscripting section for more details.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_4">5.4.4&nbsp; </font>Warp-in
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>When this option is set, objects warp in from bottom to top instead of instantly appearing.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_4">5.4.5&nbsp; </font>Stop
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>This causes the timeline time to pause when it reaches the flagged object, and continue only when the object has been spawned. Press shift-P to view the timeline while testing a room to see what it happening.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_4">5.4.6&nbsp; </font>Facing / Heading
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>The small arrows sets an actor or prop's initial orientation. "Heading" refers to the direction an actor is initially moving and normally applies only to monsters.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_4">5.4.7&nbsp; </font>Eternal objects
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>If a pickup is flagged as eternal, it will reset after it is killed and/or collected the next time that room is entered. Useful for things like save points that can be used multiple times, or for setting up rooms that should completely reset each time.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Skull toggle button indicates an actor can die any number of times.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Coin toggle button indicates a pickup can be collected any number of times.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_4">5.4.8&nbsp; </font>Room Goal
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Room Goal objects all need to be killed (monsters) or collected (pickups) for the room to be marked 'completed'. On completing a room, a message is shown to the player ("ROOM CLEARED"), and all goal objects are marked as non-eternal.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Note that use of room goals are entirely optional but provided as a convenient mechanism for implementing game progress schemes.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_4">5.4.9&nbsp; </font>Extra parameters
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Room objects have some extra parameters that depend on their type.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Door: DESTINATION
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Doors can be used to send a player from one room to another. Each door has a 'Destination' id that indicates where the player should be sent to. This is the room object id of a door in another room. If the id does not point towards an object that is a door, it is ignored.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Monster: HOW MANY
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	The number of monsters to spawn in a huddle. Each monster inherits the same object id.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Pickup: LIFE
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	How many seconds before disappearing (0 for no time limit)
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Script: P
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	A parameter passed to the script.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c5_5">5.5&nbsp; </font>Groups
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Each object instance belongs to a group (and only one group). To group objects, select them and press shift-G. To view the objects in a group, select one of the objects and press g to extend the selection to all objects in that group. Groups can be referenced from object triggers to, for example, make something happen when all pickups in a group have been collected, or all monsters in a group have been killed.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c5_6">5.6&nbsp; </font>Prop Properties
+ </b></font><p></p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_6">5.6.1&nbsp; </font>Indestructible
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>When placed in the room, the prop's voxels are marked as indestructible. This means that they can hover in mid-air and will never be destroyed by bullets.
+</p></td></tr></tbody></table>
+
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c5_7">5.7&nbsp; </font>Room Properties
+ </b></font><p></p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_7">5.7.1&nbsp; </font>Size
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Maximum size is 256x256x64. If the room is more than 48 voxels high, be careful to not obscure the HUD too much with tall objects!
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_7">5.7.2&nbsp; </font>Base
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Type: NONE
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Empty space
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Type: COL
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Choose a colour to use an indestructible ground plane.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Type: VOID
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>No ground plane; similar to none but actors die if they fall into the void.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Type: LIQUID
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Room-wide liquid at a specified z level (default:56).
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Type: SHAPE
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Room is an arbitrary shape defined by which voxels are non-zero at the ground level.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Extend Walls
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Base types all have an 'extend walls' Z option. When this is checked, any walls present at the specified Z position create an invisible wall that extends to the top of the room. This can be useful for preventing the player or other actors from jumping over walls without having to visually make them tall.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_7">5.7.3&nbsp; </font>HUD Visible
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Toggle to indicate weather the HUD should be visible for that room.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_7">5.7.4&nbsp; </font>Time Skipping
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>When this is on, the timeline will skip ahead to the next object if there are no active monsters. This is useful if you want to organise monster spawning into waves, but don't want the player to have to wait for the next wave to start.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_7">5.7.5&nbsp; </font>Checkpoint
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Red flag checkpoint: Automatically save the game when entering the room.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Green flag checkpoint: Automatically save the game when exiting the room.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_7">5.7.6&nbsp; </font>Camera
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Optionally set the camera position to a low or high angle.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>After the camera has finished moving, the player is still free to manually adjust the cameras position using the camera controls (O/P or d-pad by default).
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_7">5.7.7&nbsp; </font>Atmospherics
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Turn on rain or snow.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c5_7">5.7.8&nbsp; </font>Elephant Mode and World Persistence
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>When elephant mode is on, the entire state of the room is recorded and then recalled when the player returns to the room. For example, any damage to the walls, spawned monsters and their positions, and any particles of snow will still be where you left them. When elephant mode is off, the room resets each time with one exception: any monsters killed will remain dead, and any pickups collected will remain collected. This exception can be switched off by using the per-object 'Eternal' option explained in Object Instance Properties.
+</p></td></tr></tbody></table>
+
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="40"></td><td><font style="font-size:23px"><b><font style="color:#ff0080" id="c6_0">6.0&nbsp; </font>Prop Editor
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="44"></td><td><p>Each prop is a single voxel model -- a 3 dimensional grid of colour values. Props can be placed directly in rooms as static scenery, and also collected into sequences to form animations. To create a new prop, select 'New Prop' from the 'New Item' menu in the navigator. You must be in one of the objects tabs as props can not be added to the Rooms tab.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c6_1">6.1&nbsp; </font>Tools
+ </b></font><p></p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c6_1">6.1.1&nbsp; </font>Build
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Add voxels, or remove them with colour zero (marked with a white x)
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c6_1">6.1.2&nbsp; </font>Paint
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Paint existing voxels (or remove with colour zero)
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c6_1">6.1.3&nbsp; </font>Dropper
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Select the colour of a voxel (shortcut: right mouse button)
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c6_1">6.1.4&nbsp; </font>Stamp
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Stamp a copy of what ever you last Control-C'ed
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c6_1">6.1.5&nbsp; </font>Box
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Drag to get a filled box
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c6_1">6.1.6&nbsp; </font>Select
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Select voxels (see below)
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c6_1">6.1.7&nbsp; </font>Fill
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Fills a flat slice (hold shift), or extends whatever's under it.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c6_2">6.2&nbsp; </font>Indicating Voxel Position
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>For the build, stamp, box and fill tools, the voxel you're indicating is taken to be the one neighbouring the side under the cursor. So if the cursor is on top of a voxel, whatever you draw will start there. If you want to draw over the voxel under the cursor, hold shift. Doing so produces bahviour similar to the paint tool. Likewise, holding shift with the fill tool will fill a slice of solid voxels rather than the empty space above/next to something.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c6_3">6.3&nbsp; </font>Voxel Properties
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Some voxel colours have special properties. The shades of gray at the bottom right are indestructible and float indefiniately wherever they are in the world. e.g. for inside walls that should not be destroyed. You can alternatively set a whole prop to be indestructible with the per-prop 'Indestructible' checkbox.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>The Magenta colour on the right of the palette is used to specify negative voxels. When negative voxels are drawn to the world, any existing voxels are subtracted to leave empty space. This can be used for effects like opening doors or sculpting negative spaces out of the ground. [experimental -- not well supported by tools!]
+</p></td></tr></tbody></table>
+
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="40"></td><td><font style="font-size:23px"><b><font style="color:#ff0080" id="c7_0">7.0&nbsp; </font>Custom Objects
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="44"></td><td><p>Compound objects such as actors are represented as special folders that contain any number of components along with a set of properties for that object. For example, a monster folder might contain a walking animation, where the animation folder itself contains a sequence of frames (props) showing the monster's legs in different positions. The object definition's folder can be opened like a usual folder, by double clicking on it.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="44"></td><td><p>To create a custom object, click 'New Object' and then select a type.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c7_1">7.1&nbsp; </font>Animation
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Animations can be either stand-alone objects (placed directly in a room -- e.g. a blade of grass), or used as an actor component (e.g. a monster's legs). All actors are drawn using only animations, so visible actors have at least one. Animations are usually a folder of props, where each prop is one frame.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c7_1">7.1.1&nbsp; </font>Animation Properties
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Duration
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Controls how many world ticks the animation is displayed for in world ticks. 120 == 1 second.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Frame Length
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Controls how many world ticks each frame is shown for in world ticks. Again in world ticks, so using 8 means that the animation is displayed at 15 frames per second (120 / 8).
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Anchor
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>The anchor controls where the animation is drawn with respect to its xyz coordinates in the world. Monsters' coordinates are taken to be bottom center, and so you normally want to also use this for monsters' animations. Bullets positions are taken to be at the center of the collision box, in which case animations should also be centered (center center).
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Offset
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Further positioning relative to the anchor. These values are in the same coordinate space as the editor so if you draw a character facing the camera, then using X = 5 will shift the animation 5 voxels to the right (the character's left), and Y = 5 will shift it infront (towards the camera). Z = 1 means down one voxel. Checking 'Rotate With Actor' will cause X &amp; Y to be rotated according to the host actor's current facing angle.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Play Style
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Controls how to advance through the frames. The only tricky one is 'Actor Movement'. This causes the frame to advance when the actor moves n voxels in any direction. So if you draw a walk cycle with feet that move one voxel at a time, they should roughly line up with the ground (avoiding a moonwalking effect).
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Paint Mode
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Paint Solid only draws voxels on existing world voxels; Paint Empty only draws voxels in empty space (never clobbering existing voxels).
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Draw in Screen Space
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Ignores the camera and actor position (useful for titles, scrolly tricks).
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>The rest of the properties
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Hitbox size, Gravity, Locking and Interaction are ignored for animations that are part of a monster. They are used for animations indpendently spawned into the world and have the same meaning as the corresponding monster properties. (i.e. they become physical objects similar to monsters).
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c7_1">7.1.2&nbsp; </font>Multi-Angle Animations
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>A voxel model can only be drawn facing one of four anges (0, 90, 180 and 270 degrees). In cases where actors or bullets need to visually face more than 4 directions, it is possible to specify sets of frames to be drawn at different angles.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Instead of creating a prop for each frame, using another animation indicates that the contents of that animation is the same frame drawn at multiple angles. The first prop in the sub-animation is at 0 degrees as usual, and then spread evently between 0 and 90 degrees after than. For example, 2 frames should show the animation drawn at 0 and 45 degrees, while 3 frames would indicate 0, 30 and 60 degrees and so on.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c7_2">7.2&nbsp; </font>Actor
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Actors include monsters, players and pickups. They can collide with each other and optionally stand on or push one another.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c7_2">7.2.1&nbsp; </font>Actor Properties
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Some properties are shared between monsters, players, pickups and sometimes animations.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>WIDTH, LENGTH and HEIGHT
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>In voxels. This defines the collision box and can be completely different from the animation size. Normally the size of the monster should roughly matches its appearance. It is best to give the width of the animation and the width of the monster the same parity (i.e. both odd or both even). Same for length.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>GRAVITY
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> 1.0 is roughly the same as the robot.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>LIFE
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> Number of hitpoints.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>MORTALITY
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> Any damage inflicted on the monster is multiplied by this value. i.e. 1.0 means normal damage, 0.5 means 50% damage, and 0.0 means the monster is immortal.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>DENSITY
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> Normally 1.0. Determines the actor's weight (weight = w * l * h * density). If you want an actor to be easily pushed around, try a lower value. If you want a bullets or small actors to push other actors around a lot, try something like 10.0.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>POINTS
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> Points scored when the monster is killed.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>TEAM
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> Which team the monster is on. Any bullets emitted from the monster will inherit this team value, determining which other actors it can hurt. 0 means no team and will hurt any other actor. Internal monster definitions use team -1. Put monsters on different teams if you want them to hurt each other!
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>LOCK X, Y, Z
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> Lock the position (X,Y) or elevation (Z) of the actor.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>INTERACTION
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> Usually you want to check the first 3, so that the object has collidable sides and can be stood on. Check hoistable &amp; throwable if you want to be able to pick up an object (by pressing shoot infront of it) and throw it (by pressing shoot while carrying).
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c7_3">7.3&nbsp; </font>Monsters
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>In addition to common actor properties, a monster also has
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>SPEED, JUMP HEIGHT
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> 1.0 is roughly the same as the robot. You probably want to turn speed down for most monsters.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>JUMP FREQ
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> How many frames on average between jumps. The world is calculated at 120 frames per second, so a value of 240 means jump about once every 2 seconds. 0 means never, 1 means constantly bouncing.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>TURN SPEED
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> How fast the monster can turn in rps; i.e. 1.0 means one full rotation in one second.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>MOVE STYLE
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> How the monster turns and moves.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>NONE
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p> Do nothing.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>WANDER
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p> Randomly wander around without reacting to the player's location.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>CHASE PLAYER
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p> Turn towards the target (player) and accelerate towards them. The stop to turn parameter means that the monster will only accelerate when facing roughly in the desired direction. Leaving it unchecked results in a more loopy movement path. If X-Ray Vision is not checked, the monster will revert to a wandering behaviour after losing sight of the player for several seconds.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>PATROL
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p> Walk straight until hitting something, and then turn by the specified angle. Angles are in full rotations, so 0.5 means turn 180 degrees.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>EAT WALLS
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> If the monster hits wall, bite a chunk out of it about once per second.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>ATOMIZE, LEAVE DEBRIS
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> Explode into separate voxels on death, that optionally settle on the ground.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>SPREAD OUT
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> Avoid walking too close to other monsters. If this is unchecked, monsters tend to bunch up into tight packs (like the demo pig)
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>COUNT AS MONSTER (LEGACY)
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> Used in conjunction with the NOMON trigger. e.g. if you're making a crate that doesn't need to be killed in order to trigger a door, you would leave this unchecked.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>ATTACK
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> Choose if the player (or any actor of another team) is hurt when standing on top of and/or touches the side of a monster.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>FACING CONTROL
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> The direction in which the monster is accelerating (heading) and the direction that the monster is visibly rotated (facing) are two separate values. This means that you can have for example, a monster that patrols left and right, but is always facing the player.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>NONE
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p> Remain facing the direction that the actor was placed
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>FACE PLAYER
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p> Always turn to face the player
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>FACE DIR
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p> Turn to match the heading
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>TURN
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p> Turn a given amount each frame
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p>    Facing Control's turn speed is given in rotations per second.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c7_4">7.4&nbsp; </font>Pickups
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Pickup definitions are similar to regular monsters. They can have the same behaviours as a monster.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>The main difference is that when a pickup comes in contact with a player, it is collected.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c7_4">7.4.1&nbsp; </font>Internal Pickups
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Access to internal pickups is given by using the SPECIAL attribute. These pickups act as if the player had collected one of the corresponding pickup type (health, sword, freeze, etc.)
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c7_4">7.4.2&nbsp; </font>Pickups and Teams
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Like monsters, pickups have a team number. This can be used to determine which bullets are able to collide or hurt with the pickup, but also which players can collect it. Only players on the same team as a pickup may collect it. If the pickup's team is 0, any player can collect it. The Robot has a default team number of 1.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c7_5">7.5&nbsp; </font>Inventory Items
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Inventory items 
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c7_5">7.5.1&nbsp; </font>Properties
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Collect Group
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Collect Priority
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Weild Group
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Weild Priority
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Max Ammo
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Add Ammo
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Use Ammo
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Use Delay
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Weild Delay
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Flags
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>Weild on Collect
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>Deweild on 0 Ammo
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>Auto-Reweild
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>Reject Collection
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>Use on Request
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Button
+ </b></font><p></p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c7_6">7.6&nbsp; </font>Players
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Players are actors that can be controlled by human players and that can travel between rooms.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>The custom control scheme is intended to be only as flexible as required and no more, so that controls are generally standardized across cartridges. For example, it isn't possible to swap jump and shoot buttons at this level.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Controls
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>Move
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p>	The player should move primarily in XY (most common) XZ, or be controlled like a car (turn and accelerate).
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>Shoot
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p>	Which buttons can be used to shoot. Facing buttons are taken to mean shoot when they are fully extended. i.e. it is possible to face in a particular direction without shooting e.g. when ASDW+mouse style input is used, the player can look around without shooting.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>Jump
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p>	By default, player jumps when either A Button or either of the Triggers is pressed.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>Facing
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p>	The facing buttons are used to control the direction the player is facing.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>Hoist / Throw
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p>	Allow the player to hoist and throw hoistable/throwable actors. When X button is enabled for this as well as shoot, the shooting action is blocked when a hoist or throw is performed. In this case it is impossible for the player to shoot while carrying a throwable object on their head.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>Auto-Thrust
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p>	The player should accelerate forward as if they were pushing the directional movement or acceleration button.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Extra Controls
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	Buttons can also be bound to the USE_ITEM event allowing inventory items to be triggered by any button.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Debug Placement
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>When playing from Designer, a special player spawning rule is used to allow testing arbitrary rooms without needing to start from the beginning each time. If there are no players in the room, and there is at least one door, the first player object found in the resource tree is placed at the first door found in the room.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>When playing from the starting room (the first room in the ROOMS folder), this rule is not applied so that the cartridge can be play-tested as if it were played from the BBS CARTS menu.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c7_7">7.7&nbsp; </font>Bullets
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Bullets are similar to actors but are more lightweight. They can collide with actors but not each other, and have fewer properties. Regular actors can normally be used in place of bullets, but if many (more than a few hundred) bullets are likely to be spawned at the same time, using the bullet type is recommended.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c7_7">7.7.1&nbsp; </font>Bullet Properties
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Duration
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>How long the bullet should stay alive, or zero for forever. Try 480 (4 seconds) for a fast bullet. You should set some value less than 1200 for this to avoid slow bullets accumulating to a very large number, unless you're very certain the bullet will die at some point. If you're using a positive gravity value and no duration, make sure "collide with ground" is set.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Collide With Sender
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>When this is set, the bullet can collide with the actor that emitted it. It's normally best to leave this off at least for the start of a bullets life so that it doesn't immediately collide with the actor (unless that's what you want to do!)
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Collide With/ Hurt Same Team
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>The team index is taken from the host actor that emitted it. A team value of 0 means no team, in which case the bullet will collide with any actor.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Leave Hole In Ground
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>When the bullet hits the ground, a small spherical crater is created. Control the size with crater_radius.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Multi-hit
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>If a bullet has multi-hit enabled, it does not necessarily die after colliding with an actor. Instead, the bullet is depleted by the ammount of attack damage it inflicted on the actor. If the actor dies and the bullet still has remaining attack damage, it will continue moving without changing velocity. For example, if a multi-hit bullet has attack damage 10 then it can cut through 20 life:0.5 actors before expiring.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Lock
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Lock position on each axis.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c7_8">7.8&nbsp; </font>Emitter
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Emitters are used to spawn any kind of object into the game world. They can be stand-alone independent world objects or used as actor components to implement attacks or decorative effects.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>It is currently possible to emit monsters, pickups, animations, bullets and other emitters.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Note that emitters that are used as actor components reset only when their activation controller resets.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Source ID
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>The thing you want to emit. If 0, the first item found in the emitter's folder will be emitted.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Bursts
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>How many bursts to emit. 0 for continuous.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Burst Frequency
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>How many world ticks inbetween each burst (by time; 120 for once per second), or how many voxels the host actor need to travel for one burst (by movement; 1 for once per voxel). The first burst is emitted at the moment the modifier is activated.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Spawn Position
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Where to spawn relative to the emitter (or host actor's) position. Same meanings as animation offsets; Y = 10 will position the spawned object 10 voxels infront of the emitter/actor.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Velocity
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Same again, but for velocity of the burst. This is added to any other velocities generated by the pattern (e.g. so you can have a ring that is expanding, but the whole ring is also moving)
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Pattern 
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>The pattern describes what shape a single burst should be.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>Single
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p>Emit a single item.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>Ring
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p>Emit a circle of items moving apart at speed of 'Magnitude', offset by Angle, and increasing the offset by DAngle each burst (to create spirals).
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="200"></td><td><font style="font-size:14px"><b>Spread
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="204"></td><td><p>Emit an arc of items. Similar to ring, except spread controls how much of the ring to cover. 0.25 means a quarter-circle.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c7_8">7.8.1&nbsp; </font>Adding Random Noise
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>If the burst shape should have some randomness to it, use something like "rand -0.2 0.2" in the dx, dy and dz fields.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c7_9">7.9&nbsp; </font>Door
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Doors are special actors that can transport player actors to other doors on contact. The destination door is specified in the door instance's properties. A 2-way door is actually 2 doors pointing at each other. Because it is a common pattern, a "LINK DOOR" button will sometimes pop up in the editor to link the selected door with the last selected door in another room, and vice versa.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Note: earlier versions of Voxatron included doors that send players to rooms rather than doors. It is no longer possible to do this, and although legacy support is provided foor door-to-room doors, it is recommended to update them to modern door-to-door doors.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c7_9">7.9.1&nbsp; </font>Door Types
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Pocket
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>The most common type of door: these are entered from the side and contain a pocket of special empty space that can extend beyond the visible side of the room. This creates an implied tunnel effect; there is a pause between a continuously moving player exiting one room and entering the next.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>The length of a door is taken to be how 'deep' the pocket goes. For example, a length of 20 means that the player will have to travel 20 voxels inside the door before being transported. 
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Width and height specify the width and height of the pocket. They should normally roughly match the visual size of the door's opening. Check out the example doors in the default library for examples.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Collectable
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Collectable doors behave like a regular pickup. They normaly point towards a spawn point door.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Spawn Point
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Use to receive players from any type of door, but can never send players anywhere.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Vertical Holes
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>[Not implemented yet. Use collectable doors instead.]
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c7_9">7.9.2&nbsp; </font>Flags
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Open
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	Player can pass through to the destination door.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Level Goal
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	Set the cartridge to completed on entry.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Orient Traveller
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	Set the player to face the same direction as the door when entering.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Scifi Warp
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	(For pickups) do a rainbow warp effect on the player before being transported.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Trundle
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	Automatically push any players out. Useful for situations where you don't want to the player to lurk inside or door, or door entrances and exits directions do not match (e.g. North exit -&gt; West entrance).
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="40"></td><td><font style="font-size:23px"><b><font style="color:#ff0080" id="c8_0">8.0&nbsp; </font>Actor Component Control
+ </b></font><p></p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c8_1">8.1&nbsp; </font>Modifiers
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>A modifier is an actor definition that replaces part or all of the host actor's definition when it is active. For example, a boss might speed up and change movement behaviour when it is low on life. Or a door might be set to 'unlocked' after a key has been collected in another room.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Animations placed in a modifier's folder with an activation trigger of HOST:ACTIVE can be used to replace animations with the same activation group number. When a boss monster is low on life in the above example, this might be to make the body change colour, or add visible damage.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c8_2">8.2&nbsp; </font>Property Value Functions
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Most values in object definitions are constant values. e.g. 0.2 or 45. For convenience, a few common functions are provided to give variable results based on the age of the actor or component. These can be typed into any actor property field in the form "func x y [z]".
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>rand x y
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>A random number between x and y
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>srand x y
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>A random number between x and y, but only randomized once on the actor's creation. E.g. if you want to give a monster a random speed for the lifetime of the monster.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>lerp x y z
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Linear interpolation between x and y over z seconds
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>serp x y z
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Sigmoidal interpolation between x and y over z seconds
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>sin/cos x y z
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>x + sin(z) * y  //  z = 1.0 means PI*2 per second
+</p></td></tr></tbody></table>
+
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c8_3">8.3&nbsp; </font>Activation Controller
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Each actor component (animation, modifier, or emitter) has an activation controller that determines when the component should be activated or deactivated. For example, an animation of a player swimming should only replace the generic walking animation when that actor is swimming. In that case, the activation controller would need a trigger HOST:M-STATE:SWIMMING and for the animation to have the same group and priority than the walking animation.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>To debug an actor's activation controller state changes, play the cartidge in debug mode (shift-P) and use [ and ] to switch between actors.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Activation controllers have the following properties:
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c8_3">8.3.1&nbsp; </font>Trigger
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p> A single microscripting statement that triggers activation when true. A component can only be active when its parent is active.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c8_3">8.3.2&nbsp; </font>Duration
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p> How long the modifier remains active for in world ticks. 0 means forever. 1 means stay active while the trigger condition is true.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c8_3">8.3.3&nbsp; </font>Next
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p> Which component to activate when this one expires (0 for none)
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c8_3">8.3.4&nbsp; </font>Priority and Group
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p> If group number is set, then only one modifier in each group can be active, selected by highest priority.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c8_3">8.3.5&nbsp; </font>Delay
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p> How long to wait before the modifier can be activated again.
+</p></td></tr></tbody></table>
+
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="40"></td><td><font style="font-size:23px"><b><font style="color:#ff0080" id="c9_0">9.0&nbsp; </font>Game Saving
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="44"></td><td><p>Voxatron is able to store the state of the world to disk under the current player save game slot. The most recently saved state is restored when either the player dies, continues a saved game, or selects 'back to checkpoint' from the in-game menu.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c9_1">9.1&nbsp; </font>Saving Methods
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>There are 2 ways to invoke a save: using room checkpoints or save point pickups (e.g. the floating disk item). Each method suits different styles of game progress but they can also be used in combination.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c9_1">9.1.1&nbsp; </font>Room Checkpoints
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>In the room properties box, a checkpoint can be set using the little flag button. There are two types of checkpoints: Red means the world is saved each time the room is entered, and green means the world is saved just before the room is exited.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c9_1">9.1.2&nbsp; </font>Save Point Pickups
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>Pickups have a special checkpoint flag ('save point') that indicates the world should be saved on collection. This method suits worlds with sparse save points, where the player can decide at each point if they want to save or not. To allow the save point to be used multiple times, the object instance can be set to eternal collectable (the little coin icon in object instance properties). See the default save point pickup in the Objects tabs (a little disk).
+</p></td></tr></tbody></table>
+
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="40"></td><td><font style="font-size:23px"><b><font style="color:#ff0080" id="c10_0">10.0&nbsp; </font>Microscripting
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="44"></td><td><p>Microscripting in Voxatron provides basic control over things like when an actor should spawn in a room, or when an actor's jump animation should be active. There are two main parts: a "trigger" which can be true or false (e.g. "All of the apples in this room have been collected"), and an "activation controller". The activation controller is used to determine things like how long an animation should play for, and which animations can play at the same time.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="44"></td><td><p>[It is possible to build reasonably complex objects using only microscripting events: e.g. a monster that changes behaviour and appearance when it can see a player. But it is also possible to mix with Lua scripting to do more specific things once a general event has been triggered.]
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c10_1">10.1&nbsp; </font>Statements
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>A statement has 2 main parts: a selector, an event. The selector picks out which objects to consider ("All monsters"), and the event part checks to see if something is true about each one ("has died").
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Each statement can be either true or false, depending what's going on in the game world. The first part of the statement ("NO / ANY / ALL") specifies how many of the selected objects should pass the event test for the whole statement to be true.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c10_2">10.2&nbsp; </font>Selectors
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Each statement has a selector that picks out the actor or set of actors you want to talk about. For example, if you want to make something happen when all apples in a room are collected, the selector part of the statement will pick out the set of apples.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>Selectors only pick out objects in the same room, with the exception of OBJ_ID which can refer to objects in other rooms.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c10_2">10.2.1&nbsp; </font>SELF
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p>When activating actor components, SELF can be used to refer to the actor this component belongs to. For example, a player animation that is triggered by the player jumping might use self:state:in_air.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c10_2">10.2.2&nbsp; </font>ACTOR
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p> The set of actors of a particular type.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c10_2">10.2.3&nbsp; </font>OBJ_ID(n)
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p> Picks out all actors that have object instance id n. Normally there is only one of them, so use this to refer to a particular actor. Unlike other selectors, OBJ_ID(n) can be used to pick out objects in other rooms.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c10_2">10.2.4&nbsp; </font>DEF_ID(n)
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p> All actors that are instances of definition n.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c10_2">10.2.5&nbsp; </font>GROUP_ID(n)
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="124"></td><td><p> All actors that are in group n.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="80"></td><td><font style="font-size:20px"><b><font style="color:#ff0080" id="c10_3">10.3&nbsp; </font>Events
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="84"></td><td><p>The events that can be tested for a particular actor depend on the type of actor.
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="120"></td><td><font style="font-size:17px"><b><font style="color:#ff0080" id="c10_3">10.3.1&nbsp; </font>Common Actor Events
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>STATUS
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>An actor's status is the point on its lifecycle. At first it is DORMANT, and then ACTIVE once spawned in the room. From there, it can either be killed (DIED) or in the case of pickups, COLLECTED. Pickups that disappear because of a time limit have a DIED status. [When more than one actor is spawned from the same object, the object has a state of DIED or COLLECTED only when all such spawned actors (that the same object id) have died or have been collected.]
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>STATE
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	IN AIR, STANDING, SWIMMING
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	JUMPED, LANDED
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	HURT (by anything)
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	SHOT (by any bullet, even if not hurt)
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	ATTACKED (hurt by colliding with an actor not on the same team)
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	DEFENDED (if damage was averted by having a 'DEFEND' flag set)
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	HOISTED THROWN
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>	ENTERING EXITING: the moment when entering or exiting a room
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Collide
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> Collide with another actor, on a specified side or set of sides. If the collide event is used in host, it means collide with anything.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>Speed
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> Actor speed in voxels per world frame. As the world runs at 120 frames per second, a speed of 1.0 indicates the actor is moving at 120 voxels per second.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>LIFE
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> Actor life.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>TIME
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> Actor's time since spawn.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>PERIODIC(n)
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> True every n world frames, starting from the actor's spawn time. A periodic event first occurs at time 0 when the actor is spawned (rather than at n frames).
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>DISTANCE
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> The distance between two actors. The distance is taken to be the shortest straight line between the two actors, rather than the distance between their midpoints. So a distance of zero means that the two actors are perfectly touching, and a negative value means that they are overlapping.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>VISIBLE
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p> There exists a visible line of sight between two actors. Vision is blocked by both map voxels and optionally [not implemented yet] actors. The result of this call is cached and only updates at 4 times a second (every 30 frames) for efficiency.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Legacy applies to players. Normally used to trigger animations.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>COMPONENT
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Check if a component is active or not.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>BUTTON
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>For players
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="160"></td><td><font style="font-size:14px"><b>LEGACY
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>Some built-in events from old version of Voxatron
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>SHOOT-L: Player is shooting with left hand.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>SHOOT-R: Player is shooting with right hand.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>LEGACY:SHOOT-ANY Player is shooting with either hand.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>LEGACY:HAVE GUN Player is holding a gun
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>LEGACY:SWIPE Player is swinging a sword / handheld weapon.
+</p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="164"></td><td><p>LEGACY:CLOSE Actor is close to player (used to be TRIG:CLOSE)
+</p></td></tr></tbody></table>
+<br>
+<table width="800" cellpadding="5"><tbody><tr><td width="40"></td><td><font style="font-size:23px"><b><font style="color:#ff0080" id="c11_0">11.0&nbsp; </font>Lua Scripting API
+ </b></font><p></p></td></tr></tbody></table>
+<table width="800" cellpadding="5"><tbody><tr><td width="44"></td><td><p>(See the API reference manual)
+</p></td></tr></tbody></table>
+
+</body></html>

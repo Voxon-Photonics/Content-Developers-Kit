@@ -1,0 +1,56 @@
+\hypertarget{struct_voxie__disp__t}{}\doxysection{Voxie\+\_\+disp\+\_\+t Struct Reference}
+\label{struct_voxie__disp__t}\index{Voxie\_disp\_t@{Voxie\_disp\_t}}
+
+
+Voxon Display Struct -\/ Configuration for a display suitable to render a volumetric image (usually projector)  
+
+
+
+
+{\ttfamily \#include $<$vx\+Data\+Types.\+h$>$}
+
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{struct_voxie__disp__t_ad9510c8766d64ea6d2ab972795d7d7aa}\label{struct_voxie__disp__t_ad9510c8766d64ea6d2ab972795d7d7aa}} 
+\mbox{\hyperlink{vx_data_types_8h_ac4f559d26f0f5e2211e15b519cdfc8e3}{point2d}} \mbox{\hyperlink{struct_voxie__disp__t_ad9510c8766d64ea6d2ab972795d7d7aa}{keyst}} \mbox{[}8\mbox{]}
+\begin{DoxyCompactList}\small\item\em Keystone settings for display. a collection of 2D points giving coordinates for top and bottom corners of the display. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_voxie__disp__t_a169138aadbf10fb634f1e1966eb810d0}\label{struct_voxie__disp__t_a169138aadbf10fb634f1e1966eb810d0}} 
+int \mbox{\hyperlink{struct_voxie__disp__t_a169138aadbf10fb634f1e1966eb810d0}{colo\+\_\+r}}
+\begin{DoxyCompactList}\small\item\em LED initial start up values for the red channel in RGB color mode. 0..255. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_voxie__disp__t_a1116c9a388cbe438e3136794324659c9}\label{struct_voxie__disp__t_a1116c9a388cbe438e3136794324659c9}} 
+int \mbox{\hyperlink{struct_voxie__disp__t_a1116c9a388cbe438e3136794324659c9}{colo\+\_\+g}}
+\begin{DoxyCompactList}\small\item\em LED initial start up values for the green channel in RGB color mode. 0..255. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_voxie__disp__t_a75a729418db961a529f3b1120d66962f}\label{struct_voxie__disp__t_a75a729418db961a529f3b1120d66962f}} 
+int \mbox{\hyperlink{struct_voxie__disp__t_a75a729418db961a529f3b1120d66962f}{colo\+\_\+b}}
+\begin{DoxyCompactList}\small\item\em LED initial start up values for the blue channel in RGB color mode. 0..255. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_voxie__disp__t_ac48f3aff7ec2e39e80c2e6e820e1aa03}\label{struct_voxie__disp__t_ac48f3aff7ec2e39e80c2e6e820e1aa03}} 
+int \mbox{\hyperlink{struct_voxie__disp__t_ac48f3aff7ec2e39e80c2e6e820e1aa03}{mono\+\_\+r}}
+\begin{DoxyCompactList}\small\item\em LED initial start up values for the red channel in monochrome (single color) mode. 0..255. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_voxie__disp__t_a6eb5771691d322598fe1b9a9f05e595e}\label{struct_voxie__disp__t_a6eb5771691d322598fe1b9a9f05e595e}} 
+int \mbox{\hyperlink{struct_voxie__disp__t_a6eb5771691d322598fe1b9a9f05e595e}{mono\+\_\+g}}
+\begin{DoxyCompactList}\small\item\em LED initial start up values for the red channel in monochrome (single color) mode. 0..255. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_voxie__disp__t_af601664ae9d77d2f11a5144d9a47c2a2}\label{struct_voxie__disp__t_af601664ae9d77d2f11a5144d9a47c2a2}} 
+int \mbox{\hyperlink{struct_voxie__disp__t_af601664ae9d77d2f11a5144d9a47c2a2}{mono\+\_\+b}}
+\begin{DoxyCompactList}\small\item\em LED initial start up values for the red channel in monochrome (single color) mode. 0..255. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_voxie__disp__t_ada67106654ce7887b1eada8df4c9b576}\label{struct_voxie__disp__t_ada67106654ce7887b1eada8df4c9b576}} 
+int \mbox{\hyperlink{struct_voxie__disp__t_ada67106654ce7887b1eada8df4c9b576}{mirrorx}}
+\begin{DoxyCompactList}\small\item\em Horizontal mirror setting value. Uses projector hardware flipping. 0 is for non-\/mirrored image. 1 is for mirrored image. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{struct_voxie__disp__t_a831d8d68c90a46ed6040adccbd55c261}\label{struct_voxie__disp__t_a831d8d68c90a46ed6040adccbd55c261}} 
+int \mbox{\hyperlink{struct_voxie__disp__t_a831d8d68c90a46ed6040adccbd55c261}{mirrory}}
+\begin{DoxyCompactList}\small\item\em Vertical mirror setting value. Uses projector hardware flipping. 0 is for non-\/mirrored image. 1 is for mirrored image. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Voxon Display Struct -\/ Configuration for a display suitable to render a volumetric image (usually projector) 
+
+This struct manages a projector\textquotesingle{}s display settings which includes keystone (the position coordinates for the display), LED levels and mirror settings. Each display struct (voxie\+\_\+disp\+\_\+t) is loaded into the voxie window (voxie\+\_\+wind\+\_\+t) during the voxie\+\_\+load() and voxie\+\_\+init() or when a new \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} is contructed \begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_voxie_box_a06195dca9603ea448f72d502808384b2}{Voxie\+Box\+::\+Voxie\+Box()}} 
+
+\mbox{\hyperlink{class_voxie_box_a9df7e95b7c877b5942690affef94d4a6}{Voxie\+Box\+::init()}} 
+\end{DoxySeeAlso}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{vx_data_types_8h}{vx\+Data\+Types.\+h}}\end{DoxyCompactItemize}

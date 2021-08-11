@@ -1,0 +1,25 @@
+\hypertarget{vx_interfaces_8h}{}\doxysection{vx\+Interfaces.\+h File Reference}
+\label{vx_interfaces_8h}\index{vxInterfaces.h@{vxInterfaces.h}}
+
+
+VX++ interface header contains interface definitions for creating VX++ related classes.  
+
+
+{\ttfamily \#include \char`\"{}Vx\+Cpp.\+h\char`\"{}}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{class_i_voxie_ptr}{IVoxie\+Ptr}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_i_voxie_ptr}{IVoxie\+Ptr}} classes which inherit this interface require access to \mbox{\hyperlink{class_i_voxie_box}{IVoxie\+Box}} pointer. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_i_active}{IActive}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_i_active}{IActive}} interface allows a class to be \textquotesingle{}active\textquotesingle{}. Set to true of false. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_i_drawable}{IDrawable}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_i_drawable}{IDrawable}} classes which inherit are \textquotesingle{}drawable\textquotesingle{} interface can be added to the \textquotesingle{}drawable\textquotesingle{} vector and drawn automatically by the \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} class. \end{DoxyCompactList}\item 
+class \mbox{\hyperlink{class_i_breathable}{IBreathable}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{class_i_breathable}{IBreathable}} classes which inherit this interface can be added to the \textquotesingle{}breathable\textquotesingle{} vector and updated automatically by the \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} class during the breath() function call. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+VX++ interface header contains interface definitions for creating VX++ related classes. 
+
+This header is essential to developing VX++ applications using the Vx\+Cpp.\+DLL. This file is kept seperate to allow easy integration... 
