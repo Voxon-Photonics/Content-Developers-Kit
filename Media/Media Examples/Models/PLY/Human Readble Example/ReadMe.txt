@@ -1,0 +1,1 @@
+Points.ply is an ASCII (human readable) can be edited and viewed in a text editor.
