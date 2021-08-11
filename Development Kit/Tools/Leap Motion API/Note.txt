@@ -1,1 +1,0 @@
-For these leap motion demo programs to work you'll need to have the Leap Motion SDK installed

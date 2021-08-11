@@ -1,5 +1,0 @@
-To compile, launch a Visual C/C++ Command Prompt (requires Visual Studio to be installed), cd to the appropriate directory, and type:
-    nmake filename.c
-The makefile is embedded at the top of source code. Be sure to compile for 64-bit target. 
-
-Make sure to include the voxiebox.h file into the appropriate directory which can be located at C:\Voxon\Runtime

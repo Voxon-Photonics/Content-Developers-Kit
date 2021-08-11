@@ -1,1 +1,0 @@
-start "" "BetweenWorlds.exe" -batchmode
