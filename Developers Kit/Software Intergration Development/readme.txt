@@ -1,0 +1,1 @@
+We are currently working on a networking solution for VX software. So third party applications can access the volumetric display via a network connection. We hope to release this framework soon.

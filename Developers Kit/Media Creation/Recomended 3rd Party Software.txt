@@ -1,0 +1,5 @@
+Third party tools we recommend for content creation for the Voxon's volumetric technology
+
+Gimp		https://www.gimp.org/		- open source software for image manipulation
+Bleder 		https://www.blender.org/	- open source software for 3D model creation
+3D Slicer  	https://www.slicer.org/ 	- open source software for DICOM creation
