@@ -26,7 +26,7 @@ The latest version of the Developers Kit is always hosted on our GitHub page: ht
 
 ## Installation
 
-To install the Developers Kit either run the *Voxon Installer* obtained from our website [**www.voxon.co**](http://www.voxon.co), or manually unzip the files into a folder. We recommend installing the Developers Kit to ‘C:\Voxon’, and run the *Set Path and Registry.bat* file located under the ‘System’ folder to set Path and Registry settings. This will ensure your system is set up properly. 
+To install the Developers Kit either run the *Voxon Installer* obtained from our website [**www.voxon.co**](http://www.voxon.co), or manually (sideload) unzip the files into a folder. We recommend installing the Developers Kit to ‘C:\Voxon’, and run the *Set Path and Registry.bat* file located under the ‘System/Setup’ folder to set Path and Registry settings. This will ensure your system is set up properly. 
 
  
 
