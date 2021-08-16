@@ -43,6 +43,11 @@ To install the Developers Kit either run the *Voxon Installer* obtained from our
 **System** – Holds the Voxon Environment Runtime files and other critical files to run and create VX applications. 
 
 
+## Runtime Version
+
+voxiebox.dll : 24/05/21
+
+
 
 ## Git Commit prefixes for changes 
 
