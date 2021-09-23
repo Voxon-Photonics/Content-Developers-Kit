@@ -417,9 +417,9 @@ static const touchkey_t default_touchkey_extended[] =
 	"F11"    ,666, 80, 50, 50,0x405060,-1,EKB_F11,
 	"F12"    ,717, 80, 50, 50,0x405060,-1,EKB_F12,
 
-	"PrntS" ,842, 80, 60, 50,0x405060,-1,EKB_Print_Screen,
-	"Sclk"  ,903, 80, 60, 50,0x405060,-1,EKB_ScrollLock,
-	"Pause" ,964, 80, 60, 50,0x405060,-1,EKB_Pause_Break,
+	"PrntS" ,841, 80, 60, 50,0x405060,-1,EKB_Print_Screen,
+	"Sclk"  ,902, 80, 60, 50,0x405060,-1,EKB_ScrollLock,
+	"Pause" ,963, 80, 60, 50,0x405060,-1,EKB_Pause_Break,
 
 	"`"    ,  0, 155, 50, 50,0x605040,-1,EKB_Tilde,
 	"1"    , 51, 155, 50, 50,0x605040,-1,EKB_1,
@@ -529,19 +529,18 @@ static const touchkey_t default_touchkey_extended[] =
 
 static const touchkey_t bigArrows_touchkey[] =
 {
-	"\xc8" ,250, 100, 200, 200,0x800000,0x100000,EKB_Arrow_Up,
-	"\xcb" ,40, 310, 200, 200,0x800000,0x100000,EKB_Arrow_Left,
-	"\xd0" ,250, 310, 200, 200,0x800000,0x100000,EKB_Arrow_Down,
-	"\xcd" ,460, 310, 200, 200,0x800000,0x100000,EKB_Arrow_Right,
+	"\xc8" ,600, 100, 200, 200,0x800000,0x100000,EKB_Arrow_Up,
+	"\xcb" ,390, 310, 200, 200,0x800000,0x100000,EKB_Arrow_Left,
+	"\xd0" ,600, 310, 200, 200,0x800000,0x100000,EKB_Arrow_Down,
+	"\xcd" ,810, 310, 200, 200,0x800000,0x100000,EKB_Arrow_Right,
 
-	"A"    ,750, 100, 100, 100,0x008000,0x001000,EKB_A,
-	"Z"    ,750, 210, 100, 100,0x008000,0x001000,EKB_Z,
-	"S"    ,860, 100, 100, 100,0x008000,0x001000,EKB_S,
-	"X"    ,860, 210, 100, 100,0x008000,0x001000,EKB_X,
+	"A"    ,75, 100, 100, 100,0x008000,0x001000,EKB_A,
+	"Z"    ,75, 210, 100, 100,0x008000,0x001000,EKB_Z,
+	"S"    ,185, 100, 100, 100,0x008000,0x001000,EKB_S,
+	"X"    ,185, 210, 100, 100,0x008000,0x001000,EKB_X,
 
-	"Ctrl"    ,690, 400, 150, 100,0x008080,0x001010,EKB_Control_Right,
-	"Shift"    ,851, 400, 150, 100,0x008080,0x001010,EKB_Shift_Right,
-
+	"Ctrl"    ,25, 400, 150, 100,0x008080,0x001010,EKB_Control_Right,
+	"Shift"    ,200, 400, 150, 100,0x008080,0x001010,EKB_Shift_Right,
 
 };
 
@@ -549,7 +548,7 @@ static const touchkey_t bigMouse_touchkey[] =
 {
 	"Touch Pad",2,70,1020,415,0x406040,0x051005,0x0000, //Mouse
 	"LMB"  ,  2,490,340,110,0x406040,0x051005,0x0001, //LBut
- 	"MMB"  ,344,490,340,110,0x406040,0x051005,0x0003, //MBut
+ //	"MMB"  ,344,490,340,110,0x406040,0x051005,0x0003, //MBut
 	"RMB"  ,686,490,340,110,0x406040,0x051005,0x0002, //RBut
 
 };
