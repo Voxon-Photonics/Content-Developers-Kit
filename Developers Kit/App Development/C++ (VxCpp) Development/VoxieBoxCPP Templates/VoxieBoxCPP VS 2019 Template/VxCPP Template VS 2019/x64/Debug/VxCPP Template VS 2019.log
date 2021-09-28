@@ -1,7 +1,0 @@
-﻿  VxCPP Template VS 2019.cpp
-D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VoxieBoxCPP\Headers and DLLs\vxDataTypes.h(26,5): warning C4552: '*': result of expression not used
-D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VoxieBoxCPP\Headers and DLLs\vxDataTypes.h(26,16): warning C4552: '*': result of expression not used
-D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VoxieBoxCPP\VoxieBoxCPP Templates\VoxieBoxCPP VS 2019 Template\VxCPP Template VS 2019\VxCPP Template VS 2019\VxCPP Template VS 2019.cpp(25,32): warning C4305: 'initializing': truncation from 'double' to 'float'
-D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VoxieBoxCPP\VoxieBoxCPP Templates\VoxieBoxCPP VS 2019 Template\VxCPP Template VS 2019\VxCPP Template VS 2019\VxCPP Template VS 2019.cpp(26,33): warning C4305: 'initializing': truncation from 'double' to 'float'
-D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VoxieBoxCPP\VoxieBoxCPP Templates\VoxieBoxCPP VS 2019 Template\VxCPP Template VS 2019\VxCPP Template VS 2019\VxCPP Template VS 2019.cpp(35,37): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  VxCPP Template VS 2019.vcxproj -> D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VoxieBoxCPP\VoxieBoxCPP Templates\VoxieBoxCPP VS 2019 Template\VxCPP Template VS 2019\x64\Debug\VxCPP Template VS 2019.exe
