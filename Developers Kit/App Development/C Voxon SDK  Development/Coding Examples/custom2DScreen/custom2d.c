@@ -17,15 +17,7 @@ custom2d.exe: custom2d.c; gcc custom2d.c -o custom2d.exe -pipe -O3 -s -m64
 #include <stdlib.h>
 #include <math.h>
 #include <stdio.h>
-#include <conio.h>
 #define PI 3.14159265358979323
-
-#ifndef min
-#define min(a, b) (((a) < (b)) ? (a) : (b))
-#endif
-#ifndef max
-#define max(a, b) (((a) < (b)) ? (a) : (b))
-#endif
 
 static voxie_wind_t vw;
 static voxie_frame_t vf; 
@@ -36,6 +28,7 @@ static int menu_update (int id, char *st, double v, int how, void *userdata)
 {
  return 1;
 }
+
 
 int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdshow)
 {
@@ -67,6 +60,39 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 	// be on or 0 to always be off on launch
 	voxie_menu_reset(menu_update,0,"background.jpg");
 
+
+   	// tiletype - 2D array of pixels
+   	//  f: pointer to top-left pixel
+   	//  p: pitch - number of bytes per horizontal line (usually x*4 but may be higher or negative)
+   	//x,y: image dimensions
+  	//typedef struct { INT_PTR f, p, x, y; } tiletype;
+
+ 	//Hi-level image decode (uses kzfile_t internally):
+	//extern int kpzload (const char *filnam, INT_PTR *fptr, INT_PTR *bpl, INT_PTR *xsiz, INT_PTR *ysiz);
+
+	// how to create a tile type to show onto the 2D screen.
+	tiletype crab2d; 													// declare new tiletype type
+	crab2d.x = 16;														// get the image's x dimension (check the details in windows explorer)
+	crab2d.y = 16;														// get the image's y dimension (check the details in windows explorer)
+	crab2d.p = (crab2d.x<<2);											// define the pitch number of bytes per horizontal line (usually x*4 but may be higher or negative)
+	crab2d.f = (INT_PTR)malloc(crab2d.p*crab2d.y);						// create pointer to 1st pixel
+	kpzload("2dCrab0.png", &crab2d.f, &crab2d.p, &crab2d.x, &crab2d.y); // load the image into file memory.
+
+	// how to create a tile type to show onto the 2D screen.
+	tiletype balls; 													// make new tiletype type
+	balls.x = 800;														// get the image's x Dimension
+	balls.y = 600;														// get the image's y Dimension
+	balls.p = (balls.x<<2);											    // define the pitch number of bytes per horizontal line (usually x*4 but may be higher or negative)
+	balls.f = (INT_PTR)malloc(balls.p*balls.y);							// create pointer to 1st pixel
+	kpzload("balls.jpg", &balls.f, &balls.p, &balls.x, &balls.y); 		// load the image into file memory pass in the pointers
+
+	tiletype sampleImg;
+	sampleImg.x = 272;
+	sampleImg.y = 170;
+	sampleImg.p = (sampleImg.x<<2);
+	sampleImg.f = (INT_PTR)malloc(sampleImg.p*sampleImg.y);	
+	kpzload("sample.png", &sampleImg.f, &sampleImg.p, &sampleImg.x, &sampleImg.y); 	
+
 	while (!voxie_breath(&in)) // a breath is a complete volume sweep. a whole volume is rendered in a single breath
 	{
 		otim = tim; 
@@ -76,28 +102,18 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 
 		if (in.bstat == 1) mousPing = 0;
 
-		if (voxie_keystat(0x1)) // esc key closes app
-			voxie_quitloop(); // quitloop() is used to exit the main loop of the program
-		
-	
-		i = (voxie_keystat(0x1b) & 1) - (voxie_keystat(0x1a) & 1); // keys '[' and ']'
-		if (i)
-		{
-			if (voxie_keystat(0x2a) | voxie_keystat(0x36))
-				vw.emuvang = min(max(vw.emuvang + (float)i * dtim * 2.0, -PI * .5), 0.1268); //Shift+[,]
-			else if (voxie_keystat(0x1d) | voxie_keystat(0x9d))
-				vw.emudist = max(vw.emudist - (float)i * dtim * 2048.0, 400.0); //Ctrl+[,]
-			else
-				vw.emuhang += (float)i * dtim * 2.0; //[,]
-			voxie_init(&vw);
+		if (voxie_keystat(0x1)) { voxie_quitloop(); }
+
+		if (mousPing < 100 ) {
+			mousPing++; 
 		}
 
-		/**************************
-		*   DRAW                  *
-		*                         *
-		**************************/
+
+		/////////////////////////////////////////////////////////////////// DRAW
+
 		voxie_frame_start(&vf); 
 		voxie_setview(&vf, -vw.aspx, -vw.aspy, -vw.aspz, vw.aspx, vw.aspy, vw.aspz); 
+
 
 		// these are the various graphical calls you can make to the 2D screen. They must be called between 
 		//voxie_frame_start() and voxie_frame_end() functions
@@ -119,16 +135,22 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 		voxie_debug_print6x8_(150,202,0xffff00,0x000000,"Title Message"); // types out a message
 		voxie_debug_print6x8_(150,210,0xffffff,-1,"show int: %d, show float: %1.5f", mousPing, tim); // types out a message
 		
-		if (mousPing < 100 ) {
-			mousPing++; 
-		}
+		// New Debug Draw Function - Draw texture to secondary screen. "voxie_debug_drawtile"
+	   	//  src: source texture. NOTE: Alpha bytes (bits 24-31) of source pixels control what's drawn:
+ 	  	//        0: fully transparent (pixel is ignored)
+	  	//    1-254: blending in between (NOTE: will render slower than 0 or 255)
+ 	  	//      255: fully opaque (pixel is copied to screen)
+	   	//x0,y0: top-left corner in pixels. Tile must be fully within bounds of screen.
+		//void voxie_debug_drawtile (tiletype *src, int x0, int y0);
 
-		voxie_debug_print6x8_(30, 80, 0xffffff, -1, "Press 'F1' to show / disable the custom background"); 	
-		/**************************
-		*   DEBUG                 *
-		*                         *
-		**************************/
+		voxie_debug_drawtile (&crab2d, mousx, 500);
+		voxie_debug_drawtile (&crab2d, 150, 150);
+		voxie_debug_drawtile (&balls, 800, 400);
+		voxie_debug_drawtile (&sampleImg, 850, 75);
 
+		voxie_debug_print6x8_(30, 80, 0xffffff, -1, "Press 'F1' to show / disable the custom help background"); 	
+
+		////////////////////////////////////////////////////////////////// DEBUG
 #if DEBUG	
 		//draw wireframe box around the edge of the screen
 		voxie_drawbox(&vf, -vw.aspx + 1e-3, -vw.aspy + 1e-3, -vw.aspz, +vw.aspx - 1e-3, +vw.aspy - 1e-3, +vw.aspz, 1, 0xffffff);
@@ -137,13 +159,9 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 		avgdtim += (dtim - avgdtim) * .1;
 		voxie_debug_print6x8_(30, 68, 0xffc080, -1, "VPS %5.1f", 1.0 / avgdtim); 	
 #endif
-
-	voxie_frame_end(); 
-	
-	voxie_getvw(&vw);
-
+		voxie_frame_end(); 
+		voxie_getvw(&vw);
 	}
-
 
 	voxie_uninit(0); //Close window and unload voxiebox.dll
 	return (0);
