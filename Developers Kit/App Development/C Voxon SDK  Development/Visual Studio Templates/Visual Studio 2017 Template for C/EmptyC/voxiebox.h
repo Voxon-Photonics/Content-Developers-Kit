@@ -172,8 +172,8 @@ extern int    voxie_laser_read (int id, voxie_laser_t *las);
 #if defined(_WIN32)
 enum {MENU_TEXT=0, MENU_LINE, MENU_BUTTON, MENU_HSLIDER=MENU_BUTTON+4, MENU_VSLIDER, MENU_EDIT, MENU_EDIT_DO, MENU_TOGGLE, MENU_PICKFILE};
 EXTERN void (__cdecl *voxie_menu_reset)(int (*menu_update)(int id, char *st, double val, int how, void *userdata), void *userdata, char *bkfilnam);
-EXTERN void (__cdecl *voxie_menu_addtab)(char *st, int x, int y, int xs, int ys);
-EXTERN void (__cdecl *voxie_menu_additem)(char *st, int x, int y, int xs, int ys, int id, int type, int down, int col, double v, double v0, double v1, double vstp0, double vstp1);
+EXTERN void (__cdecl *voxie_menu_addtab)(const char *st, int x, int y, int xs, int ys);
+EXTERN void (__cdecl *voxie_menu_additem)(const char *st, int x, int y, int xs, int ys, int id, int type, int down, int col, double v, double v0, double v1, double vstp0, double vstp1);
 EXTERN void (__cdecl *voxie_menu_updateitem)(int id, char *st, int down, double v);
 #else
 TODO..
@@ -200,8 +200,9 @@ typedef struct
 	float xmul, ymul, zmul, xadd, yadd, zadd;
 	tiletype f2d;
 } voxie_frame_t;
+enum {VOLCAP_OFF=0, VOLCAP_FRAME_PLY, VOLCAP_FRAME_PNG, VOLCAP_FRAME_REC, VOLCAP_VIDEO_REC, VOLCAP_FRAME_VCB, VOLCAP_VIDEO_VCBZIP};
 #if defined(_WIN32)
-EXTERN void (__cdecl *voxie_doscreencap )(int);
+EXTERN void (__cdecl *voxie_volcap      )(const char *filnam, int volcap_mode, int target_vps);
 EXTERN void (__cdecl *voxie_setview     )(voxie_frame_t *vf, float x0, float y0, float z0, float x1, float y1, float z1);
 EXTERN void (__cdecl *voxie_setmaskplane)(voxie_frame_t *vf, float x0, float y0, float z0, float nx, float ny, float nz);
 EXTERN void (__cdecl *voxie_setnorm     )(float nx, float ny, float nz);
@@ -211,7 +212,7 @@ EXTERN void (__cdecl *voxie_frame_end   )(void);
 EXTERN void (__cdecl *voxie_setleds     )(int id, int r, int g, int b);
 EXTERN void (__cdecl *voxie_project     )(int disp, int dir, float x, float y, int z, float *xo, float *yo);
 #else
-extern void voxie_doscreencap (int);
+extern void voxie_volcap      (const char *filnam, int volcap_mode, int target_vps);
 extern void voxie_setview     (voxie_frame_t *vf, float x0, float y0, float z0, float x1, float y1, float z1);
 extern void voxie_setmaskplane(voxie_frame_t *vf, float x0, float y0, float z0, float nx, float ny, float nz);
 extern void voxie_setnorm     (float nx, float ny, float nz);
@@ -234,7 +235,7 @@ EXTERN void (__cdecl *voxie_drawvox    )(voxie_frame_t *vf, float fx, float fy, 
 EXTERN void (__cdecl *voxie_drawbox    )(voxie_frame_t *vf, float x0, float y0, float z0, float x1, float y1, float z1, int fillmode, int col);
 EXTERN void (__cdecl *voxie_drawlin    )(voxie_frame_t *vf, float x0, float y0, float z0, float x1, float y1, float z1, int col);
 EXTERN void (__cdecl *voxie_drawpol    )(voxie_frame_t *vf, pol_t *pt, int n, int col);
-EXTERN void (__cdecl *voxie_drawmeshtex)(voxie_frame_t *vf, char *fnam, const poltex_t *vt, int vtn, const int *mesh, int meshn, int flags, int col);
+EXTERN void (__cdecl *voxie_drawmeshtex)(voxie_frame_t *vf, const char *fnam, const poltex_t *vt, int vtn, const int *mesh, int meshn, int flags, int col);
 EXTERN void (__cdecl *voxie_drawsph    )(voxie_frame_t *vf, float fx, float fy, float fz, float rad, int issol, int col);
 EXTERN void (__cdecl *voxie_drawcone   )(voxie_frame_t *vf, float x0, float y0, float z0, float r0, float x1, float y1, float z1, float r1, int fillmode, int col);
 EXTERN int  (__cdecl *voxie_drawspr    )(voxie_frame_t *vf, const char *fnam, point3d *p, point3d *r, point3d *d, point3d *f, int col);
@@ -244,7 +245,7 @@ extern void voxie_drawvox    (voxie_frame_t *vf, float fx, float fy, float fz, i
 extern void voxie_drawbox    (voxie_frame_t *vf, float x0, float y0, float z0, float x1, float y1, float z1, int fillmode, int col);
 extern void voxie_drawlin    (voxie_frame_t *vf, float x0, float y0, float z0, float x1, float y1, float z1, int col);
 extern void voxie_drawpol    (voxie_frame_t *vf, pol_t *pt, int n, int col);
-extern void voxie_drawmeshtex(voxie_frame_t *vf, char *fnam, const poltex_t *vt, int vtn, const int *mesh, int meshn, int flags, int col);
+extern void voxie_drawmeshtex(voxie_frame_t *vf, const char *fnam, const poltex_t *vt, int vtn, const int *mesh, int meshn, int flags, int col);
 extern void voxie_drawsph    (voxie_frame_t *vf, float fx, float fy, float fz, float rad, int issol, int col);
 extern void voxie_drawcone   (voxie_frame_t *vf, float x0, float y0, float z0, float r0, float x1, float y1, float z1, float r1, int fillmode, int col);
 extern int  voxie_drawspr    (voxie_frame_t *vf, const char *fnam, point3d *p, point3d *r, point3d *d, point3d *f, int col);
@@ -273,7 +274,7 @@ typedef struct
 	kzfile_t *kzfil;
 	__int64 valsumn, valsums, valsumss;
 	int valmin, valmax;
-	int compmode, ncomp, multiframe;
+	int compmode, ncomp, multiframe, mirrorz;
 	int zslice, zslice0, zslicemin, zslicemax, zsizmal;
 	int bitmal, bitmsb, bituse, issign;     //placement of data in (assumed&hard-coded) 16-bit pixel value
 	float reslop, reinte;                   //silly transformation (usually 1.f,0.f respectively)
@@ -301,6 +302,7 @@ EXTERN void (__cdecl *voxie_debug_drawline    )(float x0, float y0, float x1, fl
 EXTERN void (__cdecl *voxie_debug_drawcirc    )(int xc, int yc, int r, int col);
 EXTERN void (__cdecl *voxie_debug_drawrectfill)(int x0, int y0, int x1, int y1, int col);
 EXTERN void (__cdecl *voxie_debug_drawcircfill)(int x, int y, int r, int col);
+EXTERN void (__cdecl *voxie_debug_drawtile    )(tiletype *src, int x0, int y0);
 #else
 TODO..
 #endif
@@ -321,7 +323,7 @@ extern void voxie_setaudreccb (void (*userrecfunc )(int *samps, int nframes));
 	//.REC playback
 typedef struct
 {
-	FILE *fil; //Warning: do not use this from user code - for internal use only.
+	kzfile_t *kzfil; //Warning: do not use this from user code - for internal use only.
 	double timleft;
 	float *frametim;
 	int *frameseek, framemal, kztableoffs, error;
@@ -372,11 +374,11 @@ int voxie_load (voxie_wind_t *vw)
 	voxie_nav_read     = (   int (__cdecl *)(int, voxie_nav_t *))GetProcAddress(hvoxie,"voxie_nav_read");
 	voxie_laser_read   = (   int (__cdecl *)(int, voxie_laser_t *))GetProcAddress(hvoxie,"voxie_laser_read");
 	voxie_menu_reset   = (  void (__cdecl *)(int(*)(int,char*,double,int,void*),void*,char*))GetProcAddress(hvoxie,"voxie_menu_reset");
-	voxie_menu_addtab  = (  void (__cdecl *)(char*,int,int,int,int))GetProcAddress(hvoxie,"voxie_menu_addtab");
-	voxie_menu_additem = (  void (__cdecl *)(char*,int,int,int,int,int,int,int,int,double,double,double,double,double))GetProcAddress(hvoxie,"voxie_menu_additem");
+	voxie_menu_addtab  = (  void (__cdecl *)(const char*,int,int,int,int))GetProcAddress(hvoxie,"voxie_menu_addtab");
+	voxie_menu_additem = (  void (__cdecl *)(const char*,int,int,int,int,int,int,int,int,double,double,double,double,double))GetProcAddress(hvoxie,"voxie_menu_additem");
 	voxie_menu_updateitem=( void (__cdecl *)(int,char*,int,double))GetProcAddress(hvoxie,"voxie_menu_updateitem");
 	voxie_touch_custom = (  void (__cdecl *)(const touchkey_t *,int))GetProcAddress(hvoxie,"voxie_touch_custom");
-	voxie_doscreencap  = (  void (__cdecl *)(int           ))GetProcAddress(hvoxie,"voxie_doscreencap");
+	voxie_volcap       = (  void (__cdecl *)(const char *,int,int))GetProcAddress(hvoxie,"voxie_volcap");
 	voxie_setview      = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,float,float))GetProcAddress(hvoxie,"voxie_setview");
 	voxie_setmaskplane = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,float,float))GetProcAddress(hvoxie,"voxie_setmaskplane");
 	voxie_frame_start  = (   int (__cdecl *)(voxie_frame_t*))GetProcAddress(hvoxie,"voxie_frame_start");
@@ -388,7 +390,7 @@ int voxie_load (voxie_wind_t *vw)
 	voxie_drawbox      = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,float,float,int,int))GetProcAddress(hvoxie,"voxie_drawbox");
 	voxie_drawlin      = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,float,float,int))GetProcAddress(hvoxie,"voxie_drawlin");
 	voxie_drawpol      = (  void (__cdecl *)(voxie_frame_t*,pol_t*,int,int))GetProcAddress(hvoxie,"voxie_drawpol");
-	voxie_drawmeshtex  = (  void (__cdecl *)(voxie_frame_t*,char*,const poltex_t*,int,const int*,int,int,int))GetProcAddress(hvoxie,"voxie_drawmeshtex");
+	voxie_drawmeshtex  = (  void (__cdecl *)(voxie_frame_t*,const char*,const poltex_t*,int,const int*,int,int,int))GetProcAddress(hvoxie,"voxie_drawmeshtex");
 	voxie_drawsph      = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,int,int))GetProcAddress(hvoxie,"voxie_drawsph");
 	voxie_drawcone     = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,float,float,float,float,int,int))GetProcAddress(hvoxie,"voxie_drawcone");
 	voxie_drawspr      = (   int (__cdecl *)(voxie_frame_t*,const char*,point3d*,point3d*,point3d*,point3d*,int))GetProcAddress(hvoxie,"voxie_drawspr");
@@ -404,6 +406,7 @@ int voxie_load (voxie_wind_t *vw)
 	voxie_debug_drawcirc     = (void (__cdecl *)(int xc, int yc, int r, int col))                        GetProcAddress(hvoxie,"voxie_debug_drawcirc");
 	voxie_debug_drawrectfill = (void (__cdecl *)(int x0, int y0, int x1, int y1, int col))               GetProcAddress(hvoxie,"voxie_debug_drawrectfill");
 	voxie_debug_drawcircfill = (void (__cdecl *)(int x, int y, int r, int col))                          GetProcAddress(hvoxie,"voxie_debug_drawcircfill");
+	voxie_debug_drawtile     = (void (__cdecl *)(tiletype *src, int x0, int y0))                         GetProcAddress(hvoxie,"voxie_debug_drawtile");
 	voxie_playsound    = (   int (__cdecl *)(const char*,int,int,int,float))GetProcAddress(hvoxie,"voxie_playsound");
 	voxie_playsound_update = (void (__cdecl *)(int,int,int,int,float))GetProcAddress(hvoxie,"voxie_playsound_update");
 	voxie_setaudplaycb = (  void (__cdecl *)(void(*userplayfunc)(int*,int)))GetProcAddress(hvoxie,"voxie_setaudplaycb");
