@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['ldotnum_757',['ldotnum',['../struct_voxie__wind__t.html#a1042379341b783239132fdeba48f2132',1,'Voxie_wind_t']]],
-  ['lt_758',['lt',['../struct_voxie__xbox__t.html#a3a73911aee44bd2b859ffc0691d00ab5',1,'Voxie_xbox_t']]]
+  ['ldotnum_888',['ldotnum',['../structvoxie__wind__t.html#a695b8f49193b4c79d4df4de15a8203bf',1,'voxie_wind_t']]],
+  ['lt_889',['lt',['../structvoxie__xbox__t.html#a90ddfb7f7457a4f11bba5f9d17922034',1,'voxie_xbox_t']]]
 ];

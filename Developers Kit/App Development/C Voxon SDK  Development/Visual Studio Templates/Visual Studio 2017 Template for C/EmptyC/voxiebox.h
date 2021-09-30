@@ -18,7 +18,7 @@
 #endif
 
 //--------------------------------------------------------------------------------------------------
-	//Ken's Picture LIBrary (KPLIB)
+//Ken's Picture LIBrary (KPLIB)
 EXTERN int  (__cdecl *kzaddstack     )(const char *);
 EXTERN void (__cdecl *kzuninit       )(void);
 enum { ATTRIB_ISDIR=1, ATTRIB_INZIP=2, ATTRIB_RDONLY=4, ATTRIB_HIDDEN=8, ATTRIB_ISDRIVE=16 };

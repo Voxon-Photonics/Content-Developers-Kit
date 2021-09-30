@@ -23,5 +23,8 @@
     <ClCompile Include="empty.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="voxiebox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

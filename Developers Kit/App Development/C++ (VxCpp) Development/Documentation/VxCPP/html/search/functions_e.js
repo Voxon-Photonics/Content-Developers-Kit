@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['updatejoystate_690',['updateJoyState',['../class_voxie_box.html#a88ab69387e02516d39dcb21c0bc2d34d',1,'VoxieBox']]],
-  ['updatemenu_691',['updateMenu',['../class_i_voxie_box.html#a5b5075aa133b8e42a69b4c9c3d26af57',1,'IVoxieBox::updateMenu()'],['../class_voxie_box.html#abbb7fb316be13efd98f26e623aeb03b3',1,'VoxieBox::updateMenu()']]],
-  ['updatenavstate_692',['updateNavState',['../class_i_voxie_box.html#a038123df60149d6367a0da9903de1517',1,'IVoxieBox::updateNavState()'],['../class_voxie_box.html#a70a760d5670b3588aa95f97f831200bd',1,'VoxieBox::updateNavState()']]],
-  ['updatesound_693',['updateSound',['../class_i_voxie_box.html#a1d10e13ce4ce1596eda1ded2b9e3a6d6',1,'IVoxieBox::updateSound()'],['../class_voxie_box.html#a059069f0ecf2a149bbd8775e52613397',1,'VoxieBox::updateSound()']]]
+  ['touchaddcustomlayout_818',['touchAddCustomLayout',['../class_i_voxie_box.html#af32547c7364d319179680868189879e1',1,'IVoxieBox::touchAddCustomLayout()'],['../class_voxie_box.html#a0698a2ecfef631c2e021b3b8fe8ddee7',1,'VoxieBox::touchAddCustomLayout()']]],
+  ['tweencol_819',['tweenCol',['../class_i_voxie_box.html#ae08bd1dd4231ff500b57bd79b5875aef',1,'IVoxieBox::tweenCol()'],['../class_voxie_box.html#a7fcbfb676db6668d6f3da9139b5382dc',1,'VoxieBox::tweenCol()']]]
 ];

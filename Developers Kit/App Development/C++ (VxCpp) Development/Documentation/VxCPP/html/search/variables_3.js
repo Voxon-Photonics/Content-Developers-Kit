@@ -1,17 +1,18 @@
 var searchData=
 [
-  ['density_715',['density',['../struct_voxie__wind__t.html#ad9ce32ecadea466df98c11f1a9cde4c4',1,'Voxie_wind_t']]],
-  ['dimcaps_716',['dimcaps',['../struct_voxie__wind__t.html#a33b28b26c40ee65c2a89c02c993ebf0f',1,'Voxie_wind_t']]],
-  ['disp_717',['disp',['../struct_voxie__wind__t.html#acaf3e18f6a3362192306a178887c7203',1,'Voxie_wind_t']]],
-  ['dispcur_718',['dispcur',['../struct_voxie__wind__t.html#a4e807512b0df220c36b47fa3ce5ecce7',1,'Voxie_wind_t']]],
-  ['dispnum_719',['dispnum',['../struct_voxie__wind__t.html#a0b8d4426b299170a838f20d7efe30f7c',1,'Voxie_wind_t']]],
-  ['dither_720',['dither',['../struct_voxie__wind__t.html#a7904e40b134e3c7abaef969cae2101b4',1,'Voxie_wind_t']]],
-  ['dmousx_721',['dmousx',['../struct_voxie__input__t.html#a7d96d8fb5b5917c0b81d4bc03349cded',1,'Voxie_input_t']]],
-  ['dmousy_722',['dmousy',['../struct_voxie__input__t.html#a9f0dd48243e92f4583e22adad4b51931',1,'Voxie_input_t']]],
-  ['dmousz_723',['dmousz',['../struct_voxie__input__t.html#ac5beccb9c9031d419e457a5a39f0f3ce',1,'Voxie_input_t']]],
-  ['drawplanes_724',['drawplanes',['../struct_voxie__frame__t.html#a2a91443d8a97a76bfb0038bb5d425369',1,'Voxie_frame_t']]],
-  ['drawstroke_725',['drawstroke',['../struct_voxie__wind__t.html#ae3624592123462f6e9e1bd9e21632cba',1,'Voxie_wind_t']]],
-  ['dx_726',['dx',['../struct_voxie__nav__t.html#a677ab2189ba1cb874915aa3b581c1c55',1,'Voxie_nav_t']]],
-  ['dy_727',['dy',['../struct_voxie__nav__t.html#af90406e00d2e3f9236515d0a62f1a95a',1,'Voxie_nav_t']]],
-  ['dz_728',['dz',['../struct_voxie__nav__t.html#a2955121627fa2cc5f06715643ef358d2',1,'Voxie_nav_t']]]
+  ['default_5ftouchkey_845',['default_touchkey',['../vx_input_types_8h.html#a9cd8ea1ad292fb3d042f2436b6b6e276',1,'vxInputTypes.h']]],
+  ['density_846',['density',['../structvoxie__wind__t.html#afa7312f14e58b76821530caa23f36b15',1,'voxie_wind_t']]],
+  ['dimcaps_847',['dimcaps',['../structvoxie__wind__t.html#af269fbfa22df556d3131a0895fb46466',1,'voxie_wind_t']]],
+  ['disp_848',['disp',['../structvoxie__wind__t.html#a028cfad540720909d35cafd74c72ff32',1,'voxie_wind_t']]],
+  ['dispcur_849',['dispcur',['../structvoxie__wind__t.html#a35cd67d05fcd805f605f6caa65ae2b69',1,'voxie_wind_t']]],
+  ['dispnum_850',['dispnum',['../structvoxie__wind__t.html#aaca6c4dc26835bf9f5ad8c151457fe28',1,'voxie_wind_t']]],
+  ['dither_851',['dither',['../structvoxie__wind__t.html#a60a2d4b97a0dc8b46ae47b4ed2200ab5',1,'voxie_wind_t']]],
+  ['dmousx_852',['dmousx',['../structvoxie__input__t.html#a2b651b2ccd07f3465b91070b987a3116',1,'voxie_input_t']]],
+  ['dmousy_853',['dmousy',['../structvoxie__input__t.html#aee42ebce334e55c0583c051acef3f53e',1,'voxie_input_t']]],
+  ['dmousz_854',['dmousz',['../structvoxie__input__t.html#ae6385b3418a42cb721d8a83399457b29',1,'voxie_input_t']]],
+  ['drawplanes_855',['drawplanes',['../structvoxie__frame__t.html#a63c6f93ff6efaf4731b4f5cec366daf8',1,'voxie_frame_t']]],
+  ['drawstroke_856',['drawstroke',['../structvoxie__wind__t.html#a2eb91b6875a7bb7e03e4006e780af5f7',1,'voxie_wind_t']]],
+  ['dx_857',['dx',['../structvoxie__nav__t.html#a886769c4eae83252f4d46f93dd3c2977',1,'voxie_nav_t']]],
+  ['dy_858',['dy',['../structvoxie__nav__t.html#a8fce5d6c70a1cb7d3eb2df5a9852b4f9',1,'voxie_nav_t']]],
+  ['dz_859',['dz',['../structvoxie__nav__t.html#abc1c067cbbcf4e5d64c6ed36cf177816',1,'voxie_nav_t']]]
 ];

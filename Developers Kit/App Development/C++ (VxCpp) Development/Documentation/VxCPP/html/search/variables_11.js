@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['thread_5foverride_5fhack_787',['thread_override_hack',['../struct_voxie__wind__t.html#a70cc39540e6c563c97740b0f56adf008',1,'Voxie_wind_t']]],
-  ['tx0_788',['tx0',['../struct_voxie__xbox__t.html#ab29944b1af73344bb2c8aa4bd7586332',1,'Voxie_xbox_t']]],
-  ['tx1_789',['tx1',['../struct_voxie__xbox__t.html#a800cc636d4e83888ae27272c3097497b',1,'Voxie_xbox_t']]],
-  ['ty0_790',['ty0',['../struct_voxie__xbox__t.html#a1b59a22d70b1efc34ca32c2f9913ab5b',1,'Voxie_xbox_t']]],
-  ['ty1_791',['ty1',['../struct_voxie__xbox__t.html#abe14b0663a471e7e845e4a27448f8045',1,'Voxie_xbox_t']]]
+  ['thread_5foverride_5fhack_918',['thread_override_hack',['../structvoxie__wind__t.html#ac6598fe1c9315ee937d1b0788f53fcf7',1,'voxie_wind_t']]],
+  ['tx0_919',['tx0',['../structvoxie__xbox__t.html#abf1f2d5f9c9697d4adac149d4519810f',1,'voxie_xbox_t']]],
+  ['tx1_920',['tx1',['../structvoxie__xbox__t.html#ab809673b04cdee731d3cca1f7e469f89',1,'voxie_xbox_t']]],
+  ['ty0_921',['ty0',['../structvoxie__xbox__t.html#a2c311b513615457c4539a1a960169210',1,'voxie_xbox_t']]],
+  ['ty1_922',['ty1',['../structvoxie__xbox__t.html#af42e0088d0c14c2905df7e513e2d3bdf',1,'voxie_xbox_t']]]
 ];

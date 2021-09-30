@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['obstat_769',['obstat',['../struct_voxie__input__t.html#a99fc66f113af89d89248540cba61f57f',1,'Voxie_input_t']]],
-  ['outcol_770',['outcol',['../struct_voxie__wind__t.html#ab6bcbb6483bd406c6bd7ca0b313035b0',1,'Voxie_wind_t']]]
+  ['obstat_900',['obstat',['../structvoxie__input__t.html#a8e9e08a17fdffd9cb7026f3c6e8aa535',1,'voxie_input_t']]],
+  ['outcol_901',['outcol',['../structvoxie__wind__t.html#ac8d619c0a7c36f6e553ada36d4912711',1,'voxie_wind_t']]]
 ];

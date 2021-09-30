@@ -92,7 +92,7 @@ Benefits of Using the VX++ Framework</h1>
            *  Easier Debuging Reporting for Voxie Window, Voxie Frame and all inputs types
            *  Extended input function checks for mouse, keyboard, SpaceNav and gamepads all inputs have functions to check for onDown(), 
                  onUp(), duration(), and isDown()  
-           *  Internally managed Input for Gamecontrollers and SpaceNav. More advanced Key stroke history. 
+           *  Internally managed Input for Game controllers and SpaceNav. More advanced Key stroke history. 
            *  Various boolean function calls to turn on/off features such as 'drawBorder' 'clipMouse' or 'invertZAxis'
            *  Embedded cursor (for mouse or otherwise) 
            *  DrawQuad() function to easily draw a textured Quad on the display. 
@@ -107,7 +107,7 @@ Benefits of Using the VX++ Framework</h1>
            *  Simple Move To Point function for moving a position to another.
 </pre><h1><a class="anchor" id="developing_sec"></a>
 Developing with VxCpp.dll and making your own VX++ App</h1>
-<p>Developing with VxCpp.dll is similar to developing with the voxiebox.dll. A VX application needs to load in the voxiebox.dll (Ken's Voxon SDK library) a VX++ application loads in the voxiebox.dll by an entry function in VxCpp.dll "CreateVoxieBoxObject" calling this function createsa new '<a class="el" href="class_voxie_box.html" title="VoxieBox class.">VoxieBox</a>' an object Once the <a class="el" href="class_voxie_box.html" title="VoxieBox class.">VoxieBox</a> object is created it can be accessed using an pointer to the <a class="el" href="class_i_voxie_box.html" title="Interface for VoxieBox class.">IVoxieBox</a> interface.</p>
+<p>Developing with VxCpp.dll is similar to developing with the voxiebox.dll. A VX application needs to load in the voxiebox.dll (Ken's Voxon SDK library) a VX++ application loads in the voxiebox.dll by an entry function in VxCpp.dll "CreateVoxieBoxObject" calling this function creates a new '<a class="el" href="class_voxie_box.html" title="VoxieBox class.">VoxieBox</a>' an object Once the <a class="el" href="class_voxie_box.html" title="VoxieBox class.">VoxieBox</a> object is created it can be accessed using an pointer to the <a class="el" href="class_i_voxie_box.html" title="Interface for VoxieBox class.">IVoxieBox</a> interface.</p>
 <p>A simple hello world example... </p><pre class="fragment">           // VX++ APP HELLO WORLD EXAMPLE 
            // You may use this as a template to start creating your own volumetric applications.
            #include "VxCpp.h"
@@ -142,7 +142,7 @@ Developing with VxCpp.dll and making your own VX++ App</h1>
 
                voxie-&gt;quitLoop(); // quitLoop() stops the hardware from physically moving and ends the breath() loop
                delete voxie;
-               return 0;   // After the program quits the deconstructor for voxiebox frees the DLLs from memory if you wanted to do this manually call the voxie-&gt;Shutdown()
+               return 0;   // After the program quits the de-constructor for voxiebox frees the DLLs from memory if you wanted to do this manually call the voxie-&gt;Shutdown()
            }
 </pre><h1><a class="anchor" id="running_sec"></a>
 Running Applications written using VX++ / VxCpp</h1>
@@ -150,7 +150,7 @@ Running Applications written using VX++ / VxCpp</h1>
 <h1><a class="anchor" id="releases_sec"></a>
 Updating / Where to get newer versions of VX++ / VxCpp.dll</h1>
 <p>VxCpp / VX++ public release (with source code) is available as part of the Voxon Content Developers Kit which can be obtained freely at <a href="https://github.com/Voxon-Photonics/Content-Developers-Kit">https://github.com/Voxon-Photonics/Content-Developers-Kit</a></p>
-<h1><a class="anchor" id="licence_sec"></a>
+<h1><a class="anchor" id="licencefg_sec"></a>
 Licence</h1>
 <p>The compiled VxCpp.dll is public domain any application you make using VxCpp.dll is yours. Applications made with VX++ and the VxCpp.dll can be distributed with your applications freely without any accreditation needed. However. VX++ / VxCpp.dll's source code is released with a Creative Commons By Attribution (CC BY) license. This means that licensees may copy, distribute, display and perform the work and make derivative works and remixes based on it only if they give the author (Matthew Vecchio / Voxon Photonics ) proper accreditation</p>
 <h1><a class="anchor" id="contact_sec"></a>

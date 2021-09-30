@@ -1,0 +1,66 @@
+\hypertarget{structvoxie__input__t}{}\doxysection{voxie\+\_\+input\+\_\+t Struct Reference}
+\label{structvoxie__input__t}\index{voxie\_input\_t@{voxie\_input\_t}}
+
+
+Struct to manage mouse inputs. Mouse state is updated when \mbox{\hyperlink{class_voxie_box_a0cd2ee2048f4b560910621c693709270}{Voxie\+Box\+::breath()}} is called. ~\newline
+  
+
+
+
+
+{\ttfamily \#include $<$vx\+Data\+Types.\+h$>$}
+
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{structvoxie__input__t_a1141d7f7cff7c5c044bb3077ca319725}{bstat}}
+\begin{DoxyCompactList}\small\item\em buttonstate for mouse buttons 0 = no buttons pressed, 1 = left mouse button pressed, 2 = right mouse button pressed, 3 = both left and right button pressed. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structvoxie__input__t_a8e9e08a17fdffd9cb7026f3c6e8aa535}\label{structvoxie__input__t_a8e9e08a17fdffd9cb7026f3c6e8aa535}} 
+int \mbox{\hyperlink{structvoxie__input__t_a8e9e08a17fdffd9cb7026f3c6e8aa535}{obstat}}
+\begin{DoxyCompactList}\small\item\em the previous button state compare this value to the current bstat to do your own \textquotesingle{}On Down\textquotesingle{} or \textquotesingle{}On Up\textquotesingle{} calls or use Voxie\+Box\+::get\+Mouse\+Click\+On\+Down \& Voxie\+Box\+::get\+Mouse\+Click\+On\+Up \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structvoxie__input__t_a2b651b2ccd07f3465b91070b987a3116}\label{structvoxie__input__t_a2b651b2ccd07f3465b91070b987a3116}} 
+int \mbox{\hyperlink{structvoxie__input__t_a2b651b2ccd07f3465b91070b987a3116}{dmousx}}
+\begin{DoxyCompactList}\small\item\em delta X movement from mouse \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structvoxie__input__t_aee42ebce334e55c0583c051acef3f53e}\label{structvoxie__input__t_aee42ebce334e55c0583c051acef3f53e}} 
+int \mbox{\hyperlink{structvoxie__input__t_aee42ebce334e55c0583c051acef3f53e}{dmousy}}
+\begin{DoxyCompactList}\small\item\em delta Y movement from mouse \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structvoxie__input__t_ae6385b3418a42cb721d8a83399457b29}\label{structvoxie__input__t_ae6385b3418a42cb721d8a83399457b29}} 
+int \mbox{\hyperlink{structvoxie__input__t_ae6385b3418a42cb721d8a83399457b29}{dmousz}}
+\begin{DoxyCompactList}\small\item\em delta Z movement from mouse (scroll wheel) \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+Struct to manage mouse inputs. Mouse state is updated when \mbox{\hyperlink{class_voxie_box_a0cd2ee2048f4b560910621c693709270}{Voxie\+Box\+::breath()}} is called. ~\newline
+ 
+
+mouse and keyboard input are managed by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} class there are many function calls which can be used to interact with the mouse (and keyboard) \begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} to see them all. ~\newline
+ for convenience \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} privately tracks the mouse\+Position 
+
+\mbox{\hyperlink{class_voxie_box_ac567600c40003e62fbcf9ffe1aaf938b}{Voxie\+Box\+::get\+Mouse\+Position()}} as the \mbox{\hyperlink{structvoxie__input__t}{voxie\+\_\+input\+\_\+t}} just tracks movements use 
+
+\mbox{\hyperlink{class_voxie_box_a8fc2b7e9e938d61314aaf8c3b23fbae2}{Voxie\+Box\+::report\+Mouse}} to see a live report 
+\end{DoxySeeAlso}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{structvoxie__input__t_a1141d7f7cff7c5c044bb3077ca319725}\label{structvoxie__input__t_a1141d7f7cff7c5c044bb3077ca319725}} 
+\index{voxie\_input\_t@{voxie\_input\_t}!bstat@{bstat}}
+\index{bstat@{bstat}!voxie\_input\_t@{voxie\_input\_t}}
+\doxysubsubsection{\texorpdfstring{bstat}{bstat}}
+{\footnotesize\ttfamily int voxie\+\_\+input\+\_\+t\+::bstat}
+
+
+
+buttonstate for mouse buttons 0 = no buttons pressed, 1 = left mouse button pressed, 2 = right mouse button pressed, 3 = both left and right button pressed. 
+
+\begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_voxie_box_a9505deb662efbbd9d955158be30575f5}{Voxie\+Box\+::get\+Mouse\+Button\+State}} 
+
+Voxie\+Box\+::get\+Mouse\+Click\+On\+Down 
+\end{DoxySeeAlso}
+
+
+The documentation for this struct was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{vx_data_types_8h}{vx\+Data\+Types.\+h}}\end{DoxyCompactItemize}

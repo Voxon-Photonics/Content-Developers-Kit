@@ -1,12 +1,10 @@
 var searchData=
 [
-  ['iactive_159',['IActive',['../class_i_active.html',1,'']]],
-  ['ianghak_160',['ianghak',['../struct_voxie__wind__t.html#ad27ca59b4625abae65b043a055538f77',1,'Voxie_wind_t']]],
-  ['ibreathable_161',['IBreathable',['../class_i_breathable.html',1,'']]],
-  ['idrawable_162',['IDrawable',['../class_i_drawable.html',1,'']]],
-  ['ilacemode_163',['ilacemode',['../struct_voxie__wind__t.html#ac8456ac63600730fc0edda5f8a77ce50',1,'Voxie_wind_t']]],
-  ['init_164',['init',['../class_i_voxie_box.html#a98efc8de5deeb9879275dfe6df935006',1,'IVoxieBox::init()'],['../class_voxie_box.html#a9df7e95b7c877b5942690affef94d4a6',1,'VoxieBox::init()']]],
-  ['isrecording_165',['isrecording',['../struct_voxie__wind__t.html#ae6df453ddb2049913fa4cc7e1bbe83c5',1,'Voxie_wind_t']]],
-  ['ivoxiebox_166',['IVoxieBox',['../class_i_voxie_box.html',1,'']]],
-  ['ivoxieptr_167',['IVoxiePtr',['../class_i_voxie_ptr.html',1,'']]]
+  ['hacks_173',['hacks',['../structvoxie__wind__t.html#a2fb15ea7d1a06b1697c67ea0ed1a54bd',1,'voxie_wind_t']]],
+  ['hat_174',['hat',['../structvoxie__xbox__t.html#a7f14604d0ff3e2a82580b00412ceaff1',1,'voxie_xbox_t']]],
+  ['hwsync_5famp_175',['hwsync_amp',['../structvoxie__wind__t.html#a253789a3b40ccb83e14a47de70a50727',1,'voxie_wind_t']]],
+  ['hwsync_5fframe0_176',['hwsync_frame0',['../structvoxie__wind__t.html#ab4a4b77e3367fea1e45201119b0742f4',1,'voxie_wind_t']]],
+  ['hwsync_5flevthresh_177',['hwsync_levthresh',['../structvoxie__wind__t.html#ac4552533167ba423a06aa872bd6134d8',1,'voxie_wind_t']]],
+  ['hwsync_5fpha_178',['hwsync_pha',['../structvoxie__wind__t.html#aad256bf4b9c42765159cd4fa8b0bb6e4',1,'voxie_wind_t']]],
+  ['hwsync_5fphase_179',['hwsync_phase',['../structvoxie__wind__t.html#aad77268198b51d917f2a147b92a3b98a',1,'voxie_wind_t']]]
 ];

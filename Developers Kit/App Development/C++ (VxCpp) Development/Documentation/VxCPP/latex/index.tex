@@ -24,7 +24,7 @@ The compiled Vx\+Cpp.\+dll and associated files are released as public domain. H
            *  Easier Debuging Reporting for Voxie Window, Voxie Frame and all inputs types
            *  Extended input function checks for mouse, keyboard, SpaceNav and gamepads all inputs have functions to check for onDown(), 
                  onUp(), duration(), and isDown()  
-           *  Internally managed Input for Gamecontrollers and SpaceNav. More advanced Key stroke history. 
+           *  Internally managed Input for Game controllers and SpaceNav. More advanced Key stroke history. 
            *  Various boolean function calls to turn on/off features such as 'drawBorder' 'clipMouse' or 'invertZAxis'
            *  Embedded cursor (for mouse or otherwise) 
            *  DrawQuad() function to easily draw a textured Quad on the display. 
@@ -39,7 +39,7 @@ The compiled Vx\+Cpp.\+dll and associated files are released as public domain. H
            *  Simple Move To Point function for moving a position to another.
 \end{DoxyVerb}
 \hypertarget{index_developing_sec}{}\doxysection{Developing with Vx\+Cpp.\+dll and making your own VX++ App}\label{index_developing_sec}
-Developing with Vx\+Cpp.\+dll is similar to developing with the voxiebox.\+dll. A VX application needs to load in the voxiebox.\+dll (Ken\textquotesingle{}s Voxon SDK library) a VX++ application loads in the voxiebox.\+dll by an entry function in Vx\+Cpp.\+dll \char`\"{}\+Create\+Voxie\+Box\+Object\char`\"{} calling this function createsa new \textquotesingle{}\mbox{\hyperlink{class_voxie_box}{Voxie\+Box}}\textquotesingle{} an object Once the \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} object is created it can be accessed using an pointer to the \mbox{\hyperlink{class_i_voxie_box}{IVoxie\+Box}} interface.
+Developing with Vx\+Cpp.\+dll is similar to developing with the voxiebox.\+dll. A VX application needs to load in the voxiebox.\+dll (Ken\textquotesingle{}s Voxon SDK library) a VX++ application loads in the voxiebox.\+dll by an entry function in Vx\+Cpp.\+dll \char`\"{}\+Create\+Voxie\+Box\+Object\char`\"{} calling this function creates a new \textquotesingle{}\mbox{\hyperlink{class_voxie_box}{Voxie\+Box}}\textquotesingle{} an object Once the \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} object is created it can be accessed using an pointer to the \mbox{\hyperlink{class_i_voxie_box}{IVoxie\+Box}} interface.
 
 A simple hello world example... \begin{DoxyVerb}           // VX++ APP HELLO WORLD EXAMPLE 
            // You may use this as a template to start creating your own volumetric applications.
@@ -75,11 +75,11 @@ A simple hello world example... \begin{DoxyVerb}           // VX++ APP HELLO WOR
 
                voxie->quitLoop(); // quitLoop() stops the hardware from physically moving and ends the breath() loop
                delete voxie;
-               return 0;   // After the program quits the deconstructor for voxiebox frees the DLLs from memory if you wanted to do this manually call the voxie->Shutdown()
+               return 0;   // After the program quits the de-constructor for voxiebox frees the DLLs from memory if you wanted to do this manually call the voxie->Shutdown()
            }
 \end{DoxyVerb}
 \hypertarget{index_running_sec}{}\doxysection{Running Applications written using VX++ / Vx\+Cpp}\label{index_running_sec}
 A VX++ App (Voxon App developed with Vx\+Cpp.\+DLL) requires access to the Vx\+Cpp.\+dll. To do this you can copy Vx\+Cpp.\+dll to the local directory, place it in the Voxon runtime directory (C\+:\textbackslash{}\+Voxon\textbackslash{}\+System\textbackslash{}\+Runtime) or set it up in your system\textquotesingle{}s path variable.\hypertarget{index_releases_sec}{}\doxysection{Updating / Where to get newer versions of VX++ / Vx\+Cpp.\+dll}\label{index_releases_sec}
-Vx\+Cpp / VX++ public release (with source code) is available as part of the Voxon Content Developers Kit which can be obtained freely at \href{https://github.com/Voxon-Photonics/Content-Developers-Kit}{\texttt{ https\+://github.\+com/\+Voxon-\/\+Photonics/\+Content-\/\+Developers-\/\+Kit}}\hypertarget{index_licence_sec}{}\doxysection{Licence}\label{index_licence_sec}
+Vx\+Cpp / VX++ public release (with source code) is available as part of the Voxon Content Developers Kit which can be obtained freely at \href{https://github.com/Voxon-Photonics/Content-Developers-Kit}{\texttt{ https\+://github.\+com/\+Voxon-\/\+Photonics/\+Content-\/\+Developers-\/\+Kit}}\hypertarget{index_licencefg_sec}{}\doxysection{Licence}\label{index_licencefg_sec}
 The compiled Vx\+Cpp.\+dll is public domain any application you make using Vx\+Cpp.\+dll is yours. Applications made with VX++ and the Vx\+Cpp.\+dll can be distributed with your applications freely without any accreditation needed. However. VX++ / Vx\+Cpp.\+dll\textquotesingle{}s source code is released with a Creative Commons By Attribution (CC BY) license. This means that licensees may copy, distribute, display and perform the work and make derivative works and remixes based on it only if they give the author (Matthew Vecchio / Voxon Photonics ) proper accreditation\hypertarget{index_contact_sec}{}\doxysection{Contact information}\label{index_contact_sec}
 Vx\+Cpp / VX++ is maintained by Matthew Vecchio for Voxon Photonics. Contact me at \href{mailto:Matt@Voxon.co}{\texttt{ Matt@\+Voxon.\+co}} for feature requests, code suggestions. bug reports, feedback, showing off cool stuff you have done or anything else you can contact me at \href{mailto:Matt@Voxon.co}{\texttt{ Matt@\+Voxon.\+co}} 

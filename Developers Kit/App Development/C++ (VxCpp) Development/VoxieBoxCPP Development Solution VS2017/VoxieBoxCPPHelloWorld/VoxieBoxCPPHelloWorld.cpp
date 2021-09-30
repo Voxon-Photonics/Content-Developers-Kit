@@ -23,7 +23,7 @@ int main(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdshow)
 	IVoxieBox* voxie = pEntryFunction();
 
 	// variables to setup text positions to display 'Hello World' -- feel free to delete this  
-	point3d textPos{ -0.5, 0, 0 };     // text postions x,y,z values
+	point3d textPos{ -0.5, 0, 0 };     // text positions x,y,z values
 	point3d textWidth{ 0.1,  0, 0 };     // text rVector  x,y,z ... the x value determines the width of the text the other values deal with rotating text
 	point3d textHeight{ 0, 0.15, 0 }; // text dVector  x,y,z ... the y value determines the height of the text the other values deal with rotating text
 
@@ -42,5 +42,5 @@ int main(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdshow)
 
 	voxie->quitLoop(); // quitLoop() stops the hardware from physically moving and ends the breath() loop
 	delete voxie;
-	return 0;   // After the program quits the deconstructor for voxiebox frees the DLLs from memory if you wanted to do this manually call the voxie->Shutdown()
+	return 0;   // After the program quits the de-constructor for voxiebox frees the DLLs from memory if you wanted to do this manually call the voxie->Shutdown()
 }

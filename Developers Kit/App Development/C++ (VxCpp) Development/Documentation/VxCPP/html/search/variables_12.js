@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['u_792',['u',['../struct_poltex__t.html#aa1b32439fa6ec0d2f0becef084fd13d5',1,'Poltex_t']]],
-  ['upndow_793',['upndow',['../struct_voxie__wind__t.html#a7a60d20877725d442b7658621b30bb91',1,'Voxie_wind_t']]],
-  ['usecol_794',['usecol',['../struct_voxie__wind__t.html#aa874003f0117a77d62b4cf6ca8567d16',1,'Voxie_wind_t']]],
-  ['useemu_795',['useemu',['../struct_voxie__wind__t.html#ab0a8ac96e9611178d4dfe7cd90cc9cd9',1,'Voxie_wind_t']]],
-  ['usejoy_796',['usejoy',['../struct_voxie__wind__t.html#aa7135b272ddbe11aacc292a5bbcc0d39',1,'Voxie_wind_t']]],
-  ['usekeystone_797',['usekeystone',['../struct_voxie__wind__t.html#ad4d9916aebc63dda0ac436cf7efb1dfc',1,'Voxie_wind_t']]]
+  ['u_923',['u',['../structpoltex__t.html#a8a3aee4828da92bee5d65724e648460e',1,'poltex_t']]],
+  ['upndow_924',['upndow',['../structvoxie__wind__t.html#a349d05d0274aad1aa2c4c66e2dda5151',1,'voxie_wind_t']]],
+  ['usecol_925',['usecol',['../structvoxie__wind__t.html#a0134b92b88cd8ee72e88f362d76ab494',1,'voxie_wind_t']]],
+  ['useemu_926',['useemu',['../structvoxie__wind__t.html#af2084c581d45bcae94db5ed44a178eec',1,'voxie_wind_t']]],
+  ['usejoy_927',['usejoy',['../structvoxie__wind__t.html#ac83b00147f5c800f00932fc718eda928',1,'voxie_wind_t']]],
+  ['usekeystone_928',['usekeystone',['../structvoxie__wind__t.html#ac020d8200d6975c061c0ad261ea4557c',1,'voxie_wind_t']]]
 ];

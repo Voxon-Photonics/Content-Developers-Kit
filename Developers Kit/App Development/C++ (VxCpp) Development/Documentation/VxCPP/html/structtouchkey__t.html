@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.9.1"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>VxCPP (VX++): touchkey_t Struct Reference</title>
+<title>VX++ Framework (VxCpp.dll): touchkey_t Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -20,8 +20,9 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
+  <td id="projectlogo"><img alt="Logo" src="vx++ logo_small.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">VxCPP (VX++)
+   <div id="projectname">VX++ Framework (VxCpp.dll)
    </div>
    <div id="projectbrief">Friendly Voxon development with classes</div>
   </td>
@@ -106,12 +107,12 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struc
 <tr class="memdesc:affa332a4844a25e1befbe34c2869f686"><td class="mdescLeft">&#160;</td><td class="mdescRight">background color (24-bit hex 0xRBG value 0xff0000 = Red). Use -1 for transparent background. <br /></td></tr>
 <tr class="separator:affa332a4844a25e1befbe34c2869f686"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6306345a3b739b5eddf98d7e5d3e0a89"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtouchkey__t.html#a6306345a3b739b5eddf98d7e5d3e0a89">keycode</a></td></tr>
-<tr class="memdesc:a6306345a3b739b5eddf98d7e5d3e0a89"><td class="mdescLeft">&#160;</td><td class="mdescRight">keyboard scan code of button.  <a href="structtouchkey__t.html#a6306345a3b739b5eddf98d7e5d3e0a89">More...</a><br /></td></tr>
+<tr class="memdesc:a6306345a3b739b5eddf98d7e5d3e0a89"><td class="mdescLeft">&#160;</td><td class="mdescRight">keyboard scan code of button. use extended scancodes for visual feedback  <a href="structtouchkey__t.html#a6306345a3b739b5eddf98d7e5d3e0a89">More...</a><br /></td></tr>
 <tr class="separator:a6306345a3b739b5eddf98d7e5d3e0a89"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Manages custom touch keys displayed on the 2D secondary (touch) screen. </p>
-<p>To make use of this struct in Voxon development see <a class="el" href="class_voxie_box.html#ad87164717cc7cc8d9a63af3395c24a8a" title="Add custom touch keys. (enable touch keyboard under &#39;Misc&#39; menu tab)">VoxieBox::touchAddKey</a> </p>
+<p>To make use of this struct in Voxon development see VoxieBox::touchAddKey </p>
 </div><h2 class="groupheader">Member Data Documentation</h2>
 <a id="a6306345a3b739b5eddf98d7e5d3e0a89"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6306345a3b739b5eddf98d7e5d3e0a89">&#9670;&nbsp;</a></span>keycode</h2>
@@ -125,7 +126,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struc
       </table>
 </div><div class="memdoc">
 
-<p>keyboard scan code of button. </p>
+<p>keyboard scan code of button. use extended scancodes for visual feedback </p>
 <dl class="section see"><dt>See also</dt><dd>inputTypes.h::Keys for list of scancodes. Special keycodes for mouse: Mouse:0x0000, LBut:0x0001, RBut:0x0002, MBut:0x0003 </dd></dl>
 
 </div>

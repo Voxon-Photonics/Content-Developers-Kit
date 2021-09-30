@@ -10,7 +10,7 @@ HINSTANCE VoxieBox::hvoxie = 0;
 
  /** VoxieBox constructor checks to see if another instance of VoxieBox has been created.
   *	If not; then loads the internal voxie_wind_t struct (vw) into memory.
-  *	Then calls VoxieBox:init() & initalises the data, loads settings from voxiebox.ini
+  *	Then calls VoxieBox:init() & initialise the data, loads settings from voxiebox.ini
   * and voxie_menu_0.ini  
   */
 VoxieBox::VoxieBox()
@@ -26,7 +26,7 @@ VoxieBox::VoxieBox()
 		MessageBox(0, "Error: voxie_init() failed", "", MB_OK); success = false;
 	}
 
-	//check if hardware is a spinner or up/down system and adjust clipshape
+	//check if hardware is a spinner or up/down system and adjust clip shape
 	// Update : this is called too early and fails to detect a spinner... had to move it to the breathloop 
 	
 	//if (vw.nblades > 0)	vw.clipshape = 1;
@@ -45,7 +45,7 @@ VoxieBox::~VoxieBox()
  * 
  *  The voxie window is the struct which holds all the settings and values to do with the volumetric display.  @see vxDataTypes.h::voxie_wind_t
  * 
- *  This function is called first time by the VoxieBox contructor. So there is no need for a developer to initalise it
+ *  This function is called first time by the VoxieBox constructor. So there is no need for a developer to initialise it
  *  But can be used to update the voxie_window if the VoxieBox class's vw (voxie_wind_t) has been updated.
  *  On the first call, this function sets up the window and starts the hardware motor.
  *  On later calls, it can be used to override some parameters of the vw (voxie_window_t) structure.
@@ -53,7 +53,7 @@ VoxieBox::~VoxieBox()
  *     For example:
  *       vw.useJoy = 0; voxie_init(&vw);
  *    would change the joystick input method to direct input (joyInfoEx) emulation regardless of the setting in voxiebox.ini.
- *	     if voxie_init returns -1 the function returns an error could not intalise or update
+ *	     if voxie_init returns -1 the function returns an error could not initialise or update
  *   @return 0 if Initialization or updating is successful. -1 if an error  
  *
  *  Note : This function always passing in the VoxieBox class's voxie_wind_t which is known as 'vw'
@@ -64,7 +64,20 @@ int VoxieBox::init()
 	return voxie_init(&vw);
 }
 
-//! Overides internal mouse position with a new point3d position
+
+//! returns a pointer to the internal voxie_wind_t struct
+voxie_wind_t * VoxieBox::getVoxieWindow()
+{
+	return &vw;
+}
+
+//! returns a pointer to the internal voxie_frame_t struct
+voxie_frame_t * VoxieBox::getVoxieFrame()
+{
+	return &vf;
+}
+
+//! Overrides internal mouse position with a new point3d position
 /**
  * Useful to jump / move the mouse cursor to a specific part of the display.
  *
@@ -97,9 +110,6 @@ void VoxieBox::updateMousePosition()
 	mousePos.y += float(in.dmousy * mouseXYSensitivity);
 	if (invertZAxis)	mousePos.z += float(-in.dmousz * mouseZSensitivity); // inverted mouse movement
 	else				mousePos.z += float(in.dmousz * mouseZSensitivity);  // normal mouse movement
-
-	
-
 
 	if (enableMouseClip) clipInsideVolume(&mousePos);
 
@@ -198,9 +208,9 @@ void VoxieBox::rotVexD(float angInDegrees, point2d *a, point2d *b)
 //! Renders a 2D textured (.png, .jpg... most image formats) quad (plane) onto the volumetric display. Useful to rendering 2D textures. Must be called between startFrame() & endFrame() functions.
 /**
  * @param filename	the filename / path for the texture to load (.png, .jpg... most image formats supported) 
- * @param pos		the centre position of the quad to render
+ * @param pos		the center position of the quad to render
  * @param width		x dimension of the quad (how wide).
- * @param height	y dimention of the quad (how high). 
+ * @param height	y dimension of the quad (how high). 
  * @param hang		the horizontal angle (yaw)  . 0 is front facing. 180 is facing the back of the display. presented in degrees. 
  * @param hang		the vertical angle (pitch). 0 is horizontal facing. 90 is facing vertical. presented in degrees.
  * @param twist		how much 'twist' is in the quad. (roll) in the quad 0 is flat. presented in degrees.
@@ -232,7 +242,7 @@ void VoxieBox::drawQuad(char *filename, point3d *pos, float width, float height,
 
 	rotVex(twist, &vx, &vy);
 		
-	//voxie_drawsph(&vf, pos->x, pos->y, pos->z, .10, 0, 0x00ff00); // for debuging
+	//voxie_drawsph(&vf, pos->x, pos->y, pos->z, .10, 0, 0x00ff00); // for debugging
 	for (i = 0; i < 4; i++)
 	{
 		if ((i + 1) & 2) { f = -width; vt[i].u = 0.f; }
@@ -244,7 +254,7 @@ void VoxieBox::drawQuad(char *filename, point3d *pos, float width, float height,
 		vt[i].y = vx.y*f + vy.y*g + pos->y;
 		vt[i].z = vx.z*f + vy.z*g + pos->z;
 		vt[i].col = 0;
-	//	voxie_drawsph(&vf, vt[i].x, vt[i].y, vt[i].z, .10, 0, cols[i]); // for debuging
+	//	voxie_drawsph(&vf, vt[i].x, vt[i].y, vt[i].z, .10, 0, cols[i]); // for debugging
 	}
 	
 	drawMesh(filename, vt, 4, mesh, 5, 2, col);
@@ -256,7 +266,7 @@ void VoxieBox::drawQuad(char *filename, point3d *pos, float width, float height,
  * @param LUTpos			pointer to the Left, Up, Top position of the box. 
  * @param RDBpos			pointer to the Right, Down, Bottom position of the box.
  * @param collisionPos		the collision position to check.
- * @param showCollisionBox  For debuging set to false by default. Set to true to render the collision box onto the volumetric display. (Note : The collision check must be called within the start and end frame)
+ * @param showCollisionBox  For debugging set to false by default. Set to true to render the collision box onto the volumetric display. (Note : The collision check must be called within the start and end frame)
  *
  * @returns 1 if collision position is within (inside) the box otherwise returns 0
  * 
@@ -295,7 +305,7 @@ int VoxieBox::boxInsideCollideChk(point3d * LUTpos, point3d * RDBpos, point3d co
  * @param RDBpos			pointer to the Right, Down, Bottom position of the first box.
  * @param LUTpos			pointer to the Left, Up, Top position of the second box.
  * @param RDBpos			pointer to the Right, Down, Bottom position of the second  box.
- * @param showCollisionBox  For debuging set to false by default. Set to true to render the collision box onto the volumetric display. (Note : The collision check must be called within the start and end frame)
+ * @param showCollisionBox  For debugging set to false by default. Set to true to render the collision box onto the volumetric display. (Note : The collision check must be called within the start and end frame)
  *
  * @returns 1 if collision position is within (inside) the box otherwise returns 0
  * To check to just see if a position is inside of a box use boxInsideCollidChk()
@@ -334,13 +344,13 @@ int VoxieBox::boxCollideChk(point3d * LUTpos1, point3d * RDBpos1, point3d * LUTp
 
 
 
-//! Sphere collision check. Check if two spheres are touching. Returns 1 if collision is found otherise returns 0 
+//! Sphere collision check. Check if two spheres are touching. Returns 1 if collision is found otherwise returns 0 
 /**
  * @param sphereAPos		pointer of first sphere's position
  * @param sphereARadius		first sphere's radius
  * @param sphereBPos		pointer of second sphere's position
  * @param sphereBRadius		second sphere's radius
- * @param showCollisionBox  For debuging set to false by default. Set to true to render the collision box onto the volumetric display. (Note : The collision check must be called within the start and end frame)
+ * @param showCollisionBox  For debugging set to false by default. Set to true to render the collision box onto the volumetric display. (Note : The collision check must be called within the start and end frame)
  *
  * @returns 1 if there is a collision and 0 if not
  */
@@ -497,7 +507,7 @@ int VoxieBox::breath(voxie_inputs_t * input)
 	if (!manualNavManage) updateNavInput();
 
 	// check if the hardware is a spinner
-	// unfortuantely we have to do it every breath otherwise it might get missed....
+	// unfortunately we have to do it every breath otherwise it might get missed....
 	if (vw.nblades > 0 && vw.clipshape == 0) {
 		vw.clipshape = 1; init();
 	}
@@ -509,19 +519,20 @@ int VoxieBox::breath(voxie_inputs_t * input)
 
 //! start building the frame buffer.
 /**
-  *	 All volumetric and secondary (touch) screen draw calls need to happen betweem VoxieBox::startFrame() and VoxieBox::endFrame()
+  *	 All volumetric and secondary (touch) screen draw calls need to happen between VoxieBox::startFrame() and VoxieBox::endFrame()
   *	 the startframe() function prepares the vxTypes::voxie_frame_t struct to start a new frame and empty out the voxel buffer. 
   *  any draw call used after this point is loaded into the voxel buffer.
   *  the startFrame() function uses the internal vf voxie_frame_t to manage its voxel data. It is possible for a developer to 
   *  write directly to the vf for their own low-level drawing. 
   *	
   *  The startFrame function also sets the view to the correct aspect ration (traditionally a user would call 'voxie_setview()' after the frame to set the views dimentions)
-  *  the startFrame fucntion also draws a border around the display (if VoxieBox::setBorder() has been set to true)
+  *  the startFrame function also draws a border around the display (if VoxieBox::setBorder() has been set to true)
   *
   */
 void VoxieBox::startFrame()
 {
 	voxie_frame_start(&vf);
+	//vf.flags |= VOXIEFRAME_FLAGS_IMMEDIATE; //<-Mandatory for internal multithreading!
 	if (invertZAxis)	voxie_setview(&vf, -vw.aspx, -vw.aspy, vw.aspz, vw.aspx, vw.aspy, -vw.aspz); // inverted
 	else				voxie_setview(&vf, -vw.aspx, -vw.aspy, -vw.aspz, vw.aspx, vw.aspy, vw.aspz); // normal
 
@@ -579,7 +590,7 @@ double VoxieBox::getTime()
 
 //! Returns the system's current VPS (volumes per second).
 /**
- * @return the current VPS value. At least 15 VPS on a Up/Down system and At least 30 VPS for a Spinner is recomended.   
+ * @return the current VPS value. At least 15 VPS on a Up/Down system and At least 30 VPS for a Spinner is recommended.   
  */
 double VoxieBox::getVPS()
 {
@@ -624,7 +635,7 @@ void VoxieBox::showVPS(int posX, int posY)
 }
 
 /**
- *  Exposes some of the variables from the ineral voxie_frame_t onto the secondary (touch) screen.
+ *  Exposes some of the variables from the internal voxie_frame_t onto the secondary (touch) screen.
  *  Intended for debug purposes
  *  @param posX the X position of the report
  *  @param posY the Y position of the report
@@ -636,11 +647,11 @@ void VoxieBox::reportVoxieFrame(int posX, int posY) {
 }
 
 /**
-* Exposes some of the variables a voxie_frame_t struct nto the secondary (touch) screen.
+* Exposes some of the variables a voxie_frame_t struct onto the secondary (touch) screen.
 * Intended for debug purposes
 * @param posX the X position of the report
 * @param posY the Y position of the report
-* @param VF a pointer fo the voxie_frame_t struct to report on
+* @param VF a pointer for the voxie_frame_t struct to report on
 */
 void VoxieBox::reportVoxieFrame(int posX, int posY, voxie_frame_t * VF)
 {
@@ -653,7 +664,7 @@ void VoxieBox::reportVoxieFrame(int posX, int posY, voxie_frame_t * VF)
 }
 
 /**
-* Exposes all the varibles from the internal (vw) voxie_wind_t onto the secondary (touch) screen.
+* Exposes all the variables from the internal (vw) voxie_wind_t onto the secondary (touch) screen.
 * Intended for debug purposes
 * @param posX the X position of the report
 * @param posY the Y position of the report
@@ -665,7 +676,7 @@ void VoxieBox::reportVoxieWind(int posX, int posY) {
 }
 
 /**
-* Exposes all the varibles of a voxie_wind_t struct onto the secondary (touch) screen.
+* Exposes all the variables of a voxie_wind_t struct onto the secondary (touch) screen.
 * Intended for debug purposes
 * @param posX the X position of the report
 * @param posY the Y position of the report
@@ -710,7 +721,7 @@ void VoxieBox::reportVoxieWind(int posX, int posY, voxie_wind_t * VW )
 	debugText(posX, posY, col[4], -1, "Display -=> ilacemode = %d, drawstroke = %d, dither = %d, smear = %d, usekeystone = %d, flip = %d, menu_on_voxie = %d clipshape = %d\n aspx = %1.2f, aspy = %1.2f, aspz = %1.2f, aspr = %1.2f, asprmin = %1.2f gamma = %1.2f, density = %1.2f dotsize = %d, dimcaps = %d\n outcol[0] = %#08x, outcol[1] = %#08x, outcol[2] = %#08x, sensemask[0] = %#08x, sensemask[1] = %#08x, sensemask[2] = %#08x\n normhax %d",
 		VW->ilacemode, VW->drawstroke, VW->dither, VW->smear, VW->usekeystone, VW->flip, VW->menu_on_voxie, VW->clipshape,
 		VW->aspx, VW->aspy, VW->aspz, VW->aspr, VW->asprmin, VW->gamma, VW->density, VW->ldotnum, VW->dimcaps,
-		VW->outcol[0], VW->outcol[1], VW->outcol[2], VW->sensemask[0], VW->sensemask[1], VW->sensemask[2], VW->normmhax
+		VW->outcol[0], VW->outcol[1], VW->outcol[2], VW->sensemask[0], VW->sensemask[1], VW->sensemask[2], VW->normhax
 	);
 	posY += 36;
 	// Sound
@@ -726,9 +737,9 @@ void VoxieBox::reportVoxieWind(int posX, int posY, voxie_wind_t * VW )
 
 }
 
-//! Returns delta time (the time between volume updates) delta time is CPU speed dependant and can be used to make ensure timing is consistent between various computers / systems.
+//! Returns delta time (the time between volume updates) delta time is CPU speed dependent and can be used to make ensure timing is consistent between various computers / systems.
 /**
- * @return in seconds the delta time (time between volume updatees)
+ * @return in seconds the delta time (time between volume updates)
  */
 double VoxieBox::getDeltaTime()
 {
@@ -773,8 +784,8 @@ void VoxieBox::setView(point3d LUT, point3d RDB)
  *  Call after each VoxieBox::setView() to mask off a plane of a specified thickness. Used for viewing
  *  a slice of a scene.
  *  @param x0 x point on the center of the mask plane
- *  @param y0 y point on the centre of the mask plane
- *  @param z0 z point on the centre of the mask plane
+ *  @param y0 y point on the center of the mask plane
+ *  @param z0 z point on the center of the mask plane
  *  @param nx The normal vector; the magnitude of this vector determines the thickness of the plane.
  *  @param ny The normal vector; the magnitude of this vector determines the thickness of the plane. 
  *  @param nz The normal vector; the magnitude of this vector determines the thickness of the plane.
@@ -852,7 +863,7 @@ void VoxieBox::setLeds(int dispNum, int r, int g, int b)
 	voxie_setleds(dispNum, r, g, b);
 }
 
-//! Turns off the reciprocating screen and effectly makes the display a '2D' screen. (Works on Voxon hardware only)
+//! Turns off the reciprocating screen and effectively makes the display a '2D' screen. (Works on Voxon hardware only)
 void VoxieBox::setDisplay2D()
 {
 	if (vw.useemu == 0) {
@@ -875,7 +886,7 @@ void VoxieBox::setDisplay3D()
 
 //! Returns the internal voxie_wind_t's aspect X ratio
 /**
- * @return returns the interal voxie_wind_t's aspect X ratio (default is 1)
+ * @return returns the internal voxie_wind_t's aspect X ratio (default is 1)
  */
 float VoxieBox::getAspectX()
 {
@@ -884,7 +895,7 @@ float VoxieBox::getAspectX()
 
 //! Returns the internal voxie_wind_t's aspect Y ratio
 /**
- * @return returns the interal voxie_wind_t's aspect Y ratio (default is 1)
+ * @return returns the internal voxie_wind_t's aspect Y ratio (default is 1)
  */
 float VoxieBox::getAspectY()
 {
@@ -893,16 +904,16 @@ float VoxieBox::getAspectY()
 
 //! Returns the internal voxie_wind_t's aspect Z ratio
 /**
- * @return returns the interal voxie_wind_t's aspect Z ratio (default is .40)
+ * @return returns the internal voxie_wind_t's aspect Z ratio (default is .40)
  */
 float VoxieBox::getAspectZ()
 {
 	return vw.aspz;
 }
 
-//! Returns all the interal voxie_wind_t's aspect ratio values as a point3d (x,y,z)
+//! Returns all the internal voxie_wind_t's aspect ratio values as a point3d (x,y,z)
 /**
- *  @return returns all the interal voxie_wind_t's aspect ratio values as a point3d (x,y,z)
+ *  @return returns all the internal voxie_wind_t's aspect ratio values as a point3d (x,y,z)
  */
 point3d VoxieBox::getAspect()
 {
@@ -911,7 +922,7 @@ point3d VoxieBox::getAspect()
 }
 
 
-//! Set the interal voxie_wind_t's X aspect ratio value and update the voxie_wind_t
+//! Set the internal voxie_wind_t's X aspect ratio value and update the voxie_wind_t
 /**
  *  @param newAspectX  the new Aspect X value to apply. th
  */
@@ -921,7 +932,7 @@ void VoxieBox::setAspectX(float newAspectX)
 	this->init();
 }
 
-//! Set the interal voxie_wind_t's Y aspect ratio value and update the voxie_wind_t
+//! Set the internal voxie_wind_t's Y aspect ratio value and update the voxie_wind_t
 /**
  *  @param newAspectY  the new Aspect Y value to apply. th
  */
@@ -931,7 +942,7 @@ void VoxieBox::setAspectY(float newAspectY)
 	this->init();
 }
 
-//! Set the interal voxie_wind_t's Z aspect ratio value and update the voxie_wind_t
+//! Set the internal voxie_wind_t's Z aspect ratio value and update the voxie_wind_t
 /**
  *  @param newAspectZ  the new Aspect Z value to apply. th
  */
@@ -941,7 +952,7 @@ void VoxieBox::setAspectZ(float newAspectZ)
 	this->init();
 }
 
-//! Set all the interal voxie_wind_t's aspect ratio values and update the voxie_wind_t
+//! Set all the internal voxie_wind_t's aspect ratio values and update the voxie_wind_t
 /**
  *  @param newAspect the new aspect ratios for the volumetric display. 
  */
@@ -996,8 +1007,7 @@ int VoxieBox::voxie_load(voxie_wind_t *vw)
 	voxie_menu_addtab = (void(__cdecl *)(char*, int, int, int, int))GetProcAddress(hvoxie, "voxie_menu_addtab");
 	voxie_menu_additem = (void(__cdecl *)(char*, int, int, int, int, int, int, int, int, double, double, double, double, double))GetProcAddress(hvoxie, "voxie_menu_additem");
 	voxie_menu_updateitem = (void(__cdecl *)(int, char*, int, double))GetProcAddress(hvoxie, "voxie_menu_updateitem");
-	voxie_touch_custom = (void(__cdecl *)(const touchkey_t *, int))GetProcAddress(hvoxie, "voxie_touch_custom");
-	voxie_doscreencap = (void(__cdecl *)(int))GetProcAddress(hvoxie, "voxie_doscreencap");
+	voxie_volcap = (void(__cdecl *)(const char*, int, int))GetProcAddress(hvoxie, "voxie_volcap");
 	voxie_setview = (void(__cdecl *)(voxie_frame_t*, float, float, float, float, float, float))GetProcAddress(hvoxie, "voxie_setview");
 	voxie_setmaskplane = (void(__cdecl *)(voxie_frame_t*, float, float, float, float, float, float))GetProcAddress(hvoxie, "voxie_setmaskplane");
 	voxie_setnorm = (void(__cdecl *)(float nx, float ny, float nz))GetProcAddress(hvoxie, "voxie_setnorm");
@@ -1024,7 +1034,9 @@ int VoxieBox::voxie_load(voxie_wind_t *vw)
 	voxie_debug_drawline = (void(__cdecl *)(float x0, float y0, float x1, float y1, int col))       GetProcAddress(hvoxie, "voxie_debug_drawline");
 	voxie_debug_drawcirc = (void(__cdecl *)(int xc, int yc, int r, int col))                        GetProcAddress(hvoxie, "voxie_debug_drawcirc");
 	voxie_debug_drawrectfill = (void(__cdecl *)(int x0, int y0, int x1, int y1, int col))               GetProcAddress(hvoxie, "voxie_debug_drawrectfill");
-	voxie_debug_drawcircfill = (void(__cdecl *)(int x, int y, int r, int col))                          GetProcAddress(hvoxie, "voxie_debug_drawcircfill");
+	voxie_debug_drawcircfill = (void(__cdecl *)(int x, int y, int r, int col))               GetProcAddress(hvoxie, "voxie_debug_drawcircfill");
+	voxie_debug_drawtile =	(void(__cdecl *)(tiletype *src, int x, int y))					 GetProcAddress(hvoxie, "voxie_debug_drawtile");
+
 	voxie_playsound = (int(__cdecl *)(const char*, int, int, int, float))GetProcAddress(hvoxie, "voxie_playsound");
 	voxie_playsound_update = (void(__cdecl *)(int, int, int, int, float))GetProcAddress(hvoxie, "voxie_playsound_update");
 	voxie_setaudplaycb = (void(__cdecl *)(void(*userplayfunc)(int*, int)))GetProcAddress(hvoxie, "voxie_setaudplaycb");
@@ -1032,22 +1044,26 @@ int VoxieBox::voxie_load(voxie_wind_t *vw)
 	voxie_rec_open = (int(__cdecl *)(voxie_rec_t*, char*, int))GetProcAddress(hvoxie, "voxie_rec_open");
 	voxie_rec_play = (int(__cdecl *)(voxie_rec_t*, int))      GetProcAddress(hvoxie, "voxie_rec_play");
 	voxie_rec_close = (void(__cdecl *)(voxie_rec_t*))          GetProcAddress(hvoxie, "voxie_rec_close");
-	kpzload = (void(__cdecl *)(const char*, INT_PTR*, int*, int*, int*))        GetProcAddress(hvoxie, "kpzload");
-	kpgetdim = (int(__cdecl *)(const char*, int, int*, int*))                  GetProcAddress(hvoxie, "kpgetdim");
-	kprender = (int(__cdecl *)(const char*, int, INT_PTR, int, int, int, int, int))GetProcAddress(hvoxie, "kprender");
-	kzaddstack = (int(__cdecl *)(const char*))GetProcAddress(hvoxie, "kzaddstack");
+
+	
+	//Ken's ZIP functions
+	kpzload = (void(__cdecl *)(const char* fileName, INT_PTR* fptr, INT_PTR* bpl, INT_PTR* xsiz, INT_PTR* ysiz))        GetProcAddress(hvoxie, "kpzload");
+	kpgetdim = (int(__cdecl *)(const char * buffer, int nby, int * xsiz, int * ysiz))                  GetProcAddress(hvoxie, "kpgetdim");
+	kprender = (int(__cdecl *)(const char * buffer, int nby, INT_PTR fptr, int bpl, int xsiz, int ysiz, int xoff, int yoff))GetProcAddress(hvoxie, "kprender");
+	kzaddstack = (int(__cdecl *)(const char * fileName))GetProcAddress(hvoxie, "kzaddstack");
 	kzuninit = (void(__cdecl *)(void))       GetProcAddress(hvoxie, "kzuninit");
-	kzsetfil = (void(__cdecl *)(FILE*))      GetProcAddress(hvoxie, "kzsetfil");
-	kzopen = (INT_PTR(__cdecl *)(const char*))GetProcAddress(hvoxie, "kzopen");
-	kzfindfilestart = (void(__cdecl *)(const char*))GetProcAddress(hvoxie, "kzfindfilestart");
-	kzfindfile = (int(__cdecl *)(char*))      GetProcAddress(hvoxie, "kzfindfile");
-	kzread = (int(__cdecl *)(void*, int))  GetProcAddress(hvoxie, "kzread");
-	kzfilelength = (int(__cdecl *)(void))       GetProcAddress(hvoxie, "kzfilelength");
-	kzseek = (int(__cdecl *)(int, int))    GetProcAddress(hvoxie, "kzseek");
-	kztell = (int(__cdecl *)(void))       GetProcAddress(hvoxie, "kztell");
-	kzgetc = (int(__cdecl *)(void))       GetProcAddress(hvoxie, "kzgetc");
-	kzeof = (int(__cdecl *)(void))       GetProcAddress(hvoxie, "kzeof");
-	kzclose = (void(__cdecl *)(void))       GetProcAddress(hvoxie, "kzclose");
+	kzsetfil = (void(__cdecl *)(FILE* fileName))      GetProcAddress(hvoxie, "kzsetfil");
+	kzopen = (INT_PTR(__cdecl *)(const char* ))GetProcAddress(hvoxie, "kzopen");
+	kzfindfilestart = (void(__cdecl *)(const char* st))GetProcAddress(hvoxie, "kzfindfilestart");
+	kzfindfile = (int(__cdecl *)(kzfind_t * find, kzfileinfo_t *fileinfo))      GetProcAddress(hvoxie, "kzfindfile");
+	kzread = (int(__cdecl *)(kzfile_t * kzfile, void * buffer, unsigned int leng))  GetProcAddress(hvoxie, "kzread");
+	kzfilelength = (int(__cdecl *)(kzfile_t * kzfile))       GetProcAddress(hvoxie, "kzfilelength");
+
+	kzseek = (int(__cdecl *)(kzfile_t * kzfile, int offset, int whence))    GetProcAddress(hvoxie, "kzseek");
+	kztell = (int(__cdecl *)(kzfile_t * kzfile))       GetProcAddress(hvoxie, "kztell");
+	kzgetc = (int(__cdecl *)(kzfile_t * kzfile))       GetProcAddress(hvoxie, "kzgetc");
+	kzeof = (int(__cdecl *)(kzfile_t * kzfile))       GetProcAddress(hvoxie, "kzeof");
+	kzclose = (void(__cdecl *)(kzfile_t * kzfile))       GetProcAddress(hvoxie, "kzclose");
 #endif
 
 	voxie_loadini_int(vw);
@@ -1454,13 +1470,59 @@ void VoxieBox::reportMouse(int posX, int posY, bool showCursor)
 
 //! Add custom touch keys. (enable touch keyboard under 'Misc' menu tab) 
 /** 
- *	pass through touchKey_t to add them to the touch keyboard (shown on the secondary touch screen). 
- *	see touchkey_t for structure of touchKey_t
- *	@param num @TODO
+ *	pass through an array of const touchkey_t setup your own custom touch screen layout
+ *  Make sure 'touch controls' are enabled via on the misc. tab on the VoxieMenu
+ *  @params const touchkey_t * touchkey		pointer to an array of const touchkey_t structs with definitions. 
+ *  @params int  sizeOfArray				size of how many touch buttons in the array to add
+ *
+ *  Note : call touchAddCustomLayout(NULL,NULL) to return to default layout
+ *  each touchkey_t struct contains one key the params are
+
+				char* 	title		- the title of the key
+				int 	xpos  		- the x position of where to draw the touch button
+				int 	ypos  		- the y position of where to draw the touch button
+				int 	xsize 		- the size or the horizontal length of the button written as pixels
+				int 	ysize 		- the size or the horizontal length of the button written as pixels
+				int		frontColor	- the hexadecimal color value for the button
+				int		backColor	- the hexadecimal color value for the button's background. -1 for transparent
+				int 	scanCode	- the scancode / keyboard scan code * 256 + ASCII code (0 if N/A).
+
+				Note special keycodes for mouse: Mouse:0x0000, LBut:0x0001, RBut:0x0002, MBut:0x0003
+
+				// To make a custom function callback link the touchkey_t struct to a scancode that isn't being used for example (0x8080, 0x8181)
+				//               Scan codes used:                                   ASCII codes used:
+				//00 01 02 03 04 05 06 07 08 09 0a 0b 0c 0d 0e 0f    00 01 02 03  .  .  .  . 08 09  .  .  . 0d  .  .
+				//10 11 12 13 14 15 16 17 18 19 1a 1b 1c 1d 1e 1f     .  .  .  .  .  .  .  .  .  .  . 1b  .  .  .  .
+				//20 21 22 23 24 25 26 27 28 29 2a 2b 2c 2d 2e 2f    20  .  .  .  .  .  . 27  .  . 2a 2b 2c 2d 2e 2f
+				//30 31 32 33 34 35 36 37 38 39 3a 3b 3c 3d 3e 3f    30 31 32 33 34 35 36 37 38 39  . 3b  . 3d  .  .
+				//40 41 42 43 44 45 46 47 48 49 4a 4b 4c 4d 4e 4f     .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+				//50 51 52 53  .  .  . 57 58  .  .  .  .  .  .  .     .  .  .  .  .  .  .  .  .  .  . 5b 5c 5d  .  .  <--0x54..0x56 (3), 0x59..0x5a (2), 0x5e..0x5f (2)
+				// .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .    60 61 62 63 64 65 66 67 68 69 6a 6b 6c 6d 6e 6f
+				// .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .    70 71 72 73 74 75 76 77 78 79 7a  .  .  .  .  .  <--0x7b..0x9b (33)
+				// .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+				// .  .  .  .  .  .  .  .  .  .  .  . 9c 9d  .  .     .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  <--0x9e..0xb4 (23)
+				// .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+				// .  .  .  .  . b5  . b7 b8  .  .  .  .  .  .  .     .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  <--0xb9..0xc4 (12)
+				// .  .  .  .  . c5  . c7 c8 c9  . cb  . cd  . cf     .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+				//d0 d1 d2 d3  .  .  .  .  .  .  .  .  . dd  .  .     .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  <--0xd4..0xdc (9), 0xde..0xff (34)
+				// .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+				// .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
+
+				example: 
+				touchkey_t = { "Touch\nonly\nFunc0", 80,100,200,200,0x405060,-1,0x8080 };
+				voxie->getKeyIsDown(0x80) { ... your custom function here ... }
+
+
+
+ * to actually see the custom touch controls you need to have TOUCH CONTROLLS ENABLED
+ * by default they are turned off - they can be turned on by pressing the button in the 'misc' menu
+ * or adding 'touchcontrols=1' to voxiebox.ini
  */
-void VoxieBox::touchAddKey(const touchkey_t * touchkey, int num)
+
+void VoxieBox::touchAddCustomLayout(const touchkey_t * touchkey , int  sizeOfArray )
 {
-	voxie_touch_custom(touchkey, num);
+	
+	voxie_touch_custom(touchkey, sizeOfArray);
 }
 
 //!  toggles a white border around the perimeter of the volumetric display.
@@ -1470,7 +1532,7 @@ void VoxieBox::setBorder(bool option)
 }
 
 
-//! when enabled and VoxieBox::quitLoop is called the Voxiebox libary is freed from memory
+//! when enabled and VoxieBox::quitLoop is called the Voxiebox library is freed from memory
 void VoxieBox::setCleanExitOnQuitLoop(bool option)
 {
 	enableCleanExit = option;
@@ -1831,7 +1893,7 @@ void VoxieBox::reportNav(int posX, int posY, bool showCursor)
  * @param bgImageFileName	an image file to be used as background (should be 1024x600 for the LCD display)
  *
  *
- * The menu_update( int id, char *st, double val. int how, void * userdata) is called everytime a menu button is pressed.
+ * The menu_update( int id, char *st, double val. int how, void * userdata) is called every time a menu button is pressed.
  * each menu item has an id and passes through certain values depending on its item type.
  *
  *                  Parameters for the menu_update() custom function:
@@ -1889,9 +1951,9 @@ void VoxieBox::menuAddTab(char *st, int x, int y, int xs, int ys)
 * @param label name of text/button/slider
 * @param x starting x position for menu item
 * @param y starting y position for menu item
-* @param xSize horiztional size of item
+* @param xSize horizontal size of item
 * @param ySize vertical size of item
-* @param id user-defined low integer (use enum to differentiate easily). Assign aa unique number (ID) so the menu item can be recalled by other functions
+* @param id user-defined low integer (use enum to differentiate easily). Assign a unique number (ID) so the menu item can be recalled by other functions
 * @param type the type of menu item to create see vxInputTypes.h::menuTypes
 *           MENU_TEXT:     text (decoration only)
 *           MENU_LINE:     line (decoration only)
@@ -1928,9 +1990,6 @@ void VoxieBox::menuAddItem(char * label, int x, int y, int xSize, int ySize, int
  *	@param	st		changing the text (if applicable)
  *	@param  state	the state of the item (if applicable)
  *	@param	v		the value (if applicable)
- *
- *
- *
  */
 void VoxieBox::updateMenu(int id, char * st, int state, double v)
 {
@@ -1989,11 +2048,11 @@ void VoxieBox::debugDrawCircle(int xCenterPos, int yCenterPos, int radius, int c
 
 //! Draw filled rectangle on the secondary (touch) screen.  Must be called between startFrame() & endFrame() functions. 
 /** 
- *	@param	xStartPos	left most starting postion of box
- *	@param	yStartPos	top most starting postion of box
- *	@param	xEndPos		right most ending postion of box
- *	@param	yEndPos		bottom most ending postion of box
- *	@param	col			24-bit hexidemical RGB color value
+ *	@param	xStartPos	left most starting position of box
+ *	@param	yStartPos	top most starting position of box
+ *	@param	xEndPos		right most ending position of box
+ *	@param	yEndPos		bottom most ending position of box
+ *	@param	col			24-bit hexadecimal RGB color value
  */
 void VoxieBox::debugDrawBoxFill(int xStartPos, int yStartPos, int xEndPos, int yEndPos, int col)
 {
@@ -2002,14 +2061,45 @@ void VoxieBox::debugDrawBoxFill(int xStartPos, int yStartPos, int xEndPos, int y
 
 //! Draw filled circle on the secondary (touch) screen.  Must be called between startFrame() & endFrame() functions. 
 /**  
- *	@param xCenterPos	x horiztional circle's center position
+ *	@param xCenterPos	x horizontal circle's center position
  *	@param yCenterPos	y vertical circle's center position
  *  @param radius	radius of circle. Size in pixels
- *	@param col	24-bit hexidemical RGB color value
+ *	@param col	24-bit hexadecimal RGB color value
  */ 
 void VoxieBox::debugDrawCircFill(int xCenterPos, int yCenterPos, int radius, int col)
 {
 	voxie_debug_drawcircfill(xCenterPos, yCenterPos, radius,col);
+}
+
+//!  Draws a texture onto the secondary (touch) screen. 
+/**
+ * @param tiletype * source		pointer to a tile type    
+ * @param int	xpos			the x position to render onto the secondary (touch) screen
+ * @param int	ypos			the y position to render onto the secondary (touch) screen
+ *
+ * Tile must be fully within bounds of screen.
+ *
+ *							Note :  Alpha bytes (bits 24-31) of source pixels control what's drawn:
+ *	  				        0: fully transparent (pixel is ignored)
+ *	  						1-254: blending in between (NOTE: will render slower than 0 or 255)
+ *	  						255: fully opaque (pixel is copied to screen)
+ *
+ *							@Example on how to create a tile type data (the pure pixel data from an image
+ *
+ *							// how to create a tile type to show onto the 2D screen.
+ * 							tiletype example; 								// define new tiletype type
+ *							example.x = 800;								// get the image's x dimension (look at the details of the file - Windows explorer -> properties)
+ *							example.y = 600;								// get the image's y dimension (look at the details of the file - Windows explorer -> properties)
+ *							example.p = (example.x<<2);						// define the pitch number of bytes per horizontal line (usually x*4 but may be higher or negative)
+ *							example.f = (INT_PTR)malloc(balls.p*balls.y);	// create pointer to 1st pixel
+ *							voxie->_kpzload((char*)"example.jpg", &example.f, &example.p, &example.x, &example.y); 		// load the image into file memory pass in the pointers
+ *
+ *							to render your tiletype unto the 2D display call 
+ *							voxie->debugDrawTile(&example, xposition, yposition);
+ */
+void VoxieBox::debugDrawTile(tiletype * source, int xpos, int ypos)
+{
+	voxie_debug_drawtile(source, xpos, ypos);
 }
 //! Returns the internal mouse's X delta movement. Reads from internal (in) voxie_input_t.
 /**
@@ -2305,6 +2395,7 @@ void VoxieBox::drawMesh(char * fileName, poltex_t * verticeList, int verticeNum,
 {
 	voxie_drawmeshtex(&vf, fileName, verticeList, verticeNum, meshList, meshNum, flags, col);
 }
+
 
 //! Renders a cone shape on the volumetric display with rounded ends (also capable of rendering a cylinder/sphere) using 2 point3ds for coordinates.
 /**
@@ -3322,7 +3413,7 @@ void VoxieBox::mountZip(char * filename)
  */
 void VoxieBox::captureVolumeAsPly()
 {
-	voxie_doscreencap(2); // 1 = PNG, 2 = PLY
+	voxie_volcap(NULL, 2, 15); // 1 = PNG, 2 = PLY
 }
 
 //! Causes a screen capture of the volumetric buffer to occur on the next frame. Captured as a PNG file
@@ -3332,7 +3423,27 @@ void VoxieBox::captureVolumeAsPly()
  */
 void VoxieBox::captureVolumeAsPng()
 {
-	voxie_doscreencap(1); // 1 = PNG, 2 = PLY
+	voxie_volcap(NULL, 1, 15); // 1 = PNG, 2 = PLY
+}
+
+//! Causes a capture of the volumetric buffer to occur on the next frame, or video capture to start /stop.
+/** @param fileName the file name of the capture - if null writes to the next available nonexistent numbered file: VOXIE0000.PNG, VOXIE0001.PNG, ..
+ *  @param volumeCaptureMode the capture mode to use. Off (Stop recording) = 0, Single PLY = 1, Single PNG = 2, Single REC = 3, Video Rec = 4, Single VCB = 5, Video VCB = 6; 
+ *  @param targetVPS if 
+ * Note : 	If fileName is NULL, writes to the next available nonexistent numbered file: VOXIE0000.PNG, VOXIE0001.PNG, ..
+ */
+void VoxieBox::captureVolume(const char *fileName, int volumeCaptureMode, int targetVPS = 15)
+{
+
+	voxie_volcap(fileName, volumeCaptureMode, targetVPS);
+
+
+}
+//! If volumetric recording is happening. call this function to stop.
+void VoxieBox::captureVolumeStop()
+{
+	voxie_volcap(NULL, 0, 0);
+
 }
 
 //! returns a timestamp of the compile date of VxCpp.dll expressed as an __int64. (format: YYYYMMDDHHmmss)
@@ -4100,4 +4211,101 @@ void VoxieBox::updateJoyInput()
 
 
 
+}
+
+//! Internal function for managing zip files. 
+int VoxieBox::_kzaddstack(const char * fileName) {
+
+	return kzaddstack(fileName);
+
+}
+
+//! Internal function for managing zip files. 
+void VoxieBox::_kzuninit()
+{
+	kzuninit();
+}
+
+//! Internal function for managing zip files. 
+void VoxieBox::_kzsetfil(FILE * fileName)
+{
+	kzsetfil(fileName);
+}
+
+//! Internal function for managing zip files. 
+INT_PTR VoxieBox::_kzopen(const char * st)
+{
+	return kzopen(st);
+}
+
+//! Internal function for managing zip files. 
+void VoxieBox::_kzfindfilestart(const char * st)
+{
+	kzfindfilestart(st);
+}
+
+//! Internal function for managing zip files. 
+int VoxieBox::_kzfindfile(kzfind_t * find, kzfileinfo_t * fileinfo)
+{
+	return kzfindfile(find,fileinfo);
+}
+
+//! Internal function for managing zip files. 
+unsigned int VoxieBox::_kzread(kzfile_t * kzfile, void * buffer, unsigned int leng)
+{
+	return kzread(kzfile, buffer, leng);
+}
+
+//! Internal function for managing zip files. 
+unsigned int VoxieBox::_kzfilelength(kzfile_t * kzfile)
+{
+	return kzfilelength(kzfile);
+}
+
+//! Internal function for managing zip files. 
+unsigned int VoxieBox::_kztell(kzfile_t * kzfile)
+{
+	return kztell(kzfile);
+}
+
+//! Internal function for managing zip files. 
+int VoxieBox::_kzseek(kzfile_t * kzfile, int offset, int whence)
+{
+	return kzseek(kzfile, offset, whence);
+}
+
+//! Internal function for managing zip files. 
+int VoxieBox::_kzgetc(kzfile_t * kzfile)
+{
+	return kzgetc(kzfile);
+}
+
+//! Internal function for managing zip files. 
+int VoxieBox::_kzeof(kzfile_t * kzfile)
+{
+	return kzeof(kzfile);
+}
+
+//! Internal function for managing zip files. 
+void VoxieBox::_kzclose(kzfile_t * kzfile)
+{
+	kzclose(kzfile);
+}
+
+//! Internal function for managing image files. 
+int VoxieBox::_kpgetdim(const char * buffer, int nby, int * xsiz, int * ysiz)
+{
+	return kpgetdim(buffer, nby, xsiz, ysiz);
+}
+
+//! Internal function for managing image files. 
+int VoxieBox::_kprender(const char * buffer, int nby, INT_PTR fptr, int bpl, int xsiz, int ysiz, int xoff, int yoff)
+{
+	return kprender(buffer, nby, fptr, bpl, xsiz, ysiz, xoff, yoff);
+}
+
+//! Internal function for managing zip files. 
+void VoxieBox::_kpzload(const char * fileName, INT_PTR * fptr, INT_PTR * bpl, INT_PTR * xsiz, INT_PTR * ysiz)
+{
+	kpzload(fileName, fptr, bpl, xsiz, ysiz);
 }

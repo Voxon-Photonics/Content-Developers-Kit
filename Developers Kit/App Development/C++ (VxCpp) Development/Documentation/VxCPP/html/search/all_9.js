@@ -1,24 +1,12 @@
 var searchData=
 [
-  ['joy_5fa_168',['JOY_A',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a3b2532e71e50fc5b23abb765f7cc375f',1,'vxInputTypes.h']]],
-  ['joy_5fb_169',['JOY_B',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71afd2fd33989331c5c3f6cbaafd659fc0e',1,'vxInputTypes.h']]],
-  ['joy_5fback_170',['JOY_BACK',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a8a14e48fc98f75fce6ea3091640c479f',1,'vxInputTypes.h']]],
-  ['joy_5fdpad_5fdown_171',['JOY_DPAD_DOWN',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a1a96d8b7369f417a2020867fb689be27',1,'vxInputTypes.h']]],
-  ['joy_5fdpad_5fleft_172',['JOY_DPAD_LEFT',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a57de2e342358f6b51ad5b29704998639',1,'vxInputTypes.h']]],
-  ['joy_5fdpad_5fright_173',['JOY_DPAD_RIGHT',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a1c36fc68c54e6af791b757ea9fcbbe5d',1,'vxInputTypes.h']]],
-  ['joy_5fdpad_5fup_174',['JOY_DPAD_UP',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a1e5f0402ae84760be6e4153b03374e46',1,'vxInputTypes.h']]],
-  ['joy_5fleft_5fshoulder_175',['JOY_LEFT_SHOULDER',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a382999b07513373278bc6628cdab81b9',1,'vxInputTypes.h']]],
-  ['joy_5fleft_5fstick_5fx_176',['JOY_LEFT_STICK_X',['../vx_input_types_8h.html#a0fa7818ea73e62e1cacf9825fc5bb352ac1f5490e79758fae3c1fb33f35ac64fe',1,'vxInputTypes.h']]],
-  ['joy_5fleft_5fstick_5fy_177',['JOY_LEFT_STICK_Y',['../vx_input_types_8h.html#a0fa7818ea73e62e1cacf9825fc5bb352af209471e91ac467f41b39c798599d0f0',1,'vxInputTypes.h']]],
-  ['joy_5fleft_5fthumb_178',['JOY_LEFT_THUMB',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71ad3307ecb484de2e96a337702f64e1c6c',1,'vxInputTypes.h']]],
-  ['joy_5fleft_5ftrigger_179',['JOY_LEFT_TRIGGER',['../vx_input_types_8h.html#a8110a6d44da262f812006011ce131d7fa1dc0b7156ae6572ccb3dc7f55bd8001b',1,'vxInputTypes.h']]],
-  ['joy_5fright_5fshoulder_180',['JOY_RIGHT_SHOULDER',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a8fe0e6383b068ac1392af48ee1b409ee',1,'vxInputTypes.h']]],
-  ['joy_5fright_5fstick_5fx_181',['JOY_RIGHT_STICK_X',['../vx_input_types_8h.html#a0fa7818ea73e62e1cacf9825fc5bb352a25c7efcacd8b7e98c2e6c5fd325e5fda',1,'vxInputTypes.h']]],
-  ['joy_5fright_5fstick_5fy_182',['JOY_RIGHT_STICK_Y',['../vx_input_types_8h.html#a0fa7818ea73e62e1cacf9825fc5bb352a4d48d4dcd58f0c3d7348250b3b25e115',1,'vxInputTypes.h']]],
-  ['joy_5fright_5fthumb_183',['JOY_RIGHT_THUMB',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71adbed9caf3f74f4dd6a63ad1adde0f06c',1,'vxInputTypes.h']]],
-  ['joy_5fright_5ftrigger_184',['JOY_RIGHT_TRIGGER',['../vx_input_types_8h.html#a8110a6d44da262f812006011ce131d7fa57c34f31cf8168e13d786377ea368469',1,'vxInputTypes.h']]],
-  ['joy_5fstart_185',['JOY_START',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71af72bd99cb770b18c5e67af5a7d92046d',1,'vxInputTypes.h']]],
-  ['joy_5fx_186',['JOY_X',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a87b77c7c47ce3655395a01d7bc11f196',1,'vxInputTypes.h']]],
-  ['joy_5fy_187',['JOY_Y',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a932411966eb4ce17b26d4834beb016a0',1,'vxInputTypes.h']]],
-  ['joybuttoncodes_188',['JoyButtonCodes',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71',1,'vxInputTypes.h']]]
+  ['iactive_180',['IActive',['../class_i_active.html',1,'']]],
+  ['ianghak_181',['ianghak',['../structvoxie__wind__t.html#a28dedd278f257def0edcc91566c6348f',1,'voxie_wind_t']]],
+  ['ibreathable_182',['IBreathable',['../class_i_breathable.html',1,'']]],
+  ['idrawable_183',['IDrawable',['../class_i_drawable.html',1,'']]],
+  ['ilacemode_184',['ilacemode',['../structvoxie__wind__t.html#a34c2944975319407ea7f4d1a1dda4e7c',1,'voxie_wind_t']]],
+  ['init_185',['init',['../class_i_voxie_box.html#a98efc8de5deeb9879275dfe6df935006',1,'IVoxieBox::init()'],['../class_voxie_box.html#a9df7e95b7c877b5942690affef94d4a6',1,'VoxieBox::init()']]],
+  ['isrecording_186',['isrecording',['../structvoxie__wind__t.html#a70c8164e5262b9e66a9312f5c34059ab',1,'voxie_wind_t']]],
+  ['ivoxiebox_187',['IVoxieBox',['../class_i_voxie_box.html',1,'']]],
+  ['ivoxieptr_188',['IVoxiePtr',['../class_i_voxie_ptr.html',1,'']]]
 ];

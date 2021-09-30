@@ -1,14 +1,19 @@
 var searchData=
 [
-  ['amend_0',['amend',['../struct_point3d.html#a1ec03d5a411489a455f124ba685e9f2e',1,'Point3d']]],
-  ['amendall_1',['amendAll',['../struct_point3d.html#a75075cc7a87ba9a1487fbc9eef9290bf',1,'Point3d']]],
-  ['animmode_2',['animmode',['../struct_voxie__rec__t.html#a7c58f260a4fc2dcb86ea46d7603be878',1,'Voxie_rec_t']]],
-  ['aspr_3',['aspr',['../struct_voxie__wind__t.html#acc4370a17eaee2152241d8f81e066380',1,'Voxie_wind_t']]],
-  ['asprmin_4',['asprmin',['../struct_voxie__wind__t.html#a5973a4cac8e97b3658e5c55f628365b3',1,'Voxie_wind_t']]],
-  ['aspx_5',['aspx',['../struct_voxie__wind__t.html#a87c4e6fb6d1f89574abca3cdb9fc6965',1,'Voxie_wind_t']]],
-  ['aspy_6',['aspy',['../struct_voxie__wind__t.html#acb7fb2f438b35b48357613fa101b7b3a',1,'Voxie_wind_t']]],
-  ['aspz_7',['aspz',['../struct_voxie__wind__t.html#ac5b5e9e3f30a89846e6def2e3a2c992b',1,'Voxie_wind_t']]],
-  ['ax_8',['ax',['../struct_voxie__nav__t.html#a96fae139cde2a96b23218de6be64b56c',1,'Voxie_nav_t']]],
-  ['ay_9',['ay',['../struct_voxie__nav__t.html#ae7a897d665f3eb41490802ca5260c207',1,'Voxie_nav_t']]],
-  ['az_10',['az',['../struct_voxie__nav__t.html#ae43cce86849e7be648fdf8e8f39cd562',1,'Voxie_nav_t']]]
+  ['_5fkpgetdim_0',['_kpgetdim',['../class_i_voxie_box.html#a7e6ad15ce1aa026195c13ab891ac73b5',1,'IVoxieBox::_kpgetdim()'],['../class_voxie_box.html#a0d6a1b69a3f260b8217d34e417c760e2',1,'VoxieBox::_kpgetdim()']]],
+  ['_5fkprender_1',['_kprender',['../class_i_voxie_box.html#a3357f81218c594928a3332453579186d',1,'IVoxieBox::_kprender()'],['../class_voxie_box.html#a82abf8d443c2bb3c0634d3b42f016129',1,'VoxieBox::_kprender()']]],
+  ['_5fkpzload_2',['_kpzload',['../class_i_voxie_box.html#affd844739b889ad96a1b79c12e0ab7cb',1,'IVoxieBox::_kpzload()'],['../class_voxie_box.html#abb66c2fec1770dcbb665f191a3bde2ed',1,'VoxieBox::_kpzload()']]],
+  ['_5fkzaddstack_3',['_kzaddstack',['../class_i_voxie_box.html#ac68e9524c89c41ac3ada58c15e0bebd5',1,'IVoxieBox::_kzaddstack()'],['../class_voxie_box.html#a1a221c9856e247de0944341960c9ebbb',1,'VoxieBox::_kzaddstack()']]],
+  ['_5fkzclose_4',['_kzclose',['../class_i_voxie_box.html#a51c1632d20be76efc05602bb27901a21',1,'IVoxieBox::_kzclose()'],['../class_voxie_box.html#a18743fd056d8d808dbacac8ca4f85c80',1,'VoxieBox::_kzclose()']]],
+  ['_5fkzeof_5',['_kzeof',['../class_i_voxie_box.html#ac4508ce1b9a68b424c1df85bb4f16f05',1,'IVoxieBox::_kzeof()'],['../class_voxie_box.html#acf03170ecdd80dc684bcf8da60eaec9b',1,'VoxieBox::_kzeof()']]],
+  ['_5fkzfilelength_6',['_kzfilelength',['../class_i_voxie_box.html#a4407429323c1866c71ff5931f865ab7e',1,'IVoxieBox::_kzfilelength()'],['../class_voxie_box.html#a358d2d0e5dbdf95b1361298bc1844293',1,'VoxieBox::_kzfilelength()']]],
+  ['_5fkzfindfile_7',['_kzfindfile',['../class_i_voxie_box.html#a67381ce58613a4b0bc370fc0411b6c9e',1,'IVoxieBox::_kzfindfile()'],['../class_voxie_box.html#a4f3658452833363b42e2185df980c3ff',1,'VoxieBox::_kzfindfile()']]],
+  ['_5fkzfindfilestart_8',['_kzfindfilestart',['../class_i_voxie_box.html#a0507806314c60cf16237ef5259eca00b',1,'IVoxieBox::_kzfindfilestart()'],['../class_voxie_box.html#a4df9abdb4addb662885bb04fa5959342',1,'VoxieBox::_kzfindfilestart()']]],
+  ['_5fkzgetc_9',['_kzgetc',['../class_i_voxie_box.html#a5a3147a9aa04b6ec5b9cd75e32380c45',1,'IVoxieBox::_kzgetc()'],['../class_voxie_box.html#ab28ceca8a1259cd8a22a5b644bb6056f',1,'VoxieBox::_kzgetc()']]],
+  ['_5fkzopen_10',['_kzopen',['../class_i_voxie_box.html#ab10a1f75e6ea8b1ae6ece2b61f01eaeb',1,'IVoxieBox::_kzopen()'],['../class_voxie_box.html#a80d443a8241a696e30e20f3d4533077e',1,'VoxieBox::_kzopen()']]],
+  ['_5fkzread_11',['_kzread',['../class_i_voxie_box.html#adf45e4850627f80aa257c94b96f74d39',1,'IVoxieBox::_kzread()'],['../class_voxie_box.html#a7a5c6edb3e89cbfaf226954b77e2fdd0',1,'VoxieBox::_kzread()']]],
+  ['_5fkzseek_12',['_kzseek',['../class_i_voxie_box.html#a88b72171e7a42a1c0fd587201d19656f',1,'IVoxieBox::_kzseek()'],['../class_voxie_box.html#a911600747379ce7293fe04e5db4886de',1,'VoxieBox::_kzseek()']]],
+  ['_5fkzsetfil_13',['_kzsetfil',['../class_i_voxie_box.html#a7ce994c6ddc0eda9eefba7a6c238eeed',1,'IVoxieBox::_kzsetfil()'],['../class_voxie_box.html#ae421e98a34343800aa3dc8cf471e324a',1,'VoxieBox::_kzsetfil()']]],
+  ['_5fkztell_14',['_kztell',['../class_i_voxie_box.html#ab58795c9909fc919ac3de7c4d754bb0b',1,'IVoxieBox::_kztell()'],['../class_voxie_box.html#a9b2059d1b5eaf47f9fc5e6a86bc13cd2',1,'VoxieBox::_kztell()']]],
+  ['_5fkzuninit_15',['_kzuninit',['../class_i_voxie_box.html#a19e78b799e3ae44ff3b67417e3e80d2b',1,'IVoxieBox::_kzuninit()'],['../class_voxie_box.html#ac1d9c43aa6cbda15e4f4dac3f8dc3729',1,'VoxieBox::_kzuninit()']]]
 ];

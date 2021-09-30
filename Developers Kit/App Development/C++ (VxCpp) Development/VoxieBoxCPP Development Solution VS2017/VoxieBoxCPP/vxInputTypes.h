@@ -4,7 +4,7 @@
  *
  * VX++ input types header contains definitions to do with various input systems.
  * This header is essential to developing VX++ applications using the VxCpp.DLL.
- * This file is kept seperate to allow easy integration...
+ * This file is kept separate to allow easy integration...
  *
  */
 
@@ -79,12 +79,12 @@ enum NavAxis {
 * These are the scancodes that voxieBox::getKeyState, voxieBox::getKeyIsDown, 
 * voxieBox::getKeyOnDown, voxieBox:getKeyStreamScanCode used to detect key presses.
 */
-enum Keys
+enum Keycodes
 {
 	KB_ = 0x00,						//!< 0x00 Empty state 
-	KB_Escape = 0x01,				//!< 0x01 'Esc' / Escape ley
+	KB_Escape = 0x01,				//!< 0x01 'Esc' / Escape key
 
-									// Numeric Keys
+	// Numeric Keys
 
 	KB_1 = 0x02,					//!< 0x02 Number 1 key
 	KB_2 = 0x03,					//!< 0x03 Number 2 key
@@ -97,7 +97,7 @@ enum Keys
 	KB_9 = 0x0A,					//!< 0x0A Number 9 key
 	KB_0 = 0x0B,					//!< 0x0B Number 0 key
 
-									// Alpha Keys
+	// Alpha Keys
 
 	KB_A = 0x1E,					//!< 0x1E 'A' key
 	KB_B = 0x30,					//!< 0x30 'B' key
@@ -126,7 +126,7 @@ enum Keys
 	KB_Y = 0x15,					//!< 0x15 'Y' key
 	KB_Z = 0x2C,					//!< 0x2C 'Z' key
 
-									// Special Keys
+	// Special Keys
 
 	KB_Alt_Left = 0x38,				//!< 0x38 Left Alt
 	KB_Alt_Right = 0xB8,			//!< 0xB8 Right Alt  
@@ -136,7 +136,7 @@ enum Keys
 	KB_Control_Left = 0x1D,			//!< 0x1D Left Control
 	KB_Control_Right = 0x9D,		//!< 0x9D Right Control
 	KB_Delete = 0xD3,				//!< 0xD3 Delete
-	KB_Divide = 0x35,				//!< 0x35 Divide
+	KB_Forward_Slash = 0x35,		//!< 0x35 Divide
 	KB_Full_Stop = 0x34,			//!< 0x34 Fullstop / Greater Than
 	KB_End = 0xCF,					//!< 0xCF End
 	KB_Enter = 0x1C,				//!< 0x1C Enter
@@ -144,25 +144,25 @@ enum Keys
 	KB_Home = 0xC7,					//!< 0xC7 Home
 	KB_Insert = 0xD2,				//!< 0xD2 Insert
 	KB_Minus = 0x0C,				//!< 0x0C Minus / Dash 
-	KB_Numlock = 0x45,				//!< 0x45 Numlock
+	KB_Numlock = 0xC5,				//!< 0xC5 Numlock
 	KB_Page_Down = 0xD1,			//!< 0xD1 Page Down
 	KB_Page_Up = 0xC9,				//!< 0xC9 Page Up
-	KB_Pause = 0xC5,				//!< 0xC5 Pause
+	KB_Pause = 0x45,				//!< 0x45 Pause
 	KB_Print_Screen = 0xB7,			//!< 0xB7 Print_Screen
 	KB_Secondary_Action = 0xDD,		//!< 0XDD Secondary Action (not on all keyboards)
 	KB_Semicolon = 0x27,			//!< 0x27 Semicolon / Less Than
 	KB_ScrollLock = 0x46,			//!< 0x46 Scrolllock
 	KB_Shift_Left = 0x2A,			//!< 0x2A Left Shift
 	KB_Shift_Right = 0x36,			//!< 0x36 Right Shift
-	KB_SingleQuote = 0x28,			//!< 0x28 Single Quote / Double Quote
-	KB_SpaceBar = 0x39,				//!< 0x39 Spacebar
+	KB_Single_Quote = 0x28,			//!< 0x28 Single Quote / Double Quote
+	KB_Space_Bar = 0x39,			//!< 0x39 Spacebar
 	KB_Square_Bracket_Open = 0x1A,	//!< 0x1A Open Square Bracket 
 	KB_Square_Bracket_Close = 0x1B, //!< 0x1B Closed Square Bracket
 	KB_Tab = 0x0F,					//!< 0x0F Tab
 	KB_Tilde = 0x29,				//!< 0x29 Tilde
-	BackSlash = 0x2B,				//!< 0x2B BackSlash (Used by VX1 to open menu)
+	KB_Back_Slash = 0x2B,			//!< 0x2B BackSlash (Used by VX1 to open menu)
 
-									// Function Keys
+	// Function Keys
 
 	KB_F1 = 0x3B,					//!< 0x3B F1 function key
 	KB_F2 = 0x3C,					//!< 0x3C F2 function key
@@ -177,7 +177,7 @@ enum Keys
 	KB_F11 = 0x57,					//!< 0x57 F11 function key
 	KB_F12 = 0x58,					//!< 0x58 F12 function key
 
-									// Numpad
+	// Numpad
 
 	KB_NUMPAD_0 = 0x52,				//!< 0x52 Numpad 0 key
 	KB_NUMPAD_1 = 0x4F,				//!< 0x4F Numpad 1 key
@@ -196,13 +196,146 @@ enum Keys
 	KB_NUMPAD_Plus = 0x4E,			//!< 0x4E Numpad plus key
 	KB_NUMPAD_Enter = 0x9C,			//!< 0x9C Numpad enter key
 
-									// Arrow Keys
+	// Arrow Keys
 
 	KB_Arrow_Right = 0xCD,			//!< 0xCD Arrow Right
 	KB_Arrow_Left = 0xCB,			//!< 0xCB Arrow Left
 	KB_Arrow_Up = 0xC8,				//!< 0xC8 Arrow Up
 	KB_Arrow_Down = 0xD0,			//!< 0xD0 Arrow Down
 };
+
+
+
+//! \enum Keyboard scancodes touch layout..  
+/**
+* These are scancodes with an ASCII code amended to the end. touchkey_t needs both values to work properly. @see input_types.h::touchkey_t
+*/
+
+enum Keycodes_Touch
+{
+	TKB_ = 0x00,						//!< 0x00 Empty state 
+	TKB_Escape = 0x011b,				//!< 0x01 'Esc' / Escape key
+
+// Numeric Keys
+
+TKB_1 = 0x0231,					//!< 0x02 Number 1 key
+TKB_2 = 0x0332,					//!< 0x03 Number 2 key
+TKB_3 = 0x0433,					//!< 0x04 Number 3 key
+TKB_4 = 0x0534,					//!< 0x05 Number 4 key
+TKB_5 = 0x0635,					//!< 0x06 Number 5 key
+TKB_6 = 0x0736,					//!< 0x07 Number 6 key
+TKB_7 = 0x0837,					//!< 0x08 Number 7 key
+TKB_8 = 0x0938,					//!< 0x09 Number 8 key
+TKB_9 = 0x0a39,					//!< 0x0A Number 9 key
+TKB_0 = 0x0b30,					//!< 0x0B Number 0 key
+
+// Alpha Keys
+
+TKB_A = 0x1e61,					//!< 0x1E 'A' key
+TKB_B = 0x3000,					//!< 0x30 'B' key
+TKB_C = 0x2E00,					//!< 0x2E 'C' key
+TKB_D = 0x2074,					//!< 0x20 'D' key
+TKB_E = 0x1265,					//!< 0x12 'E' key
+TKB_F = 0x2166,					//!< 0x21 'F' key
+TKB_G = 0x2267,					//!< 0x22 'G' key
+TKB_H = 0x2368,					//!< 0x23 'H' key
+TKB_I = 0x1769,					//!< 0x17 'I' key
+TKB_J = 0x246a,					//!< 0x24 'J' key
+TKB_K = 0x256b,					//!< 0x25 'K' key
+TKB_L = 0x266c,					//!< 0x26 'L' key
+TKB_M = 0x326d,					//!< 0x32 'M' key
+TKB_N = 0x316e,					//!< 0x31 'N' key
+TKB_O = 0x186f,					//!< 0x18 'O' key
+TKB_P = 0x1970,					//!< 0x19 'P' key
+TKB_Q = 0x1071,					//!< 0x10 'Q' key
+TKB_R = 0x1372,					//!< 0x13 'R' key
+TKB_S = 0x1f73,					//!< 0x1F 'S' key
+TKB_T = 0x1474,					//!< 0x14 'T' key
+TKB_U = 0x1675,					//!< 0x16 'U' key
+TKB_V = 0x2F76,					//!< 0x2F 'V' key
+TKB_W = 0x1177,					//!< 0x11 'W' key
+TKB_X = 0x2D78,					//!< 0x2D 'X' key
+TKB_Y = 0x1579,					//!< 0x15 'Y' key
+TKB_Z = 0x2C7a,					//!< 0x2C 'Z' key
+
+// Special Keys
+
+TKB_Alt_Left = 0x3800,			//!< 0x38 Left Alt
+TKB_Alt_Right = 0xb800,			//!< 0xB8 Right Alt  
+TKB_Backspace = 0x0e08,			//!< 0x0E Backspace
+TKB_CapsLock = 0x3a00,			//!< 0x3A Capslock
+TKB_Comma = 0x332c,				//!< 0x33 Comma
+TKB_Control_Left = 0x1d00,		//!< 0x1D Left Control
+TKB_Control_Right = 0x9d00,		//!< 0x9D Right Control
+TKB_Delete = 0xd300,			//!< 0xD3 Delete
+TKB_Forward_Slash = 0x352f,		//!< 0x35 Forward Slash (same as divide)
+TKB_Full_Stop = 0x342e,			//!< 0x34 Fullstop / Greater Than
+TKB_End = 0xcf00,				//!< 0xCF End
+TKB_Enter = 0x1c0d,				//!< 0x1C Enter
+TKB_Equals = 0x0d3d,			//!< 0x0D Equals
+TKB_Home = 0xc700,				//!< 0xC7 Home
+TKB_Insert = 0xd200,			//!< 0xD2 Insert
+TKB_Minus = 0x0c2d,				//!< 0x0C Minus / Dash 
+TKB_Numlock = 0xC500,			//!< 0xC500 Numlock
+TKB_Page_Down = 0xd100,			//!< 0xD1 Page Down
+TKB_Page_Up = 0xc900,			//!< 0xC9 Page Up
+TKB_Pause_Break = 0x4500,			//!< 0x4500 Pause
+TKB_Print_Screen = 0xB700,			//!< 0xB7 Print_Screen
+TKB_Secondary_Action = 0xDD00,		//!< 0XDD Secondary Action (not on all keyboards)
+TKB_Semicolon = 0x273b,				//!< 0x27 Semicolon / Less Than
+TKB_ScrollLock = 0x4600,			//!< 0x46 Scrolllock
+TKB_Shift_Left = 0x2a00,			//!< 0x2A Left Shift
+TKB_Shift_Right = 0x3600,			//!< 0x36 Right Shift
+TKB_Single_Quote = 0x2827,			//!< 0x28 Single Quote / Double Quote
+TKB_Space_Bar = 0x3920,				//!< 0x39 Spacebar
+TKB_Square_Bracket_Open = 0x1a5b,	//!< 0x1A Open Square Bracket 
+TKB_Square_Bracket_Close = 0x1b5d, 	//!< 0x1B Closed Square Bracket
+TKB_Tab = 0x0f09,					//!< 0x0F Tab
+TKB_Tilde = 0x2960,					//!< 0x29 Tilde
+TKB_Back_Slash = 0x2b5c,			//!< 0x2B BackSlash (Used by VX1 to open menu)
+
+// Function Keys
+
+TKB_F1 = 0x3b00,					//!< 0x3B F1 function key
+TKB_F2 = 0x3C00,					//!< 0x3C F2 function key
+TKB_F3 = 0x3D00,					//!< 0x3D F3 function key
+TKB_F4 = 0x3E00,					//!< 0x3E F4 function key
+TKB_F5 = 0x3F00,					//!< 0x3F F5 function key
+TKB_F6 = 0x4000,					//!< 0x40 F6 function key
+TKB_F7 = 0x4100,					//!< 0x41 F7 function key
+TKB_F8 = 0x4200,					//!< 0x42 F8 function key
+TKB_F9 = 0x4300,					//!< 0x43 F9 function key
+TKB_F10 = 0x4400,					//!< 0x44 F10 function key
+TKB_F11 = 0x5700,					//!< 0x57 F11 function key
+TKB_F12 = 0x5800,					//!< 0x58 F12 function key
+
+// Numpad
+
+TKB_NUMPAD_0 = 0x5230,				//!< 0x52 Numpad 0 key
+TKB_NUMPAD_1 = 0x4F31,				//!< 0x4F Numpad 1 key
+TKB_NUMPAD_2 = 0x5032,				//!< 0x50 Numpad 2 key	
+TKB_NUMPAD_3 = 0x5133,				//!< 0x51 Numpad 3 key
+TKB_NUMPAD_4 = 0x4B34,				//!< 0x4B Numpad 4 key
+TKB_NUMPAD_5 = 0x4C35,				//!< 0x4C Numpad 5 key
+TKB_NUMPAD_6 = 0x4D36,				//!< 0x4D Numpad 6 key
+TKB_NUMPAD_7 = 0x4737,				//!< 0x47 Numpad 7 key
+TKB_NUMPAD_8 = 0x4838,				//!< 0x48 Numpad 8 key
+TKB_NUMPAD_9 = 0x4939,				//!< 0x49 Numpad 9 key
+TKB_NUMPAD_Decimal = 0x532e,		//!< 0x53 Numpad decimal key
+TKB_NUMPAD_Divide = 0xB500,			//!< 0xB5 Numpad divide key
+TKB_NUMPAD_Multiply = 0x372a,		//!< 0x37 Numpad multiply key
+TKB_NUMPAD_Minus = 0x4A2d,			//!< 0x4A Numpad minus key
+TKB_NUMPAD_Plus = 0x4E2b,			//!< 0x4E Numpad plus key
+TKB_NUMPAD_Enter = 0x9c00,			//!< 0x9C Numpad enter key
+
+// Arrow Keys
+
+TKB_Arrow_Right = 0xcd00,			//!< 0xCD Arrow Right    
+TKB_Arrow_Left = 0xcb00,			//!< 0xCB Arrow Left
+TKB_Arrow_Up = 0xC800,				//!< 0xC8 Arrow Up
+TKB_Arrow_Down = 0xd000,			//!< 0xD0 Arrow Down
+};
+
 
 //! \enum VoxieMenu types used for creating custom touch screen menus
 /**
@@ -226,7 +359,109 @@ enum VoxieMenuTypes {
 	MENU_PICKFILE = 11						//!<  File selector. Specify type in 2nd strig. Example "Browse\r*.kv6"
 };
 
-//! \enum musical notes frequencies, can be used with a custom audio call back function to playet musical notes.
+//! \enum Voxie capture modes used to determine capture type. 
+/**
+* @see VoxieBox::captureVolume()
+*
+*/
+
+enum VolumeCaptureModes { 
+	VOLCAP_OFF = 0, 
+	VOLCAP_FRAME_PLY, 
+	VOLCAP_FRAME_PNG, 
+	VOLCAP_FRAME_REC, 
+	VOLCAP_VIDEO_REC, 
+	VOLCAP_FRAME_VCB, 
+	VOLCAP_VIDEO_VCBZIP
+};
+
+/** Default touchkey taken from Voxiebox source*/ 
+const touchkey_t default_touchkey[] =
+{
+	(char*)"`"    ,  0, 80, 64, 64,0x605040,-1,0x2960,
+	(char*)"1"    , 68, 80, 64, 64,0x605040,-1,0x0231,
+	(char*)"2"    ,136, 80, 64, 64,0x605040,-1,0x0332,
+	(char*)"3"    ,204, 80, 64, 64,0x605040,-1,0x0433,
+	(char*)"4"    ,272, 80, 64, 64,0x605040,-1,0x0534,
+	(char*)"5"    ,340, 80, 64, 64,0x605040,-1,0x0635,
+	(char*)"6"    ,408, 80, 64, 64,0x605040,-1,0x0736,
+	(char*)"7"    ,476, 80, 64, 64,0x605040,-1,0x0837,
+	(char*)"8"    ,544, 80, 64, 64,0x605040,-1,0x0938,
+	(char*)"9"    ,612, 80, 64, 64,0x605040,-1,0x0a39,
+	(char*)"0"    ,680, 80, 64, 64,0x605040,-1,0x0b30,
+	(char*)"-"    ,748, 80, 64, 64,0x605040,-1,0x0c2d,
+	(char*)"="    ,816, 80, 64, 64,0x605040,-1,0x0d3d,
+	(char*)"Backspace",884, 80,139, 64,0x405060,-1,0x0e08,
+
+	(char*)"Tab"  ,  0,148, 98, 64,0x605040,-1,0x0f09,
+	(char*)"Q"    ,102,148, 64, 64,0x605040,-1,0x1071,
+	(char*)"W"    ,170,148, 64, 64,0x605040,-1,0x1177,
+	(char*)"E"    ,238,148, 64, 64,0x605040,-1,0x1265,
+	(char*)"R"    ,306,148, 64, 64,0x605040,-1,0x1372,
+	(char*)"T"    ,374,148, 64, 64,0x605040,-1,0x1474,
+	(char*)"Y"    ,442,148, 64, 64,0x605040,-1,0x1579,
+	(char*)"U"    ,510,148, 64, 64,0x605040,-1,0x1675,
+	(char*)"I"    ,578,148, 64, 64,0x605040,-1,0x1769,
+	(char*)"O"    ,646,148, 64, 64,0x605040,-1,0x186f,
+	(char*)"P"    ,714,148, 64, 64,0x605040,-1,0x1970,
+	(char*)"["    ,782,148, 64, 64,0x605040,-1,0x1a5b,
+	(char*)"]"    ,850,148, 64, 64,0x605040,-1,0x1b5d,
+	(char*)"\\"   ,918,148,105, 64,0x605040,-1,0x2b5c,
+
+	(char*)"Caps",0,216, 98, 64,0x405060,-1,0x3a00,
+	(char*)"A"    ,124,216, 64, 64,0x605040,-1,0x1e61,
+	(char*)"S"    ,192,216, 64, 64,0x605040,-1,0x1f73,
+	(char*)"D"    ,260,216, 64, 64,0x605040,-1,0x2074,
+	(char*)"F"    ,328,216, 64, 64,0x605040,-1,0x2166,
+	(char*)"G"    ,396,216, 64, 64,0x605040,-1,0x2267,
+	(char*)"H"    ,464,216, 64, 64,0x605040,-1,0x2368,
+	(char*)"J"    ,532,216, 64, 64,0x605040,-1,0x246a,
+	(char*)"K"    ,600,216, 64, 64,0x605040,-1,0x256b,
+	(char*)"L"    ,668,216, 64, 64,0x605040,-1,0x266c,
+	(char*)";"    ,736,216, 64, 64,0x605040,-1,0x273b,
+	(char*)"'"    ,804,216, 64, 64,0x605040,-1,0x2827,
+	(char*)"Enter",872,216,151, 64,0x605040,-1,0x1c0d,
+
+	(char*)"Shift",  0,284,154, 64,0x405060,-1,0x2a00,
+	(char*)"Z"    ,158,284, 64, 64,0x605040,-1,0x2c7a,
+	(char*)"X"    ,226,284, 64, 64,0x605040,-1,0x2d78,
+	(char*)"C"    ,294,284, 64, 64,0x605040,-1,0x2e63,
+	(char*)"V"    ,362,284, 64, 64,0x605040,-1,0x2f76,
+	(char*)"B"    ,430,284, 64, 64,0x605040,-1,0x3062,
+	(char*)"N"    ,498,284, 64, 64,0x605040,-1,0x316e,
+	(char*)"M"    ,566,284, 64, 64,0x605040,-1,0x326d,
+	(char*)","    ,634,284, 64, 64,0x605040,-1,0x332c,
+	(char*)"."    ,702,284, 64, 64,0x605040,-1,0x342e,
+	(char*)"/"    ,770,284, 64, 64,0x605040,-1,0x352f,
+	(char*)"Shift",838,284,185, 64,0x405060,-1,0x3600,
+
+	(char*)"Ctrl" ,  0,352,100, 64,0x405060,-1,0x1d00,
+	(char*)"Alt"  ,174,352,100, 64,0x405060,-1,0x3800,
+	(char*)" "    ,278,352,468, 64,0x605040,-1,0x3920,
+	(char*)"Alt"  ,750,352,100, 64,0x405060,-1,0xb800,
+	(char*)"Ctrl" ,924,352, 99, 64,0x405060,-1,0x9d00,
+
+	(char*)"LMB"  ,  0,432,116,167,0x406040,-1,0x0001, //LBut
+	(char*)"Touch Pad",120,432,216,167,0x406040,-1,0x0000, //Mouse
+	(char*)"RMB"  ,340,432, 96,167,0x406040,-1,0x0002, //RBut
+ //(char*)"MMB"  ,440,432, 96,167,0x406040,-1,0x0003, //MBut
+
+	(char*)"Ins"  ,510,464, 64, 64,0x405060,-1,0xd200,
+	(char*)"Home" ,578,464, 64, 64,0x405060,-1,0xc700,
+	(char*)"PgUp" ,646,464, 64, 64,0x405060,-1,0xc900,
+	(char*)"Del"  ,510,532, 64, 64,0x405060,-1,0xd300,
+	(char*)"End"  ,578,532, 64, 64,0x405060,-1,0xcf00,
+	(char*)"PgDn" ,646,532, 64, 64,0x405060,-1,0xd100,
+
+	(char*)"ESC"  ,750,420, 64, 64,0x405060,-1,0x011b,
+
+	(char*)"\xc8" ,860,432, 80, 80,0x405060,-1,0xc800, // hak to show graphical arrow
+	(char*)"\xcb" ,776,512, 80, 80,0x405060,-1,0xcb00, // hak to show graphical arrow
+	(char*)"\xd0" ,860,512, 80, 80,0x405060,-1,0xd000, // hak to show graphical arrow 
+	(char*)"\xcd" ,944,512, 79, 80,0x405060,-1,0xcd00, // hak to show graphical arrow
+};
+
+//! \enum musical notes frequencies, can be used with a custom audio call back function to play musical notes.
 enum MUSICAL_NOTES {
 	B1 = 6173,
 

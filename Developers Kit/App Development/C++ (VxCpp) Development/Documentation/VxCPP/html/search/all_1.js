@@ -1,12 +1,14 @@
 var searchData=
 [
-  ['backslash_11',['BackSlash',['../vx_input_types_8h.html#a0ada92b8263d776ca3c779d2a0e031bcaee11d296a13e5c686e170bd08dc6485b',1,'vxInputTypes.h']]],
-  ['bcol_12',['bcol',['../struct_touchkey__t.html#a6535692bdb5c9674d0f700fa5fe12bd7',1,'Touchkey_t']]],
-  ['bitspervol_13',['bitspervol',['../struct_voxie__wind__t.html#a8425610380ee54fc8d30c5cf0727e37f',1,'Voxie_wind_t']]],
-  ['boxcollidechk_14',['boxCollideChk',['../class_i_voxie_box.html#a6770c0826e853800e4b1c218ac29c58f',1,'IVoxieBox::boxCollideChk()'],['../class_voxie_box.html#a9ac793efbe7ce15deb9ceddb4da105c0',1,'VoxieBox::boxCollideChk()']]],
-  ['boxinsidecollidechk_15',['boxInsideCollideChk',['../class_i_voxie_box.html#a7687f3274f6f8c7ff2b875ea45b1d136',1,'IVoxieBox::boxInsideCollideChk()'],['../class_voxie_box.html#ab6b8ee0d69b5f28f90f73a9a21968313',1,'VoxieBox::boxInsideCollideChk()']]],
-  ['breath_16',['breath',['../class_i_voxie_box.html#af0814d9392e461322f177e41026754e8',1,'IVoxieBox::breath()=0'],['../class_i_voxie_box.html#abadd2a46b41c146060e1c8e3a9f265af',1,'IVoxieBox::breath(voxie_inputs_t *input)=0'],['../class_voxie_box.html#a0cd2ee2048f4b560910621c693709270',1,'VoxieBox::breath()'],['../class_voxie_box.html#af0fc4d29059d67c2df643073bd02b3c9',1,'VoxieBox::breath(voxie_inputs_t *input)']]],
-  ['brightencol_17',['brightenCol',['../class_voxie_box.html#af3d2ecdc33fcfccd752bb1614d4dbbeb',1,'VoxieBox']]],
-  ['bstat_18',['bstat',['../struct_voxie__input__t.html#a86be8dd0e2f5f1a3f927c558086b440b',1,'Voxie_input_t']]],
-  ['but_19',['but',['../struct_voxie__xbox__t.html#ac50ea05df80a4b713a651c81f877dd12',1,'Voxie_xbox_t::but()'],['../struct_voxie__nav__t.html#aac4e6fb4c095049699018d6717beb646',1,'Voxie_nav_t::but()']]]
+  ['amend_16',['amend',['../structpoint3d.html#a7dc9c53d08576fcf9f2d951397fb8f71',1,'point3d']]],
+  ['amendall_17',['amendAll',['../structpoint3d.html#a373e4f0348fb6968beeffd6fbc50d9b3',1,'point3d']]],
+  ['animmode_18',['animmode',['../structvoxie__rec__t.html#a9bd26107414c3fe8195d079ec320c381',1,'voxie_rec_t']]],
+  ['aspr_19',['aspr',['../structvoxie__wind__t.html#a7f07a52b15564ed647dd867647536bc6',1,'voxie_wind_t']]],
+  ['asprmin_20',['asprmin',['../structvoxie__wind__t.html#afb09104e7103d035011fa67770f77624',1,'voxie_wind_t']]],
+  ['aspx_21',['aspx',['../structvoxie__wind__t.html#ae4e7adb32922fd488d3b8063fd294edc',1,'voxie_wind_t']]],
+  ['aspy_22',['aspy',['../structvoxie__wind__t.html#ad0474b5053059e931b1b8317ec0b096a',1,'voxie_wind_t']]],
+  ['aspz_23',['aspz',['../structvoxie__wind__t.html#a533978d4069a78ce9a7ef5ddad17a152',1,'voxie_wind_t']]],
+  ['ax_24',['ax',['../structvoxie__nav__t.html#aba8d3ee14f7561dea9dd16155fb499e9',1,'voxie_nav_t']]],
+  ['ay_25',['ay',['../structvoxie__nav__t.html#a59861ec7f34dc2877eeb4d5a7a7487c0',1,'voxie_nav_t']]],
+  ['az_26',['az',['../structvoxie__nav__t.html#a1ea134a67ef07c1eaebd7d9e81ed1460',1,'voxie_nav_t']]]
 ];

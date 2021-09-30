@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['tiletype_825',['tiletype',['../vx_data_types_8h.html#abd98e35d2fb80b0d48bd9e9649453704',1,'vxDataTypes.h']]],
-  ['touchkey_5ft_826',['touchkey_t',['../vx_data_types_8h.html#a61300abc19a098446bd0206b723ec1cf',1,'vxDataTypes.h']]]
+  ['tiletype_954',['tiletype',['../vx_data_types_8h.html#ad7a492b037d1684fa4660224fe4c42b5',1,'vxDataTypes.h']]],
+  ['touchkey_5ft_955',['touchkey_t',['../vx_data_types_8h.html#a92e49ca56b7a735da1c94fe60e3b874d',1,'vxDataTypes.h']]]
 ];

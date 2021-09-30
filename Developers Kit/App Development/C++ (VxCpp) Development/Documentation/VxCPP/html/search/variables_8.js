@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['ianghak_752',['ianghak',['../struct_voxie__wind__t.html#ad27ca59b4625abae65b043a055538f77',1,'Voxie_wind_t']]],
-  ['ilacemode_753',['ilacemode',['../struct_voxie__wind__t.html#ac8456ac63600730fc0edda5f8a77ce50',1,'Voxie_wind_t']]],
-  ['isrecording_754',['isrecording',['../struct_voxie__wind__t.html#ae6df453ddb2049913fa4cc7e1bbe83c5',1,'Voxie_wind_t']]]
+  ['ianghak_883',['ianghak',['../structvoxie__wind__t.html#a28dedd278f257def0edcc91566c6348f',1,'voxie_wind_t']]],
+  ['ilacemode_884',['ilacemode',['../structvoxie__wind__t.html#a34c2944975319407ea7f4d1a1dda4e7c',1,'voxie_wind_t']]],
+  ['isrecording_885',['isrecording',['../structvoxie__wind__t.html#a70c8164e5262b9e66a9312f5c34059ab',1,'voxie_wind_t']]]
 ];

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['gamma_743',['gamma',['../struct_voxie__wind__t.html#a5ba6527125458ee7ebd607a8adcc2060',1,'Voxie_wind_t']]],
-  ['goalrpm_744',['goalrpm',['../struct_voxie__wind__t.html#a75dc9aec62782a57446d9433f9b5cfc1',1,'Voxie_wind_t']]]
+  ['gamma_874',['gamma',['../structvoxie__wind__t.html#aa6e0fe5096fa94ad3e001e02f4e0ad84',1,'voxie_wind_t']]],
+  ['goalrpm_875',['goalrpm',['../structvoxie__wind__t.html#ac990574ef4b569ecab5ef2f388e24fb4',1,'voxie_wind_t']]]
 ];

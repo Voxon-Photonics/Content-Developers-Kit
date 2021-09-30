@@ -41,12 +41,12 @@ int \mbox{\hyperlink{structvoxie__wind__t_a9f11bc24464f204342f0ab1f42794f4b}{fra
 \mbox{\Hypertarget{structvoxie__wind__t_a0134b92b88cd8ee72e88f362d76ab494}\label{structvoxie__wind__t_a0134b92b88cd8ee72e88f362d76ab494}} 
 int \mbox{\hyperlink{structvoxie__wind__t_a0134b92b88cd8ee72e88f362d76ab494}{usecol}}
 \begin{DoxyCompactList}\small\item\em display color setting. 0 = mono white, 1 = RGB full color time multiplexed. various negative values are for full color mono -\/1 = red, -\/2 = green, -\/3 yellow, -\/4 blue, -\/5 magenta, -\/6 cyan, \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{structvoxie__wind__t_a95a93ec4eed4dccd413b0d0f9fd92c53}\label{structvoxie__wind__t_a95a93ec4eed4dccd413b0d0f9fd92c53}} 
-int \mbox{\hyperlink{structvoxie__wind__t_a95a93ec4eed4dccd413b0d0f9fd92c53}{bitspervol}}
-\begin{DoxyCompactList}\small\item\em bit planes per volume written by the Voxie\+Box.\+dll. Can be useful for custom volume renderer \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structvoxie__wind__t_aaca6c4dc26835bf9f5ad8c151457fe28}\label{structvoxie__wind__t_aaca6c4dc26835bf9f5ad8c151457fe28}} 
 int \mbox{\hyperlink{structvoxie__wind__t_aaca6c4dc26835bf9f5ad8c151457fe28}{dispnum}}
 \begin{DoxyCompactList}\small\item\em number of displays to search for and use for volumetric rendering. a VX1 only uses 1 display but it is possible to create a volume using multiple displays. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structvoxie__wind__t_a95a93ec4eed4dccd413b0d0f9fd92c53}\label{structvoxie__wind__t_a95a93ec4eed4dccd413b0d0f9fd92c53}} 
+int \mbox{\hyperlink{structvoxie__wind__t_a95a93ec4eed4dccd413b0d0f9fd92c53}{bitspervol}}
+\begin{DoxyCompactList}\small\item\em bit planes per volume written by the Voxie\+Box.\+dll. Can be useful for custom volume renderer \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structvoxie__wind__t_a028cfad540720909d35cafd74c72ff32}\label{structvoxie__wind__t_a028cfad540720909d35cafd74c72ff32}} 
 \mbox{\hyperlink{structvoxie__disp__t}{voxie\+\_\+disp\+\_\+t}} \mbox{\hyperlink{structvoxie__wind__t_a028cfad540720909d35cafd74c72ff32}{disp}} \mbox{[}MAXDISP\mbox{]}
 \begin{DoxyCompactList}\small\item\em An array of \mbox{\hyperlink{structvoxie__disp__t}{voxie\+\_\+disp\+\_\+t}}. These are the different display settings for each display targeted for volumetric rendering. These \textquotesingle{}displays\textquotesingle{} are typically projectors. See \mbox{\hyperlink{structvoxie__disp__t}{voxie\+\_\+disp\+\_\+t}} for infomation of what is within this struct. \end{DoxyCompactList}\item 
@@ -165,8 +165,8 @@ int \mbox{\hyperlink{structvoxie__wind__t_a28dedd278f257def0edcc91566c6348f}{ian
 \mbox{\Hypertarget{structvoxie__wind__t_a695b8f49193b4c79d4df4de15a8203bf}\label{structvoxie__wind__t_a695b8f49193b4c79d4df4de15a8203bf}} 
 int \mbox{\hyperlink{structvoxie__wind__t_a695b8f49193b4c79d4df4de15a8203bf}{ldotnum}}
 \begin{DoxyCompactList}\small\item\em dot number the size of a single voxel. affects brightness. Range\+:\{0..3\}, 0=default \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{structvoxie__wind__t_a3bb0b42090ade48ba7c2f8c756e12eef}\label{structvoxie__wind__t_a3bb0b42090ade48ba7c2f8c756e12eef}} 
-int \mbox{\hyperlink{structvoxie__wind__t_a3bb0b42090ade48ba7c2f8c756e12eef}{normmhax}}
+\mbox{\Hypertarget{structvoxie__wind__t_a55ba9375e72ab2c41881ce0451e45592}\label{structvoxie__wind__t_a55ba9375e72ab2c41881ce0451e45592}} 
+int \mbox{\hyperlink{structvoxie__wind__t_a55ba9375e72ab2c41881ce0451e45592}{normhax}}
 \begin{DoxyCompactList}\small\item\em Used by global normal shading stores the vertical and horizontal angle and amplitude \+: (vang/$\ast$-\/90..90$\ast$/$<$$<$20) + ((hang/$\ast$-\/180..180$\ast$/\&4095)$<$$<$8) + amp/$\ast$0..255$\ast$/. 0=disable. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structvoxie__wind__t_a349d05d0274aad1aa2c4c66e2dda5151}\label{structvoxie__wind__t_a349d05d0274aad1aa2c4c66e2dda5151}} 
 int \mbox{\hyperlink{structvoxie__wind__t_a349d05d0274aad1aa2c4c66e2dda5151}{upndow}}
@@ -224,7 +224,7 @@ Voxie\+Box\+::voxie\+\_\+disp\+\_\+t()
 
 value determines to render the Voxie Window on hardware or via software emulation or simulation. 
 
-set values are\+: 0 to run on Voxon hardware, 1 = emulator perspective view (looks like autentic hardware), 2 = simulator perspective view, 3 = emulator orthogonal view, 4 = emulator orthogonal view using older, slower code. ~\newline
+set values are\+: 0 to run on Voxon hardware, 1 = emulator perspective view (looks like authentic hardware), 2 = simulator perspective view, 3 = emulator orthogonal view, 4 = emulator orthogonal view using older, slower code. ~\newline
  \mbox{\Hypertarget{structvoxie__wind__t_ac020d8200d6975c061c0ad261ea4557c}\label{structvoxie__wind__t_ac020d8200d6975c061c0ad261ea4557c}} 
 \index{voxie\_wind\_t@{voxie\_wind\_t}!usekeystone@{usekeystone}}
 \index{usekeystone@{usekeystone}!voxie\_wind\_t@{voxie\_wind\_t}}

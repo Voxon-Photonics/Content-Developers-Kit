@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['z_817',['z',['../struct_point3d.html#a262f96e4e47cf4a1760197f2d4128683',1,'Point3d::z()'],['../struct_pol__t.html#a9021584d96655512808f03dd1dfbf498',1,'Pol_t::z()'],['../struct_poltex__t.html#a1a3125710a36de9bf3469a8258f6068e',1,'Poltex_t::z()']]],
-  ['zadd_818',['zadd',['../struct_voxie__frame__t.html#a5af7d73bd94fa786eda51f272d151ced',1,'Voxie_frame_t']]],
-  ['zmul_819',['zmul',['../struct_voxie__frame__t.html#afa4439f6e4712ce45b9382b9f7943cfe',1,'Voxie_frame_t']]]
+  ['z_946',['z',['../structpoint3d.html#a075565f3f2483a035941ea8d2958211d',1,'point3d::z()'],['../structpol__t.html#ad6e2b7ff8aa10bd8a6285f34b7ea7bd6',1,'pol_t::z()'],['../structpoltex__t.html#a29bb4d8040e5fa85a2acb4004c8b29bb',1,'poltex_t::z()']]],
+  ['zadd_947',['zadd',['../structvoxie__frame__t.html#a04f7c8b478cbe2faac06a2ef6016af9c',1,'voxie_frame_t']]],
+  ['zmul_948',['zmul',['../structvoxie__frame__t.html#a1c783389f6ad3b8be8ac76160ec31acc',1,'voxie_frame_t']]]
 ];

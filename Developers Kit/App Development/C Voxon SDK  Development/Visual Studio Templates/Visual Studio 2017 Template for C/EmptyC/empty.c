@@ -28,8 +28,7 @@ empty.exe: empty.c; gcc empty.c -o empty.exe -pipe -O3 -s -m64
 #ifndef max
 #define max(a, b) (((a) < (b)) ? (a) : (b))
 #endif
-
- 
+	 
 static voxie_wind_t vw;
 static voxie_frame_t vf; 
 
@@ -50,7 +49,7 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 		MessageBox(0, (char *)"Error: can't load voxiebox.dll", (char *)"", MB_OK); // if there is an error this will create a standard Windows message box
 		return (-1);
 	}
-	if (voxie_init(&vw) < 0) // first initalise of the (&vw) voxie_wind_t activates settings from voxiebox.ini and voxie_menu_0.ini 
+	if (voxie_init(&vw) < 0) // first initialise of the (&vw) voxie_wind_t activates settings from voxiebox.ini and voxie_menu_0.ini 
 	{
 		return (-1);
 	}

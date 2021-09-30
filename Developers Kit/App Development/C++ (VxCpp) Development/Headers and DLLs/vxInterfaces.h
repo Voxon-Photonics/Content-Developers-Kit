@@ -5,7 +5,7 @@
  *
  * VX++ interface header contains interface definitions for creating VX++ related classes. 
  * This header is essential to developing VX++ applications using the VxCpp.DLL.
- * This file is kept seperate to allow easy integration...
+ * This file is kept separate to allow easy integration...
  *
  */
 

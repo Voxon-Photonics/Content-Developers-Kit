@@ -3,7 +3,7 @@
  *
  * VX++ data types header contains definitions of all Voxon related structs and types.
  * This header is essential to developing VX++ applications using the VxCpp.DLL.
- * This file is kept seperate to allow easy integration...
+ * This file is kept separate to allow easy integration...
  *
  */
 
@@ -16,8 +16,10 @@
 
 #pragma pack(push,1)
 
+
+
 //! 2 floats (x & y) usually to describe a point in 2D
-typedef struct Point2d {
+typedef struct point2d {
 
 	float x, //!< x position
 		  y; //!< y position
@@ -29,7 +31,7 @@ typedef struct Point2d {
 } point2d;
 
 //! 3 floats (x, y & z) usually to describe a point in 3D
-typedef struct Point3d {
+typedef struct point3d {
 
 	float x, //!< x position
 		y, //!< y position
@@ -50,7 +52,7 @@ typedef struct Point3d {
 } point3d;
 
 //! point3d with index to next point in loop (starting at 0). Similar to poltex_t but with no texture data. Used by VoxieBox::drawPoly()
-typedef struct Pol_t { 
+typedef struct pol_t { 
 	
 	float	x,			//!< x position
 			y,			//!< y position
@@ -60,7 +62,7 @@ typedef struct Pol_t {
 } pol_t;
 
 //!  3D point with texture coordinate and color (ARGB32). Used by VoxieBox::drawMesh()
-typedef struct Poltex_t { 
+typedef struct poltex_t { 
 	
 	float	x,			//!< x position
 			y,			//!< y position
@@ -73,27 +75,27 @@ typedef struct Poltex_t {
 } poltex_t;
 
 //! 2D array of pixels can be used with VoxieBox::drawMesh, VoxieBox::drawHeightMap and the 2D display (via voxie_frame_t)
-typedef struct Tiletype { 
+typedef struct tiletype { 
 
-	INT_PTR		f; 		//!< pointer to the top-left pixel
-	INT_PTR		p;		//!< pitch - number of bytes per horizontal line (usually 32 bit color (ARGB32) x*4 but may be higher or negative)
-	INT_PTR		x;		//!< x (horizontal) image dimention  
-	INT_PTR		y;		//!< y (vertical) image dimention
+	INT_PTR		f; 		//!< pointer to the top-left pixel ( (INT_PTR)malloc(tile.p*tile.y) - good formula for working it out )	
+	INT_PTR		p;		//!< pitch - number of bytes per horizontal line (usually 32 bit color (ARGB32) x*4 but may be higher or negative) ( tile.p = (tile.x<<2) - good formula))
+	INT_PTR		x;		//!< x (horizontal) image dimension  (look at the file's details)
+	INT_PTR		y;		//!< y (vertical) image dimension (look at the file's details)
 
 } tiletype;
 
-#define MAXDISP 3			//the maxium amount of displays which can render a volumetric volume at any point in time.
+#define MAXDISP 3			//the maximum amount of displays which can render a volumetric volume at any point in time.
 #define VOXIE_DICOM_MIPS 4	//NOTE:limited to 6 by dicom_gotz
 
 //! Voxon Display Struct - Configuration for a display suitable to render a volumetric image (usually projector)
 /**
 * This struct manages a projector's display settings which includes keystone (the position coordinates for the display), LED levels
 * and mirror settings. Each display struct (voxie_disp_t) is loaded into the voxie window (voxie_wind_t) during the voxie_load() and voxie_init() or when a new 
-* VoxieBox is contructed 
+* VoxieBox is constructed 
 * @see VoxieBox::VoxieBox() 
 * @see VoxieBox::init()
 */
-typedef struct Voxie_disp_t {
+typedef struct voxie_disp_t {
 
 	point2d keyst[8];	//!< Keystone settings for display. a collection of 2D points giving coordinates for top and bottom corners of the display
 	int colo_r,			//!<LED initial start up values for the red channel in RGB color mode. 0..255
@@ -114,13 +116,13 @@ typedef struct Voxie_disp_t {
  *  @see VoxieBox::update()
  *  @see VoxieBox::voxie_disp_t()
  */
-typedef struct Voxie_wind_t {
+typedef struct voxie_wind_t {
 
 	// Emulator and display settings 
 	int		useemu;					//!< value determines to render the Voxie Window on hardware or via software emulation or simulation. 
 									//!< set values are: 
 									//!< 0 to run on Voxon hardware,
-									//!< 1 = emulator perspective view (looks like autentic hardware),
+									//!< 1 = emulator perspective view (looks like authentic hardware),
 									//!< 2 = simulator perspective view, 
 									//!< 3 = emulator orthogonal view, 
 									//!< 4 = emulator orthogonal view using older, slower code. 
@@ -135,8 +137,9 @@ typedef struct Voxie_wind_t {
 	int		projrate;				//!< projector's refresh rate in Hz range is {60..107} 
 	int		framepervol;			//!< number of projector's frames per volume {1..16}. example with framepervol set to 3 at projrate set to 60 render a volume at 60/3 = 20 Hz volume rate. This setting should always be at '8' on a typical VX1 setup. 60/8 =  
 	int		usecol;					//!< display color setting. 0 = mono white, 1 = RGB full color time multiplexed. various negative values are for full color mono -1 = red, -2 = green, -3 yellow,  -4 blue, -5 magenta, -6 cyan, 
-	int		bitspervol;				//!< bit planes per volume written by the VoxieBox.dll. Can be useful for custom volume renderer 
 	int		dispnum;				//!< number of displays to search for and use for volumetric rendering. a VX1 only uses 1 display but it is possible to create a volume using multiple displays. 
+	int		bitspervol;				//!< bit planes per volume written by the VoxieBox.dll. Can be useful for custom volume renderer 
+
 
 	voxie_disp_t disp[MAXDISP];		//!< An array of voxie_disp_t. These are the different display settings for each display targeted for volumetric rendering. These 'displays' are typically projectors. See voxie_disp_t for infomation of what is within this struct. 
     
@@ -203,7 +206,7 @@ typedef struct Voxie_wind_t {
 			cpmaxrpm,				//!< for Spinner only. Maximum rotation rate the voxiebox.dll will allow the motor to spin
 			ianghak,				//!< for Spinner only. Phase offset for rotation (0-65535)
 			ldotnum,				//!< dot number the size of a single voxel. affects brightness. Range:{0..3}, 0=default
-			normmhax;				//!< Used by global normal shading stores the vertical and horizontal angle and amplitude : (vang/*-90..90*/<<20) + ((hang/*-180..180*/&4095)<<8) + amp/*0..255*/. 0=disable.
+			normhax;				//!< Used by global normal shading stores the vertical and horizontal angle and amplitude : (vang/*-90..90*/<<20) + ((hang/*-180..180*/&4095)<<8) + amp/*0..255*/. 0=disable.
 	
 	int		upndow;					//!< screen shape: 0=sawtooth, 1=triangle
 	int		nblades;				//!< screen shape: 0=VX1 (not spinner), 1=/|, 2=/|/|, ..
@@ -231,7 +234,7 @@ typedef struct Voxie_wind_t {
 //! Struct which holds all the frame data (frame is a 2D slice of the volumetric image) which gets loaded unto the projector. 
 /** It also holds the tiletype data which gets rendered to the 2D secondary screen (touch screen) 
 */
-typedef struct Voxie_frame_t {
+typedef struct voxie_frame_t {
 
 	INT_PTR		f,				//!< Pointer to top-left-up of current frame to draw
 				p,				//!< Number of bytes per horizontal line (x)
@@ -267,7 +270,7 @@ typedef struct Voxie_frame_t {
 *   as the voxie_input_t just tracks movements
 *   use @see VoxieBox::reportMouse to see a live report
 */
-typedef struct Voxie_input_t { 
+typedef struct voxie_input_t { 
 
 	int			bstat,			//!< buttonstate for mouse buttons 0 = no buttons pressed, 1 = left mouse button pressed, 
 								//!< 2 = right mouse button pressed, 3 = both left and right button pressed. 
@@ -280,7 +283,7 @@ typedef struct Voxie_input_t {
 } voxie_inputs_t;
 
 //! USB game controller input state struct. Used to manage USB game controller input
-typedef struct Voxie_xbox_t {
+typedef struct voxie_xbox_t {
 
 	short	but,	//!< XBox controller buttons (same layout as XInput) @see JoyButtonCodes 
 			lt,		//!< XBox controller left analog trigger (0..255)
@@ -295,7 +298,7 @@ typedef struct Voxie_xbox_t {
 
 
 //! 3D SpaceMouse / Space Navigator by 3DConnexion input state struct. Used to manage SpaceNav input
-typedef struct Voxie_nav_t {
+typedef struct voxie_nav_t {
 	
 	float	dx,		//!< Space Navigator's translation delta movement on X axis 
 			dy,		//!< Space Navigator's translation delta movement on Y axis
@@ -304,7 +307,7 @@ typedef struct Voxie_nav_t {
 			ay,		//!< Space Navigator's rotation (angle) delta on Y axis
 			az;		//!< Space Navigator's rotation (angle) delta on Z axis
 
-	int		but;	//!< Space Navigator button status similar to a tradional mouse 0 = no buttons, 1 = left button, 2 = right button, 3 = both buttons 
+	int		but;	//!< Space Navigator button status similar to a traditional mouse 0 = no buttons, 1 = left button, 2 = right button, 3 = both buttons 
 
 } voxie_nav_t;
 
@@ -313,7 +316,7 @@ typedef struct Voxie_nav_t {
 /**
 * To make use of this struct in Voxon development see VoxieBox::touchAddKey
 */
-typedef struct Touchkey_t {
+typedef struct touchkey_t {
 
 	char	*st;		//!<  string to display. Arrows use special string code: 0xcb,0xcd,0xc8,0xd0 (up,down,left,right respectively) following by null terminator.
 	
@@ -323,14 +326,14 @@ typedef struct Touchkey_t {
 			ys,			//!< size (how tall) in pixels for the button's rectangle
 			fcol,		//!< foreground color (24-bit hex 0xRBG value 0xff0000 = Red) 
 			bcol,		//!< background color (24-bit hex 0xRBG value 0xff0000 = Red). Use -1 for transparent background.
-			keycode;	//!< keyboard scan code of button. @see inputTypes.h::Keys for list of scancodes. Special keycodes for mouse: Mouse:0x0000, LBut:0x0001, RBut:0x0002, MBut:0x0003
+			keycode;	//!< keyboard scan code of button. use extended scancodes for visual feedback @see inputTypes.h::Keys for list of scancodes. Special keycodes for mouse: Mouse:0x0000, LBut:0x0001, RBut:0x0002, MBut:0x0003
 
 } touchkey_t;
 
 #define VOXIE_DICOM_MIPS 4 //NOTE:limited to 6 by voxie_dicom_t:gotz bit mask trick
 
 //! struct for reading DICOM (media data) - used internally; not for developers
-typedef struct Voxie_dicom_t {
+typedef struct voxie_dicom_t {
 
 	signed short	*mip[VOXIE_DICOM_MIPS];			
 	int				*gotz;							
@@ -382,10 +385,23 @@ typedef struct Voxie_dicom_t {
 
 } voxie_dicom_t;
 
-//! struct to manage Voxon Volumetric Recordings .REC files - used internally; not for developers
-typedef struct Voxie_rec_t {
 
-	FILE			*fil; 			//!< Warning: do not use this from user code - for internal use only.
+
+//! internal struct used by voxiebox.dll privately to manage zip files (similar to FILE structure)
+struct kzfile_t;
+//! internal struct used by voxiebox.dll privately to manage searching through zip files (similar to FILE structure)
+struct kzfind_t;
+// enum to manage file attributes from kzfileinfo_t
+enum { ATTRIB_ISDIR = 1, ATTRIB_INZIP = 2, ATTRIB_RDONLY = 4, ATTRIB_HIDDEN = 8, ATTRIB_ISDRIVE = 16 };
+//! internal struct used by voxiebox.dll to store ziped files information.
+typedef struct { __int64 size; int year; char month, day, dayofweek, hour, minute, second; short attrib; char name[MAX_PATH]; } kzfileinfo_t;
+// enum to manage different image decoding functions used
+enum { KPLIB_NONE = 0, KPLIB_PNG, KPLIB_JPG, KPLIB_GIF, KPLIB_CEL, KPLIB_BMP, KPLIB_PCX, KPLIB_DDS, KPLIB_TGA }; //kpgetdim() returns this
+
+//! struct to manage Voxon Volumetric Recordings .REC files - used internally; not for developers
+typedef struct voxie_rec_t {
+
+	kzfile_t			*fil; 			//!< Warning: do not use this from user code - for internal use only.
 	double			timleft;
 	float			*frametim;
 	
@@ -407,7 +423,7 @@ typedef struct Voxie_rec_t {
 
 
 //! Not for developers - Legacy code - This is for an experimental laser controller developed by Voxon which is not used by the public
-typedef struct Voxie_laser_t {
+typedef struct voxie_laser_t {
 
 	point3d		pt,
 				vec;
@@ -424,7 +440,7 @@ static const int XBOX_HISTORY_LENGTH = 16;
 static const int NAV_HISTORY_LENGTH = 3;
 
 //! used internally by VoxieBox class to log various button inputs this struct allows you to view the history of various inputs
-typedef struct Voxie_input_state_t {
+typedef struct voxie_input_state_t {
 
 	int inputCodeRaw;
 	int inputCode;
@@ -437,7 +453,7 @@ typedef struct Voxie_input_state_t {
 } voxie_input_state_t;
 
 //! used internally by VoxieBox to log various keyboard button inputs this struct allows you to view the history
-typedef struct Voxie_keyboard_history_t {
+typedef struct voxie_keyboard_history_t {
 
 	voxie_input_state_t history[KEY_HISTORY_LENGTH];
 
@@ -445,14 +461,14 @@ typedef struct Voxie_keyboard_history_t {
 
 
 //! used internally by VoxieBox to log various USB game controller button inputs this struct allows you to view the history
-typedef struct Voxie_xbox_history_t {
+typedef struct voxie_xbox_history_t {
 
 	voxie_input_state_t history[XBOX_HISTORY_LENGTH];
 
 } voxie_xbox_history_t;
 
 //! used internally by VoxieBox to log various Space Nav inputs this struct allows you to view the history of various inputs
-typedef struct Voxie_nav_history_t {
+typedef struct voxie_nav_history_t {
 
 	voxie_input_state_t history[NAV_HISTORY_LENGTH];
 

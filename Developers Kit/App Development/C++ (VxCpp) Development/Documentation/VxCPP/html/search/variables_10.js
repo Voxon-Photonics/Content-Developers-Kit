@@ -1,10 +1,10 @@
 var searchData=
 [
-  ['sawtoothrat_780',['sawtoothrat',['../struct_voxie__wind__t.html#ab3fd371d4d1d3d7f359c2be5e7778b82',1,'Voxie_wind_t']]],
-  ['sensemask_781',['sensemask',['../struct_voxie__wind__t.html#a1d494d0e10137f559136664baa7fe378',1,'Voxie_wind_t']]],
-  ['smear_782',['smear',['../struct_voxie__wind__t.html#a20d1704f8fee6595860a49c56fe60ea7',1,'Voxie_wind_t']]],
-  ['sndfx_5faud_783',['sndfx_aud',['../struct_voxie__wind__t.html#a3c73014eb6623761db7bf830135182c6',1,'Voxie_wind_t']]],
-  ['sndfx_5fvol_784',['sndfx_vol',['../struct_voxie__wind__t.html#a238a48b1f7e4600dcbb744d85e519224',1,'Voxie_wind_t']]],
-  ['st_785',['st',['../struct_touchkey__t.html#a992fc7359a23013f4a188bac9ae0021c',1,'Touchkey_t']]],
-  ['sync_5fusb_5foffset_786',['sync_usb_offset',['../struct_voxie__wind__t.html#a01e8fcdffe62bb3247b5cac3bed06e69',1,'Voxie_wind_t']]]
+  ['sawtoothrat_911',['sawtoothrat',['../structvoxie__wind__t.html#a8b036f716993d1d4912d5f4592165ebe',1,'voxie_wind_t']]],
+  ['sensemask_912',['sensemask',['../structvoxie__wind__t.html#a88152d581b80c951b2362900b644b1eb',1,'voxie_wind_t']]],
+  ['smear_913',['smear',['../structvoxie__wind__t.html#a76871f1fc291ebdb1c6e8cfe29f6db2e',1,'voxie_wind_t']]],
+  ['sndfx_5faud_914',['sndfx_aud',['../structvoxie__wind__t.html#a51c1f702bab8b5544f69ac09c91cfcd8',1,'voxie_wind_t']]],
+  ['sndfx_5fvol_915',['sndfx_vol',['../structvoxie__wind__t.html#a0438274fb468c711203dc733617550e0',1,'voxie_wind_t']]],
+  ['st_916',['st',['../structtouchkey__t.html#a585f3cfcf4501f48914bd7eaef4f9ebd',1,'touchkey_t']]],
+  ['sync_5fusb_5foffset_917',['sync_usb_offset',['../structvoxie__wind__t.html#adfe7d5d1af79ec3ca331ed2613bbd206',1,'voxie_wind_t']]]
 ];
