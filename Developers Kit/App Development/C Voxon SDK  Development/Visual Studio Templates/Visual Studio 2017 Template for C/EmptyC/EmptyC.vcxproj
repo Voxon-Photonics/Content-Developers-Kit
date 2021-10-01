@@ -118,7 +118,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="empty.c" />
-    <ClCompile Include="voxiebox.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="voxiebox.h" />

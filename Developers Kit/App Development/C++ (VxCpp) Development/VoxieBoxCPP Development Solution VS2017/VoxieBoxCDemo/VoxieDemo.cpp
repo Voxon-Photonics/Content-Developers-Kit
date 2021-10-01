@@ -1,10 +1,13 @@
 // VX APP C HELLO WORLD EXAMPLE (force compiler as C++ (enable /TP in compiler or save as use the .cpp file)
+#include "pch.h"
+
 #include "voxiebox.h"
+
 
 #define PI 3.14159265358979323
 #include <math.h>
 
-int main()
+int WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdshow)
 {
 	voxie_wind_t vw;								// The voxie window struct to manage the volumetric display - most display settings exist in this struct
 	voxie_frame_t vf;								// struct to manage the voxie frame all graphical data is loaded into the voxie_frame_t struct
