@@ -291,10 +291,10 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 			//This function should be called in a while loop until 0 is returned, ex:
 			//   while (voxie_touch_read(&i,&x,&y,&j)) { /*process i,x,y,j*/ }
 			
-			// Get Touch inputs from voxiebox.dll
+					// Get Touch inputs from voxiebox.dll
 			touch.currentTouchNo = 0;
 
-			// pinch update
+
 			while (voxie_touch_read(&i, &x, &y, &j)) {
 
 				touch.tPoint[i].oposx = touch.tPoint[i].posx;
@@ -310,6 +310,7 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 				}
 
 				touch.tPoint[i].lastUpdate = tim;
+		
 				touch.tPoint[i].state = j;
 				touch.tPoint[i].active = true;
 
@@ -317,6 +318,9 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 			}
 
 			if (touch.currentTouchNo > TOUCH_MAX) touch.currentTouchNo = TOUCH_MAX;
+
+
+
 
 				// update loop for touch controls
 			for (i = 0; i < TOUCH_MAX; i++) {
@@ -331,7 +335,7 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 				touch.tPoint[i].inPinch = false;
 
 				// state reminder; 1 == just pressed, 2 == off, 0 == down
-				if(touch.tPoint[i].state == 1) touch.tPoint[i].justPressed = true;
+				if(touch.tPoint[i].state == 1 || touch.tPoint[i].state == 0 && touch.tPoint[i].ostate == -1) touch.tPoint[i].justPressed = true;
 				if(touch.tPoint[i].state == 2 && touch.tPoint[i].ostate <= 1) touch.tPoint[i].onUp = true;
 				if(touch.tPoint[i].state == 0) touch.tPoint[i].isDown = true;
 
@@ -351,13 +355,15 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 		
 				touch.tPoint[i].ostate = touch.tPoint[i].state;
 
-				if(touch.tPoint[i].state == 2) { // 2 is off
+				if(touch.tPoint[i].state == 2 && touch.tPoint[i].onUp == false) { // 2 is off
 					touchClear(&touch, i);
 					continue;
 				}
 
 
 			}
+
+	
 
 		/////////////// END OF TOUCH UPDATE ////////////////////
 
@@ -545,10 +551,10 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 			voxie_debug_print6x8_(30, 110 + (i * 10), 0xff30f0, -1, "touch X %d Y %d Delta X %d Y %d state %d utim %1.2f stim %1.2f  ", touch.tPoint[i].posx, touch.tPoint[i].posy,  touch.tPoint[i].deltax, touch.tPoint[i].deltay, touch.tPoint[i].state, touch.tPoint[i].lastUpdate, touch.tPoint[i].startTime); 	
 
 			if (touch.tPoint[i].active)		voxie_debug_print6x8_(30, 110 + (i * 10), 0xff0000, -1, "								   	                                    A  "); 	
-			if (touch.tPoint[i].isDown)		voxie_debug_print6x8_(30, 110 + (i * 10), 0x00ffff, -1, "								   	                                     D %1.2f  ", tim - touch.tPoint[i].startTime); 	
-			if (touch.tPoint[i].justPressed) 	voxie_debug_print6x8_(30, 110 + (i * 10), 0x00ff00, -1, "									                                             P"); 	
-			if (touch.tPoint[i].onUp) 			voxie_debug_print6x8_(30, 110 + (i * 10), 0xffff00, -1, "									                                              U");
-			if (touch.tPoint[i].inPinch) 		voxie_debug_print6x8_(30, 110 + (i * 10), 0xff00ff, -1, "									                                                I");
+			if (touch.tPoint[i].isDown)		voxie_debug_print6x8_(30, 110 + (i * 10), 0x00ffff, -1, "								   	                                      D %1.2f  ", tim - touch.tPoint[i].startTime); 	
+			if (touch.tPoint[i].justPressed) 	voxie_debug_print6x8_(30, 110 + (i * 10), 0x00ff00, -1, "									                                                P"); 	
+			if (touch.tPoint[i].onUp) 			voxie_debug_print6x8_(30, 110 + (i * 10), 0xffff00, -1, "									                                                 U");
+			if (touch.tPoint[i].inPinch) 		voxie_debug_print6x8_(30, 110 + (i * 10), 0xff00ff, -1, "									                                                   I");
 
 		}
 
