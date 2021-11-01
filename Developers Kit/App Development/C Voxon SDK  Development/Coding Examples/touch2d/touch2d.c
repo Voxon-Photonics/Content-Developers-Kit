@@ -49,7 +49,7 @@ static int objectNo = 0;
 typedef struct touchPoint_t {int posx, posy, oposx, oposy, deltax, deltay, state = -1, ostate; bool isHeld, isDown, justPressed, onUp, active, inPinch; double startTime, lastUpdate; } touchPoint_t;
 
 // touch input is the bigger struct that manages a few more lower level settings
-typedef struct touchInput_t {point2d opinch0, opinch1; float sensitivity = 1, opinchDistance, pinchDistance, pinchDistanceDelta, pinchAngle, pinchRotation, opinchRotation, pinchRotationDelta, currentTouchNo; bool initPinch, active, pinchActive; touchPoint_t tPoint[TOUCH_MAX]; double heldTime = HELD_TIME; int gDeltaX, gDeltaY, ogDeltaX, ogDeltaY, pinchPriority; double pinchLastUpdate; bool focusPinch; } touchInput_t;
+typedef struct touchInput_t {point2d opinch0, opinch1; float sensitivity = 1, opinchDistance, pinchDistance, pinchDistanceDelta, pinchAngle, pinchRotation, opinchRotation, pinchRotationDelta, currentTouchNo; bool initPinch, active, pinchActive; touchPoint_t tPoint[TOUCH_MAX]; double heldTime = HELD_TIME; int pinch0Index, pinch1Index, gDeltaX, gDeltaY, ogDeltaX, ogDeltaY, pinchPriority; double pinchLastUpdate; bool focusPinch; } touchInput_t;
 
 static touchInput_t touch;
 
@@ -72,6 +72,9 @@ void touchPinchClear(touchInput_t * touchInputPtr) {
 		touchInputPtr->opinchRotation = 0;
 		touchInputPtr->pinchActive = false;
 		touchInputPtr->pinchPriority = -1;
+		touchInputPtr->pinch0Index = 0;
+		touchInputPtr->pinch1Index = 0;
+		
 	}
 
 }
@@ -92,6 +95,8 @@ void touchClear(touchInput_t * touchInputPtr, int i) {
 	touchInputPtr->tPoint[i].inPinch = false;
 	touchInputPtr->tPoint[i].startTime = 0;
 	touchInputPtr->tPoint[i].lastUpdate = 0;
+
+	
 
 }
 
@@ -236,7 +241,12 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 			touch.gDeltaX = 0;
 			touch.gDeltaY = 0;
 			
+			x = touch.pinch0Index;
+			y = touch.pinch1Index;
+
 			if (touch.pinchActive) {
+
+				
 
 					distFrom.x = touch.tPoint[y].posx;
 					distFrom.y = touch.tPoint[y].posy;
@@ -419,8 +429,8 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 					
 						// draw pinch
 						if (touch.currentTouchNo > 1 && x == -1 || touch.currentTouchNo > 1 && y == -1 ) {
-							if (touch.tPoint[i].active == true && x == -1) x = i;
-							else if (touch.tPoint[i].active == true && y == -1) y = i;
+							if (touch.tPoint[i].active == true && x == -1) { x = i; touch.pinch0Index = i; }
+							else if (touch.tPoint[i].active == true && y == -1) { y = i; touch.pinch1Index = i; }
 							if (x != -1 && y != -1) {
 							
 								touch.pinchActive = true;	
