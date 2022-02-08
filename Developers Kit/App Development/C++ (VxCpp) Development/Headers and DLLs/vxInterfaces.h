@@ -9,8 +9,6 @@
  *
  */
 
-
-
 //! IVoxiePtr classes which inherit this interface require access to IVoxieBox pointer
 /**
  * Classes which need the voxie pointer object will usually use variables or functions from the VoxieBox object
@@ -28,7 +26,6 @@ protected:
 
 };
 
-
 //! IActive interface allows a class to be 'active'. Set to true of false. 
 class IActive {
 
@@ -37,6 +34,9 @@ public:
 	bool isActive() { return active; };
 	void setActive(bool option) {
 		active = option;
+	}
+	bool getActive() {
+		return active;
 	}
 
 
@@ -56,6 +56,9 @@ public:
 	void setDrawable(bool option) {
 		drawable = option;
 	};
+	bool getDrawable() {
+		return drawable;
+	}
 protected:
 	bool drawable = true;
 };
@@ -72,13 +75,29 @@ public:
 	void setBreathable(bool option) {
 		breathable = option;
 	};
+	bool getBreathable() {
+		return breathable;
+	}
 
 protected:
 	bool breathable = true;
 
 };
 
+//! Interface used to create 2D UIs
+class IUI2D {
 
+public:
+	void moveTo(int newPosX, int newPosY) { posX = newPosX; posY = newPosY; }
+	int  getPosX() { return posX; }
+	int  getPosY() { return posY; }
+	int  getGroupID() { return groupID; }
+	void setGroupID(int newGroupID) { groupID = newGroupID;  }
+
+protected:
+	int posX = 0, posY = 0, groupID = -1;
+
+};
 
 
 

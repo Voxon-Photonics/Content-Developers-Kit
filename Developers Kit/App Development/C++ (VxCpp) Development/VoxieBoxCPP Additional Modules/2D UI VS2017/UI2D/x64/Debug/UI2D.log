@@ -1,0 +1,78 @@
+﻿  Button2D.cpp
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.cpp(97): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.cpp(98): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.cpp(121): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.cpp(122): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.cpp(123): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.cpp(124): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.cpp(140): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.cpp(141): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.cpp(142): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.cpp(143): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.cpp(161): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.cpp(162): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.cpp(163): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.cpp(164): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  HSlider2D.cpp
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\hslider2d.cpp(15): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\hslider2d.cpp(32): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\hslider2d.cpp(48): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\hslider2d.cpp(59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\hslider2d.cpp(61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\hslider2d.cpp(62): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\hslider2d.cpp(64): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\hslider2d.cpp(67): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\hslider2d.cpp(68): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\hslider2d.cpp(74): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\hslider2d.cpp(75): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\hslider2d.cpp(77): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\hslider2d.cpp(87): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  MainTest.cpp
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.h(5): error C2504: 'IUI2D': base class undefined
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\maintest.cpp(43): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\maintest.cpp(44): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\maintest.cpp(61): error C2039: 'getPosX': is not a member of 'Button2D'
+  d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.h(4): note: see declaration of 'Button2D'
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\maintest.cpp(61): error C2039: 'getPosY': is not a member of 'Button2D'
+  d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.h(4): note: see declaration of 'Button2D'
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\maintest.cpp(61): error C2660: 'IVoxieBox::debugText': function does not take 4 arguments
+  d:\matdev\dev\development visual studio\voxieboxcpp\headers and dlls\vxcpp.h(292): note: see declaration of 'IVoxieBox::debugText'
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\maintest.cpp(67): error C2039: 'getPosX': is not a member of 'Button2D'
+  d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.h(4): note: see declaration of 'Button2D'
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\maintest.cpp(67): error C2039: 'getPosY': is not a member of 'Button2D'
+  d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\button2d.h(4): note: see declaration of 'Button2D'
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\maintest.cpp(67): error C2660: 'IVoxieBox::debugText': function does not take 4 arguments
+  d:\matdev\dev\development visual studio\voxieboxcpp\headers and dlls\vxcpp.h(292): note: see declaration of 'IVoxieBox::debugText'
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\maintest.cpp(80): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\maintest.cpp(81): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+  PinchBox2D.cpp
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(23): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(23): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(24): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(24): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(46): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(47): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(63): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(64): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  VSlider2D.cpp
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\vslider2d.cpp(14): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\vslider2d.cpp(31): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\vslider2d.cpp(47): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\vslider2d.cpp(52): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\vslider2d.cpp(55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\vslider2d.cpp(56): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\vslider2d.cpp(58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\vslider2d.cpp(61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\vslider2d.cpp(62): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\vslider2d.cpp(68): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\vslider2d.cpp(69): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\vslider2d.cpp(71): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\vslider2d.cpp(78): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+  Window2D.cpp
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(42): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(55): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(56): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(57): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(58): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Generating Code...

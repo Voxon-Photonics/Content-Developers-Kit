@@ -29,7 +29,7 @@
  *				 	
  *                * Presents VoxieBox as a class so Voxon Applications can be made using OO principles
  *                * Supports all function calls from VoxieBox.h / VoxieBox.dll
-
+ *
  *
  *	              "Quality of life features"	
  *
@@ -218,7 +218,9 @@ public:
 	virtual void setJoyInputToDirectInput() = 0;
 	//! Set to true to handle Joy input manually. Disables many of the joy input functions.	Set to false by default
 	virtual void setEnableLegacyJoyInput(bool option) = 0;
-	//! Toggles a joystick / gamepad dead zone on analog sticks. Set to true by default.
+	//! Set to true to handle Touch input manually. Disables many of the touch input functions.	Set to false by default
+	virtual void setEnableLegacyTouchInput(bool option) = 0;
+	//! Set to true to give access to the touch screen (if disabled touching the screen will always bring up the Voxie Menu)
 	virtual void setEnableJoyDeadZone(bool option) = 0;
 	//! Toggles a dead zone for Space Navigator. Set to true by default.
 	virtual void setEnableNavDeadZone(bool option) = 0;
@@ -351,6 +353,11 @@ public:
 	virtual float drawHeightMap(char *fileName, point3d *pos,  point3d *rVector, point3d *dVector, point3d *fVector, int colorKey, int reserved, int flags) = 0;
 	//! Renders a string (printf-style) unto the volumetric display. Must be called between startFrame() & endFrame() functions.
 	virtual void drawText(point3d *pos, point3d *rVector, point3d *dVector, int col, const char *fmt, ...) = 0;
+	//! Renders a string (printf-style) unto the volumetric display addition parameter for font width. Must be called between startFrame() & endFrame() functions.
+	virtual void drawText(point3d *pos, point3d *rVector, point3d *dVector, float size, int col, const char *fmt, ...) = 0;
+
+	//! Simple version to render a string (printf-style) unto the volumetric display. Must be called between startFrame() & endFrame() functions.
+	virtual void drawTextSimp(point3d *pos, float textWidth, float textHeight, float hang, float vang, float tilt, int col, char *fmt, ...) = 0;
 	//! Renders  a DICOM file unto the volumetric display
 	virtual void drawDicom(voxie_dicom_t *vd, const char *gfilnam, point3d *gp, point3d *gr, point3d *gd, point3d *gf, int *animn, int *loaddone) = 0;
 
@@ -432,8 +439,48 @@ public:
 // Touch Controls
 
 	//! Add custom touch keys. (enable touch keyboard under 'Misc' menu tab) 
-	virtual void			touchAddCustomLayout(const touchkey_t *touchkey, int  sizeOfArray) = 0;
+	virtual void			AddTouchKeyboardLayout(const touchkey_t *touchkey, int  sizeOfArray) = 0;
+	//! Read touch inputs - This function should be called in a while loop until 0 is returned
+	virtual int				touchManualRead(int *touchIndex, int *xVal, int *yVal, int *packetState) = 0;
+	
+	
+	//! Enables the touch screen to be used as a input device. Set this to true if you want to use the touch screen in your own VX applications 
+	virtual void			setEnableTouchInput(bool option) = 0;
+	//! Returns the touch movement delta of the X position by index register. Use index register -1 for global delta 
+	virtual int				getTouchDeltaX(int index) = 0;
+	//! Returns the touch movement delta of the Y position by index register. Use index register -1 for global delta 
+	virtual int				getTouchDeltaY(int index) = 0;
+	//! Returns the touch X position by index register. Run using a for loop with TOUCH_MAX_INPUT to check all inputs 
+	virtual int				getTouchPosX(int index) = 0;
+	//! Returns the touch Y position by index register. Run using a for loop with TOUCH_MAX_INPUT to check all inputs 
+	virtual int				getTouchPosY(int index) = 0;
+	//! Returns the touch state requires the touch point index number. (0 = no touch, 1 = touch is down, 2 = is held, 3 = just pressed, 4 = on up)
+	virtual int				getTouchState(int index) = 0;
+	//! Returns in radians the touch rotation delta when a pinch is active range is usually 0.2 and 0.01
+	virtual float			getTouchRotationDelta() = 0;
+	//! Returns the touch rotation delta when a pinch is active range is usually 0.2 and 0.01
+	virtual float			getTouchDistanceDelta() = 0;
+	//! Returns a positive number if a touch event happens within the collision box (0 = no touch, 1 = touch is down, 2 = is held, 3 = just pressed, 4 = on up)
+	virtual int				getTouchPressState(point2d TLpos, point2d BRpos, bool drawCollision = false) = 0;
+	//! Returns a positive number if a touch event happens within the collision circle (0 = no touch, 1 = touch is down, 2 = is held, 3 = just pressed, 4 = on up)
+	virtual int				getTouchPressStateCir(point2d CirPos, float radius, bool drawCollision = false) = 0;
+	//! Returns a the internal touchInput_t pointer  
+	virtual touchInput_t *	getTouchInputStruct() = 0;
+	//! Updates the internal touchInput_t struct
+	virtual void			setTouchInputStruct(touchInput_t * newTouchInput) = 0;
+	//! Sets the touch sensitivity value 1 is default. the higher the value the more sensitive.  
+	virtual void			setTouchSensitivity(float newSensitivityValue) = 0;
+	//! Returns the touch sensitivity setting/
+	virtual float			getTouchSensitivity() = 0;
+	//! Disables / enables the touches focus pinch. 
+	virtual void			enableTouchFocusPinch(bool choice) = 0;
+	//! Returns the touch point index if a touch event happens within the collision box 
+	virtual int				getTouchPressIndex(point2d TLpos, point2d BRpos, bool drawCollision = false) = 0;
+	//! Returns the touch point index if a touch event happens within the collision circle
+	virtual int				getTouchPressIndexCir(point2d CirPos, float radius, bool drawCollision = false) = 0;
 
+	//! Reports the state of the touch input on to the secondary (touch) screen.
+	virtual void			reportTouch(int posX, int posY) = 0;
 
 // Game Controllers
 
@@ -539,9 +586,11 @@ public:
 	virtual int  playSound(const char *fileName, int sourceChannel, int volumeLeft, int volumeRight, float playBackSpeed) = 0;
 	//! Updates or adjusts a currently playing sound. Used for muting a current sound or adjusting settings.  
 	virtual void updateSound(int handleID, int sourceChannel, int volumeLeft, int volumeRight, float playBackSpeed) = 0;
-	// Define a custom audio callback function to play PCM raw audio data
+	//! Updates or  currently playing sound. to a new position. Seek types are SEEK_SET (0), SEEK_CUR (1) & SEEK_END (2) - values based on fseek()  
+	virtual void updateSoundPosition(int handleID, double second, int seekType = SEEK_SET) = 0;
+	//! Define a custom audio callback function to play PCM raw audio data
 	virtual void  setAudioPlayCallBack(void(*userplayfunc)(int *sampleBuffer, int sampleRate)) = 0;
-	// Define a custom audio callback function to record PCM audio data - TODO finishing documentation for this function ... under construction!
+	//! Define a custom audio callback function to record PCM audio data - see VXBeeper demo (under modules) for a demo on how to use this function
 	virtual void  setAudioRecordCallBack(void(*userrecfunc)(int *sampleBuffer, int sampleRate)) = 0;
 	
 
@@ -581,11 +630,17 @@ public:
 	virtual int		randomCol() = 0;
 	//! Sphere collision check. Check if two spheres are touching. Returns 1 if collision is found otherwise returns 0 
 	virtual int		sphereCollideChk(point3d * sphereAPos, double sphereARadius, point3d * sphereBPos, double sphereBRadius, bool showCollisionBox = false) = 0;
+	//! Within box collision check 2D. Checks if a X Y position is within a collision box. two boxes are touching. Returns 1 if collision is found otherwise returns 0
+	virtual int		boxInsideCollideChk2D(point2d * TLpos, point2d * BRpos, point2d * collisionPos, bool showCollisionBox = false) = 0;
 	//! Box collision check. Check if two boxes are touching. Returns 1 if collision is found otherwise returns 0
 	virtual int		boxCollideChk(point3d * LUTpos1, point3d * RDBpos1, point3d * LUTpos2, point3d * RDBpos2, bool showCollisionBox = false) = 0;
-	//! Within Box collision check. Check if a position is inside a collision box.  boxTLU = Top, Left, Up, boxBRD = bottom, right, down.
+	//! Within box collision check. Check if a position is inside a collision box.  boxTLU = Top, Left, Up, boxBRD = bottom, right, down.
 	virtual int		boxInsideCollideChk(point3d * LUTpos, point3d * RDBpos, point3d collisionPos, bool showCollisionBox = false) = 0;
+	//! Within circle collision check. Check if a position is inside a collision circle. 
+	virtual int		ciricle2DChk(point2d *circlePos, float radius, point2d * collisionPos, int showCollisionBox = 0) = 0;
+
 	// TODO: Cube to Cube check - checks two cubes (with rotation vectors) are colliding 
+
 
 	//! Updates/"moves" a point from the current position towards the destination point. Returns 1 if currentPos collides with destinnationPos otherwise returns a 0.  
 	virtual int		moveToPos(point3d * currentPos, point3d destinationPos, float speed, float accuracy) = 0;
@@ -610,13 +665,10 @@ public:
 		ZIP, TAR, GZ, GRP, and directories." - Ken S.
 	*/
 
-
-
 	 //! Internal zip file management function - global function (these not multi-thread safe!)
 	virtual int					_kzaddstack(const char * fileName) = 0; 
 	//! Internal zip file management function -  global function (these not multi-thread safe!)
 	virtual void				_kzuninit() = 0; 
-
 	//! Internal zip file management function. All 'kz...' functions are to do with Ken's zip file access
 	virtual void				_kzsetfil(FILE * fileName) = 0; 
 	//! Internal zip file management function. All 'kz...' functions are to do with Ken's zip file access
@@ -685,6 +737,7 @@ public:
 	void setEnableLegacyKeyInput(bool option);
 	void setEnableLegacyJoyInput(bool option);
 	void setEnableLegacyNavInput(bool option);
+	void setEnableLegacyTouchInput(bool option);
 	void setInvertZAxis(bool option);
 	void setEnableJoyDeadZone(bool option);
 	void setEnableNavDeadZone(bool option);
@@ -736,6 +789,7 @@ public:
 	void debugDrawCircFill(int xCenterPos, int yCenterPos, int radius, int col);
 	void debugDrawTile(tiletype *source, int xpos, int ypos);
 
+
 	//  Drawing Graphics to Volumetric Display
 	void drawVox(point3d pos, int col);
 	void drawVox(float x, float y, float z, int col);
@@ -755,6 +809,9 @@ public:
 	void drawQuad(char *filename, point3d *pos, float width, float height, float hang, float vang, float tilt, int col, float uValue, float vValue);
 	float drawHeightMap(char *fileName, point3d *pos, point3d *rVector, point3d *dVector, point3d *fVector, int colorKey, int reserved, int flags);
 	void drawText(point3d *pos, point3d *rVector, point3d *dVector, int col, const char *fmt, ...);
+	void drawText(point3d *pos, point3d *rVector, point3d *dVector, float size, int col, const char *fmt, ...);
+
+	void drawTextSimp(point3d *pos, float textWidth, float textHeight, float hang, float vang, float tilt, int col, char *fmt, ...);
 	void drawDicom(voxie_dicom_t *vd, const char *gfilnam, point3d *gp, point3d *gr, point3d *gd, point3d *gf, int *animn, int *loaddone);
 	
 
@@ -797,8 +854,33 @@ public:
 	void			setMouseOrientation(int orientation);
 	int				getMouseOrientation();
 
-	// Touch Controls
-	void	touchAddCustomLayout(const touchkey_t *touchkey = default_touchkey, int  sizeOfArray = sizeof(default_touchkey) / sizeof(touchkey_t));
+
+	// Custom Touch Controls
+	void	AddTouchKeyboardLayout(const touchkey_t *touchkey = default_touchkey, int  sizeOfArray = sizeof(default_touchkey) / sizeof(touchkey_t));
+	int		touchManualRead(int *touchIndex, int *xVal, int *yVal, int *packetState);
+
+	void			setEnableTouchInput(bool option);
+	void			setDrawTouchInput(bool option);
+	int				getTouchDeltaX(int index = -1);
+	int				getTouchDeltaY(int index = -1);
+	int 			getTouchPosX(int index);
+	int 			getTouchPosY(int index);
+	int				getTouchState(int index);
+	float			getTouchRotationDelta();
+	float			getTouchDistanceDelta();
+	int				getTouchPressState			(point2d TLpos, point2d BRpos, bool drawCollision = false);
+	int				getTouchPressStateCir		(point2d CirPos, float radius, bool drawCollision = false);
+	int				getTouchPressIndex			(point2d TLpos, point2d BRpos, bool drawCollision = false);
+	int				getTouchPressIndexCir		(point2d CirPos, float radius, bool drawCollision = false);
+
+
+
+	touchInput_t *	getTouchInputStruct();
+	void			setTouchInputStruct(touchInput_t * newTouchInput);
+	void			setTouchSensitivity(float newSensitivityValue);
+	float			getTouchSensitivity();
+	void			enableTouchFocusPinch(bool choice);
+	void			reportTouch(int posX, int posY);
 
 
 	// Game Controllers
@@ -858,6 +940,7 @@ public:
 	// Sound 
 	int  playSound(const char *fileName, int sourceChannel, int volumeLeft, int volumeRight, float playBackSpeed);
 	void updateSound(int handleID, int sourceChannel, int volumeLeft, int volumeRight, float playBackSpeed);
+	void updateSoundPosition(int handleID, double second, int seekType = SEEK_SET);
 	void setAudioPlayCallBack(void(*userplayfunc)(int *sampleBuffer, int sampleRate));
 	void setAudioRecordCallBack(void(*userrecfunc)(int *sampleBuffer, int sampleRate));
 
@@ -881,8 +964,10 @@ public:
 	int			tweenCol(int color, int speed, int destcolor);
 	int			brightenCol(int color, int amount);
 	int			randomCol();
-	int			sphereCollideChk(point3d * sphereAPos, double sphereARadius, point3d * sphereBPos, double sphereBRadius, bool showCollisionBox = false) ;
+	int			sphereCollideChk(point3d * sphereAPos, double sphereARadius, point3d * sphereBPos, double sphereBRadius, bool showCollisionBox = false);
 	int			boxInsideCollideChk(point3d * LUTpos, point3d * RDBpos, point3d collisionPos, bool showCollisionBox = false);
+	int			boxInsideCollideChk2D(point2d * TLpos, point2d * BRpos, point2d * collisionPos, bool showCollisionBox = false);
+	int			ciricle2DChk(point2d *circlePos, float radius, point2d * collisionPos, int showCollisionBox = 0);
 	int			boxCollideChk(point3d * LUTpos1, point3d * RDBpos1, point3d * LUTpos2, point3d * RDBpos2, bool showCollisionBox = false);
 	int			moveToPos(point3d *currentPos, point3d destinationPos, float speed, float accuracy);
 	void		rotVex(float angInRaidans, point3d *a, point3d *b);
@@ -931,6 +1016,7 @@ private:
 	
 	static HINSTANCE		hvoxie;									//!< the voxie handle instance
 	voxie_inputs_t			in;										//!< the internal input state @see vxDataTypes::voxie_inputs_t
+	touchInput_t			touch;									//!< the struct that manages all the advanced touch input. 
 	point3d					mousePos = { 0,0,0 };					//!< the internal mouse position used for mouse clipping and displaying a mouse cursor. Use VoxieBox::getMousePosition() to return values
 	point3d					navPos[4] = { 0 };						//!< the 4 SpaceNav position used for clipping and nav cursor
 
@@ -959,7 +1045,7 @@ private:
 	voxie_keyboard_history_t keyHistory = { 0 };					//!< Internal struct which holds all the keyboard's keystroke data. Can be accessed VoxieBox::Get
 	void					 updateKeyboardHistory();				//!< Internal function that updates and logs all the keyboard keystrokes
 
-	int		colScrollcolor = PALETTE_COLOR[rainbowCounter];		//!< Internal color scroll color
+	int		colScrollcolor = PALETTE_COLOR[rainbowCounter];			//!< Internal color scroll color
 	double	colScrollSpeed = 0.1;									//!< Internal color scroll speed.
 	double	rainbowTim = 0;											//!< Timer to manage the color scroller
 	int		rainbowCounter = 0;										//!< Counter to manage the internal color scroller
@@ -981,6 +1067,9 @@ private:
 	double deltaTime;												//!< Internal delta time the time difference between volume updates.
 	double averageTime;												//!< Internal average time value to work out the average update time.
 
+	bool touchUpdate		= false;								//!< 
+	bool touchIsDrawing		= true;									//!<
+
 	bool drawBorder			= false;								//!< Internal bool to determine whether to draw a border around the edge of the display. 
 	bool enableEscQuit		= true;									//!< Internal bool to determine whether to map the 'Esc' key to quit the VX program.
 	bool enableMouseClip	= false;								//!< Internal bool to determine whether to clip the internal mouse position. 
@@ -989,6 +1078,8 @@ private:
 	bool manualJoyManage	= false;								//!< Internal bool to determine whether to use modern or legacy game controller input management.
 	bool manualNavManage	= false;								//!< Internal bool to determine whether to use modern or legacy Space Nav input management.
 	bool manualKeyManage	= false;								//!< Internal bool to determine whether to use modern or legacy keyboard input management.
+	bool manualTouchManage  = false;								//!< Internal bool to determine whether to use modern or legacy touch input management.
+
 	bool enableJoyDeadZone  = true;									//!< Internal bool to determine whether to enable game controller dead zones or not 
 	bool enableNavDeadZone  = true;									//!< Internal bool to determine whether to enable Space Nav dead zones or not 
 
@@ -997,7 +1088,10 @@ private:
 
 	point2d		oriCorrection(int oriType, float xValue, float yValue);		//!< fixes an XY value to the prescribed orientation 
 	void		updateMousePosition();										//!< Internal function that updates mouse input
-
+	void		updateTouch();												//!< Internal function that updates inputTouch_t struct		
+	void		touchPinchClear(touchInput_t * touchInputPtr);				//!< Internal function clearing out the touch pinch state
+	void		touchClear(touchInput_t * touchInputPtr, int index);		//!< Internal function clearing out the touch finger state
+	void		touchDraw();												//!< Internal function for drawing touch input presses onto the touch screen
 
 
 #pragma region InternalFunctions
@@ -1022,6 +1116,7 @@ private:
 	int(__cdecl *voxie_xbox_read)(int id, voxie_xbox_t *vx);
 	void(__cdecl *voxie_xbox_write)(int id, float lmot, float rmot);
 	int(__cdecl *voxie_nav_read)(int id, voxie_nav_t *nav);
+	int(__cdecl *voxie_touch_read)(int *id, int *xVal, int *yVal, int *packetState);
 	void(__cdecl *voxie_menu_reset)(int(*menu_update)(int id, char *st, double val, int how, void *userdata), void *userdata, char *bkfilnam);
 	void(__cdecl *voxie_menu_addtab)(char *st, int x, int y, int xs, int ys);
 	void(__cdecl *voxie_menu_additem)(char *st, int x, int y, int xs, int ys, int id, int type, int down, int col, double v, double v0, double v1, double vstp0, double vstp1);
@@ -1046,6 +1141,7 @@ private:
 	int(__cdecl *voxie_drawspr)(voxie_frame_t *vf, const char *fnam, point3d *p, point3d *r, point3d *d, point3d *f, int col);
 	int(__cdecl *voxie_drawspr_ext)(voxie_frame_t *vf, const char *fnam, point3d *p, point3d *r, point3d *d, point3d *f, int col, float forcescale, float fdrawratio, int flags);
 	void(__cdecl *voxie_printalph)(voxie_frame_t *vf, point3d *p, point3d *r, point3d *d, int col, const char *st);
+	void(__cdecl *voxie_printalph_ext)(voxie_frame_t *vf, point3d *p, point3d *r, point3d *d, float rad, int col, const char *st);
 	void(__cdecl *voxie_drawcube)(voxie_frame_t *vf, point3d *p, point3d *r, point3d *d, point3d *f, int fillmode, int col);
 	float(__cdecl *voxie_drawheimap)(voxie_frame_t *vf, char *fnam, point3d *p, point3d *r, point3d *d, point3d *f, int colorkey, int reserved, int flags);
 	void(__cdecl *voxie_drawdicom)(voxie_frame_t *vf, voxie_dicom_t *vd, const char *gfilnam, point3d *gp, point3d *gr, point3d *gd, point3d *gf, int *animn, int *loaddone);
@@ -1059,6 +1155,9 @@ private:
 	void(__cdecl *voxie_debug_drawtile)(tiletype *src, int x0, int y0);
 	int(__cdecl *voxie_playsound)(const char *fileName, int sourceChannel, int volumeLeft, int volumeRight, float playBackSpeed);
 	void(__cdecl *voxie_playsound_update)(int handle, int sourceChannel, int volumeLeft, int volumeRight, float playBackSpeed);
+	void(__cdecl *voxie_playsound_seek)(int handle, double secs, int seekType);
+	
+
 	void(__cdecl *voxie_setaudplaycb)(void (*userplayfunc)(int *samps, int nframes));
 	void(__cdecl *voxie_setaudreccb)(void(*userrecfunc)(int *samps, int nframes));
 	int(__cdecl *voxie_rec_open)(voxie_rec_t *vr, char *fnam, int flags);

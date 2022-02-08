@@ -187,12 +187,12 @@ typedef struct voxie_wind_t {
 
 	int		isrecording,			//!< 0=normally, 1 when .REC file recorder is in progress (written by voxiebox.DLL)
 			hacks,					//!< bit0!=0:exclusive mouse; bit1!=0:disable REC/TCP options under File menu (for Voxieplay)
-			dispcur;				//!< current display selected in menus {0..dispnum-1}
-	
-
+			dispcur,				//!< current display selected in menus {0..dispnum-1}
+			sndfx_nspk,				//!< variable to hold the number of physical speakers {1 = VX1 default, 2 = stereo system}
+			reserved;				//!< reserved variable for future features
 	// Obsolete 
 
-	double	freq,					//!< starting value in Hz (must be set before first call to voxie_init()); obsolete - not used by current hardware
+	float	freq,					//!< starting value in Hz (must be set before first call to voxie_init()); obsolete - not used by current hardware
 			phase;					//!< phase lock {0.0..1.0} (can be updated on later calls to voxie_init()); obsolete - not used by current hardware
 
 
@@ -498,6 +498,26 @@ static int const PALETTE_COLOR[PALETTE_COLOR_MAX] = {
 0x00EEFF, 0x00DDFF, 0x00CCFF, 0x00BBFF, 0x00AAFF, 0x0099FF, 0x0088FF, 0x0077FF, 0x0066FF, 0x0055FF, 0x0044FF, 0x0033FF, 0x0022FF, 0x0011FF, 0x0000FF, // BLUE
 0x1100FF, 0x2200FF, 0x3300FF, 0x4400FF, 0x5500FF, 0x6600FF, 0x7700FF, 0x8800FF, 0x9900FF, 0xAA00FF, 0xBB00FF, 0xCC00FF, 0xDD00FF, 0xEE00FF, 0xFF00FF // MAGENTA
 };
+
+// some touch settings 
+#define TOUCH_MAX					11	// how many touches the API can process 
+#define TOUCH_TIME_OUT				3	// how long before a dead touch sense dies out -- this is to prevent glitches
+#define TOUCH_HELD_TIME				2	// how long a touch is received before the 'isHeld' boolean becomes true. 
+#define TOUCH_ANGLE_DEAD_ZONE		0	// the dead zone for angle rotation delta 
+#define TOUCH_DISTANCE_DEAD_ZONE	1	// the dead zone for the pinch distance delta
+
+//! touch point struct used for holding data associated for a single finger / touch point. Used for advanced touchscreen use. 
+typedef struct touchPoint_t { int posx, posy, oposx, oposy, deltax, deltay, state = -1, ostate; bool isHeld, isDown, justPressed, onUp, active, inPinch; double startTime, lastUpdate; } touchPoint_t;
+
+//! touch input struct holds all the touch input data. Used for advanced touchscreen use. 
+typedef struct touchInput_t { point2d opinch0, opinch1; float sensitivity = 1, opinchDistance, pinchDistance, pinchDistanceDelta, pinchAngle, pinchRotation, opinchRotation, pinchRotationDelta, currentTouchNo; bool initPinch, active, pinchActive; touchPoint_t tPoint[TOUCH_MAX]; double heldTime = TOUCH_HELD_TIME; int pinch0Index, pinch1Index, gDeltaX, gDeltaY, ogDeltaX, ogDeltaY, pinchPriority; double pinchLastUpdate; bool focusPinch; } touchInput_t;
+
+// enum to manage file VoxieBox::getTouchPressState return values
+enum { TOUCH_STATE_NOT_PRESSED = 0, TOUCH_STATE_IS_DOWN = 1, TOUCH_STATE_IS_HELD = 2, TOUCH_STATE_JUST_PRESSED = 3, TOUCH_STATE_ON_UP = 4 };
+
+
+
+static touchInput_t touch;
 
 #pragma pack(pop)
 #endif

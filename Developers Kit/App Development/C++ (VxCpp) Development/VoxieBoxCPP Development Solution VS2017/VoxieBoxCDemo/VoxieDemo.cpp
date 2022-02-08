@@ -1,9 +1,5 @@
 // VX APP C HELLO WORLD EXAMPLE (force compiler as C++ (enable /TP in compiler or save as use the .cpp file)
-#include "pch.h"
-
 #include "voxiebox.h"
-
-
 #define PI 3.14159265358979323
 #include <math.h>
 

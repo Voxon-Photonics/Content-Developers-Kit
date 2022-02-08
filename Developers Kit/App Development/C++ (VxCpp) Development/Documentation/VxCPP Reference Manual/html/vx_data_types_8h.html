@@ -147,6 +147,12 @@ Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvoxie__nav__history__t.html">voxie_nav_history_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">used internally by <a class="el" href="class_voxie_box.html" title="VoxieBox class.">VoxieBox</a> to log various Space Nav inputs this struct allows you to view the history of various inputs  <a href="structvoxie__nav__history__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtouch_point__t.html">touchPoint_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">touch point struct used for holding data associated for a single finger / touch point. Used for advanced touchscreen use.  <a href="structtouch_point__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtouch_input__t.html">touchInput_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">touch input struct holds all the touch input data. Used for advanced touchscreen use.  <a href="structtouch_input__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
@@ -170,6 +176,21 @@ Macros</h2></td></tr>
 <tr class="memitem:a1031ff2fcaffbd833b0c91ff01f672f9"><td class="memItemLeft" align="right" valign="top"><a id="a1031ff2fcaffbd833b0c91ff01f672f9"></a>
 #define&#160;</td><td class="memItemRight" valign="bottom"><b>VOXIE_DICOM_MIPS</b>&#160;&#160;&#160;4</td></tr>
 <tr class="separator:a1031ff2fcaffbd833b0c91ff01f672f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab09659a71a162c922c65666bb094c46a"><td class="memItemLeft" align="right" valign="top"><a id="ab09659a71a162c922c65666bb094c46a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TOUCH_MAX</b>&#160;&#160;&#160;11</td></tr>
+<tr class="separator:ab09659a71a162c922c65666bb094c46a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af20e921bd23143b8b53aa164cc36edc8"><td class="memItemLeft" align="right" valign="top"><a id="af20e921bd23143b8b53aa164cc36edc8"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TOUCH_TIME_OUT</b>&#160;&#160;&#160;3</td></tr>
+<tr class="separator:af20e921bd23143b8b53aa164cc36edc8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ead34b073e874d612789e35b3fac294"><td class="memItemLeft" align="right" valign="top"><a id="a2ead34b073e874d612789e35b3fac294"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TOUCH_HELD_TIME</b>&#160;&#160;&#160;2</td></tr>
+<tr class="separator:a2ead34b073e874d612789e35b3fac294"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedf1c8ebcc02842b97d2c0ca0370c873"><td class="memItemLeft" align="right" valign="top"><a id="aedf1c8ebcc02842b97d2c0ca0370c873"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TOUCH_ANGLE_DEAD_ZONE</b>&#160;&#160;&#160;0</td></tr>
+<tr class="separator:aedf1c8ebcc02842b97d2c0ca0370c873"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a80ac63f1663e7433ca2517154108d99e"><td class="memItemLeft" align="right" valign="top"><a id="a80ac63f1663e7433ca2517154108d99e"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>TOUCH_DISTANCE_DEAD_ZONE</b>&#160;&#160;&#160;1</td></tr>
+<tr class="separator:a80ac63f1663e7433ca2517154108d99e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="typedef-members"></a>
 Typedefs</h2></td></tr>
@@ -245,6 +266,14 @@ typedef struct <a class="el" href="structvoxie__xbox__history__t.html">voxie_xbo
 typedef struct <a class="el" href="structvoxie__nav__history__t.html">voxie_nav_history_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vx_data_types_8h.html#ae2287375860b2fa2f8fab75e42327d27">voxie_nav_history_t</a></td></tr>
 <tr class="memdesc:ae2287375860b2fa2f8fab75e42327d27"><td class="mdescLeft">&#160;</td><td class="mdescRight">used internally by <a class="el" href="class_voxie_box.html" title="VoxieBox class.">VoxieBox</a> to log various Space Nav inputs this struct allows you to view the history of various inputs <br /></td></tr>
 <tr class="separator:ae2287375860b2fa2f8fab75e42327d27"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa8655a592a10f24e5b9eef03263c79f6"><td class="memItemLeft" align="right" valign="top"><a id="aa8655a592a10f24e5b9eef03263c79f6"></a>
+typedef struct <a class="el" href="structtouch_point__t.html">touchPoint_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vx_data_types_8h.html#aa8655a592a10f24e5b9eef03263c79f6">touchPoint_t</a></td></tr>
+<tr class="memdesc:aa8655a592a10f24e5b9eef03263c79f6"><td class="mdescLeft">&#160;</td><td class="mdescRight">touch point struct used for holding data associated for a single finger / touch point. Used for advanced touchscreen use. <br /></td></tr>
+<tr class="separator:aa8655a592a10f24e5b9eef03263c79f6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a84a60250df8675280e5925b9b9e9eb1b"><td class="memItemLeft" align="right" valign="top"><a id="a84a60250df8675280e5925b9b9e9eb1b"></a>
+typedef struct <a class="el" href="structtouch_input__t.html">touchInput_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vx_data_types_8h.html#a84a60250df8675280e5925b9b9e9eb1b">touchInput_t</a></td></tr>
+<tr class="memdesc:a84a60250df8675280e5925b9b9e9eb1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">touch input struct holds all the touch input data. Used for advanced touchscreen use. <br /></td></tr>
+<tr class="separator:a84a60250df8675280e5925b9b9e9eb1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
 Enumerations</h2></td></tr>
@@ -273,6 +302,16 @@ Enumerations</h2></td></tr>
 <br />
  }</td></tr>
 <tr class="separator:adf764cbdea00d65edcd07bb9953ad2b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a99fb83031ce9923c84392b4e92f956b5"><td class="memItemLeft" align="right" valign="top"><a id="a99fb83031ce9923c84392b4e92f956b5"></a>enum &#160;</td><td class="memItemRight" valign="bottom">{ <br />
+&#160;&#160;<b>TOUCH_STATE_NOT_PRESSED</b> = 0
+, <b>TOUCH_STATE_IS_DOWN</b> = 1
+, <b>TOUCH_STATE_IS_HELD</b> = 2
+, <b>TOUCH_STATE_JUST_PRESSED</b> = 3
+, <br />
+&#160;&#160;<b>TOUCH_STATE_ON_UP</b> = 4
+<br />
+ }</td></tr>
+<tr class="separator:a99fb83031ce9923c84392b4e92f956b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>VX++ data types header contains definitions of all Voxon related structs and types. </p>
@@ -310,7 +349,7 @@ Enumerations</h2></td></tr>
 <p>Voxon Display Struct - Configuration for a display suitable to render a volumetric image (usually projector) </p>
 <p>This struct manages a projector's display settings which includes keystone (the position coordinates for the display), LED levels and mirror settings. Each display struct (<a class="el" href="structvoxie__disp__t.html" title="Voxon Display Struct - Configuration for a display suitable to render a volumetric image (usually pro...">voxie_disp_t</a>) is loaded into the voxie window (<a class="el" href="structvoxie__wind__t.html" title="Voxie Window Struct - Configuration for the Voxon Window. This struct manages all the settings to do ...">voxie_wind_t</a>) during the voxie_load() and voxie_init() or when a new <a class="el" href="class_voxie_box.html" title="VoxieBox class.">VoxieBox</a> is constructed </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="class_voxie_box.html#a06195dca9603ea448f72d502808384b2" title="VoxieBox constructor checks to see if another instance of VoxieBox has been created.">VoxieBox::VoxieBox()</a> </dd>
 <dd>
-<a class="el" href="class_voxie_box.html#a9df7e95b7c877b5942690affef94d4a6" title="Initalises and updates voxiebox.dll&#39;s voxie window (voxie_wind_t)">VoxieBox::init()</a> </dd></dl>
+<a class="el" href="class_voxie_box.html#a9df7e95b7c877b5942690affef94d4a6" title="Initializes and updates voxiebox.dll&#39;s voxie window (voxie_wind_t)">VoxieBox::init()</a> </dd></dl>
 
 </div>
 </div>
@@ -367,7 +406,7 @@ Enumerations</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Voxie Window Struct - Configuration for the Voxon Window. This struct manages all the settings to do with the volume. </p>
-<p>Most settings to do with creating a volume are contained here. This struct is passed in when <a class="el" href="class_voxie_box.html#a9df7e95b7c877b5942690affef94d4a6" title="Initalises and updates voxiebox.dll&#39;s voxie window (voxie_wind_t)">VoxieBox::init()</a> is called. Most of these settings can be updated while the volume is rendering. Pass the <a class="el" href="structvoxie__wind__t.html" title="Voxie Window Struct - Configuration for the Voxon Window. This struct manages all the settings to do ...">voxie_wind_t</a> struct through VoxieBox::update() for the settings to be applied to the current volume. </p><dl class="section see"><dt>See also</dt><dd>VoxieBox::update() </dd>
+<p>Most settings to do with creating a volume are contained here. This struct is passed in when <a class="el" href="class_voxie_box.html#a9df7e95b7c877b5942690affef94d4a6" title="Initializes and updates voxiebox.dll&#39;s voxie window (voxie_wind_t)">VoxieBox::init()</a> is called. Most of these settings can be updated while the volume is rendering. Pass the <a class="el" href="structvoxie__wind__t.html" title="Voxie Window Struct - Configuration for the Voxon Window. This struct manages all the settings to do ...">voxie_wind_t</a> struct through VoxieBox::update() for the settings to be applied to the current volume. </p><dl class="section see"><dt>See also</dt><dd>VoxieBox::update() </dd>
 <dd>
 VoxieBox::voxie_disp_t() </dd></dl>
 

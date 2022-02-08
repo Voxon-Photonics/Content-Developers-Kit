@@ -1,4 +1,3 @@
-// This source code is provided by the Voxon Developers Kit with an open-source license. You may use this code in your own projects with no restrictions.
 #if 0
 voxiedemo.exe: voxiedemo.obj
 	 link       voxiedemo.obj user32.lib
@@ -60,17 +59,23 @@ enum
 {
 		//Generic names
 	MENU_RESET, MENU_PAUSE, MENU_PREV, MENU_NEXT, MENU_ENTER, MENU_LOAD, MENU_SAVE,
-	MENU_LEFT, MENU_RIGHT, MENU_UP, MENU_DOWN, MENU_CEILING, MENU_FLOOR, MENU_MIRRORX, MENU_MIRRORY,
+	MENU_LEFT, MENU_RIGHT, MENU_UP, MENU_DOWN, MENU_CEILING, MENU_FLOOR,
 	MENU_WHITE, MENU_RED, MENU_GREEN, MENU_BLUE, MENU_CYAN, MENU_MAGENTA, MENU_YELLOW,
 
 		//2 state switches
-	MENU_AUTOMOVE, MENU_PRESTORED, MENU_AUTOCYCLE, MENU_WIREFRAME, MENU_TEXEL, MENU_SLICEDITHER, MENU_TEXTURE, MENU_SLICE, MENU_DRAWSTATS,
+	MENU_AUTOMOVEOFF, MENU_AUTOMOVEON,
+	MENU_AUTOCYCLEOFF, MENU_AUTOCYCLEON,
+	MENU_TEXEL_NEAREST, MENU_TEXEL_BILINEAR,
+	MENU_SLICEDITHEROFF, MENU_SLICEDITHERON,
+	MENU_TEXTUREOFF, MENU_TEXTUREON,
+	MENU_SLICEOFF, MENU_SLICEON,
+	MENU_DRAWSTATSOFF, MENU_DRAWSTATSON,
 
 		//Other
 	MENU_AUTOROTATEOFF, MENU_AUTOROTATEX, MENU_AUTOROTATEY, MENU_AUTOROTATEZ, MENU_AUTOROTATESPD,
 	MENU_FRAME_PREV, MENU_FRAME_NEXT,
 	MENU_SOL0, MENU_SOL1, MENU_SOL2, MENU_SOL3,
-	MENU_HINT, MENU_WHITEAI, MENU_BLACKAI, MENU_SPEED,
+	MENU_HINT, MENU_DIFFICULTY, MENU_SPEED,
 	MENU_ZIGZAG, MENU_SINE, MENU_HUMP_LEVEL,
 	MENU_DISP_CUR, MENU_DISP_END=MENU_DISP_CUR+MAXDISP-1, MENU_DISP_ALL,
 	MENU_ROTLEFT5, MENU_ROTRIGHT5, MENU_ROTLEFT, MENU_ROTRIGHT, MENU_KEYSTONE_RESET,
@@ -166,7 +171,7 @@ static int menu_keystonecal_update (int id, char *st, double v, int how, void *u
 			if ((vw.nblades <= 0) && (vw.dispnum == 1))
 			{
 				vw.usekeystone = 1;
-				if ((!(vw.hacks&(1<<3))) == (int)v) //VX1 detected
+				if (!(vw.hacks&(1<<3))) //VX1 detected
 				{
 					vw.flip = 0;
 					vw.disp[0].keyst[0].x = 149.55; vw.disp[0].keyst[0].y = 157.26; vw.disp[0].keyst[1].x = 571.38; vw.disp[0].keyst[1].y = 173.05;
@@ -189,18 +194,8 @@ static int menu_keystonecal_update (int id, char *st, double v, int how, void *u
 			} //else { .. }
 			break;
 		case MENU_IANGHAK: vw.ianghak = ((int)v)&65535; voxie_init(&vw); break;
-		case MENU_DISP_CUR: case MENU_DISP_CUR+1: case MENU_DISP_CUR+2:
-			vw.dispcur = id-MENU_DISP_CUR; grabdispall = 0;
-			voxie_init(&vw);
-			voxie_menu_updateitem(MENU_MIRRORX,0,vw.disp[vw.dispcur].mirrorx!=0,0.0);
-			voxie_menu_updateitem(MENU_MIRRORY,0,vw.disp[vw.dispcur].mirrory!=0,0.0);
-			break;
+		case MENU_DISP_CUR: case MENU_DISP_CUR+1: case MENU_DISP_CUR+2: vw.dispcur = id-MENU_DISP_CUR; grabdispall = 0; voxie_init(&vw); break;
 		case MENU_DISP_ALL: grabdispall = 1; break;
-		case MENU_MIRRORX: case MENU_MIRRORY:
-				  if (id == MENU_MIRRORX) { vw.disp[vw.dispcur].mirrorx = !vw.disp[vw.dispcur].mirrorx; }
-			else if (id == MENU_MIRRORY) { vw.disp[vw.dispcur].mirrory = !vw.disp[vw.dispcur].mirrory; }
-			voxie_init(&vw);
-			break;
 	}
 	return(1);
 }
@@ -216,13 +211,17 @@ static int menu_heightmap_update (int id, char *st, double v, int how, void *use
 {
 	switch(id)
 	{
-		case MENU_PREV:        ghitkey = 0xc9; break;
-		case MENU_NEXT:        ghitkey = 0xd1; break;
-		case MENU_AUTOCYCLE:   gautocycle = !gautocycle; break;
-		case MENU_TEXEL:       gheightmap_flags ^= 2; break;
-		case MENU_SLICEDITHER: gheightmap_flags ^= 1; break;
-		case MENU_TEXTURE:     gheightmap_flags ^= 4; break;
-		case MENU_RESET:       ghitkey = 0x0e; break;
+		case MENU_PREV:           ghitkey = 0xc9; break;
+		case MENU_NEXT:           ghitkey = 0xd1; break;
+		case MENU_AUTOCYCLEOFF:   gautocycle = 0;         break;
+		case MENU_AUTOCYCLEON:    gautocycle = 1;         break;
+		case MENU_TEXEL_NEAREST:  gheightmap_flags &= ~2; break;
+		case MENU_TEXEL_BILINEAR: gheightmap_flags |=  2; break;
+		case MENU_SLICEDITHEROFF: gheightmap_flags &= ~1; break;
+		case MENU_SLICEDITHERON:  gheightmap_flags |=  1; break;
+		case MENU_TEXTUREOFF:     gheightmap_flags &= ~4; break;
+		case MENU_TEXTUREON:      gheightmap_flags |=  4; break;
+		case MENU_RESET:          ghitkey = 0x0e; break;
 	}
 	return(1);
 }
@@ -236,11 +235,13 @@ static int menu_voxieplayer_update (int id, char *st, double v, int how, void *u
 {
 	switch(id)
 	{
-		case MENU_PREV:      ghitkey = 0xc9; break;
-		case MENU_NEXT:      ghitkey = 0xd1; break;
-		case MENU_DRAWSTATS: gdrawstats = !gdrawstats; break;
-		case MENU_AUTOCYCLE: gautocycleall = !gautocycleall; break;
-		case MENU_PAUSE:     gvoxieplayer_ispaused = !gvoxieplayer_ispaused; break;
+		case MENU_PREV:         ghitkey = 0xc9; break;
+		case MENU_NEXT:         ghitkey = 0xd1; break;
+		case MENU_DRAWSTATSOFF: gdrawstats = 0; break;
+		case MENU_DRAWSTATSON:  gdrawstats = 1; break;
+		case MENU_AUTOCYCLEOFF: gautocycleall = 0; break;
+		case MENU_AUTOCYCLEON:  gautocycleall = 1; break;
+		case MENU_PAUSE:        gvoxieplayer_ispaused = !gvoxieplayer_ispaused; break;
 	}
 	return(1);
 }
@@ -273,28 +274,20 @@ static char gmyst[20+1] = {"Voxiebox by VOXON :)"};
 	//Chess globals
 static int gchesscol[2] = {0x808080,0x104010};
 static int gchessailev[2] = {0,5};
-static const char *chess_piece_sound[] = {0,"zipguns.flac","shoot2.flac","shoot2.flac","shoot2.flac","shoot3.flac","warp.flac"};
-static int gchess_automove = 0, gchess_prestored = 0, gchess_hint = 0;
-static float gchesstime = 1.f, gchessgameendtime = 10.f;
-
-static char **gchessgame = 0;
-static int gchessgamen = 0, gchessgamemal = 0;
-static int gchessgame_curgame = 0, gchessgame_curchar = 0;
-
+static int gchess_automove = 0, gchess_hint = 0;
+static float gchesstime = 1.0;
 static int menu_chess_update (int id, char *st, double v, int how, void *userdata)
 {
 	switch(id)
 	{
-		case MENU_HINT:     gchess_hint = 1; break;
-		case MENU_AUTOMOVE: gchess_automove = !gchess_automove; break;
-		case MENU_PRESTORED: gchess_prestored = !gchess_prestored; if (gchess_prestored) { gchessgame_curgame = 0; gchessgame_curchar = 0; ghitkey = 0x0e; } break;
-		case MENU_WHITEAI:  gchessailev[0] = (int)v; break;
-		case MENU_BLACKAI:  gchessailev[1] = (int)v; break;
-		case MENU_RESET:    ghitkey = 0x0e; break;
+		case MENU_HINT: gchess_hint = 1; break;
+		case MENU_AUTOMOVEOFF: gchess_automove = 0; break;
+		case MENU_AUTOMOVEON: gchess_automove = 1; break;
+		case MENU_DIFFICULTY: gchessailev[1] = (int)v; break;
+		case MENU_RESET: ghitkey = 0x0e; break;
 	}
 	return(1);
 }
-
 //--------------------------------------------------------------------------------------------------
 	//Packer globals
 static int gpakrendmode = 4, gpakxdim = 6, gpakydim = 3;
@@ -477,28 +470,30 @@ typedef struct
 #define GANIMMAX 256
 static anim_t ganim[GANIMMAX];
 static int ganimi = 0, ganimn = 0;
-static int gmodelanim_pauseit = 0, gslicemode = 0, gwireframe = 0;
+static int gmodelanim_pauseit = 0, gslicemode = 0;
 static int grotatex = 0, grotatey = 0, grotatez = 5;
 static point3d gslicep, gslicer, gsliced, gslicef;
 static int menu_modelanim_update (int id, char *st, double v, int how, void *userdata)
 {
 	switch(id)
 	{
-		case MENU_PREV:       ghitkey = 0xc9; break;
-		case MENU_NEXT:       ghitkey = 0xd1; break;
-		case MENU_FRAME_PREV: ghitkey = 0xc8; break;
-		case MENU_FRAME_NEXT: ghitkey = 0xd0; break;
-		case MENU_DRAWSTATS:  gdrawstats = !gdrawstats; break;
-		case MENU_SLICE:      gslicemode = !gslicemode; if (!gslicemode) break;
-									 gslicep.x = 0.f; gslicer.x = .05f; gsliced.x = 0.f; gslicef.x = 0.f;
-									 gslicep.y = 0.f; gslicer.y = 0.f; gsliced.y = .05f; gslicef.y = 0.f;
-									 gslicep.z = 0.f; gslicer.z = 0.f; gsliced.z = 0.f; gslicef.z = .05f; break;
-		case MENU_AUTOCYCLE:  gautocycle = !gautocycle; break;
-		case MENU_WIREFRAME:  gwireframe = !gwireframe; break;
-		case MENU_RESET:      ghitkey = 0x0e; break;
-		case MENU_PAUSE:      gmodelanim_pauseit = !gmodelanim_pauseit; break;
-		case MENU_LOAD:       ghitkey = 0x26; break;
-		case MENU_SAVE:       ghitkey = 0x1f; break;
+		case MENU_PREV:          ghitkey = 0xc9; break;
+		case MENU_NEXT:          ghitkey = 0xd1; break;
+		case MENU_FRAME_PREV:    ghitkey = 0xc8; break;
+		case MENU_FRAME_NEXT:    ghitkey = 0xd0; break;
+		case MENU_DRAWSTATSOFF:  gdrawstats = 0; break;
+		case MENU_DRAWSTATSON:   gdrawstats = 1; break;
+		case MENU_AUTOCYCLEOFF:  gautocycle = 0; break;
+		case MENU_AUTOCYCLEON:   gautocycle = 1; break;
+		case MENU_SLICEOFF:      gslicemode = 0; break;
+		case MENU_SLICEON:       gslicemode = 1;
+										 gslicep.x = 0.f; gslicer.x = .05f; gsliced.x = 0.f; gslicef.x = 0.f;
+										 gslicep.y = 0.f; gslicer.y = 0.f; gsliced.y = .05f; gslicef.y = 0.f;
+										 gslicep.z = 0.f; gslicer.z = 0.f; gsliced.z = 0.f; gslicef.z = .05f; break;
+		case MENU_RESET:         ghitkey = 0x0e; break;
+		case MENU_PAUSE:         gmodelanim_pauseit = !gmodelanim_pauseit; break;
+		case MENU_LOAD:          ghitkey = 0x26; break;
+		case MENU_SAVE:          ghitkey = 0x1f; break;
 
 #if 0
 		case MENU_AUTOROTATEOFF: gautorotateax =-1; break;
@@ -1796,13 +1791,12 @@ static void loadini (void)
 	float f, animdefscale = 0.5f;
 	int i, j, oficnt, ficnt, fileng, gotmun = 0, keymenucnt = 0;
 	char *fibuf, och, *cptr, *eptr, ktid[] = "[VOXIEDEMO]\r\n";
-	kzfile_t *kzfil;
 
-	kzfil = kzopen("voxiedemo.ini"); if (!kzfil) return;
-	fileng = kzfilelength(kzfil);
-	fibuf = (char *)malloc(fileng+1); if (!fibuf) { kzclose(kzfil); return; }
-	kzread(kzfil,fibuf,fileng);
-	kzclose(kzfil);
+	if (!kzopen("voxiedemo.ini")) return;
+	fileng = kzfilelength();
+	fibuf = (char *)malloc(fileng+1); if (!fibuf) { kzclose(); return; }
+	kzread(fibuf,fileng);
+	kzclose();
 
 		//Preprocessor (#include)
 	for(ficnt=0;ficnt<fileng;ficnt++)
@@ -1817,18 +1811,17 @@ static void loadini (void)
 			cptr += 9;
 			if (cptr[0] == '<') { cptr++; for(i=0;cptr[i];i++) if (cptr[i] == '>') { cptr[i] = 0; break; } } //Strip <>
 			if (cptr[0] == 34) { cptr++; for(i=0;cptr[i];i++) if (cptr[i] == 34) { cptr[i] = 0; break; } } //Strip ""
-			kzfil = kzopen(cptr);
-			if (kzfil)
+			if (kzopen(cptr))
 			{
 				int fileng2;
 
 				ficnt++; memmove(&fibuf[oficnt],&fibuf[ficnt],fileng-ficnt); fileng += oficnt-ficnt; ficnt = oficnt; //remove #include line
 
-				fileng2 = kzfilelength(kzfil);
-				fibuf = (char *)realloc(fibuf,fileng+fileng2+1); if (!fibuf) { kzclose(kzfil); return; }
+				fileng2 = kzfilelength();
+				fibuf = (char *)realloc(fibuf,fileng+fileng2+1); if (!fibuf) { kzclose(); return; }
 				memmove(&fibuf[oficnt+fileng2],&fibuf[oficnt],fileng-ficnt); //shift file memory up
-				kzread(kzfil,&fibuf[oficnt],fileng2); //insert included file
-				kzclose(kzfil);
+				kzread(&fibuf[oficnt],fileng2); //insert included file
+				kzclose();
 
 				fileng += fileng2;
 			}
@@ -1890,18 +1883,7 @@ static void loadini (void)
 			if (!memcmp(cptr,"chesscol2="  ,10))   { gchesscol[1] = strtoul(&cptr[10],&eptr,0); }
 			if (!memcmp(cptr,"chessailev1=",12))   { gchessailev[0] = min(max(strtoul(&cptr[12],&eptr,0),0),8); }
 			if (!memcmp(cptr,"chessailev2=",12))   { gchessailev[1] = min(max(strtoul(&cptr[12],&eptr,0),0),8); }
-			if (!memcmp(cptr,"chesswhiteai=",13))  { gchessailev[0] = min(max(strtoul(&cptr[13],&eptr,0),0),8); }
-			if (!memcmp(cptr,"chessblackai=",13))  { gchessailev[1] = min(max(strtoul(&cptr[13],&eptr,0),0),8); }
 			if (!memcmp(cptr,"chesstime="  ,10))   { gchesstime = strtod(&cptr[10],&eptr); }
-			if (!memcmp(cptr,"chessgameendtime=",17)) { gchessgameendtime = strtod(&cptr[17],&eptr); }
-			if (!memcmp(cptr,"chessmatch="  ,11))
-			{
-				i = (int)strlen(&cptr[11]);
-				if (gchessgamen >= gchessgamemal) { gchessgamemal = max(gchessgamemal*2,16); gchessgame = (char **)realloc(gchessgame,gchessgamemal*sizeof(char *)); }
-				gchessgame[gchessgamen] = (char *)malloc(i+1);
-				memcpy(gchessgame[gchessgamen],&cptr[11],i+1);
-				gchessgamen++;
-			}
 
 			if (!memcmp(cptr,"minplays="   , 9))   { gminplays = min(max(strtol(&cptr[9],&eptr,0),1),4); }
 			if (!memcmp(cptr,"dualnav="    , 8))   { gdualnav  = min(max(strtol(&cptr[8],&eptr,0),0),1); }
@@ -2211,46 +2193,41 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 				case RENDMODE_KEYSTONECAL:
 					genpath_voxiedemo_media("voxiedemo_keystonecal.jpg",tbuf,sizeof(tbuf));
 					voxie_menu_reset(menu_keystonecal_update,&keystone,tbuf);
-					voxie_menu_addtab("Keystone",350,0,650,466);
+					voxie_menu_addtab("Keystone",350,0,650,400);
 
-					voxie_menu_additem("Drag 8 corners to calibrate keystone.", 16, 16, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-					if (vw.nblades > 0) voxie_menu_additem("Drag middle of grid to align rotation axis." , 16, 36, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-										else voxie_menu_additem("(Save button under File Menu)"         ,16, 36, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Drag 8 corners to calibrate keystone.", 32, 16, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					if (vw.nblades > 0) voxie_menu_additem("Drag middle of grid to align rotation axis." , 32, 36, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("(Save button under File Menu)"         ,32, 36, 32, 64,0 ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 
-					voxie_menu_additem("Put Cursor on..", 16, 72,128, 64,0             ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Ceiling"        , 42, 90, 96,80,MENU_CEILING   ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Floor"          , 42,180, 96,80,MENU_FLOOR     ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Put Cursor on..", 64, 72,128, 64,0              ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Ceiling"        , 90, 90, 96,80,MENU_CEILING   ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Floor"          , 90,180, 96,80,MENU_FLOOR     ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 					if (!vw.useemu)
 					{
-						voxie_menu_additem("Rotate keystone..",224, 72,128, 64,0           ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Left 5"           ,194, 90,112,80,MENU_ROTLEFT5 ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Right 5"          ,320, 90,112,80,MENU_ROTRIGHT5,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Left .1"          ,194,180,112,80,MENU_ROTLEFT ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Right .1"         ,320,180,112,80,MENU_ROTRIGHT,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Rotate keystone..",334, 72,128, 64,0           ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Left 5"           ,304, 90,112,80,MENU_ROTLEFT5 ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Right 5"          ,430, 90,112,80,MENU_ROTRIGHT5,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Left .1"          ,304,180,112,80,MENU_ROTLEFT ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Right .1"         ,430,180,112,80,MENU_ROTRIGHT,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 						if (vw.nblades > 0)
 						{
-							voxie_menu_additem("Vertical Offset",340,300,240, 64,MENU_IANGHAK ,MENU_HSLIDER ,0  ,0x908070,(double)vw.ianghak,0.0,65536.0,64.0,1024.0);
+							voxie_menu_additem("Vertical Offset",340,320,240, 64,MENU_IANGHAK ,MENU_HSLIDER ,0  ,0x908070,(double)vw.ianghak,0.0,65536.0,64.0,1024.0);
 						}
 
-						voxie_menu_additem("Reset to safe defaults\rReset to safe defaults",180,408,288,48,MENU_KEYSTONE_RESET,MENU_TOGGLE,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-
-						voxie_menu_additem("Mirror X:", 494, 80, 64, 64,0                   ,MENU_TEXT    ,0                                ,0x908070, 0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Off\rOn"  , 486, 98,128, 64,MENU_MIRRORX        ,MENU_TOGGLE  ,(vw.disp[vw.dispcur].mirrorx!=0) ,0x908070, 0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Mirror Y:", 494,170, 64, 64,0                   ,MENU_TEXT    ,0                                ,0x908070, 0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Off\rOn"  , 486,188,128, 64,MENU_MIRRORY        ,MENU_TOGGLE  ,(vw.disp[vw.dispcur].mirrory!=0) ,0x908070, 0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Reset keystone\nto safe default",250,320,208,64,MENU_KEYSTONE_RESET,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 					}
 
 					if (vw.dispnum > 1)
 					{
-						voxie_menu_additem("\bSelect Display:",25,276, 64, 64,0                   ,MENU_TEXT    ,0                                 ,0x908070, 0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("\bSelect Display:",25,296, 64, 64,0                   ,MENU_TEXT    ,0                                 ,0x908070, 0.0,0.0,0.0,0.0,0.0);
 						for(i=0;i<vw.dispnum;i++)
 						{
 							tbuf[0] = i+'1'; tbuf[1] = 0;
-							voxie_menu_additem(tbuf ,i*64-(vw.dispnum+1)*32+140,300, 64, 64,MENU_DISP_CUR+i     ,MENU_BUTTON+(i==0),(i==vw.dispcur)&&(!grabdispall),0x908070, 0.0,0.0,0.0,0.0,0.0);
+							voxie_menu_additem(tbuf ,i*64-(vw.dispnum+1)*32+140,320, 64, 64,MENU_DISP_CUR+i     ,MENU_BUTTON+(i==0),(i==vw.dispcur)&&(!grabdispall),0x908070, 0.0,0.0,0.0,0.0,0.0);
 						}
-						voxie_menu_additem("All",i*64-(vw.dispnum+1)*32+140,300, 64, 64,MENU_DISP_ALL       ,MENU_BUTTON+2,grabdispall!=0,0x908070, 0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("All",i*64-(vw.dispnum+1)*32+140,320, 64, 64,MENU_DISP_ALL       ,MENU_BUTTON+2,grabdispall!=0,0x908070, 0.0,0.0,0.0,0.0,0.0);
 					}
 
 					break;
@@ -2269,16 +2246,20 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 					voxie_menu_additem("Next"         ,338, 32,280, 64,MENU_NEXT          ,MENU_BUTTON+3,0                      ,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 					voxie_menu_additem("AutoCycle"    , 48,148, 72, 64,0                  ,MENU_TEXT    ,0                      ,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Off\rOn"      ,168,122,144, 64,MENU_AUTOCYCLE     ,MENU_TOGGLE  ,(gautocycle!=0)        ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Off"          ,168,122, 72, 64,MENU_AUTOCYCLEOFF  ,MENU_BUTTON+1,(gautocycle==0)        ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("On"           ,240,122, 72, 64,MENU_AUTOCYCLEON   ,MENU_BUTTON+2,(gautocycle!=0)        ,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 					voxie_menu_additem("Texel Filter" , 14,236, 72, 64,0                  ,MENU_TEXT    ,0                      ,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Near\rBilin"  ,168,210,144, 64,MENU_TEXEL         ,MENU_TOGGLE  ,(gheightmap_flags&2)!=0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Near"         ,168,210, 72, 64,MENU_TEXEL_NEAREST ,MENU_BUTTON+1,(gheightmap_flags&2)==0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Bilin"        ,240,210, 72, 64,MENU_TEXEL_BILINEAR,MENU_BUTTON+2,(gheightmap_flags&2)!=0,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 					voxie_menu_additem("Slice Dither" ,320,148, 72, 64,0                  ,MENU_TEXT    ,0                      ,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Off\rOn"      ,474,122,144, 64,MENU_SLICEDITHER   ,MENU_TOGGLE  ,(gheightmap_flags&1)!=0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Off"          ,474,122, 72, 64,MENU_SLICEDITHEROFF,MENU_BUTTON+1,(gheightmap_flags&1)==0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("On"           ,546,122, 72, 64,MENU_SLICEDITHERON ,MENU_BUTTON+2,(gheightmap_flags&1)!=0,0x908070,0.0,0.0,0.0,0.0,0.0);
 
-					voxie_menu_additem("Texture"      ,380,236, 72, 64,0                  ,MENU_TEXT    ,0                      ,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Off\rOn"      ,474,210,144, 64,MENU_TEXTURE       ,MENU_TOGGLE  ,(gheightmap_flags&4)!=0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Texture"      ,332,236, 72, 64,0                  ,MENU_TEXT    ,0                      ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Off"          ,474,210, 72, 64,MENU_TEXTUREOFF    ,MENU_BUTTON+1,(gheightmap_flags&4)==0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("On"           ,546,210, 72, 64,MENU_TEXTUREON     ,MENU_BUTTON+2,(gheightmap_flags&4)!=0,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 					voxie_menu_additem("Reset camera" , 32,304,586, 64,MENU_RESET         ,MENU_BUTTON+3,0                      ,0x908070,0.0,0.0,0.0,0.0,0.0);
 
@@ -2293,10 +2274,12 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 					voxie_menu_additem("Next"           ,340, 32,160, 96,MENU_NEXT        ,MENU_BUTTON+3,0               ,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 					voxie_menu_additem("Draw stats"     ,173,179, 64, 64,0                ,MENU_TEXT    ,0               ,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Off\rOn"        ,307,153,128, 64,MENU_DRAWSTATS   ,MENU_TOGGLE  ,gdrawstats!=0   ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Off"            ,307,153, 64, 64,MENU_DRAWSTATSOFF,MENU_BUTTON+1,gdrawstats==0   ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("On"             ,371,153, 64, 64,MENU_DRAWSTATSON ,MENU_BUTTON+2,gdrawstats==1   ,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 					voxie_menu_additem("Cycle all Demos",113,267, 64, 64,0                ,MENU_TEXT    ,0               ,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("No\rYes"        ,307,243,128, 64,MENU_AUTOCYCLE   ,MENU_TOGGLE  ,gautocycleall!=0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("No"             ,307,243, 64, 64,MENU_AUTOCYCLEOFF,MENU_BUTTON+1,gautocycleall==0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Yes"            ,371,243, 64, 64,MENU_AUTOCYCLEON ,MENU_BUTTON+2,gautocycleall!=0,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 					voxie_menu_additem("Pause" , 32,334,586,64,MENU_PAUSE  ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 					break;
@@ -2334,19 +2317,12 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 					genpath_voxiedemo_media("voxiedemo_chess.jpg",tbuf,sizeof(tbuf));
 					voxie_menu_reset(menu_chess_update,0,tbuf);
 					voxie_menu_addtab("Chess",350,0,650,410);
-					voxie_menu_additem("Hint"      , 32, 24,586, 64,MENU_HINT       ,MENU_BUTTON+3,0                 ,0x908070,0.0,0.0,0.0,0.0,0.0);
-
-					voxie_menu_additem("Play for\n  human:",40,116,240, 64,0        ,MENU_TEXT    ,0                 ,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Off\rOn"   ,150,104,128, 64,MENU_AUTOMOVE   ,MENU_TOGGLE  ,gchess_automove   ,0x908070,0.0,0.0,0.0,0.0,0.0);
-					if (gchessgamen > 0)
-					{
-						voxie_menu_additem("\tShow pre-\nstored game:",320,116,240, 64,0,MENU_TEXT    ,0               ,0x908070,0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Off\rOn"   ,475,104,128, 64,MENU_PRESTORED  ,MENU_TOGGLE  ,gchess_prestored,0x908070,0.0,0.0,0.0,0.0,0.0);
-					}
-
-					voxie_menu_additem("Black AI (0=human)",128,182,400, 64,MENU_BLACKAI,MENU_HSLIDER ,0              ,0x908070,(double)gchessailev[1],0.0,6.0,1.0,1.0);
-					voxie_menu_additem("White AI (0=human)",128,252,400, 64,MENU_WHITEAI,MENU_HSLIDER ,0              ,0x908070,(double)gchessailev[0],0.0,6.0,1.0,1.0);
-					voxie_menu_additem("Reset game", 32,324,586, 64,MENU_RESET      ,MENU_BUTTON+3,0                  ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Hint"      , 32, 32,586, 64,MENU_HINT       ,MENU_BUTTON+3,0                 ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Auto move" ,172,156,128, 64,0               ,MENU_TEXT    ,0                 ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Off"       ,300,132, 64, 64,MENU_AUTOMOVEOFF,MENU_BUTTON+1,gchess_automove==0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("On"        ,364,132, 64, 64,MENU_AUTOMOVEON ,MENU_BUTTON+2,gchess_automove!=0,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Difficulty",128,222,400, 64,MENU_DIFFICULTY ,MENU_HSLIDER ,0                 ,0x908070,(double)gchessailev[1],1.0,6.0,1.0,1.0);
+					voxie_menu_additem("Reset game", 32,324,586, 64,MENU_RESET      ,MENU_BUTTON+3,0                 ,0x908070,0.0,0.0,0.0,0.0,0.0);
 					break;
 
 				case RENDMODE_PACKER:
@@ -2422,17 +2398,17 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 					voxie_menu_additem("Prev Frame"      ,440, 19,138, 64,MENU_FRAME_PREV   ,MENU_BUTTON+3,0             ,0x908070,0.0,0.0,0.0,0.0,0.0);
 					voxie_menu_additem("Next Frame"      ,586, 19,138, 64,MENU_FRAME_NEXT   ,MENU_BUTTON+3,0             ,0x908070,0.0,0.0,0.0,0.0,0.0);
 
-					voxie_menu_additem("Cross section"   , 22,129, 64, 64,0                 ,MENU_TEXT    ,0             ,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Off\rOn"         ,188,103,128, 64,MENU_SLICE        ,MENU_TOGGLE  ,gslicemode!=0 ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Draw stats"      , 60,129, 64, 64,0                 ,MENU_TEXT    ,0             ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Off"             ,188,103, 64, 64,MENU_DRAWSTATSOFF ,MENU_BUTTON+1,gdrawstats==0 ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("On"              ,252,103, 64, 64,MENU_DRAWSTATSON  ,MENU_BUTTON+2,gdrawstats==1 ,0x908070,0.0,0.0,0.0,0.0,0.0);
 
-					voxie_menu_additem("Wireframe"       , 70,209, 64, 64,0                 ,MENU_TEXT    ,0             ,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Off\rOn"         ,188,183,128, 64,MENU_WIREFRAME    ,MENU_TOGGLE  ,gwireframe!=0 ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Cross section"   , 22,209, 64, 64,0                 ,MENU_TEXT    ,0             ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Off"             ,188,183, 64, 64,MENU_SLICEOFF     ,MENU_BUTTON+1,gslicemode==0 ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("On"              ,252,183, 64, 64,MENU_SLICEON      ,MENU_BUTTON+2,gslicemode==1 ,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 					voxie_menu_additem("AutoCycle"       ,450,129, 64, 64,0                 ,MENU_TEXT    ,0             ,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Off\rOn"         ,568,103,128, 64,MENU_AUTOCYCLE    ,MENU_TOGGLE  ,gautocycle!=0 ,0x908070,0.0,0.0,0.0,0.0,0.0);
-
-					voxie_menu_additem("Draw stats"      ,440,209, 64, 64,0                 ,MENU_TEXT    ,0             ,0x908070,0.0,0.0,0.0,0.0,0.0);
-					voxie_menu_additem("Off\rOn"         ,568,183,128, 64,MENU_DRAWSTATS    ,MENU_TOGGLE  ,gdrawstats!=0 ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("Off"             ,568,103, 64, 64,MENU_AUTOCYCLEOFF ,MENU_BUTTON+1,gautocycle==0 ,0x908070,0.0,0.0,0.0,0.0,0.0);
+					voxie_menu_additem("On"              ,632,103, 64, 64,MENU_AUTOCYCLEON  ,MENU_BUTTON+2,gautocycle==1 ,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 					voxie_menu_additem("Reset pos&ori"   , 92,265,256, 64,MENU_RESET        ,MENU_BUTTON+3,0             ,0x908070,0.0,0.0,0.0,0.0,0.0);
 					voxie_menu_additem("Pause"           , 92,345,256, 64,MENU_PAUSE        ,MENU_BUTTON+3,0             ,0x908070,0.0,0.0,0.0,0.0,0.0);
@@ -3106,12 +3082,11 @@ dofireworks:;
 			case RENDMODE_WAVYPLANE:
 				{
 					//wavy texture-mapped flag
-				poltex_t vt[4]; int mesh[8];
+				poltex_t vt[4]; int mesh[5];
 				#define XN 10
 				#define YN 8
 				voxie_setview(&vf,-vw.aspx,-vw.aspy,-vw.aspz,+vw.aspx,+vw.aspy,+vw.aspz);
-				mesh[0] = 0; mesh[1] = 1; mesh[2] = 2; mesh[3] = -1; //-1 = end of polygonal facet
-				mesh[4] = 0; mesh[5] = 2; mesh[6] = 3; mesh[7] = -1;
+				mesh[0] = 0; mesh[1] = 1; mesh[2] = 2; mesh[3] = 3; mesh[4] = -1; /*-1 = end of polygonal facet*/
 				for(y=0;y<YN;y++)
 					for(x=0;x<XN;x++)
 					{
@@ -3124,7 +3099,7 @@ dofireworks:;
 							vt[i].z = cos(vt[i].u*5.f + vt[i].v*5.f + tim*4.f)*vw.aspz*.95f;
 							vt[i].col = 0xffffff;
 						}
-						voxie_drawmeshtex(&vf,"usflag.png",vt,4,mesh,8,2,0x404040);
+						voxie_drawmeshtex(&vf,"usflag.png",vt,4,mesh,5,2,0x404040);
 					}
 				}
 				break;
@@ -3541,7 +3516,7 @@ dofireworks:;
 										else voxie_playsound("c:/windows/media/chimes.wav",-1,200,200,1.f);
 				}
 
-				voxie_rec_play(&vr,&vf,(newframe!=0)+1); newframe = 0;
+				voxie_rec_play(&vr,(newframe!=0)+1); newframe = 0;
 
 				if (gvoxieplayer_ispaused)
 				{
@@ -3634,7 +3609,7 @@ dofireworks:;
 				break;
 			case RENDMODE_FLYINGSTUFF: //Rotating text & flying crap
 				{
-				point3d pp, rr, dd, ff, dd2, pp2;
+				point3d pp, rr, dd, ff, pp2;
 				static float ha = 0.f, va = 0.f;
 				static int platcol24[5] = {0x010000,0x000100,0x010100,0x010001,0x000101};
 
@@ -3679,29 +3654,21 @@ dofireworks:;
 					rr.x *= f; rr.y *= f; rr.z *= f;
 					dd.x *= f; dd.y *= f; dd.z *= f;
 					ff.x *= f; ff.y *= f; ff.z *= f;
-					f = 2.65; dd2.x = dd.x*f; dd2.y = dd.y*f; dd2.z = dd.z*f;
+					f = 2.65; dd.x *= f; dd.y *= f; dd.z *= f;
 					f = 0.5; pp.x -= rr.x*f; pp.y -= rr.y*f; pp.z -= rr.z*f;
-					f = 0.5; pp.x -= dd2.x*f; pp.y -= dd2.y*f; pp.z -= dd2.z*f;
+					f = 0.5; pp.x -= dd.x*f; pp.y -= dd.y*f; pp.z -= dd.z*f;
 
+					//pp.z += 0.01f;
+					//voxie_printalph_(&vf,&pp,&rr,&dd,0xffffff,"%c",gmyst[i]);
+					//pp.z -= 0.02f;
 					j = (i%5)+2; j = ((j>>2)&1)*0xff0000 + ((j>>1)&1)*0xff00 + (j&1)*0xff;
-#if 0
-					for(f=-.5f;f<=.5f;f+=1.f/32.f) //Simple translational sweep
+					for(f=-.5f;f<=.5f;f+=1.f/32.f)
 					{
 						pp2.x = pp.x + ff.x*f;
 						pp2.y = pp.y + ff.y*f;
 						pp2.z = pp.z + ff.z*f;
-						voxie_printalph_(&vf,&pp2,&rr,&dd2,j,"%c",gmyst[i]);
+						voxie_printalph_(&vf,&pp2,&rr,&dd,j,"%c",gmyst[i]);
 					}
-#else
-					for(k=32-1;k>=0;k--) //Circular (~cylindrical) sweep
-					{
-						float c, s; f = (float)k*(PI*2/32.f); c = cos(f); s = sin(f);
-						pp2.x = (ff.x*c + dd.x*s)*.1f + pp.x;
-						pp2.y = (ff.y*c + dd.y*s)*.1f + pp.y;
-						pp2.z = (ff.z*c + dd.z*s)*.1f + pp.z;
-						voxie_printalph_(&vf,&pp2,&rr,&dd2,j,"%c",gmyst[i]);
-					}
-#endif
 				}
 
 				//draw_platonic(1,0.0,0.0,0.0,0.2,tim*1.0,3,((int)(sin(tim*2.6)*127+128)) + ((int)(cos(tim*2.3)*127+128))*256 + ((int)(sin(tim*2.1)*127+128))*65536);
@@ -3798,7 +3765,13 @@ chesselect:;        if ((fromx == cursx) && (fromy == cursy)) fromx = -1;
 					{
 						if (isvalmove(board,caststat,prevmove,fromx,fromy,cursx,cursy))
 						{
-							voxie_playsound(chess_piece_sound[labs(board[fromy][fromx])],-1,100,100,1.f);
+							i = labs(board[fromy][fromx]);
+							if (i == 1) voxie_playsound("zipguns.flac",-1,100,100,1.f);
+							if (i == 2) voxie_playsound("shoot2.flac",-1,100,100,1.f);
+							if (i == 3) voxie_playsound("shoot2.flac",-1,100,100,1.f);
+							if (i == 4) voxie_playsound("shoot2.flac",-1,100,100,1.f);
+							if (i == 5) voxie_playsound("shoot3.flac",-1,100,100,1.f);
+							if (i == 6) voxie_playsound("warp.flac",-1,100,100,1.f);
 							tox = cursx; toy = cursy; movetim = tim;
 						}
 						else
@@ -3817,46 +3790,24 @@ break2:;          }
 					}
 				}
 
-				if ((gchess_prestored) && (tox < 0) && (gchessgame_curgame < gchessgamen))
+				if ((voxie_keystat(0x23) == 1) && (voxie_keystat(0x1d) || voxie_keystat(0x9d))) gchess_automove = !gchess_automove; //Ctrl+H
+				if (((gchessailev[turn]) || (gchess_automove) || ((voxie_keystat(0x23) == 1) || (gchess_hint))) && (fromx < 0) && (win < 0)) //H:hint
 				{
-					char *cptr = &gchessgame[gchessgame_curgame][gchessgame_curchar];
-					if (cptr[0] == ' ') { cptr++; gchessgame_curchar++; }
-					if ((cptr[0] != '/') && (strlen(cptr) >= 4))
-					{
-						fromx = (cptr[0]-'A')&7; fromy = (cptr[1]-'1')&7;
-						cursx = (cptr[2]-'A')&7; cursy = (cptr[3]-'1')&7;
-						if (isvalmove(board,caststat,prevmove,fromx,fromy,cursx,cursy))
-						{
-							voxie_playsound(chess_piece_sound[labs(board[fromy][fromx])],-1,100,100,1.f);
-							tox = cursx; toy = cursy; movetim = tim;
+					gchess_hint = 0;
+					i = gchessailev[turn]; if (!i) i = gchessailev[turn^1];
+					if (!getcompmove(board,&caststat,&prevmove,turn,&fromx,&fromy,&tox,&toy,i)) goto dowin;
+					movetim = voxie_klock();
 
-							gchessgame_curchar += 4;
-						}
-					}
+					i = labs(board[fromy][fromx]);
+					if (i == 1) voxie_playsound("zipguns.flac",-1,100,100,1.f);
+					if (i == 2) voxie_playsound("shoot2.flac",-1,100,100,1.f);
+					if (i == 3) voxie_playsound("shoot2.flac",-1,100,100,1.f);
+					if (i == 4) voxie_playsound("shoot2.flac",-1,100,100,1.f);
+					if (i == 5) voxie_playsound("shoot3.flac",-1,100,100,1.f);
+					if (i == 6) voxie_playsound("warp.flac",-1,100,100,1.f);
 				}
-				else
-				{
-					if ((voxie_keystat(0x23) == 1) && (voxie_keystat(0x1d) || voxie_keystat(0x9d))) gchess_automove = !gchess_automove; //Ctrl+H
-					if (((gchessailev[turn]) || (gchess_automove) || ((voxie_keystat(0x23) == 1) || (gchess_hint))) && (fromx < 0) && (win < 0)) //H:hint
-					{
-						gchess_hint = 0;
-						i = gchessailev[turn]; if (!i) i = gchessailev[turn^1];
-						if (!getcompmove(board,&caststat,&prevmove,turn,&fromx,&fromy,&tox,&toy,i)) goto dowin;
-						movetim = voxie_klock();
-
-						voxie_playsound(chess_piece_sound[labs(board[fromy][fromx])],-1,100,100,1.f);
-					}
-				}
-
-				if (((gchess_automove) || (gchess_prestored)) && (win >= 0) && (tim >= movetim+gchessgameendtime)) //restart in auto mode
-				{
-					if (gchess_prestored)
-					{
-						gchessgame_curchar = 0;
-						gchessgame_curgame++; if (gchessgame_curgame >= gchessgamen) { gchessgame_curgame = 0; }
-					}
-					inited = 0; break;
-				}
+				if ((gchess_automove) && (win >= 0) && (tim >= movetim+10.0)) //restart in auto mode
+					{ inited = 0; break; }
 
 				n = getvalmoves(board,caststat,prevmove,turn,0);
 				if (n == 0)
@@ -3965,7 +3916,7 @@ foundking1:;}
 
 				if (win < 0)
 				{
-					if ((!gchessailev[turn]) && (!gchess_prestored) && (tim >= movetim+gchesstime))
+					if ((!gchessailev[turn]) && (tim >= movetim+gchesstime))
 					{
 						if (!gchess_automove)
 						{
@@ -4001,20 +3952,6 @@ foundking1:;}
 							  else strcpy(buf,"Stalemate");
 					f = (float)strlen(buf)*.5; pp.x -= rr.x*f; pp.y -= rr.y*f; //pp.z -= rr.z*f;
 					voxie_printalph_(&vf,&pp,&rr,&dd,0xffffff,"%s",buf);
-
-					if (gchess_prestored)
-					{
-						char *cptr = &gchessgame[gchessgame_curgame][gchessgame_curchar];
-						i = strlen(cptr);
-						if (i > 2)
-						{
-							cptr += 2; i -= 2;
-							pp.x =  0.00f; rr.x = min(vw.aspx*2.f/(float)i,0.16); dd.x = 0.00;
-							pp.y = +0.24f; rr.y = 0.00; dd.y = 0.24;
-							f = (float)i*.5f; pp.x -= rr.x*f; pp.y -= rr.y*f;
-							voxie_printalph_(&vf,&pp,&rr,&dd,0xffffff,"%s",cptr);
-						}
-					}
 				}
 
 				}
@@ -4915,15 +4852,14 @@ contbul:;   }
 				}
 				if (!dotn)
 				{
-					kzfile_t *kzfil;
 					char *filbuf;
 					int fileng, filcnt, ofilcnt, sign;
 
-					kzfil = kzopen("positions.vox"); if (!kzfil) { dotn = -1; break; }
-					fileng = kzfilelength(kzfil);
-					filbuf = (char *)malloc(fileng+1); if (!filbuf) { kzclose(kzfil); dotn = -1; break; }
-					kzread(kzfil,filbuf,fileng);
-					kzclose(kzfil);
+					if (!kzopen("positions.vox")) { dotn = -1; break; }
+					fileng = kzfilelength();
+					filbuf = (char *)malloc(fileng+1); if (!filbuf) { kzclose(); dotn = -1; break; }
+					kzread(filbuf,fileng);
+					kzclose();
 
 					dot = (dot_t *)malloc(dotmal*sizeof(dot_t)); if (!dot) { free(filbuf); dotn = -1; break; }
 					frame = (int *)malloc(framemal*sizeof(int)); if (!frame) { free(dot); free(filbuf); dotn = -1; break; }
@@ -6192,16 +6128,18 @@ contbul:;   }
 																		  ((tbuf[i-1] == 'G') || (tbuf[i-1] == 'g'))) ganim[ganimi].filetyp = 0; else ganim[ganimi].filetyp = 1;
 						if (ganim[ganimi].filetyp == 0)
 						{
-							kpzload(tbuf,&ganim[ganimi].tt[ganim[ganimi].n].f,&ganim[ganimi].tt[ganim[ganimi].n].p,
-											 &ganim[ganimi].tt[ganim[ganimi].n].x,&ganim[ganimi].tt[ganim[ganimi].n].y);
+							kpzload(tbuf,      &ganim[ganimi].tt[ganim[ganimi].n].f,(int *)&ganim[ganimi].tt[ganim[ganimi].n].p,
+											(int *)&ganim[ganimi].tt[ganim[ganimi].n].x,(int *)&ganim[ganimi].tt[ganim[ganimi].n].y);
+							ganim[ganimi].tt[ganim[ganimi].n].p &= 0xffffffffI64;
+							ganim[ganimi].tt[ganim[ganimi].n].x &= 0xffffffffI64;
+							ganim[ganimi].tt[ganim[ganimi].n].y &= 0xffffffffI64;
 						}
 						else
 						{
 							ganim[ganimi].tt[ganim[ganimi].n].f = (INT_PTR)malloc(strlen(tbuf)+1);
 							if (ganim[ganimi].tt[ganim[ganimi].n].f) strcpy((char *)ganim[ganimi].tt[ganim[ganimi].n].f,tbuf);
 
-							kzfile_t *kzfil;
-							kzfil = kzopen((const char *)ganim[ganimi].tt[ganim[ganimi].n].f); if (kzfil) kzclose(kzfil);
+							if (kzopen((const char *)ganim[ganimi].tt[ganim[ganimi].n].f)) kzclose();
 							else ganim[ganimi].tt[ganim[ganimi].n].f = 0;
 						}
 					}
@@ -6428,7 +6366,7 @@ contbul:;   }
 
 					if (gslicemode) { voxie_setmaskplane(&vf, gslicep.x,gslicep.y,gslicep.z,gsliced.x,gsliced.y,gsliced.z); }
 
-					if (!voxie_drawspr_ext(&vf,(const char *)ganim[ganimi].tt[ganim[ganimi].cnt].f,&ganim[ganimi].p,&fr,&fd,&ff,colval,0.f,1.f,gwireframe))
+					if (!voxie_drawspr(&vf,(const char *)ganim[ganimi].tt[ganim[ganimi].cnt].f,&ganim[ganimi].p,&fr,&fd,&ff,colval))
 					{
 						point3d pp, rr, dd;
 						pp.x = 0.0; rr.x = 20.0; dd.x =   0.0;

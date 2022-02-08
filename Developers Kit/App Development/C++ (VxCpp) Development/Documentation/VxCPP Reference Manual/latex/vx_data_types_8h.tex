@@ -50,7 +50,11 @@ struct \mbox{\hyperlink{structvoxie__keyboard__history__t}{voxie\+\_\+keyboard\+
 struct \mbox{\hyperlink{structvoxie__xbox__history__t}{voxie\+\_\+xbox\+\_\+history\+\_\+t}}
 \begin{DoxyCompactList}\small\item\em used internally by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} to log various USB game controller button inputs this struct allows you to view the history \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structvoxie__nav__history__t}{voxie\+\_\+nav\+\_\+history\+\_\+t}}
-\begin{DoxyCompactList}\small\item\em used internally by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} to log various Space Nav inputs this struct allows you to view the history of various inputs \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em used internally by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} to log various Space Nav inputs this struct allows you to view the history of various inputs \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structtouch_point__t}{touch\+Point\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em touch point struct used for holding data associated for a single finger / touch point. Used for advanced touchscreen use. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structtouch_input__t}{touch\+Input\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em touch input struct holds all the touch input data. Used for advanced touchscreen use. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Macros}
 \begin{DoxyCompactItemize}
 \item 
@@ -71,6 +75,21 @@ struct \mbox{\hyperlink{structvoxie__nav__history__t}{voxie\+\_\+nav\+\_\+histor
 \begin{DoxyCompactList}\small\item\em use this if calling voxie gfx from multiple threads (ex\+: custom user multithread) \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{vx_data_types_8h_a1031ff2fcaffbd833b0c91ff01f672f9}\label{vx_data_types_8h_a1031ff2fcaffbd833b0c91ff01f672f9}} 
 \#define {\bfseries VOXIE\+\_\+\+DICOM\+\_\+\+MIPS}~4
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_ab09659a71a162c922c65666bb094c46a}\label{vx_data_types_8h_ab09659a71a162c922c65666bb094c46a}} 
+\#define {\bfseries TOUCH\+\_\+\+MAX}~11
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_af20e921bd23143b8b53aa164cc36edc8}\label{vx_data_types_8h_af20e921bd23143b8b53aa164cc36edc8}} 
+\#define {\bfseries TOUCH\+\_\+\+TIME\+\_\+\+OUT}~3
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_a2ead34b073e874d612789e35b3fac294}\label{vx_data_types_8h_a2ead34b073e874d612789e35b3fac294}} 
+\#define {\bfseries TOUCH\+\_\+\+HELD\+\_\+\+TIME}~2
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_aedf1c8ebcc02842b97d2c0ca0370c873}\label{vx_data_types_8h_aedf1c8ebcc02842b97d2c0ca0370c873}} 
+\#define {\bfseries TOUCH\+\_\+\+ANGLE\+\_\+\+DEAD\+\_\+\+ZONE}~0
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_a80ac63f1663e7433ca2517154108d99e}\label{vx_data_types_8h_a80ac63f1663e7433ca2517154108d99e}} 
+\#define {\bfseries TOUCH\+\_\+\+DISTANCE\+\_\+\+DEAD\+\_\+\+ZONE}~1
 \end{DoxyCompactItemize}
 \doxysubsection*{Typedefs}
 \begin{DoxyCompactItemize}
@@ -127,7 +146,13 @@ typedef struct \mbox{\hyperlink{structvoxie__xbox__history__t}{voxie\+\_\+xbox\+
 \begin{DoxyCompactList}\small\item\em used internally by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} to log various USB game controller button inputs this struct allows you to view the history \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{vx_data_types_8h_ae2287375860b2fa2f8fab75e42327d27}\label{vx_data_types_8h_ae2287375860b2fa2f8fab75e42327d27}} 
 typedef struct \mbox{\hyperlink{structvoxie__nav__history__t}{voxie\+\_\+nav\+\_\+history\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_ae2287375860b2fa2f8fab75e42327d27}{voxie\+\_\+nav\+\_\+history\+\_\+t}}
-\begin{DoxyCompactList}\small\item\em used internally by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} to log various Space Nav inputs this struct allows you to view the history of various inputs \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em used internally by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} to log various Space Nav inputs this struct allows you to view the history of various inputs \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_aa8655a592a10f24e5b9eef03263c79f6}\label{vx_data_types_8h_aa8655a592a10f24e5b9eef03263c79f6}} 
+typedef struct \mbox{\hyperlink{structtouch_point__t}{touch\+Point\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_aa8655a592a10f24e5b9eef03263c79f6}{touch\+Point\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em touch point struct used for holding data associated for a single finger / touch point. Used for advanced touchscreen use. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_a84a60250df8675280e5925b9b9e9eb1b}\label{vx_data_types_8h_a84a60250df8675280e5925b9b9e9eb1b}} 
+typedef struct \mbox{\hyperlink{structtouch_input__t}{touch\+Input\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_a84a60250df8675280e5925b9b9e9eb1b}{touch\+Input\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em touch input struct holds all the touch input data. Used for advanced touchscreen use. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Enumerations}
 \begin{DoxyCompactItemize}
 \item 
@@ -154,6 +179,16 @@ enum \{ \newline
 , {\bfseries KPLIB\+\_\+\+DDS}
 , \newline
 {\bfseries KPLIB\+\_\+\+TGA}
+ \}
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_a99fb83031ce9923c84392b4e92f956b5}\label{vx_data_types_8h_a99fb83031ce9923c84392b4e92f956b5}} 
+enum \{ \newline
+{\bfseries TOUCH\+\_\+\+STATE\+\_\+\+NOT\+\_\+\+PRESSED} = 0
+, {\bfseries TOUCH\+\_\+\+STATE\+\_\+\+IS\+\_\+\+DOWN} = 1
+, {\bfseries TOUCH\+\_\+\+STATE\+\_\+\+IS\+\_\+\+HELD} = 2
+, {\bfseries TOUCH\+\_\+\+STATE\+\_\+\+JUST\+\_\+\+PRESSED} = 3
+, \newline
+{\bfseries TOUCH\+\_\+\+STATE\+\_\+\+ON\+\_\+\+UP} = 4
  \}
 \end{DoxyCompactItemize}
 

@@ -71,9 +71,12 @@ virtual void \mbox{\hyperlink{class_i_voxie_box_a6e9ebffbdc4b5cf6e3cad6b472b5425
 \mbox{\Hypertarget{class_i_voxie_box_a42b42c55a3d07f8c8fa458206c92f6f8}\label{class_i_voxie_box_a42b42c55a3d07f8c8fa458206c92f6f8}} 
 virtual void \mbox{\hyperlink{class_i_voxie_box_a42b42c55a3d07f8c8fa458206c92f6f8}{set\+Enable\+Legacy\+Joy\+Input}} (bool option)=0
 \begin{DoxyCompactList}\small\item\em Set to true to handle Joy input manually. Disables many of the joy input functions. Set to false by default. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a610096748ee003388e308da1a9b56271}\label{class_i_voxie_box_a610096748ee003388e308da1a9b56271}} 
+virtual void \mbox{\hyperlink{class_i_voxie_box_a610096748ee003388e308da1a9b56271}{set\+Enable\+Legacy\+Touch\+Input}} (bool option)=0
+\begin{DoxyCompactList}\small\item\em Set to true to handle Touch input manually. Disables many of the touch input functions. Set to false by default. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_a84837c998430ffe4177fda44c7926aef}\label{class_i_voxie_box_a84837c998430ffe4177fda44c7926aef}} 
 virtual void \mbox{\hyperlink{class_i_voxie_box_a84837c998430ffe4177fda44c7926aef}{set\+Enable\+Joy\+Dead\+Zone}} (bool option)=0
-\begin{DoxyCompactList}\small\item\em Toggles a joystick / gamepad dead zone on analog sticks. Set to true by default. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Set to true to give access to the touch screen (if disabled touching the screen will always bring up the Voxie Menu) \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_a1fa10105e84a9f97b1348397737922f6}\label{class_i_voxie_box_a1fa10105e84a9f97b1348397737922f6}} 
 virtual void \mbox{\hyperlink{class_i_voxie_box_a1fa10105e84a9f97b1348397737922f6}{set\+Enable\+Nav\+Dead\+Zone}} (bool option)=0
 \begin{DoxyCompactList}\small\item\em Toggles a dead zone for Space Navigator. Set to true by default. \end{DoxyCompactList}\item 
@@ -239,6 +242,12 @@ virtual float \mbox{\hyperlink{class_i_voxie_box_a34b200f89ba0ec2c92a1a7e10c761d
 \mbox{\Hypertarget{class_i_voxie_box_a5400e4b60902e40463a30a978a1e48a3}\label{class_i_voxie_box_a5400e4b60902e40463a30a978a1e48a3}} 
 virtual void \mbox{\hyperlink{class_i_voxie_box_a5400e4b60902e40463a30a978a1e48a3}{draw\+Text}} (\mbox{\hyperlink{structpoint3d}{point3d}} $\ast$pos, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$r\+Vector, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$d\+Vector, int col, const char $\ast$fmt,...)=0
 \begin{DoxyCompactList}\small\item\em Renders a string (printf-\/style) unto the volumetric display. Must be called between \mbox{\hyperlink{class_i_voxie_box_ace7dedd2c220cf2f62470697d760cef9}{start\+Frame()}} \& \mbox{\hyperlink{class_i_voxie_box_ae78f083e60d771b7885bd65f5b78d22c}{end\+Frame()}} functions. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_aa5f598deb0305b72f25161a913556a2d}\label{class_i_voxie_box_aa5f598deb0305b72f25161a913556a2d}} 
+virtual void \mbox{\hyperlink{class_i_voxie_box_aa5f598deb0305b72f25161a913556a2d}{draw\+Text}} (\mbox{\hyperlink{structpoint3d}{point3d}} $\ast$pos, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$r\+Vector, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$d\+Vector, float size, int col, const char $\ast$fmt,...)=0
+\begin{DoxyCompactList}\small\item\em Renders a string (printf-\/style) unto the volumetric display addition parameter for font width. Must be called between \mbox{\hyperlink{class_i_voxie_box_ace7dedd2c220cf2f62470697d760cef9}{start\+Frame()}} \& \mbox{\hyperlink{class_i_voxie_box_ae78f083e60d771b7885bd65f5b78d22c}{end\+Frame()}} functions. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_aca1fdbd6e069500def6e45f63de1a07e}\label{class_i_voxie_box_aca1fdbd6e069500def6e45f63de1a07e}} 
+virtual void \mbox{\hyperlink{class_i_voxie_box_aca1fdbd6e069500def6e45f63de1a07e}{draw\+Text\+Simp}} (\mbox{\hyperlink{structpoint3d}{point3d}} $\ast$pos, float text\+Width, float text\+Height, float hang, float vang, float tilt, int col, char $\ast$fmt,...)=0
+\begin{DoxyCompactList}\small\item\em Simple version to render a string (printf-\/style) unto the volumetric display. Must be called between \mbox{\hyperlink{class_i_voxie_box_ace7dedd2c220cf2f62470697d760cef9}{start\+Frame()}} \& \mbox{\hyperlink{class_i_voxie_box_ae78f083e60d771b7885bd65f5b78d22c}{end\+Frame()}} functions. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_ac8c1f4bc985d70a4bd1a8b95c9008968}\label{class_i_voxie_box_ac8c1f4bc985d70a4bd1a8b95c9008968}} 
 virtual void \mbox{\hyperlink{class_i_voxie_box_ac8c1f4bc985d70a4bd1a8b95c9008968}{draw\+Dicom}} (\mbox{\hyperlink{structvoxie__dicom__t}{voxie\+\_\+dicom\+\_\+t}} $\ast$vd, const char $\ast$gfilnam, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$gp, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$gr, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$gd, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$gf, int $\ast$animn, int $\ast$loaddone)=0
 \begin{DoxyCompactList}\small\item\em Renders a DICOM file unto the volumetric display. \end{DoxyCompactList}\item 
@@ -347,9 +356,68 @@ virtual void \mbox{\hyperlink{class_i_voxie_box_a5fb98b15f6632fd78d9847d9668e1ec
 \mbox{\Hypertarget{class_i_voxie_box_a01d967eaa56cf556e4f9b213f98df18b}\label{class_i_voxie_box_a01d967eaa56cf556e4f9b213f98df18b}} 
 virtual int \mbox{\hyperlink{class_i_voxie_box_a01d967eaa56cf556e4f9b213f98df18b}{get\+Mouse\+Orientation}} ()=0
 \begin{DoxyCompactList}\small\item\em Returns the orientation set for the mouse. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_i_voxie_box_af32547c7364d319179680868189879e1}\label{class_i_voxie_box_af32547c7364d319179680868189879e1}} 
-virtual void \mbox{\hyperlink{class_i_voxie_box_af32547c7364d319179680868189879e1}{touch\+Add\+Custom\+Layout}} (const \mbox{\hyperlink{structtouchkey__t}{touchkey\+\_\+t}} $\ast$touchkey, int size\+Of\+Array)=0
+\mbox{\Hypertarget{class_i_voxie_box_a4c06d2788bd011e5e9787ae1e65ce4b7}\label{class_i_voxie_box_a4c06d2788bd011e5e9787ae1e65ce4b7}} 
+virtual void \mbox{\hyperlink{class_i_voxie_box_a4c06d2788bd011e5e9787ae1e65ce4b7}{Add\+Touch\+Keyboard\+Layout}} (const \mbox{\hyperlink{structtouchkey__t}{touchkey\+\_\+t}} $\ast$touchkey, int size\+Of\+Array)=0
 \begin{DoxyCompactList}\small\item\em Add custom touch keys. (enable touch keyboard under \textquotesingle{}Misc\textquotesingle{} menu tab) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a2a751ef7630dad8e5811f2b307d7e2bf}\label{class_i_voxie_box_a2a751ef7630dad8e5811f2b307d7e2bf}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_a2a751ef7630dad8e5811f2b307d7e2bf}{touch\+Manual\+Read}} (int $\ast$touch\+Index, int $\ast$x\+Val, int $\ast$y\+Val, int $\ast$packet\+State)=0
+\begin{DoxyCompactList}\small\item\em Read touch inputs -\/ This function should be called in a while loop until 0 is returned. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a6707d62b7c43150a7bf6be6b1943899d}\label{class_i_voxie_box_a6707d62b7c43150a7bf6be6b1943899d}} 
+virtual void \mbox{\hyperlink{class_i_voxie_box_a6707d62b7c43150a7bf6be6b1943899d}{set\+Enable\+Touch\+Input}} (bool option)=0
+\begin{DoxyCompactList}\small\item\em Enables the touch screen to be used as a input device. Set this to true if you want to use the touch screen in your own VX applications. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a7c0a430b03e78bd5d21d77c1b4e1665e}\label{class_i_voxie_box_a7c0a430b03e78bd5d21d77c1b4e1665e}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_a7c0a430b03e78bd5d21d77c1b4e1665e}{get\+Touch\+DeltaX}} (int index)=0
+\begin{DoxyCompactList}\small\item\em Returns the touch movement delta of the X position by index register. Use index register -\/1 for global delta. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a72f9dd73d1115d608fe8fbc9ae7fe227}\label{class_i_voxie_box_a72f9dd73d1115d608fe8fbc9ae7fe227}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_a72f9dd73d1115d608fe8fbc9ae7fe227}{get\+Touch\+DeltaY}} (int index)=0
+\begin{DoxyCompactList}\small\item\em Returns the touch movement delta of the Y position by index register. Use index register -\/1 for global delta. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_aac8aa6cf55ced1b753e8f2a2df769ec6}\label{class_i_voxie_box_aac8aa6cf55ced1b753e8f2a2df769ec6}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_aac8aa6cf55ced1b753e8f2a2df769ec6}{get\+Touch\+PosX}} (int index)=0
+\begin{DoxyCompactList}\small\item\em Returns the touch X position by index register. Run using a for loop with TOUCH\+\_\+\+MAX\+\_\+\+INPUT to check all inputs. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a0db64f8621625731166ec557fb9a4953}\label{class_i_voxie_box_a0db64f8621625731166ec557fb9a4953}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_a0db64f8621625731166ec557fb9a4953}{get\+Touch\+PosY}} (int index)=0
+\begin{DoxyCompactList}\small\item\em Returns the touch Y position by index register. Run using a for loop with TOUCH\+\_\+\+MAX\+\_\+\+INPUT to check all inputs. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a4c4ad1e67519846c85ad38d943bd9fa1}\label{class_i_voxie_box_a4c4ad1e67519846c85ad38d943bd9fa1}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_a4c4ad1e67519846c85ad38d943bd9fa1}{get\+Touch\+State}} (int index)=0
+\begin{DoxyCompactList}\small\item\em Returns the touch state requires the touch point index number. (0 = no touch, 1 = touch is down, 2 = is held, 3 = just pressed, 4 = on up) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a996863fc20ffd0bfcdccb4ed65ef4368}\label{class_i_voxie_box_a996863fc20ffd0bfcdccb4ed65ef4368}} 
+virtual float \mbox{\hyperlink{class_i_voxie_box_a996863fc20ffd0bfcdccb4ed65ef4368}{get\+Touch\+Rotation\+Delta}} ()=0
+\begin{DoxyCompactList}\small\item\em Returns in radians the touch rotation delta when a pinch is active range is usually 0.\+2 and 0.\+01. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_aa340902ffb45e6303bc3b3e9a30cbf30}\label{class_i_voxie_box_aa340902ffb45e6303bc3b3e9a30cbf30}} 
+virtual float \mbox{\hyperlink{class_i_voxie_box_aa340902ffb45e6303bc3b3e9a30cbf30}{get\+Touch\+Distance\+Delta}} ()=0
+\begin{DoxyCompactList}\small\item\em Returns the touch rotation delta when a pinch is active range is usually 0.\+2 and 0.\+01. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_aa2d3ed2d2797e9ba5378226721a1b260}\label{class_i_voxie_box_aa2d3ed2d2797e9ba5378226721a1b260}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_aa2d3ed2d2797e9ba5378226721a1b260}{get\+Touch\+Press\+State}} (\mbox{\hyperlink{structpoint2d}{point2d}} TLpos, \mbox{\hyperlink{structpoint2d}{point2d}} BRpos, bool draw\+Collision=false)=0
+\begin{DoxyCompactList}\small\item\em Returns a positive number if a touch event happens within the collision box (0 = no touch, 1 = touch is down, 2 = is held, 3 = just pressed, 4 = on up) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a6591e3dc281dd04bf48dc05b874efcbc}\label{class_i_voxie_box_a6591e3dc281dd04bf48dc05b874efcbc}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_a6591e3dc281dd04bf48dc05b874efcbc}{get\+Touch\+Press\+State\+Cir}} (\mbox{\hyperlink{structpoint2d}{point2d}} Cir\+Pos, float radius, bool draw\+Collision=false)=0
+\begin{DoxyCompactList}\small\item\em Returns a positive number if a touch event happens within the collision circle (0 = no touch, 1 = touch is down, 2 = is held, 3 = just pressed, 4 = on up) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a32bc654768e05df6dd3ea50dc8a758ed}\label{class_i_voxie_box_a32bc654768e05df6dd3ea50dc8a758ed}} 
+virtual \mbox{\hyperlink{structtouch_input__t}{touch\+Input\+\_\+t}} $\ast$ \mbox{\hyperlink{class_i_voxie_box_a32bc654768e05df6dd3ea50dc8a758ed}{get\+Touch\+Input\+Struct}} ()=0
+\begin{DoxyCompactList}\small\item\em Returns a the internal \mbox{\hyperlink{structtouch_input__t}{touch\+Input\+\_\+t}} pointer ~\newline
+ \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_ae643bac8f6fccd5f9dd7e45914c3e160}\label{class_i_voxie_box_ae643bac8f6fccd5f9dd7e45914c3e160}} 
+virtual void \mbox{\hyperlink{class_i_voxie_box_ae643bac8f6fccd5f9dd7e45914c3e160}{set\+Touch\+Input\+Struct}} (\mbox{\hyperlink{structtouch_input__t}{touch\+Input\+\_\+t}} $\ast$new\+Touch\+Input)=0
+\begin{DoxyCompactList}\small\item\em Updates the internal \mbox{\hyperlink{structtouch_input__t}{touch\+Input\+\_\+t}} struct. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_ac6dfa9ed858b86f61688bd200703c737}\label{class_i_voxie_box_ac6dfa9ed858b86f61688bd200703c737}} 
+virtual void \mbox{\hyperlink{class_i_voxie_box_ac6dfa9ed858b86f61688bd200703c737}{set\+Touch\+Sensitivity}} (float new\+Sensitivity\+Value)=0
+\begin{DoxyCompactList}\small\item\em Sets the touch sensitivity value 1 is default. the higher the value the more sensitive. ~\newline
+ \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a5858815c98e91633a6057e23809f1814}\label{class_i_voxie_box_a5858815c98e91633a6057e23809f1814}} 
+virtual float \mbox{\hyperlink{class_i_voxie_box_a5858815c98e91633a6057e23809f1814}{get\+Touch\+Sensitivity}} ()=0
+\begin{DoxyCompactList}\small\item\em Returns the touch sensitivity setting/. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a5c4ebd1f0cb69377ab9215a2d2bb136c}\label{class_i_voxie_box_a5c4ebd1f0cb69377ab9215a2d2bb136c}} 
+virtual void \mbox{\hyperlink{class_i_voxie_box_a5c4ebd1f0cb69377ab9215a2d2bb136c}{enable\+Touch\+Focus\+Pinch}} (bool choice)=0
+\begin{DoxyCompactList}\small\item\em Disables / enables the touches focus pinch. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a153aee77af0b33274ba8d14ea230d81d}\label{class_i_voxie_box_a153aee77af0b33274ba8d14ea230d81d}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_a153aee77af0b33274ba8d14ea230d81d}{get\+Touch\+Press\+Index}} (\mbox{\hyperlink{structpoint2d}{point2d}} TLpos, \mbox{\hyperlink{structpoint2d}{point2d}} BRpos, bool draw\+Collision=false)=0
+\begin{DoxyCompactList}\small\item\em Returns the touch point index if a touch event happens within the collision box. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a20c95d0c4d0f76236b9f066d74ab0d79}\label{class_i_voxie_box_a20c95d0c4d0f76236b9f066d74ab0d79}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_a20c95d0c4d0f76236b9f066d74ab0d79}{get\+Touch\+Press\+Index\+Cir}} (\mbox{\hyperlink{structpoint2d}{point2d}} Cir\+Pos, float radius, bool draw\+Collision=false)=0
+\begin{DoxyCompactList}\small\item\em Returns the touch point index if a touch event happens within the collision circle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a20c5035292c6a1c324bafd61b86357ee}\label{class_i_voxie_box_a20c5035292c6a1c324bafd61b86357ee}} 
+virtual void \mbox{\hyperlink{class_i_voxie_box_a20c5035292c6a1c324bafd61b86357ee}{report\+Touch}} (int posX, int posY)=0
+\begin{DoxyCompactList}\small\item\em Reports the state of the touch input on to the secondary (touch) screen. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_a7df1c79b5822c14c101f424948cd85b2}\label{class_i_voxie_box_a7df1c79b5822c14c101f424948cd85b2}} 
 virtual int {\bfseries update\+Joy\+State} (int controller\+ID, \mbox{\hyperlink{structvoxie__xbox__t}{voxie\+\_\+xbox\+\_\+t}} $\ast$vx)=0
 \item 
@@ -488,12 +556,16 @@ virtual int \mbox{\hyperlink{class_i_voxie_box_ae939bf24c18e16a5db12f00bdefd4434
 virtual void \mbox{\hyperlink{class_i_voxie_box_a1d10e13ce4ce1596eda1ded2b9e3a6d6}{update\+Sound}} (int handle\+ID, int source\+Channel, int volume\+Left, int volume\+Right, float play\+Back\+Speed)=0
 \begin{DoxyCompactList}\small\item\em Updates or adjusts a currently playing sound. Used for muting a current sound or adjusting settings. ~\newline
  \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_ae426132df0fb167a56684de9f3b751c3}\label{class_i_voxie_box_ae426132df0fb167a56684de9f3b751c3}} 
+virtual void \mbox{\hyperlink{class_i_voxie_box_ae426132df0fb167a56684de9f3b751c3}{update\+Sound\+Position}} (int handle\+ID, double second, int seek\+Type=SEEK\+\_\+\+SET)=0
+\begin{DoxyCompactList}\small\item\em Updates or currently playing sound. to a new position. Seek types are SEEK\+\_\+\+SET (0), SEEK\+\_\+\+CUR (1) \& SEEK\+\_\+\+END (2) -\/ values based on fseek() ~\newline
+ \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_ae7b6353856cdbbdda3c3a848eb03f777}\label{class_i_voxie_box_ae7b6353856cdbbdda3c3a848eb03f777}} 
-virtual void {\bfseries set\+Audio\+Play\+Call\+Back} (void($\ast$userplayfunc)(int $\ast$sample\+Buffer, int sample\+Rate))=0
-\item 
+virtual void \mbox{\hyperlink{class_i_voxie_box_ae7b6353856cdbbdda3c3a848eb03f777}{set\+Audio\+Play\+Call\+Back}} (void($\ast$userplayfunc)(int $\ast$sample\+Buffer, int sample\+Rate))=0
+\begin{DoxyCompactList}\small\item\em Define a custom audio callback function to play PCM raw audio data. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_a7b0567413353f15205bb6f14b13fe4f9}\label{class_i_voxie_box_a7b0567413353f15205bb6f14b13fe4f9}} 
-virtual void {\bfseries set\+Audio\+Record\+Call\+Back} (void($\ast$userrecfunc)(int $\ast$sample\+Buffer, int sample\+Rate))=0
-\item 
+virtual void \mbox{\hyperlink{class_i_voxie_box_a7b0567413353f15205bb6f14b13fe4f9}{set\+Audio\+Record\+Call\+Back}} (void($\ast$userrecfunc)(int $\ast$sample\+Buffer, int sample\+Rate))=0
+\begin{DoxyCompactList}\small\item\em Define a custom audio callback function to record PCM audio data -\/ see VXBeeper demo (under modules) for a demo on how to use this function. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_a40b471b65893b47e859ff60393ba27fa}\label{class_i_voxie_box_a40b471b65893b47e859ff60393ba27fa}} 
 virtual void \mbox{\hyperlink{class_i_voxie_box_a40b471b65893b47e859ff60393ba27fa}{mount\+Zip}} (char $\ast$file\+Name)=0
 \begin{DoxyCompactList}\small\item\em Extracts and loads a .zip file into memory. \end{DoxyCompactList}\item 
@@ -539,12 +611,18 @@ virtual int \mbox{\hyperlink{class_i_voxie_box_ade780b443759853c523a9992d9c83bfe
 \mbox{\Hypertarget{class_i_voxie_box_ab72d6b411561d8a2f23efb42e8e33687}\label{class_i_voxie_box_ab72d6b411561d8a2f23efb42e8e33687}} 
 virtual int \mbox{\hyperlink{class_i_voxie_box_ab72d6b411561d8a2f23efb42e8e33687}{sphere\+Collide\+Chk}} (\mbox{\hyperlink{structpoint3d}{point3d}} $\ast$sphere\+APos, double sphere\+ARadius, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$sphere\+BPos, double sphere\+BRadius, bool show\+Collision\+Box=false)=0
 \begin{DoxyCompactList}\small\item\em Sphere collision check. Check if two spheres are touching. Returns 1 if collision is found otherwise returns 0. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a84b52b0cb7031a909535a7ace7e581fa}\label{class_i_voxie_box_a84b52b0cb7031a909535a7ace7e581fa}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_a84b52b0cb7031a909535a7ace7e581fa}{box\+Inside\+Collide\+Chk2D}} (\mbox{\hyperlink{structpoint2d}{point2d}} $\ast$TLpos, \mbox{\hyperlink{structpoint2d}{point2d}} $\ast$BRpos, \mbox{\hyperlink{structpoint2d}{point2d}} $\ast$collision\+Pos, bool show\+Collision\+Box=false)=0
+\begin{DoxyCompactList}\small\item\em Within box collision check 2D. Checks if a X Y position is within a collision box. two boxes are touching. Returns 1 if collision is found otherwise returns 0. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_a6770c0826e853800e4b1c218ac29c58f}\label{class_i_voxie_box_a6770c0826e853800e4b1c218ac29c58f}} 
 virtual int \mbox{\hyperlink{class_i_voxie_box_a6770c0826e853800e4b1c218ac29c58f}{box\+Collide\+Chk}} (\mbox{\hyperlink{structpoint3d}{point3d}} $\ast$LUTpos1, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$RDBpos1, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$LUTpos2, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$RDBpos2, bool show\+Collision\+Box=false)=0
 \begin{DoxyCompactList}\small\item\em Box collision check. Check if two boxes are touching. Returns 1 if collision is found otherwise returns 0. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_a7687f3274f6f8c7ff2b875ea45b1d136}\label{class_i_voxie_box_a7687f3274f6f8c7ff2b875ea45b1d136}} 
 virtual int \mbox{\hyperlink{class_i_voxie_box_a7687f3274f6f8c7ff2b875ea45b1d136}{box\+Inside\+Collide\+Chk}} (\mbox{\hyperlink{structpoint3d}{point3d}} $\ast$LUTpos, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$RDBpos, \mbox{\hyperlink{structpoint3d}{point3d}} collision\+Pos, bool show\+Collision\+Box=false)=0
-\begin{DoxyCompactList}\small\item\em Within Box collision check. Check if a position is inside a collision box. box\+TLU = Top, Left, Up, box\+BRD = bottom, right, down. \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em Within box collision check. Check if a position is inside a collision box. box\+TLU = Top, Left, Up, box\+BRD = bottom, right, down. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a20fd4a68dfb0ac2eef4cbebee9a0185c}\label{class_i_voxie_box_a20fd4a68dfb0ac2eef4cbebee9a0185c}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_a20fd4a68dfb0ac2eef4cbebee9a0185c}{ciricle2\+DChk}} (\mbox{\hyperlink{structpoint2d}{point2d}} $\ast$circle\+Pos, float radius, \mbox{\hyperlink{structpoint2d}{point2d}} $\ast$collision\+Pos, int show\+Collision\+Box=0)=0
+\begin{DoxyCompactList}\small\item\em Within circle collision check. Check if a position is inside a collision circle. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_a4f429fa4b4869ffec1fe68e0096df0da}\label{class_i_voxie_box_a4f429fa4b4869ffec1fe68e0096df0da}} 
 virtual int \mbox{\hyperlink{class_i_voxie_box_a4f429fa4b4869ffec1fe68e0096df0da}{move\+To\+Pos}} (\mbox{\hyperlink{structpoint3d}{point3d}} $\ast$current\+Pos, \mbox{\hyperlink{structpoint3d}{point3d}} destination\+Pos, float speed, float accuracy)=0
 \begin{DoxyCompactList}\small\item\em Updates/\char`\"{}moves\char`\"{} a point from the current position towards the destination point. Returns 1 if current\+Pos collides with destinnation\+Pos otherwise returns a 0. ~\newline

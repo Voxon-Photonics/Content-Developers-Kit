@@ -1,3 +1,22 @@
+# Version 1.1.1.4 (2022-02-07)
+
+## Major Changes
+### Features
+* Moved to new Camera system. Uses VXCamera prefab objects to maintain correct aspect ratio
+* Updated to add support for VCB recording, and local lighting
+
+### Bugs
+* Fixed SkinnedMesh scaling. Required move to 2020.3 ([20947a](https://bitbucket.org/voxon-photonics/unitypackage/commit/20947ab3d1365fa4d60224685a2eabc62e16dc7e))
+
+## Minor Changes
+### Features
+* Added Gamma, Density, DotSize and Normal Lighting Support (Including Example Scenes)
+* Added Dynamic Mesh Deformation
+
+### Bugs
+* Fixed tinting for textured materials
+* Prevent generation of empty compute buffers when vertex count is 0
+
 # Version 1.1.0.3 (2021-03-05)
 
 ## Minor Changes
