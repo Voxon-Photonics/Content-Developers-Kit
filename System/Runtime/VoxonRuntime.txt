@@ -1,5 +1,5 @@
 Voxon Runtime Readme.
-8/7/2021 - Matthew Vecchio for VOXON PHOTONICS
+2/2/2022 - Matthew Vecchio for VOXON PHOTONICS
 
 By default, the Voxon Runtime files are located at C:\Voxon\System\Runtime. These are the files needed to run the Voxon 
 environment. 
@@ -8,19 +8,19 @@ environment.
 
 ### File List:
 
-c#-bridge-interface.dll			The interface library for the C# bridge – used by the Unity Plugin
-c#-Runtime.dll				C# bridge which works which wraps the voxiebox.dll 
-grab.flac				Sound file when using the Voxie Menu
-typeKey.flac				Sound file when using the Voxie Menu
-voxiebox.dll				The core library. Essential to running any VX software
-voxiebox.ini				Voxiebox.dll’s System settings configuration file – human editable
-voxiebox_menu_0.ini			Voxiebox.dll’s User settings configuration
-voxiebox_menu_1.ini			Backup of default settings for a VX1 with Keynote projector 
-voxiebox_menu_2.ini			Backup of default settings for a VX1 with Anhua projector
-runtimeinfo.json			Human readable file which contains the version numbers of files. Used by Vertex
-voxiebox.log				Log file amended to whenever a voxiebox.dll  is executed or terminated. 
-vxCpp.dll				Library for VX apps using the VX++ / C++ framework. 
-VoxonRuntime.txt			This file
+c#-bridge-interface.dll		    The interface library for the C# bridge – used by the Unity Plugin
+c#-Runtime.dll			   	    C# bridge which works which wraps the voxiebox.dll 
+grab.flac				        Sound file when using the Voxie Menu
+typeKey.flac				    Sound file when using the Voxie Menu
+voxiebox.dll				    The core library. Essential to running any VX software
+voxiebox.ini				    Voxiebox.dll’s System settings configuration file – human editable
+voxiebox_menu_0.ini			    Voxiebox.dll’s User settings configuration
+voxiebox_menu_1.ini			    Backup of default settings for a VX1 with Keynote projector 
+voxiebox_menu_2.ini			    Backup of default settings for a VX1 with Anhua projector
+runtimeinfo.json			    Human readable file which contains the version numbers of files. Used by Vertex
+voxiebox.log				    Log file amended to whenever a voxiebox.dll  is executed or terminated. 
+vxCpp.dll				        Library for VX apps using the VX++ / C++ framework. 
+VoxonRuntime.txt			    This file
 
 
 
@@ -40,7 +40,7 @@ The voxiebox.ini is a human readable / editable configuration file. The voxiebox
 settings which define the voxie window and hardware setup. In general, the settings within voxiebox.ini are set once and
 does not need to be reconfigured unless there is a system or hardware change. 
 
-ESSENTAIL SETTINGS
+ESSENTIAL SETTINGS
 * Default values are expressed after the = 
 
 useemulation=0;         //If running on Voxon Hardware this setting can force launching in the emulator 
@@ -54,31 +54,40 @@ excl_audio=0;           //1=exclusive (faster & more stable), 0=shared (if audio
 excl_samprate=48000;    //set exclusive audio's sample rate 
                         //commonly supported sample rates: 16000, 22050, 32000, 44100, 48000, 88200, 96000, 192000
 excl_bitspersamp=24;    //set exclusive audio's bit depth. commonly supported bit depths: 16, 24, 32 (float)
-excl_mouse=1;           //1=exclusive mouse (many demos require it, otherwise mouse button presses could defocus window. 
+excl_mouse=1;           //1=exclusive mouse (many demos require it, otherwise mouse button presses could defocus the window. 
                           Can always bring up menu ' \ '  to get mouse cursor)
 usejoy=0;               //set USB game controller API, 0=joyGetPosEx (directInput), 1=XInput
-showhelp=-1;            //Shows extra infomation on the secondary screen for some Voxon Apps (VoxieOS, VoxieDemo) 
+showhelp=-1;            //Shows extra information on the secondary screen for some Voxon Apps (VoxieOS, VoxieDemo) 
                           -1= shows help on hardware but not when using emulator, 1= always on, 0= always off
 showadvancedmenu=0;     //Enables more settings on the VoxieMenu when a VX app is running. 1=enable, 0=disable
 openmenubyslashonly=0;  //if enabled only pressing the ' \ ' key will open the Voxie Menu. 1=enable, 0=disable 
 
+menu_keyscancode=0x2b;  // Choose an altnerative button to bring in the voxieMenu 
+
 logfile=voxiebox.log    //the name of the log file to write everytime the voxiebox.dll is accessed. No ';' at end of 
                           value. Output is in the same directory as the voxiebox.dll
-//loginterval=60.0;     //While a VX app is running how often the log file should be amended
-//logusecsv=0;          //If set to 1 log file is in csv format.
+loginterval=60.0;    	//While a VX app is running how often the log file should be amended
+logusecsv=0;          	//If set to 1 log file is in csv format.
 
 voxie_vol_limit=70;     //HW only the maximum value the motor coils can extrude. value is usually between 60...85
                           value is different with each device to tune the hardware to run at a 8cm volume  
                           WARNING : Setting this value to high can damage the resonator or coils     
-celcius_warning=35;     //HW only tempeture warning displayed on the touch screen when the Voxon Motherboard 
-                          reaches this tempeture
-celcius_shutdown=45;        //HW only system shutdown when the Voxon Motherboard reaches this tempeture
+
+celcius_warning=35;     //HW only temperature warning displayed on the touch screen when the Voxon Motherboard 
+                          reaches this temperature
+celcius_shutdown=40;    //HW only system shutdown when the Voxon Motherboard reaches this temperature
+
+celcius_startramp=25;	// HW only activates temperature throttling when CPU temp is above this value
+
+celcius_subperdeg=0.04;	// HW only how much to throttle the temperature if above 'startramp' threshold
+
+ledmuilpercelcover=0.95 // HW legacy value to temperature adjustment - replaced by celcius_subperdeg 
+
 noheartbeat_shutdown=10.0;  //HW only if VX app doesn't update (usually due to a CPU freeze or CPU working too hard) 
                             within the value's amount in seconds the motors will stop. 
 
 vsync_usb_offset=+30; // % HW only offset to add to USB packet timing into 120Hz vsync frame - try to keep arrow centered 
                          between 2 marks in show stats
-
 
 phase_shutdown_sensitivity=8192; //HW how much the coils are out of sync before the system shutdown 
                                  768:insanely sensitive, 2048:sensitive, 8192:default, 32768:max/disabled
@@ -87,16 +96,17 @@ phase_shutdown_sensitivity=8192; //HW how much the coils are out of sync before 
                               the user settings won't get loaded in
 
 
+
 OPTIONAL SETTINGS: 
 
-volcapdir=C:\Voxon\Media\MyCaptures\ // set a custom directory to put volume captures
+volcapdir=C:\Voxon\Media\MyCaptures\ // set a custom directory to put volume captures NOTE this setting does not end with a semicolon ;
 
 port=8081                   //set default port number for networking
 join=192.168.201.53         //set default join ip address for networking
 
 touchcontrols=0; //When launched touch screen keyboard is enabled, 1=enabled, 0=disable
 
-lock_touch_pw=1234                  // Set a password for the touch screen. Usefull when using the VX1 in public places
+lock_touch_pw=1234                  // Set a password for the touch screen. Useful when using the VX1 in public places
                                       numeric only, no ';' at the end of the value.
 lock_touch_message=Enter passkey    //Custom message when entering passkey. no ';' at the end of the value.
 
@@ -127,13 +137,15 @@ user_dispnum=3; // user_col0r=0xff0000; user_col1g=0x00ff00; user_col2b=0x0000ff
                 user_dispnum=3; user_col0g=0xff0000; user_col1b=0x00ff00; user_col2r=0x0000ff; //B,R,G swap w/below!
                 user_dispnum=3; user_col0b=0xff0000; user_col1r=0x00ff00; user_col2g=0x0000ff; //G,B,R swap w/above!
 
+invertzhack=?; // hack to invert the Z axis. 1 is inverted, 0 is normal
 
+snfx_nspk=1; // how many speakers are installed into the hardware. 1 = single speaker (VX1); 2 for stereo systems  
 
 ### Voxiebox_menu_0.ini
 
 The voxie_menu_0.ini file is a human readable / editable configuration file. It contains most of the user settings.
 An interesting setting to note is that the keystone configuration is stored in the voxie_menu_0.ini. So, if the 
-voxiebox_menu_0.ini is absent from the runtime nothing will display on the hardware when a VX app is launched. 
+voxiebox_menu_0.ini is absent from the runtime; nothing will display on the hardware when a VX app is launched. 
 
 When ‘Save Settings’ is pressed from the ‘File’ tab in voxie menu a new voxie_menu_0.ini is written with the new 
 settings. 

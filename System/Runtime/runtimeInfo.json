@@ -1,15 +1,31 @@
 { 
 	"C#-bridge-interface.dll": {
 		"_id": "C5802FD7-B91D-44BB-AE36-61822D3A54FA",
-		"BuildDate": 20200702
+		"BuildDate": 20211005
 	},
 	"voxiebox.dll": {
 		"_id": "0905BEED-AECD-458A-93BC-24AF59768CE3",
-		"BuildDate": 20210521
+		"BuildDate": 20220208
 	},
 	"C#-Runtime.dll": {
 		"_id": "E31339AC-8E0D-4C10-B425-B76020F625C7",
-		"BuildDate": 20201104
+		"BuildDate": 20211005
+	},
+	"vxCpp.dll": {
+		"_id": "EE525E9A-AE38-491C-8BC4-B2471BE8195E", 
+		"BuildDate": 20220206
+	},
+	"VoxonRuntime.txt": {
+	    "_id": "06CCC351-F02D-43F8-A161-D99F796540B4",
+		"BuildDate": 20220207
+	},
+		"grab.flac": {
+	    "_id": "41948CEC-C4CB-4FD7-B665-4F60A1482B3C", 
+		"BuildDate": 20210811
+	},
+		"typekey.flac": {
+	    "_id": "6370511A-E368-432B-97CA-D6A84436FAC5]",
+		"BuildDate": 20210811
 	}
 }
 
