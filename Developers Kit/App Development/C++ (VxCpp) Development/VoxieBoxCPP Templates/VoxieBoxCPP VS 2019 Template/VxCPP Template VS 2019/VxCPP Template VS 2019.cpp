@@ -8,7 +8,6 @@
 
 // VX++ APP HELLO WORLD EXAMPLE 
 // You may use this as a template to start creating your own volumetric applications.
-
 #include "vxCPP.h"
 int main(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdshow)
 {
