@@ -1,4 +1,3 @@
-// This source code is provided by the Voxon Developers Kit with an open-source license. You may use this code in your own projects with no restrictions.
 #if 0
 !if 1
 
@@ -195,10 +194,11 @@ enum menuStates {
 	MENU_TEST_JOY, MENU_TEST_MOUSE, MENU_TEST_KEYBOARD, MENU_TEST_SPACE_MOUSE,
 	MENU_XINPUT, MENU_JOYGETPOSEX, MENU_FORCE_SHOW_ALL,
 
-	STATE_JOY, STATE_MOUSE, STATE_KEYBOARD, STATE_SPACE_MOUSE
+	STATE_JOY, STATE_MOUSE, STATE_KEYBOARD, STATE_SPACE_MOUSE, STATE_HOME
 };
 
-int testState = STATE_JOY;
+int testState = STATE_HOME;
+bool choiceMade = false;
 
 // clips the mouse so the pointer won't go out of the bounds forever....
 static void mouseClip() {
@@ -247,10 +247,10 @@ static int menu_voxieJoy_update (int id, char *st, double v, int how, void *user
 	case MENU_XINPUT:  vw.usejoy = 1; voxie_init(&vw); break;
 	case MENU_JOYGETPOSEX:  vw.usejoy = 0; voxie_init(&vw); break;
 	case MENU_FORCE_SHOW_ALL: SHOW_ALL = true; break;
-	case MENU_TEST_JOY: testState = STATE_JOY; inited = 0; break;
-	case MENU_TEST_MOUSE: testState = STATE_MOUSE; inited = 0; break;
-	case MENU_TEST_KEYBOARD: testState = STATE_KEYBOARD; inited = 0; break;
-	case MENU_TEST_SPACE_MOUSE: testState = STATE_SPACE_MOUSE; inited = 0; break;
+	case MENU_TEST_JOY: testState = STATE_JOY; choiceMade = true; inited = 0; break;
+	case MENU_TEST_MOUSE: testState = STATE_MOUSE; choiceMade = true; inited = 0; break;
+	case MENU_TEST_KEYBOARD: testState = STATE_KEYBOARD; choiceMade = true; inited = 0; break;
+	case MENU_TEST_SPACE_MOUSE: testState = STATE_SPACE_MOUSE; choiceMade = true; inited = 0; break;
 	
 	
 	}
@@ -271,6 +271,8 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 	const int MOUSE_POINT_MAX = 5000;
 	point3d mousePoints[MOUSE_POINT_MAX]; 
 	int mousePointIndex = 0;
+	double  autoSelectDelay = 3;
+	
 
 
 
@@ -312,14 +314,33 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 		mousx += in.dmousx; mousy += in.dmousy; mousz += in.dmousz;
 		gbstat = -(in.bstat != 0);
 		
+		
 		for(vxnplays=0;vxnplays<4;vxnplays++){ //check through controllers' inputs
 			ovxbut[vxnplays] = vx[vxnplays].but;
 			if (!voxie_xbox_read(vxnplays,&vx[vxnplays])) break; //but, lt, rt, tx0, ty0, tx1, ty1
+		} 
+
+
+		for(i = vxnplays; i < 4; i++) {
+			ovxbut[i] = vx[i].but;
+			vx[i].but = 0;
+			vx[i].hat = 0;
+			vx[i].lt = 0;
+			vx[i].rt = 0;
+			vx[i].tx0 = 0;
+			vx[i].tx1 = 0;
+			vx[i].ty0 = 0;
+			vx[i].ty1 = 0;
+			
 		}
 
 		for(i=0;i<4;i++) { // check through space Nav
 			onavbut[i] = nav[i].but; voxie_nav_read(i,&nav[i]);
 		}
+
+		if (autoSelectDelay < tim && testState == STATE_HOME && choiceMade == false) {
+			testState = STATE_JOY; 				choiceMade = true; inited = 0;
+		} 
 
 	
 
@@ -327,10 +348,10 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 		//voxie_keystat is used to detect key presses use Ken's 'keyview' to get the correct scancode or see the enum VX_KB_SCANCODES
 		
 		if (voxie_keystat(KB_Escape)) { voxie_quitloop(); }
-		if (voxie_keystat(KB_1) == 1) { testState = STATE_JOY; 				inited = 0;	 } // press 1 joystick
-		if (voxie_keystat(KB_2) == 1) { testState = STATE_MOUSE;  			inited = 0;  } // press 2 mouse
-		if (voxie_keystat(KB_3) == 1) { testState = STATE_KEYBOARD; j = 0; 	inited = 0;  } // press 3 keyboard
-		if (voxie_keystat(KB_4) == 1) { testState = STATE_SPACE_MOUSE; 		inited = 0;  } // press 4 on keyboard 
+		if (voxie_keystat(KB_1) == 1) { testState = STATE_JOY; 				choiceMade = true; inited = 0;	 } // press 1 joystick
+		if (voxie_keystat(KB_2) == 1) { testState = STATE_MOUSE;  			choiceMade = true; inited = 0;  } // press 2 mouse
+		if (voxie_keystat(KB_3) == 1) { testState = STATE_KEYBOARD; j = 0; 	choiceMade = true; inited = 0;  } // press 3 keyboard
+		if (voxie_keystat(KB_4) == 1) { testState = STATE_SPACE_MOUSE; 		choiceMade = true; inited = 0;  } // press 4 on keyboard 
 	
 
 		// a few things to setup on first run when changing input type
@@ -388,6 +409,12 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 		pp.z = 0.270f; 	rr.z = 0.0f; dd.z = 0.0f;
 
 		switch(testState) {
+			case STATE_HOME:
+				rr.x = 0.05;
+				dd.y = 0.1;
+				voxie_printalph_(&vf,&pp,&rr,&dd,0xffffff,"\n\nVoxie Input Test\n\n\nUse the Touch menu to select test or...\n\nPress '1' for Joystick / Gamepad test\nPress '2' for Mouse test\nPress '3' for Keyboard test\nPress '4' for SpaceNav test", x, x>>8, voxie_keystat(x>>8));
+
+			break;
 			case STATE_KEYBOARD: 
 				// setup slightly larger font size
 				pp.x = -0.950f; rr.x = 0.045f; dd.x = 0.01f; 
@@ -558,7 +585,7 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 				// Space Mouse using the angle to rotate an object
 
 
-				// rotate senstivity edit to adjust
+				// rotate sensitivity  edit to adjust
 				f = 0.0125;
 				
 				// using the space mouse to rotate an object
@@ -633,7 +660,7 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 				// click button to drop a point 
 				// Left click for pressed
 				// Right click for hold
-				if (in.bstat == 1 && in.bstat != in.obstat || in.bstat == 2) {
+				if (in.bstat == 0 && in.obstat == 1 || in.bstat == 2) {
 
 					mousePoints[mousePointIndex].x = mousx * (g * vw.aspx );
 					mousePoints[mousePointIndex].y = mousy * (g * vw.aspy );
@@ -698,7 +725,7 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 					
 				if (SHOW_ALL == true) y = 4;
 				else y = vxnplays;
-
+				
 				if (y <= 0) voxie_printalph_(&vf,&pp,&rr,&dd,col[0],"No controllers found! vxnplays = %d", vxnplays);
 					
 				for (i = 0; i < y; i++) {
@@ -765,8 +792,8 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 								joyC.x , joyC.y, joyC.z, 0.02, 1, 0xFFFFFF);
 				
 			
-			break;
 			}
+				break;
 
 		} 
 		//display menu commands on the VX1 touch screen

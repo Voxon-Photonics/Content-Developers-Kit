@@ -1,18 +1,34 @@
-// This source code is provided by the Voxon Developers Kit with an open-source license. You may use this code in your own projects with no restrictions.
 #if 0
+
 voxierot.exe: voxierot.obj voxiebox.h
 	link       voxierot.obj user32.lib
 	del voxierot.obj
 voxierot.obj: voxierot.c; cl /c /TP voxierot.c /Ox /MT
-!if 0
+
+#voxierot: voxierot.c voxiebox.h; gcc voxierot.c -x c++ -o voxierot -O2 -L'${PWD}' -Wl,-R. -lvoxon -lm
+
+!ifdef false
 #endif
 
 #include "voxiebox.h"
 #include <stdlib.h>
 #include <malloc.h>
+#include <memory.h>
 #include <math.h>
+#if !defined(_WIN32)
+#define _alloca alloca
+#define MessageBox(a,b,c,d) printf("%s %s\n",c,b);
+#define Sleep(a) usleep(a*1000)
+#endif
 #include "moxie.h"
 #define PI 3.14159265358979323
+
+#if !defined(max)
+#define max(a,b) (((a) > (b)) ? (a) : (b))
+#endif
+#if !defined(min)
+#define min(a,b) (((a) < (b)) ? (a) : (b))
+#endif
 
 	//Rotate vectors a & b around their common plane, by ang
 static void rotvex (float ang, point3d *a, point3d *b)
@@ -93,16 +109,20 @@ static void drawlotsajunk (voxie_wind_t *vw, voxie_frame_t *vf, double tim)
 	}
 }
 
+#if defined(_WIN32)
 int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdshow)
+#else
+int main (int argc, char **argv)
+#endif
 {
 	voxie_wind_t vw;
 	voxie_frame_t vf;
 	voxie_inputs_t in;
 	voxie_nav_t nav;
-	point3d camp = {0.0,0.0,0.0}, camr = {1.f,0.f,0.f}, camd = {0.f,1.f,0.f}, camf = {0.f,0.f,1.f};
+	point3d camp = {0.0,0.0,0.0}, camr = {1.f,0.f,0.f}, camd = {0.f,1.f,0.f}, camf = {0.f,0.f,1.f}, piv = {0.f,0.f,0.f};
 	double tim = 0.0, otim, dtim;
 	float f, fx, fy, fz;
-	int i, j;
+	int i, j, navdir = 1, setpiv = 0;
 
 	if (voxie_load(&vw) < 0) { MessageBox(0,"Error: can't load voxiebox.dll","",MB_OK); return(-1); }
 	if (voxie_init(&vw) < 0) { return(-1); }
@@ -144,29 +164,57 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 		//--------------------------------------------------------------------------------------------
 		//3D Camera control..
 
-			//Move cam (Arrows,KP0,RCtrl,spacenav)
-		fx = nav.dx*.00005f + (float)((voxie_keystat(0xcd)!=0) - (voxie_keystat(0xcb)!=0))*dtim*.5f; //Right-Left
-		fy = nav.dy*.00005f + (float)((voxie_keystat(0xd0)!=0) - (voxie_keystat(0xc8)!=0))*dtim*.5f; //Down-Up
-		fz = nav.dz*.00005f + (float)((voxie_keystat(0x52)!=0) - (voxie_keystat(0x9d)!=0))*dtim*.5f; //KP0-RCTRL
-		f = 1.f/(camr.x*camr.x + camr.y*camr.y + camr.z*camr.z);
-		camp.x += (fx*camr.x + fy*camr.y + fz*camr.z)*f;
-		camp.y += (fx*camd.x + fy*camd.y + fz*camd.z)*f;
-		camp.z += (fx*camf.x + fy*camf.y + fz*camf.z)*f;
+		if (voxie_keystat(0x21) == 1) navdir = -navdir; //F:flip
+		if (voxie_keystat(0x1c) == 1) setpiv = !setpiv; //L.Enter: set pivot mode
 
-			//Rotate cam (,., PGUP,PGDN,spacenav)
-		f = camr.y; camr.y = camd.x; camd.x = f; //Transpose
-		f = camr.z; camr.z = camf.x; camf.x = f;
-		f = camd.z; camd.z = camf.y; camf.y = f;
-		rotvex(nav.ax*.0001f                                                                  ,&camr,&camf);
-		rotvex(nav.ay*.0001f + (float)((voxie_keystat(0xc9)!=0)-(voxie_keystat(0xd1)!=0))*dtim,&camd,&camf); //PGUP - PGDN
-		rotvex(nav.az*.0001f + (float)((voxie_keystat(0x34)!=0)-(voxie_keystat(0x33)!=0))*dtim,&camr,&camd); //. - ,
-		f = camr.y; camr.y = camd.x; camd.x = f; //Transpose
-		f = camr.z; camr.z = camf.x; camf.x = f;
-		f = camd.z; camd.z = camf.y; camf.y = f;
+		if (!setpiv) //Move/rotate/zoom around pivot
+		{
+				//Move cam (Arrows,KP0,RCtrl,spacenav)
+			fx = (nav.dx*+.00005f + (float)((voxie_keystat(0xcd)!=0) - (voxie_keystat(0xcb)!=0))*dtim*-.5f)*navdir + piv.x; //Right-Left
+			fy = (nav.dy*+.00005f + (float)((voxie_keystat(0xd0)!=0) - (voxie_keystat(0xc8)!=0))*dtim*-.5f)*navdir + piv.y; //Down-Up
+			fz = (nav.dz*+.00005f + (float)((voxie_keystat(0x52)!=0) - (voxie_keystat(0x9d)!=0))*dtim*-.5f)*navdir + piv.z; //KP0-RCTRL
+			f = 1.f/(camr.x*camr.x + camr.y*camr.y + camr.z*camr.z);
+			camp.x += (fx*camr.x + fy*camr.y + fz*camr.z)*f;
+			camp.y += (fx*camd.x + fy*camd.y + fz*camd.z)*f;
+			camp.z += (fx*camf.x + fy*camf.y + fz*camf.z)*f;
 
-			//Scale cam (A/Z,spacenav buttons)
-		if ((nav.but&1) || (voxie_keystat(0x1e))) { f = pow(2.0,dtim); camr.x *= f; camr.y *= f; camr.z *= f; camd.x *= f; camd.y *= f; camd.z *= f; camf.x *= f; camf.y *= f; camf.z *= f; }
-		if ((nav.but&2) || (voxie_keystat(0x2c))) { f = pow(0.5,dtim); camr.x *= f; camr.y *= f; camr.z *= f; camd.x *= f; camd.y *= f; camd.z *= f; camf.x *= f; camf.y *= f; camf.z *= f; }
+				//Rotate cam (,., PGUP,PGDN,spacenav)
+			f = camr.y; camr.y = camd.x; camd.x = f; //Transpose
+			f = camr.z; camr.z = camf.x; camf.x = f;
+			f = camd.z; camd.z = camf.y; camf.y = f;
+			rotvex((nav.ax*+.0001f                                                                  )*navdir,&camr,&camf);
+			rotvex((nav.ay*+.0001f - (float)((voxie_keystat(0xc9)!=0)-(voxie_keystat(0xd1)!=0))*dtim)*navdir,&camd,&camf); //PGUP - PGDN
+			rotvex((nav.az*+.0001f - (float)((voxie_keystat(0x34)!=0)-(voxie_keystat(0x33)!=0))*dtim)*navdir,&camr,&camd); //. - ,
+			f = camr.y; camr.y = camd.x; camd.x = f; //Transpose
+			f = camr.z; camr.z = camf.x; camf.x = f;
+			f = camd.z; camd.z = camf.y; camf.y = f;
+
+				//Scale cam (A/Z,spacenav buttons)
+			if ((nav.but&1) || (voxie_keystat(0x1e))) { f = pow(2.0,dtim); camr.x *= f; camr.y *= f; camr.z *= f; camd.x *= f; camd.y *= f; camd.z *= f; camf.x *= f; camf.y *= f; camf.z *= f; }
+			if ((nav.but&2) || (voxie_keystat(0x2c))) { f = pow(0.5,dtim); camr.x *= f; camr.y *= f; camr.z *= f; camd.x *= f; camd.y *= f; camd.z *= f; camf.x *= f; camf.y *= f; camf.z *= f; }
+
+			f = 1.f/(camr.x*camr.x + camr.y*camr.y + camr.z*camr.z);
+			camp.x -= (piv.x*camr.x + piv.y*camr.y + piv.z*camr.z)*f;
+			camp.y -= (piv.x*camd.x + piv.y*camd.y + piv.z*camd.z)*f;
+			camp.z -= (piv.x*camf.x + piv.y*camf.y + piv.z*camf.z)*f;
+		}
+		else //move pivot point (L.Enter to toggle)
+		{
+			fx = (nav.dx*+.00005f + (float)((voxie_keystat(0xcd)!=0) - (voxie_keystat(0xcb)!=0))*dtim*-.5f); //Right-Left
+			fy = (nav.dy*+.00005f + (float)((voxie_keystat(0xd0)!=0) - (voxie_keystat(0xc8)!=0))*dtim*-.5f); //Down-Up
+			fz = (nav.dz*+.00005f + (float)((voxie_keystat(0x52)!=0) - (voxie_keystat(0x9d)!=0))*dtim*-.5f); //KP0-RCTRL
+			piv.x = min(max(piv.x+fx,-vw.aspx),vw.aspx);
+			piv.y = min(max(piv.y+fy,-vw.aspy),vw.aspy);
+			piv.z = min(max(piv.z+fz,-vw.aspz),vw.aspz);
+		}
+
+		//if (voxie_keystat(0x2a) == 1)
+		//{
+		//   camp.x += (piv.x*camr.x + piv.y*camr.y + piv.z*camr.z);
+		//   camp.y += (piv.x*camd.x + piv.y*camd.y + piv.z*camd.z);
+		//   camp.z += (piv.x*camf.x + piv.y*camf.y + piv.z*camf.z);
+		//   piv.x = 0; piv.y = 0; piv.z = 0;
+		//}
 
 			//Reset cam: (/)
 		if (voxie_keystat(0x35) == 1)
@@ -186,7 +234,7 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 		//--------------------------------------------------------------------------------------------
 
 			//Show pivot point
-		voxie_drawsph(&vf,0.f,0.f,0.f,0.05f,1,0xffffff);
+		voxie_drawsph(&vf,piv.x,piv.y,piv.z,0.05f,1,0xffffff);
 
 			//For debug only
 		voxie_debug_print6x8_(0,64,0xffffff,-1,"p: %+6.3f %+6.3f %+6.3f",camp.x,camp.y,camp.z);
