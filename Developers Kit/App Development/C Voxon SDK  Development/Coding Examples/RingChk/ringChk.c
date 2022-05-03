@@ -184,13 +184,24 @@ int clipInsideVolume(voxie_wind_t * vw,  point3d * pos, float radius)
 
 
 // renders a sphere onto a circle - worked out from looking at the centre of the circle versus where the point is. returns the radian angle difference 
-double drawSphAtAngle(point3d cirlcePos, point3d pointPos, float radius, float zHeight, int col, float size ) {
+double drawSphAtAngle(point3d circlePos, point3d pointPos, float radius, float zHeight, int col, float size ) {
 
-	double radian = atan2(cirlcePos.y - pointPos.y, cirlcePos.x - pointPos.x );
+	double radian = atan2(circlePos.y - pointPos.y, circlePos.x - pointPos.x );
 
-	voxie_drawsph(&vf, cirlcePos.x + (radius * -cos(radian)), cirlcePos.y + (radius * -sin(radian)), cirlcePos.z + zHeight, size, 0, col );
+	voxie_drawsph(&vf, circlePos.x + (radius * -cos(radian)), circlePos.y + (radius * -sin(radian)), circlePos.z + zHeight, size, 0, col );
 	
 	return radian; 
+
+}
+
+// draws a point coming out of the circle at that angle
+double drawAngleLine(point3d circlePos, float radians, float length, float zHeight, int col, bool useDegrees ) {
+
+	if (useDegrees) radians = radians * PI / 180 ;
+	
+	voxie_drawlin(&vf, circlePos.x + (length * -cos(radians)), circlePos.y + (length * -sin(radians)), circlePos.z + zHeight, circlePos.x, circlePos.y, circlePos.z, col );
+	
+	return radians; 
 
 }
 
@@ -401,6 +412,10 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 		
 
 		aout = drawSphAtAngle(pp,curs.pos,r, curs.pos.z, i, 0.1f);
+
+		drawAngleLine(pp, aout, 1, pp.z, 0x00ff00, false);
+		drawAngleLine(pp,  aout * 180 / PI, 1, pp.z, 0x00ff00, true);
+
 
 	/**************************
 	*   DEBUG                 *
