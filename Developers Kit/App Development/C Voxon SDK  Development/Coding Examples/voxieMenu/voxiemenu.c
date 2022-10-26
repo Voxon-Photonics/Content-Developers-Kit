@@ -1,4 +1,3 @@
-// This source code is provided by the Voxon Developers Kit with an open-source license. You may use this code in your own projects with no restrictions.
 #if 0
 !if 1
 
@@ -36,7 +35,8 @@ enum // menu names
 {
 	//Generic names
 	MENU_UP, MENU_ONE, MENU_TWO, MENU_THREE, MENU_DOWN, MENU_VSLIDER_NAME, MENU_HSLIDER_NAME,
-	MENU_GO, MENU_EDIT_DO_NAME, MENU_EDIT_NAME, MENU_TOGGLE_NAME, MENU_PICKFILE_NAME, MENU_LOAD, MENU_FILE_NAME, MENU_BROWSE
+	MENU_GO, MENU_EDIT_DO_NAME, MENU_EDIT_NAME, MENU_TOGGLE_NAME, MENU_PICKFILE_NAME, MENU_LOAD, MENU_FILE_NAME, MENU_BROWSE,
+	MENU_SAVE_FILE, MENU_SAVE_TEXTBOX,
 	
 }; 
 
@@ -51,6 +51,7 @@ char *gTestMessage = "Edit me using the menu!";
 #define MAX_FILE 260 
 char gFilepath[MAX_FILE];
 char gFilecontents[1000];
+char gMessageBox[5000];
 
 
 // example on how to load a text file and put the text file into the global test message char array
@@ -70,6 +71,26 @@ bool loadTxt(char* filepath) {
 	strcpy(gFilecontents, dataBuff);
 	
 	fclose(fp);
+    return true;
+
+}
+
+
+
+
+// example on how to save a text file
+bool saveTxt(char* filePath, char * dataBuff) {
+	FILE *fp;
+    fp = fopen(filePath, "w");
+ 
+    if(fp == NULL) {
+       	MessageBox(0, filePath, "Error: can't open file", MB_OK); // if there is an error this will create a standard Windows message box
+        return false;
+    }
+ 
+	fprintf(fp, gMessageBox);
+
+    fclose(fp);
     return true;
 
 }
@@ -105,6 +126,17 @@ static int menu_update (int id, char *st, double v, int how, void *userdata)
 			voxie_menu_updateitem(MENU_FILE_NAME,st,0,0.0); 
 		break;
 		case MENU_LOAD: loadTxt(gFilepath);  											break;
+		break;
+		case MENU_SAVE_TEXTBOX:
+
+ 		strcpy(gMessageBox,st);
+
+		break;
+		case MENU_SAVE_FILE:
+			saveTxt(gFilepath, gMessageBox);
+		break;
+
+
 	}
 	return(1);
 }
@@ -210,7 +242,7 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 	// add some more text
 	voxie_menu_additem("Matthew Vecchio / ReadyWolf for Voxon 2020", 40,480, 64, 64,0, MENU_TEXT ,0 ,0xFF0000,0.0,0.0,0.0,0.0,0.0);
 
-	// start a second tab - now all items defined after this point will go into this new table
+	// start a second tab - now all items de\fined after this point will go into this new table
 	voxie_menu_addtab("Test File",		450,0,600,420); // add a tab to the top of the menu be careful not to add more than 2 they will be hidden on the VX1's display
 
 	voxie_menu_additem("FILE PICKER", 250,20, 64, 64,0                 ,MENU_TEXT    ,0             ,0xFF0000,0.0,0.0,0.0,0.0,0.0); // adding menu text
@@ -224,6 +256,22 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 
 	// file picker demo.. use '\r' to sperate the name of the button and filter
 	voxie_menu_additem("Browse File\r*.txt", 20,330,560, 64,MENU_BROWSE,MENU_PICKFILE,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+
+	//
+
+	// start a second tab - now all items defined after this point will go into this new table
+	voxie_menu_addtab("Save File",		450,0,600,420); // add a tab to the top of the menu be careful not to add more than 2 they will be hidden on the VX1's display
+
+	voxie_menu_additem("SAVE FILE Example\n\nwrite a message in the text box & set a\nfile name.\n\nSaved Message :\n", 10,20, 64, 64,0                 ,MENU_TEXT    ,0             ,0xFF0000,0.0,0.0,0.0,0.0,0.0); // adding menu text
+
+	voxie_menu_additem(gMessageBox         , 20,150,550, 140,MENU_SAVE_TEXTBOX,MENU_EDIT ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+
+
+	// another example of edit_do and a button
+	
+	voxie_menu_additem("Filename", 10,360, 64, 64,0                 ,MENU_TEXT    ,0             ,0xFF0000,0.0,0.0,0.0,0.0,0.0); // adding menu text
+	voxie_menu_additem(gFilepath         , 140,330,300, 64,MENU_FILE_NAME,MENU_EDIT_DO ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+	voxie_menu_additem("SAVE"         ,480,330,100, 64,MENU_SAVE_FILE  ,MENU_BUTTON+3,0,0x08FF80,0.0,0.0,0.0,0.0,0.0);
 
 
 
@@ -314,13 +362,14 @@ int WINAPI WinMain (HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsh
 
 		voxie_drawcube(&vf,&pp, &rr, &dd, &ff, 2, gGoColour);	
 
+		voxie_debug_print6x8_(30,68,0xffc080,-1,"VPS %5.1f",1.0/avgdtim);	
+		voxie_debug_print6x8_(30,100,0xffc080,-1,"VoxieMenu a sample program to learn how to make menus with VoxieBox.dll");	
+		avgdtim += (dtim-avgdtim)*.1;
+		voxie_drawbox(&vf,-vw.aspx+1e-3,-vw.aspy+1e-3,-vw.aspz,+vw.aspx-1e-3,+vw.aspy-1e-3,+vw.aspz,1,0xffffff);
 
 		if (debug == 1) 
 		{
-			avgdtim += (dtim-avgdtim)*.1;
-			voxie_debug_print6x8_(30,68,0xffc080,-1,"VPS %5.1f",1.0/avgdtim);	
-			voxie_debug_print6x8_(30,100,0xffc080,-1,"VoxieMenu a sample program to learn how to make menus with VoxieBox.dll");	
-			voxie_drawbox(&vf,-vw.aspx+1e-3,-vw.aspy+1e-3,-vw.aspz,+vw.aspx-1e-3,+vw.aspy-1e-3,+vw.aspz,1,0xffffff);
+			voxie_debug_print6x8_(30,150,0xffffff, -1, "MessageBox : %s", gMessageBox);	
 		}
 
 		voxie_frame_end(); voxie_getvw(&vw);
