@@ -18,6 +18,8 @@ struct \mbox{\hyperlink{structpol__t}{pol\+\_\+t}}
 \begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{structpoint3d}{point3d}} with index to next point in loop (starting at 0). Similar to \mbox{\hyperlink{structpoltex__t}{poltex\+\_\+t}} but with no texture data. Used by \mbox{\hyperlink{class_voxie_box_a39520956d73a5c0632bc46ae4d590b18}{Voxie\+Box\+::draw\+Poly()}} \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structpoltex__t}{poltex\+\_\+t}}
 \begin{DoxyCompactList}\small\item\em 3D point with texture coordinate and color (ARGB32). Used by \mbox{\hyperlink{class_voxie_box_aab94cfd1251732ff5bcb5a3aa2d13d4d}{Voxie\+Box\+::draw\+Mesh()}} \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structextents__t}{extents\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Extents a datatype to hold size extent of a 3D model. (the range a model extends to) \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structtiletype}{tiletype}}
 \begin{DoxyCompactList}\small\item\em 2D array of pixels can be used with \mbox{\hyperlink{class_voxie_box_aab94cfd1251732ff5bcb5a3aa2d13d4d}{Voxie\+Box\+::draw\+Mesh}}, \mbox{\hyperlink{class_voxie_box_a2364111ffd69401b54067d8172165ed5}{Voxie\+Box\+::draw\+Height\+Map}} and the 2D display (via \mbox{\hyperlink{structvoxie__frame__t}{voxie\+\_\+frame\+\_\+t}}) \end{DoxyCompactList}\item 
 struct \mbox{\hyperlink{structvoxie__disp__t}{voxie\+\_\+disp\+\_\+t}}
@@ -106,6 +108,9 @@ typedef struct \mbox{\hyperlink{structpol__t}{pol\+\_\+t}} \mbox{\hyperlink{vx_d
 \mbox{\Hypertarget{vx_data_types_8h_a2911724e2f20483c2e9aa7c3701aee89}\label{vx_data_types_8h_a2911724e2f20483c2e9aa7c3701aee89}} 
 typedef struct \mbox{\hyperlink{structpoltex__t}{poltex\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_a2911724e2f20483c2e9aa7c3701aee89}{poltex\+\_\+t}}
 \begin{DoxyCompactList}\small\item\em 3D point with texture coordinate and color (ARGB32). Used by \mbox{\hyperlink{class_voxie_box_aab94cfd1251732ff5bcb5a3aa2d13d4d}{Voxie\+Box\+::draw\+Mesh()}} \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_aa4170f3563de673f81e71fc6c848a31d}\label{vx_data_types_8h_aa4170f3563de673f81e71fc6c848a31d}} 
+typedef struct \mbox{\hyperlink{structextents__t}{extents\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_aa4170f3563de673f81e71fc6c848a31d}{extents\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Extents a datatype to hold size extent of a 3D model. (the range a model extends to) \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{vx_data_types_8h_ad7a492b037d1684fa4660224fe4c42b5}\label{vx_data_types_8h_ad7a492b037d1684fa4660224fe4c42b5}} 
 typedef struct \mbox{\hyperlink{structtiletype}{tiletype}} \mbox{\hyperlink{vx_data_types_8h_ad7a492b037d1684fa4660224fe4c42b5}{tiletype}}
 \begin{DoxyCompactList}\small\item\em 2D array of pixels can be used with \mbox{\hyperlink{class_voxie_box_aab94cfd1251732ff5bcb5a3aa2d13d4d}{Voxie\+Box\+::draw\+Mesh}}, \mbox{\hyperlink{class_voxie_box_a2364111ffd69401b54067d8172165ed5}{Voxie\+Box\+::draw\+Height\+Map}} and the 2D display (via \mbox{\hyperlink{structvoxie__frame__t}{voxie\+\_\+frame\+\_\+t}}) \end{DoxyCompactList}\item 

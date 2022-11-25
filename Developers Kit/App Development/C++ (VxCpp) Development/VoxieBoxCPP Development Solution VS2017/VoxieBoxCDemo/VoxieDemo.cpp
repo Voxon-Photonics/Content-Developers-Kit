@@ -18,7 +18,7 @@ int WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdshow)
 		MessageBox(0, "Error: can't load voxiebox.dll", "", MB_OK); // if there is an error this will create a standard Windows message box
 		return (-1);
 	}
-	if (voxie_init(&vw) < 0) // first initalise of the (&vw) voxie_wind_t activates settings from voxiebox.ini and voxie_menu_0.ini 
+	if (voxie_init(&vw) < 0) // first initialise of the (&vw) voxie_wind_t activates settings from voxiebox.ini and voxie_menu_0.ini 
 	{
 		return (-1);
 	}

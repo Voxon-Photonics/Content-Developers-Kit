@@ -346,11 +346,11 @@ TKB_Arrow_Down = 0xd000,			//!< 0xD0 Arrow Down
 enum VoxieMenuTypes { 
 	MENU_TEXT = 0,							//!<  text (decoration only)
 	MENU_LINE = 1,							//!<  line (decoration only)
-	MENU_BUTTON = 2,						//!<  push button in the middle of a group
-	MENU_BUTTON_FIRST = MENU_BUTTON + 1,	//!<  push button first in the group
-	MENU_BUTTON_LAST  = MENU_BUTTON + 2,	//!<  push button last in the group
-	MENU_BUTTON_SINGLE = MENU_BUTTON + 3,	//!<  push button single button
-	MENU_HSLIDER = MENU_BUTTON + 4,			//!<  horizontal slider
+	MENU_BUTTON_MIDDLE = 2,						//!<  push button in the middle of a group
+	MENU_BUTTON_FIRST = MENU_BUTTON_MIDDLE + 1,	//!<  push button first in the group
+	MENU_BUTTON_LAST  = MENU_BUTTON_MIDDLE + 2,	//!<  push button last in the group
+	MENU_BUTTON_SINGLE = MENU_BUTTON_MIDDLE + 3,	//!<  push button single button
+	MENU_HSLIDER = MENU_BUTTON_MIDDLE + 4,			//!<  horizontal slider
 	MENU_VSLIDER = 7,						//!<  vertical slider
 	MENU_EDIT = 8,							//!<  edit text box
 	MENU_EDIT_DO = 9,						//!<  edit text box + activates next item on 'Enter'

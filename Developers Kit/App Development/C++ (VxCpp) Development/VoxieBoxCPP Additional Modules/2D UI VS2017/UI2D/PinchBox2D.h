@@ -28,6 +28,8 @@ public:
 	~PinchBox2D();
 
 	int		isTouched();
+	int		getTouchState();
+	bool	hasDoubleTouched();
 	bool	isPinchActive();
 	int		update();
 	void	draw();
@@ -65,11 +67,16 @@ private:
 	int		color				= 0x303030;
 	bool	pinchActive			= false;
 	bool	debug				= true;
+
 	float	pinchDistanceDelta	= 0;
 	float	pinchRotationDelta	= 0;
 	bool	brightenOnTouch		= true;
 	int		pinchesInside		= 0;
 	int		activeCol			= 0x303030;
 	int		minPinchResponse	= 2; 
+	double  doubleTouchThreshold = .25;
+	double  lastTouchTime = 0;
+	bool	doubleTouch = false;
+	int	touchState = 0;
 
 };

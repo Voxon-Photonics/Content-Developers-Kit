@@ -1,0 +1,19 @@
+﻿  VxTimeLine.cpp
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\VxTimeLine\VxTimeLine.h(78,25): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\VxTimeLine\VxTimeLine.cpp(72,40): warning C4244: 'argument': conversion from 'float' to 'int', possible loss of data
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\VxTimeLine\VxTimeLine.cpp(349,42): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\VxTimeLine\VxTimeLine.cpp(358,43): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\VxTimeLine\VxTimeLine.cpp(371,44): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\VxTimeLine\VxTimeLine.cpp(389,68): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\VxTimeLine\VxTimeLine.cpp(402,43): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\VxTimeLine\VxTimeLine.cpp(536,9): warning C4244: 'return': conversion from 'double' to 'float', possible loss of data
+  main.cpp
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\VxTimeLine\VxTimeLine.h(78,25): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\VxTimeLine\main.cpp(13,28): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\VxTimeLine\main.cpp(14,27): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\VxTimeLine\main.cpp(15,27): warning C4305: 'initializing': truncation from 'double' to 'float'
+  Generating Code...
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\VxTimeLine\VxTimeLine.cpp(137): warning C4172: returning address of local variable or temporary: buff
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\VxTimeLine\VxTimeLine.cpp(159): warning C4172: returning address of local variable or temporary: buff
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\VxTimeLine\VxTimeLine.cpp(181): warning C4172: returning address of local variable or temporary: buff
+  VxTimeLine.vcxproj -> D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VXTimeLine\VxTimeLine\x64\Debug\VxTimeLine.exe

@@ -47,8 +47,8 @@ virtual \mbox{\hyperlink{structvoxie__wind__t}{voxie\+\_\+wind\+\_\+t}} $\ast$ \
 \mbox{\Hypertarget{class_i_voxie_box_a04988c3b5c3c89c401cf14f638646f6f}\label{class_i_voxie_box_a04988c3b5c3c89c401cf14f638646f6f}} 
 virtual \mbox{\hyperlink{structvoxie__frame__t}{voxie\+\_\+frame\+\_\+t}} $\ast$ \mbox{\hyperlink{class_i_voxie_box_a04988c3b5c3c89c401cf14f638646f6f}{get\+Voxie\+Frame}} ()=0
 \begin{DoxyCompactList}\small\item\em returns a pointer to the internal \mbox{\hyperlink{structvoxie__frame__t}{voxie\+\_\+frame\+\_\+t}} struct \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_i_voxie_box_a2a5015d044572abeb4eb0665a0a86a0d}\label{class_i_voxie_box_a2a5015d044572abeb4eb0665a0a86a0d}} 
-virtual void \mbox{\hyperlink{class_i_voxie_box_a2a5015d044572abeb4eb0665a0a86a0d}{set\+Border}} (bool option)=0
+\mbox{\Hypertarget{class_i_voxie_box_adb2ed204a01e9d41183e39095c34e6c7}\label{class_i_voxie_box_adb2ed204a01e9d41183e39095c34e6c7}} 
+virtual void \mbox{\hyperlink{class_i_voxie_box_adb2ed204a01e9d41183e39095c34e6c7}{set\+Border}} (bool option, int color=0xffffff)=0
 \begin{DoxyCompactList}\small\item\em Toggles a white border around the perimeter of the volumetric display. Set to false by default. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_acab250d5079c5302d783d96bccfed4bd}\label{class_i_voxie_box_acab250d5079c5302d783d96bccfed4bd}} 
 virtual void \mbox{\hyperlink{class_i_voxie_box_acab250d5079c5302d783d96bccfed4bd}{set\+Enable\+Exit\+On\+Esc}} (bool option)=0
@@ -164,9 +164,9 @@ virtual void \mbox{\hyperlink{class_i_voxie_box_a74b422c7e3d78991b25d875b52e13e2
 \mbox{\Hypertarget{class_i_voxie_box_a54467a9435d9213382bd1b08ee3537f2}\label{class_i_voxie_box_a54467a9435d9213382bd1b08ee3537f2}} 
 virtual double \mbox{\hyperlink{class_i_voxie_box_a54467a9435d9213382bd1b08ee3537f2}{debug\+Bar}} (int posX, int posY, double current\+Val, double max\+Val, double min\+Val, char $\ast$text, int type)=0
 \begin{DoxyCompactList}\small\item\em Draws a vertical bar for help tracking variables onto the secondary (touch) screen. Must be called within the \mbox{\hyperlink{class_i_voxie_box_ace7dedd2c220cf2f62470697d760cef9}{start\+Frame()}} \mbox{\hyperlink{class_i_voxie_box_ae78f083e60d771b7885bd65f5b78d22c}{end\+Frame()}} functions. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_i_voxie_box_a35f80b0f5ccae394bf27e80d8f2cae55}\label{class_i_voxie_box_a35f80b0f5ccae394bf27e80d8f2cae55}} 
-virtual void \mbox{\hyperlink{class_i_voxie_box_a35f80b0f5ccae394bf27e80d8f2cae55}{show\+VPS}} (int posX=15, int posY=525)=0
-\begin{DoxyCompactList}\small\item\em Displays volumes per second (volumetric equivalent of \textquotesingle{}FPS\textquotesingle{}) and version info on the secondary (touch) screen. Must be called within the \mbox{\hyperlink{class_i_voxie_box_ace7dedd2c220cf2f62470697d760cef9}{start\+Frame()}} \& \mbox{\hyperlink{class_i_voxie_box_ae78f083e60d771b7885bd65f5b78d22c}{end\+Frame()}} functions. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_aabb05c98e59bf16143b4d5053821034a}\label{class_i_voxie_box_aabb05c98e59bf16143b4d5053821034a}} 
+virtual double \mbox{\hyperlink{class_i_voxie_box_aabb05c98e59bf16143b4d5053821034a}{show\+VPS}} (int posX=15, int posY=525)=0
+\begin{DoxyCompactList}\small\item\em Displays volumes per second (volumetric equivalent of \textquotesingle{}FPS\textquotesingle{}) and version info on the secondary (touch) screen. Must be called within the \mbox{\hyperlink{class_i_voxie_box_ace7dedd2c220cf2f62470697d760cef9}{start\+Frame()}} \& \mbox{\hyperlink{class_i_voxie_box_ae78f083e60d771b7885bd65f5b78d22c}{end\+Frame()}} functions. Returns VPS value. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_a75d9281d2937cda6c6e193cb8ad8493a}\label{class_i_voxie_box_a75d9281d2937cda6c6e193cb8ad8493a}} 
 virtual void \mbox{\hyperlink{class_i_voxie_box_a75d9281d2937cda6c6e193cb8ad8493a}{debug\+Draw\+Pix}} (int x, int y, int col)=0
 \begin{DoxyCompactList}\small\item\em Draws single pixel on the secondary (touch) screen. Must be called between \mbox{\hyperlink{class_i_voxie_box_ace7dedd2c220cf2f62470697d760cef9}{start\+Frame()}} \mbox{\hyperlink{class_i_voxie_box_ae78f083e60d771b7885bd65f5b78d22c}{end\+Frame()}} functions. \end{DoxyCompactList}\item 
@@ -188,6 +188,12 @@ virtual void \mbox{\hyperlink{class_i_voxie_box_aa24dd42295b886eb9e576eb5813fe6f
 \mbox{\Hypertarget{class_i_voxie_box_ad79e32860cfac14a5a124dda8b4ec44e}\label{class_i_voxie_box_ad79e32860cfac14a5a124dda8b4ec44e}} 
 virtual void \mbox{\hyperlink{class_i_voxie_box_ad79e32860cfac14a5a124dda8b4ec44e}{debug\+Draw\+Tile}} (\mbox{\hyperlink{structtiletype}{tiletype}} $\ast$source, int xpos, int ypos)=0
 \begin{DoxyCompactList}\small\item\em Draw a 2D texture to the secondary (touch) screen. Must be called between \mbox{\hyperlink{class_i_voxie_box_ace7dedd2c220cf2f62470697d760cef9}{start\+Frame()}} \& \mbox{\hyperlink{class_i_voxie_box_ae78f083e60d771b7885bd65f5b78d22c}{end\+Frame()}} functions. Sent through a tiletype\+\_\+t pointer. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_ab420036b8879fda7abd6e51e28d0283d}\label{class_i_voxie_box_ab420036b8879fda7abd6e51e28d0283d}} 
+virtual bool \mbox{\hyperlink{class_i_voxie_box_ab420036b8879fda7abd6e51e28d0283d}{debug\+Custom\+Font\+Set}} (const char $\ast$file\+Name, int index=-\/1)=0
+\begin{DoxyCompactList}\small\item\em Sets a custom font to be used as an internal tile type to be written to the secondary (touch) screen. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a988579f7c0c8c7a872d0a420e892de24}\label{class_i_voxie_box_a988579f7c0c8c7a872d0a420e892de24}} 
+virtual void \mbox{\hyperlink{class_i_voxie_box_a988579f7c0c8c7a872d0a420e892de24}{debug\+Custom\+Font}} (int xpos, int ypos, int custom\+Font\+Index, const char $\ast$fmt,...)=0
+\begin{DoxyCompactList}\small\item\em Prints the custom bitmap font to the secondary (touch) screen. Must be called between \mbox{\hyperlink{class_i_voxie_box_ace7dedd2c220cf2f62470697d760cef9}{start\+Frame()}} \& \mbox{\hyperlink{class_i_voxie_box_ae78f083e60d771b7885bd65f5b78d22c}{end\+Frame()}} functions. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_a8a86e311b962c310f85287a9f5de8550}\label{class_i_voxie_box_a8a86e311b962c310f85287a9f5de8550}} 
 virtual void \mbox{\hyperlink{class_i_voxie_box_a8a86e311b962c310f85287a9f5de8550}{draw\+Vox}} (float x, float y, float z, int col)=0
 \begin{DoxyCompactList}\small\item\em Renders a single voxel onto the volumetric using a 3 floats for coordinates. Must be called between \mbox{\hyperlink{class_i_voxie_box_ace7dedd2c220cf2f62470697d760cef9}{start\+Frame()}} \& \mbox{\hyperlink{class_i_voxie_box_ae78f083e60d771b7885bd65f5b78d22c}{end\+Frame()}} functions. \end{DoxyCompactList}\item 
@@ -230,6 +236,9 @@ virtual void \mbox{\hyperlink{class_i_voxie_box_a2583f5a4cc4cc56b3dd26e2bf1d044a
 \mbox{\Hypertarget{class_i_voxie_box_a323fe437c563e47f755bd953ce376e01}\label{class_i_voxie_box_a323fe437c563e47f755bd953ce376e01}} 
 virtual int \mbox{\hyperlink{class_i_voxie_box_a323fe437c563e47f755bd953ce376e01}{draw\+Model}} (const char $\ast$file\+Name, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$pos, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$r\+Vector, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$d\+Vector, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$f\+Vector, int col)=0
 \begin{DoxyCompactList}\small\item\em Renders 3D model (.obj, .ply, .stl, .kv6). Displays a filename mesh onto the volumetric display. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_ae0529ac97dbdad46ae0f5b2d5b3b1ba1}\label{class_i_voxie_box_ae0529ac97dbdad46ae0f5b2d5b3b1ba1}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_ae0529ac97dbdad46ae0f5b2d5b3b1ba1}{draw\+Model\+Get\+Extents}} (const char $\ast$charbuff, \mbox{\hyperlink{structextents__t}{extents\+\_\+t}} $\ast$extents\+Ptr, int flags)=0
+\begin{DoxyCompactList}\small\item\em Returns the extents of a 3D model (.obj, .kv6, .stl etc...) \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_ac423496589210300b8b1375e6611b9a5}\label{class_i_voxie_box_ac423496589210300b8b1375e6611b9a5}} 
 virtual int \mbox{\hyperlink{class_i_voxie_box_ac423496589210300b8b1375e6611b9a5}{draw\+Model\+Ext}} (const char $\ast$file\+Name, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$pos, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$r\+Vector, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$d\+Vector, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$f\+Vector, int col, float forcescale, float fdrawratio, int flags)=0
 \begin{DoxyCompactList}\small\item\em Renders 3D model (.obj, .ply, .stl, .kv6) Displays a filename mesh onto the volumetric display. Extended from \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}}\+:draw\+Model. \end{DoxyCompactList}\item 
@@ -242,9 +251,9 @@ virtual float \mbox{\hyperlink{class_i_voxie_box_a34b200f89ba0ec2c92a1a7e10c761d
 \mbox{\Hypertarget{class_i_voxie_box_a5400e4b60902e40463a30a978a1e48a3}\label{class_i_voxie_box_a5400e4b60902e40463a30a978a1e48a3}} 
 virtual void \mbox{\hyperlink{class_i_voxie_box_a5400e4b60902e40463a30a978a1e48a3}{draw\+Text}} (\mbox{\hyperlink{structpoint3d}{point3d}} $\ast$pos, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$r\+Vector, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$d\+Vector, int col, const char $\ast$fmt,...)=0
 \begin{DoxyCompactList}\small\item\em Renders a string (printf-\/style) unto the volumetric display. Must be called between \mbox{\hyperlink{class_i_voxie_box_ace7dedd2c220cf2f62470697d760cef9}{start\+Frame()}} \& \mbox{\hyperlink{class_i_voxie_box_ae78f083e60d771b7885bd65f5b78d22c}{end\+Frame()}} functions. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_i_voxie_box_aa5f598deb0305b72f25161a913556a2d}\label{class_i_voxie_box_aa5f598deb0305b72f25161a913556a2d}} 
-virtual void \mbox{\hyperlink{class_i_voxie_box_aa5f598deb0305b72f25161a913556a2d}{draw\+Text}} (\mbox{\hyperlink{structpoint3d}{point3d}} $\ast$pos, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$r\+Vector, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$d\+Vector, float size, int col, const char $\ast$fmt,...)=0
-\begin{DoxyCompactList}\small\item\em Renders a string (printf-\/style) unto the volumetric display addition parameter for font width. Must be called between \mbox{\hyperlink{class_i_voxie_box_ace7dedd2c220cf2f62470697d760cef9}{start\+Frame()}} \& \mbox{\hyperlink{class_i_voxie_box_ae78f083e60d771b7885bd65f5b78d22c}{end\+Frame()}} functions. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_aabc39f1f85c06482a847f6fee13c6790}\label{class_i_voxie_box_aabc39f1f85c06482a847f6fee13c6790}} 
+virtual void \mbox{\hyperlink{class_i_voxie_box_aabc39f1f85c06482a847f6fee13c6790}{draw\+Text\+Ext}} (\mbox{\hyperlink{structpoint3d}{point3d}} $\ast$pos, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$r\+Vector, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$d\+Vector, float size, int col, const char $\ast$fmt,...)=0
+\begin{DoxyCompactList}\small\item\em Renders a string (printf-\/style) unto the volumetric display additional parameter for font width. Must be called between \mbox{\hyperlink{class_i_voxie_box_ace7dedd2c220cf2f62470697d760cef9}{start\+Frame()}} \& \mbox{\hyperlink{class_i_voxie_box_ae78f083e60d771b7885bd65f5b78d22c}{end\+Frame()}} functions. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_aca1fdbd6e069500def6e45f63de1a07e}\label{class_i_voxie_box_aca1fdbd6e069500def6e45f63de1a07e}} 
 virtual void \mbox{\hyperlink{class_i_voxie_box_aca1fdbd6e069500def6e45f63de1a07e}{draw\+Text\+Simp}} (\mbox{\hyperlink{structpoint3d}{point3d}} $\ast$pos, float text\+Width, float text\+Height, float hang, float vang, float tilt, int col, char $\ast$fmt,...)=0
 \begin{DoxyCompactList}\small\item\em Simple version to render a string (printf-\/style) unto the volumetric display. Must be called between \mbox{\hyperlink{class_i_voxie_box_ace7dedd2c220cf2f62470697d760cef9}{start\+Frame()}} \& \mbox{\hyperlink{class_i_voxie_box_ae78f083e60d771b7885bd65f5b78d22c}{end\+Frame()}} functions. \end{DoxyCompactList}\item 
@@ -415,11 +424,17 @@ virtual int \mbox{\hyperlink{class_i_voxie_box_a153aee77af0b33274ba8d14ea230d81d
 \mbox{\Hypertarget{class_i_voxie_box_a20c95d0c4d0f76236b9f066d74ab0d79}\label{class_i_voxie_box_a20c95d0c4d0f76236b9f066d74ab0d79}} 
 virtual int \mbox{\hyperlink{class_i_voxie_box_a20c95d0c4d0f76236b9f066d74ab0d79}{get\+Touch\+Press\+Index\+Cir}} (\mbox{\hyperlink{structpoint2d}{point2d}} Cir\+Pos, float radius, bool draw\+Collision=false)=0
 \begin{DoxyCompactList}\small\item\em Returns the touch point index if a touch event happens within the collision circle. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a72bbb5774747ded85c6d04557d962617}\label{class_i_voxie_box_a72bbb5774747ded85c6d04557d962617}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_a72bbb5774747ded85c6d04557d962617}{get\+Touch\+Current\+No\+Press}} ()=0
+\begin{DoxyCompactList}\small\item\em Returns the number of current touch presses / points. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_a20c5035292c6a1c324bafd61b86357ee}\label{class_i_voxie_box_a20c5035292c6a1c324bafd61b86357ee}} 
 virtual void \mbox{\hyperlink{class_i_voxie_box_a20c5035292c6a1c324bafd61b86357ee}{report\+Touch}} (int posX, int posY)=0
 \begin{DoxyCompactList}\small\item\em Reports the state of the touch input on to the secondary (touch) screen. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_i_voxie_box_a7df1c79b5822c14c101f424948cd85b2}\label{class_i_voxie_box_a7df1c79b5822c14c101f424948cd85b2}} 
-virtual int {\bfseries update\+Joy\+State} (int controller\+ID, \mbox{\hyperlink{structvoxie__xbox__t}{voxie\+\_\+xbox\+\_\+t}} $\ast$vx)=0
+\mbox{\Hypertarget{class_i_voxie_box_a85b44d45ac83f6a0c23957593fb21d5a}\label{class_i_voxie_box_a85b44d45ac83f6a0c23957593fb21d5a}} 
+virtual \mbox{\hyperlink{structvoxie__xbox__t}{voxie\+\_\+xbox\+\_\+t}} \mbox{\hyperlink{class_i_voxie_box_a85b44d45ac83f6a0c23957593fb21d5a}{get\+Joy\+State\+Raw}} (int controller\+ID)=0
+\begin{DoxyCompactList}\small\item\em Returns theg ame controller\textquotesingle{}s input state as \mbox{\hyperlink{structvoxie__xbox__t}{voxie\+\_\+xbox\+\_\+t}} structure. Use the controller\+ID to determine which one (0 = 1st, 1 = 2nd etc...) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_aee103dd30ee89c8a6c8295e5e26f439d}\label{class_i_voxie_box_aee103dd30ee89c8a6c8295e5e26f439d}} 
+virtual int {\bfseries update\+Joy\+State\+Raw} (int controller\+ID, \mbox{\hyperlink{structvoxie__xbox__t}{voxie\+\_\+xbox\+\_\+t}} $\ast$vx)=0
 \item 
 \mbox{\Hypertarget{class_i_voxie_box_a0dae28db8ae89088070d488a28223932}\label{class_i_voxie_box_a0dae28db8ae89088070d488a28223932}} 
 virtual int \mbox{\hyperlink{class_i_voxie_box_a0dae28db8ae89088070d488a28223932}{get\+Joy\+Button\+State}} (int controller\+ID)=0
@@ -468,8 +483,11 @@ virtual void \mbox{\hyperlink{class_i_voxie_box_a699e96b98e9b9731a072932a67935e2
 \mbox{\Hypertarget{class_i_voxie_box_a407905008c5960fe6d22a6c0d888b3a4}\label{class_i_voxie_box_a407905008c5960fe6d22a6c0d888b3a4}} 
 virtual int \mbox{\hyperlink{class_i_voxie_box_a407905008c5960fe6d22a6c0d888b3a4}{get\+Joy\+Orientation}} (int controller\+ID)=0
 \begin{DoxyCompactList}\small\item\em Returns the orientation set for a specific game controller. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_i_voxie_box_a038123df60149d6367a0da9903de1517}\label{class_i_voxie_box_a038123df60149d6367a0da9903de1517}} 
-virtual int \mbox{\hyperlink{class_i_voxie_box_a038123df60149d6367a0da9903de1517}{update\+Nav\+State}} (int space\+Nav\+ID, \mbox{\hyperlink{structvoxie__nav__t}{voxie\+\_\+nav\+\_\+t}} $\ast$nav)=0
+\mbox{\Hypertarget{class_i_voxie_box_a8d88ec18c0bba83481ffeef37a61df01}\label{class_i_voxie_box_a8d88ec18c0bba83481ffeef37a61df01}} 
+virtual \mbox{\hyperlink{structvoxie__nav__t}{voxie\+\_\+nav\+\_\+t}} \mbox{\hyperlink{class_i_voxie_box_a8d88ec18c0bba83481ffeef37a61df01}{get\+Nav\+State\+Raw}} (int space\+Nav\+ID)=0
+\begin{DoxyCompactList}\small\item\em Returns the 3DConnexion Space Navigator controller state as \mbox{\hyperlink{structvoxie__nav__t}{voxie\+\_\+nav\+\_\+t}} structure. Use the Space\+Nav\+ID to determine which one (0 = 1st, 1 = 2nd etc...) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_ac2fd43e54abc995155c61ae3d97d0b6d}\label{class_i_voxie_box_ac2fd43e54abc995155c61ae3d97d0b6d}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_ac2fd43e54abc995155c61ae3d97d0b6d}{update\+Nav\+State\+Raw}} (int space\+Nav\+ID, \mbox{\hyperlink{structvoxie__nav__t}{voxie\+\_\+nav\+\_\+t}} $\ast$nav)=0
 \begin{DoxyCompactList}\small\item\em Copies 3DConnexion Space Navigator controller state to \mbox{\hyperlink{structvoxie__nav__t}{voxie\+\_\+nav\+\_\+t}} structure. Used to updated Space\+Navs if \mbox{\hyperlink{class_i_voxie_box_a1cb6a0cee9155fa29d381c8d87a09245}{set\+Enable\+Legacy\+Nav\+Input()}} is set to true. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_a125ed1d2471229df9c12fff00905d061}\label{class_i_voxie_box_a125ed1d2471229df9c12fff00905d061}} 
 virtual int \mbox{\hyperlink{class_i_voxie_box_a125ed1d2471229df9c12fff00905d061}{get\+Nav\+Num}} ()=0
@@ -581,8 +599,8 @@ virtual void \mbox{\hyperlink{class_i_voxie_box_ab4d60ee7b816a989268ad51acde8367
 \mbox{\Hypertarget{class_i_voxie_box_ac15d22afdc95f90b87c9aa9c1e83ba39}\label{class_i_voxie_box_ac15d22afdc95f90b87c9aa9c1e83ba39}} 
 virtual \+\_\+\+\_\+int64 \mbox{\hyperlink{class_i_voxie_box_ac15d22afdc95f90b87c9aa9c1e83ba39}{get\+Vx\+Cpp\+Version}} ()=0
 \begin{DoxyCompactList}\small\item\em returns a time stamp of the compile date of Vx\+Cpp.\+dll expressed as an \+\_\+\+\_\+int64. (format\+: YYYYMMDDHHmmss) \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_i_voxie_box_a763448fa982dc3ab4a5d9a3c4eaefe61}\label{class_i_voxie_box_a763448fa982dc3ab4a5d9a3c4eaefe61}} 
-virtual int \mbox{\hyperlink{class_i_voxie_box_a763448fa982dc3ab4a5d9a3c4eaefe61}{scroll\+Col}} (int off\+Set)=0
+\mbox{\Hypertarget{class_i_voxie_box_aac20b2db2c03a6eaef11e623ef03656a}\label{class_i_voxie_box_aac20b2db2c03a6eaef11e623ef03656a}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_aac20b2db2c03a6eaef11e623ef03656a}{scroll\+Col}} (int off\+Set=0)=0
 \begin{DoxyCompactList}\small\item\em Returns a scrolling color as an RGB hexadecimal value. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_a09483ceacfeaa1b8145402b66be80b39}\label{class_i_voxie_box_a09483ceacfeaa1b8145402b66be80b39}} 
 virtual void \mbox{\hyperlink{class_i_voxie_box_a09483ceacfeaa1b8145402b66be80b39}{set\+Col\+Scroll\+Speed}} (double speed)=0
@@ -608,6 +626,9 @@ virtual int {\bfseries brighten\+Col} (int color, int amount)=0
 \mbox{\Hypertarget{class_i_voxie_box_ade780b443759853c523a9992d9c83bfe}\label{class_i_voxie_box_ade780b443759853c523a9992d9c83bfe}} 
 virtual int \mbox{\hyperlink{class_i_voxie_box_ade780b443759853c523a9992d9c83bfe}{random\+Col}} ()=0
 \begin{DoxyCompactList}\small\item\em Returns a random color based on the RANDOM\+\_\+\+COLOR defined in \mbox{\hyperlink{vx_data_types_8h}{vx\+Data\+Types.\+h}}. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a81ed5ad8b9a15bd8abae833d10d018dc}\label{class_i_voxie_box_a81ed5ad8b9a15bd8abae833d10d018dc}} 
+virtual \mbox{\hyperlink{structpoint3d}{point3d}} \mbox{\hyperlink{class_i_voxie_box_a81ed5ad8b9a15bd8abae833d10d018dc}{random\+Pos}} ()=0
+\begin{DoxyCompactList}\small\item\em Returns a random position within the VX display. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_ab72d6b411561d8a2f23efb42e8e33687}\label{class_i_voxie_box_ab72d6b411561d8a2f23efb42e8e33687}} 
 virtual int \mbox{\hyperlink{class_i_voxie_box_ab72d6b411561d8a2f23efb42e8e33687}{sphere\+Collide\+Chk}} (\mbox{\hyperlink{structpoint3d}{point3d}} $\ast$sphere\+APos, double sphere\+ARadius, \mbox{\hyperlink{structpoint3d}{point3d}} $\ast$sphere\+BPos, double sphere\+BRadius, bool show\+Collision\+Box=false)=0
 \begin{DoxyCompactList}\small\item\em Sphere collision check. Check if two spheres are touching. Returns 1 if collision is found otherwise returns 0. \end{DoxyCompactList}\item 
@@ -645,16 +666,19 @@ virtual int \mbox{\hyperlink{class_i_voxie_box_ac68e9524c89c41ac3ada58c15e0bebd5
 \mbox{\Hypertarget{class_i_voxie_box_a19e78b799e3ae44ff3b67417e3e80d2b}\label{class_i_voxie_box_a19e78b799e3ae44ff3b67417e3e80d2b}} 
 virtual void \mbox{\hyperlink{class_i_voxie_box_a19e78b799e3ae44ff3b67417e3e80d2b}{\+\_\+kzuninit}} ()=0
 \begin{DoxyCompactList}\small\item\em Internal zip file management function -\/ global function (these not multi-\/thread safe!) \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_i_voxie_box_a7ce994c6ddc0eda9eefba7a6c238eeed}\label{class_i_voxie_box_a7ce994c6ddc0eda9eefba7a6c238eeed}} 
-virtual void \mbox{\hyperlink{class_i_voxie_box_a7ce994c6ddc0eda9eefba7a6c238eeed}{\+\_\+kzsetfil}} (FILE $\ast$file\+Name)=0
-\begin{DoxyCompactList}\small\item\em Internal zip file management function. All \textquotesingle{}kz...\textquotesingle{} functions are to do with Ken\textquotesingle{}s zip file access. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_i_voxie_box_ab10a1f75e6ea8b1ae6ece2b61f01eaeb}\label{class_i_voxie_box_ab10a1f75e6ea8b1ae6ece2b61f01eaeb}} 
-virtual INT\+\_\+\+PTR \mbox{\hyperlink{class_i_voxie_box_ab10a1f75e6ea8b1ae6ece2b61f01eaeb}{\+\_\+kzopen}} (const char $\ast$)=0
-\begin{DoxyCompactList}\small\item\em Internal zip file management function. All \textquotesingle{}kz...\textquotesingle{} functions are to do with Ken\textquotesingle{}s zip file access. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_i_voxie_box_a0507806314c60cf16237ef5259eca00b}\label{class_i_voxie_box_a0507806314c60cf16237ef5259eca00b}} 
-virtual void \mbox{\hyperlink{class_i_voxie_box_a0507806314c60cf16237ef5259eca00b}{\+\_\+kzfindfilestart}} (const char $\ast$st)=0
+\mbox{\Hypertarget{class_i_voxie_box_ac2f3b162ccb635a0eb83dcbacf56265c}\label{class_i_voxie_box_ac2f3b162ccb635a0eb83dcbacf56265c}} 
+virtual kzfind\+\_\+t $\ast$ \mbox{\hyperlink{class_i_voxie_box_ac2f3b162ccb635a0eb83dcbacf56265c}{\+\_\+kzfindfilestart}} (const char $\ast$st)=0
 \begin{DoxyCompactList}\small\item\em Internal zip file management function. All \textquotesingle{}kz...\textquotesingle{} functions are to do with Ken\textquotesingle{}s zip file access. \end{DoxyCompactList}\item 
 virtual int \mbox{\hyperlink{class_i_voxie_box_a67381ce58613a4b0bc370fc0411b6c9e}{\+\_\+kzfindfile}} (kzfind\+\_\+t $\ast$find, \mbox{\hyperlink{structkzfileinfo__t}{kzfileinfo\+\_\+t}} $\ast$fileinfo)=0
+\begin{DoxyCompactList}\small\item\em Internal zip file management function. All \textquotesingle{}kz...\textquotesingle{} functions are to do with Ken\textquotesingle{}s zip file access. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a059258e0dee220e1c1ea504dd13a87aa}\label{class_i_voxie_box_a059258e0dee220e1c1ea504dd13a87aa}} 
+virtual kzfile\+\_\+t $\ast$ \mbox{\hyperlink{class_i_voxie_box_a059258e0dee220e1c1ea504dd13a87aa}{\+\_\+kzsetfil}} (FILE $\ast$file\+Name)=0
+\begin{DoxyCompactList}\small\item\em Internal zip file management function. All \textquotesingle{}kz...\textquotesingle{} functions are to do with Ken\textquotesingle{}s zip file access. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_ac251b1200f1e2c559988ac6e57b140c1}\label{class_i_voxie_box_ac251b1200f1e2c559988ac6e57b140c1}} 
+virtual kzfile\+\_\+t $\ast$ \mbox{\hyperlink{class_i_voxie_box_ac251b1200f1e2c559988ac6e57b140c1}{\+\_\+kzopen}} (const char $\ast$)=0
+\begin{DoxyCompactList}\small\item\em Internal zip file management function. All \textquotesingle{}kz...\textquotesingle{} functions are to do with Ken\textquotesingle{}s zip file access. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_i_voxie_box_a8e1704f8bd0c013f2b4f99bfd8b645b5}\label{class_i_voxie_box_a8e1704f8bd0c013f2b4f99bfd8b645b5}} 
+virtual kzfile\+\_\+t $\ast$ \mbox{\hyperlink{class_i_voxie_box_a8e1704f8bd0c013f2b4f99bfd8b645b5}{\+\_\+kzopen\+\_\+ext}} (const char $\ast$, const char $\ast$, const char $\ast$)=0
 \begin{DoxyCompactList}\small\item\em Internal zip file management function. All \textquotesingle{}kz...\textquotesingle{} functions are to do with Ken\textquotesingle{}s zip file access. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_i_voxie_box_adf45e4850627f80aa257c94b96f74d39}\label{class_i_voxie_box_adf45e4850627f80aa257c94b96f74d39}} 
 virtual unsigned int \mbox{\hyperlink{class_i_voxie_box_adf45e4850627f80aa257c94b96f74d39}{\+\_\+kzread}} (kzfile\+\_\+t $\ast$kzfile, void $\ast$buffer, unsigned int leng)=0
@@ -683,8 +707,8 @@ virtual int \mbox{\hyperlink{class_i_voxie_box_a7e6ad15ce1aa026195c13ab891ac73b5
 \mbox{\Hypertarget{class_i_voxie_box_a3357f81218c594928a3332453579186d}\label{class_i_voxie_box_a3357f81218c594928a3332453579186d}} 
 virtual int \mbox{\hyperlink{class_i_voxie_box_a3357f81218c594928a3332453579186d}{\+\_\+kprender}} (const char $\ast$buffer, int nby, INT\+\_\+\+PTR fptr, int bpl, int xsiz, int ysiz, int xoff, int yoff)=0
 \begin{DoxyCompactList}\small\item\em ! Internal image decoder function. All \textquotesingle{}kp...\textquotesingle{} functions are to do with Ken\textquotesingle{}s picture library (Low-\/level PNG/\+JPG decoding functions) \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{class_i_voxie_box_affd844739b889ad96a1b79c12e0ab7cb}\label{class_i_voxie_box_affd844739b889ad96a1b79c12e0ab7cb}} 
-virtual void \mbox{\hyperlink{class_i_voxie_box_affd844739b889ad96a1b79c12e0ab7cb}{\+\_\+kpzload}} (const char $\ast$file\+Name, INT\+\_\+\+PTR $\ast$fptr, INT\+\_\+\+PTR $\ast$bpl, INT\+\_\+\+PTR $\ast$xsiz, INT\+\_\+\+PTR $\ast$ysiz)=0
+\mbox{\Hypertarget{class_i_voxie_box_a631f8725c083e8234869b65b2c831d7f}\label{class_i_voxie_box_a631f8725c083e8234869b65b2c831d7f}} 
+virtual int \mbox{\hyperlink{class_i_voxie_box_a631f8725c083e8234869b65b2c831d7f}{\+\_\+kpzload}} (const char $\ast$file\+Name, INT\+\_\+\+PTR $\ast$fptr, INT\+\_\+\+PTR $\ast$bpl, INT\+\_\+\+PTR $\ast$xsiz, INT\+\_\+\+PTR $\ast$ysiz)=0
 \begin{DoxyCompactList}\small\item\em ! Internal image decoder function. All \textquotesingle{}kp...\textquotesingle{} functions are to do with Ken\textquotesingle{}s picture library (High-\/level (easy) picture loading function) \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 

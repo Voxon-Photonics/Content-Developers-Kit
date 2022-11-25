@@ -1,5 +1,6 @@
 #include "vxCPP.h"
 #include "UI2D.h"
+#include <vector>
 
 // WINDOW2D -- DONE
 // BUTTON2D -- DONE
@@ -32,6 +33,11 @@ int main(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdshow)
 	HSlider2D	hslide	(voxie, 600, 300, 200, 10, 0, 1, 0x00ff00);
 	Button2D	button	(voxie, (char*)"test", 800, 100, 200, 200, 0x309090);
 	PinchBox2D	pinch	(voxie, 100, 600, 400, 400, 0x303030);
+
+
+
+
+
 	Element2D	element1(voxie, 50, 120, 100, 100, 0x003000, 0xffffff);
 	Element2D	element2(voxie, 160, 120, 100, 100, 0x303000, 0xffffff);
 	Element2D	element3(voxie, 270, 120, 100, 100, 0x003030, 0xffffff);
@@ -60,7 +66,7 @@ int main(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdshow)
 
 	x = 2;
 
-	element1.setMessage((char*)"ele 1 %d", x);
+	element1.setMessage((char*)"element 1 %d", x);
 	element2.setMessage((char*)"ele 2 %d", x);
 	element3.setMessage((char*)"ele 3 %d", x);
 	element4.setMessage((char*)"ele 4 %d", x);

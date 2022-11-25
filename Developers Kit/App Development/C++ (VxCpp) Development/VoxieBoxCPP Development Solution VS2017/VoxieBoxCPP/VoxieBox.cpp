@@ -5,13 +5,13 @@
 HINSTANCE VoxieBox::hvoxie = 0;
 
 /** \class VoxieBox
- *  VoxieBox class. All voxiebox.dll functions presented as class with additional helper functions included. 
+ *  VoxieBox class. All voxiebox.dll functions presented as class with additional helper functions included.
  */
 
  /** VoxieBox constructor checks to see if another instance of VoxieBox has been created.
   *	If not; then loads the internal voxie_wind_t struct (vw) into memory.
   *	Then calls VoxieBox:init() & initialise the data, loads settings from voxiebox.ini
-  * and voxie_menu_0.ini  
+  * and voxie_menu_0.ini
   */
 VoxieBox::VoxieBox()
 {
@@ -28,7 +28,7 @@ VoxieBox::VoxieBox()
 
 	//check if hardware is a spinner or up/down system and adjust clip shape
 	// Update : this is called too early and fails to detect a spinner... had to move it to the breath loop 
-	
+
 	//if (vw.nblades > 0)	vw.clipshape = 1;
 	//else  				vw.clipshape = 0;
 
@@ -42,9 +42,9 @@ VoxieBox::~VoxieBox()
 
 //!  Initializes and updates voxiebox.dll's voxie window (voxie_wind_t) 
 /**
- * 
+ *
  *  The voxie window is the struct which holds all the settings and values to do with the volumetric display.  @see vxDataTypes.h::voxie_wind_t
- * 
+ *
  *  This function is called first time by the VoxieBox constructor. So there is no need for a developer to initialise it
  *  But can be used to update the voxie_window if the VoxieBox class's vw (voxie_wind_t) has been updated.
  *  On the first call, this function sets up the window and starts the hardware motor.
@@ -54,7 +54,7 @@ VoxieBox::~VoxieBox()
  *       vw.useJoy = 0; voxie_init(&vw);
  *    would change the joystick input method to direct input (joyInfoEx) emulation regardless of the setting in voxiebox.ini.
  *	     if voxie_init returns -1 the function returns an error could not initialise or update
- *   @return 0 if Initialization or updating is successful. -1 if an error  
+ *   @return 0 if Initialization or updating is successful. -1 if an error
  *
  *  Note : This function always passing in the VoxieBox class's voxie_wind_t which is known as 'vw'
  *
@@ -66,13 +66,13 @@ int VoxieBox::init()
 
 
 //! returns a pointer to the internal voxie_wind_t struct
-voxie_wind_t * VoxieBox::getVoxieWindow()
+voxie_wind_t* VoxieBox::getVoxieWindow()
 {
 	return &vw;
 }
 
 //! returns a pointer to the internal voxie_frame_t struct
-voxie_frame_t * VoxieBox::getVoxieFrame()
+voxie_frame_t* VoxieBox::getVoxieFrame()
 {
 	return &vf;
 }
@@ -93,7 +93,7 @@ void VoxieBox::setMousePosition(point3d newPos)
 //! Update the current mouse positions by applying all input deltas - called once per frame within VoxieBox::breath()
 /**
  * This function is intended to update the mouse input. updates the internal mouse position and checks the input states of the buttons.
- * It is called automatically within the VoxieBox::breath() function. There wouldn't be a reason why a developer 
+ * It is called automatically within the VoxieBox::breath() function. There wouldn't be a reason why a developer
  * would need to call this function unless they are doing something specific with the mouse inputs
  *
  * see VoxieBox::breath()
@@ -101,7 +101,7 @@ void VoxieBox::setMousePosition(point3d newPos)
 void VoxieBox::updateMousePosition()
 {
 
-	point2d a = { in.dmousx , in.dmousy  };
+	point2d a = { in.dmousx , in.dmousy };
 	a = oriCorrection(getMouseOrientation(), a.x, a.y);
 	in.dmousx = a.x;
 	in.dmousy = a.y;
@@ -117,22 +117,22 @@ void VoxieBox::updateMousePosition()
 	if (getMouseButtonOnDown(1)) startLastPressedMouse[1] = time;
 	if (getMouseButtonOnDown(2)) startLastPressedMouse[2] = time;
 
-	if (getMouseButtonIsDown(0)) durationLastPressedMouse[0]	= time - startLastPressedMouse[0];
-	if (getMouseButtonIsDown(1)) durationLastPressedMouse[1]	= time - startLastPressedMouse[1];
-	if (getMouseButtonIsDown(2)) durationLastPressedMouse[2]	= time - startLastPressedMouse[2];
+	if (getMouseButtonIsDown(0)) durationLastPressedMouse[0] = time - startLastPressedMouse[0];
+	if (getMouseButtonIsDown(1)) durationLastPressedMouse[1] = time - startLastPressedMouse[1];
+	if (getMouseButtonIsDown(2)) durationLastPressedMouse[2] = time - startLastPressedMouse[2];
 
 	if (getMouseButtonOnUp(0))	durationLastPressedMouse[0] = 0;
 	if (getMouseButtonOnUp(1))	durationLastPressedMouse[1] = 0;
 	if (getMouseButtonOnUp(2))	durationLastPressedMouse[2] = 0;
 
-	if ((getMouseButtonState() &1) == 0) durationLastPressedMouse[0] = 0;
-	if ((getMouseButtonState() &2) == 0) durationLastPressedMouse[1] = 0;
-	if ((getMouseButtonState() &4) == 0) durationLastPressedMouse[2] = 0;
-	   
+	if ((getMouseButtonState() & 1) == 0) durationLastPressedMouse[0] = 0;
+	if ((getMouseButtonState() & 2) == 0) durationLastPressedMouse[1] = 0;
+	if ((getMouseButtonState() & 4) == 0) durationLastPressedMouse[2] = 0;
+
 }
 
 //! Rotate two point3d vectors a & b around their common plane, by angle expressed in radians.
-void VoxieBox::rotVex(float angInRadians, point3d *a, point3d *b)
+void VoxieBox::rotVex(float angInRadians, point3d* a, point3d* b)
 {
 	float f, c, s;
 
@@ -150,7 +150,7 @@ void VoxieBox::rotVex(float angInRadians, point3d *a, point3d *b)
 }
 
 //! Rotate two point3d vectors a & b around their common plane, by angle expressed in degrees
-void VoxieBox::rotVexD(float angInDegrees, point3d *a, point3d *b)
+void VoxieBox::rotVexD(float angInDegrees, point3d* a, point3d* b)
 {
 	float f, c, s;
 	float ang = (angInDegrees * PI) / 180;
@@ -168,7 +168,7 @@ void VoxieBox::rotVexD(float angInDegrees, point3d *a, point3d *b)
 }
 
 //! Rotate two point2d vectors a & b around their common plane, by angle expressed in radians
-void VoxieBox::rotVex(float angInRadians, point2d *a, point2d *b)
+void VoxieBox::rotVex(float angInRadians, point2d* a, point2d* b)
 {
 	float f, c, s;
 
@@ -180,11 +180,11 @@ void VoxieBox::rotVex(float angInRadians, point2d *a, point2d *b)
 	f = a->y;
 	a->y = f * c + b->y * s;
 	b->y = b->y * c - f * s;
-	
+
 }
 
 //! Rotate two point2d vectors a & b around their common plane, by angle expressed in degrees 
-void VoxieBox::rotVexD(float angInDegrees, point2d *a, point2d *b)
+void VoxieBox::rotVexD(float angInDegrees, point2d* a, point2d* b)
 {
 	float f, c, s;
 	float ang = (angInDegrees * PI) / 180;
@@ -196,27 +196,27 @@ void VoxieBox::rotVexD(float angInDegrees, point2d *a, point2d *b)
 	f = a->y;
 	a->y = f * c + b->y * s;
 	b->y = b->y * c - f * s;
-	
-	
+
+
 }
 
 
 //! Renders a 2D textured (.png, .jpg... most image formats) quad (plane) onto the volumetric display. Useful to rendering 2D textures. Must be called between startFrame() & endFrame() functions.
 /**
- * @param filename	the filename / path for the texture to load (.png, .jpg... most image formats supported) 
+ * @param filename	the filename / path for the texture to load (.png, .jpg... most image formats supported)
  * @param pos		the center position of the quad to render
  * @param width		x dimension of the quad (how wide).
- * @param height	y dimension of the quad (how high). 
- * @param hang		the horizontal angle (yaw)  . 0 is front facing. 180 is facing the back of the display. presented in degrees. 
+ * @param height	y dimension of the quad (how high).
+ * @param hang		the horizontal angle (yaw)  . 0 is front facing. 180 is facing the back of the display. presented in degrees.
  * @param hang		the vertical angle (pitch). 0 is horizontal facing. 90 is facing vertical. presented in degrees.
  * @param twist		how much 'twist' is in the quad. (roll) in the quad 0 is flat. presented in degrees.
  * @param col		the color value of the texture 0x404040 is the natural color from the texture anything less or more will add a tint to the texture.
- * @param u			the u value of the texture. Adjusting this stretches / the horizontal texture size. Default is 1 
+ * @param u			the u value of the texture. Adjusting this stretches / the horizontal texture size. Default is 1
  * @param u			the v value of the texture. Adjusting this stretches / the vertical texture size. Default is 1
  *
  * Must be called between startFrame() & endFrame() functions.
  */
-void VoxieBox::drawQuad(char *filename, point3d *pos, float width, float height, float hAng, float vAng, float twist, int col = 0x404040, float uValue = 1, float vValue = 1)
+void VoxieBox::drawQuad(char* filename, point3d* pos, float width, float height, float hAng, float vAng, float twist, int col = 0x404040, float uValue = 1, float vValue = 1)
 {
 	poltex_t vt[4];
 	point3d vx, vy;
@@ -232,12 +232,12 @@ void VoxieBox::drawQuad(char *filename, point3d *pos, float width, float height,
 	vx.z = 0.f;
 
 	f = cos(vAng);
-	vy.x = -vx.y*f;
-	vy.y = vx.x*f;
+	vy.x = -vx.y * f;
+	vy.y = vx.x * f;
 	vy.z = -sin(vAng);
 
 	rotVex(twist, &vx, &vy);
-		
+
 	//voxie_drawsph(&vf, pos->x, pos->y, pos->z, .10, 0, 0x00ff00); // for debugging
 	for (i = 0; i < 4; i++)
 	{
@@ -246,32 +246,32 @@ void VoxieBox::drawQuad(char *filename, point3d *pos, float width, float height,
 		if (!(i & 2)) { g = -height; vt[i].v = 0.f; }
 		else { g = height; vt[i].v = vValue; }
 
-		vt[i].x = vx.x*f + vy.x*g + pos->x;
-		vt[i].y = vx.y*f + vy.y*g + pos->y;
-		vt[i].z = vx.z*f + vy.z*g + pos->z;
+		vt[i].x = vx.x * f + vy.x * g + pos->x;
+		vt[i].y = vx.y * f + vy.y * g + pos->y;
+		vt[i].z = vx.z * f + vy.z * g + pos->z;
 		vt[i].col = 0;
-	//	voxie_drawsph(&vf, vt[i].x, vt[i].y, vt[i].z, .10, 0, cols[i]); // for debugging
+		//	voxie_drawsph(&vf, vt[i].x, vt[i].y, vt[i].z, .10, 0, cols[i]); // for debugging
 	}
-	
+
 	drawMesh(filename, vt, 4, mesh, 5, 2, col);
 }
 
 
 //! Box inside collision check. Check if a position is inside a box shape.  boxTLU = Top, Left, Up, boxBRD = bottom, right, down.
-/** 
- * @param LUTpos			pointer to the Left, Up, Top position of the box. 
+/**
+ * @param LUTpos			pointer to the Left, Up, Top position of the box.
  * @param RDBpos			pointer to the Right, Down, Bottom position of the box.
  * @param collisionPos		the collision position to check.
  * @param showCollisionBox  For debugging set to false by default. Set to true to render the collision box onto the volumetric display. (Note : The collision check must be called within the start and end frame)
  *
  * @returns 1 if collision position is within (inside) the box otherwise returns 0
- * 
+ *
  */
-int VoxieBox::boxInsideCollideChk(point3d * LUTpos, point3d * RDBpos, point3d collisionPos, bool showCollisionBox) {
+int VoxieBox::boxInsideCollideChk(point3d* LUTpos, point3d* RDBpos, point3d collisionPos, bool showCollisionBox) {
 
 	int result = 0;
 	int collisionCol = 0xff0000;
-	   
+
 	if (collisionPos.x < RDBpos->x &&
 		collisionPos.x > LUTpos->x
 		&&
@@ -304,7 +304,7 @@ int VoxieBox::boxInsideCollideChk(point3d * LUTpos, point3d * RDBpos, point3d co
  * @returns 1 if collision position is within (inside) the box otherwise returns 0
  *
  */
-int VoxieBox::boxInsideCollideChk2D(point2d * TLpos, point2d * BRpos, point2d * collisionPos, bool showCollisionBox)
+int VoxieBox::boxInsideCollideChk2D(point2d* TLpos, point2d* BRpos, point2d* collisionPos, bool showCollisionBox)
 {
 	int result = 0;
 	int collisionCol = 0xff0000;
@@ -335,12 +335,12 @@ int VoxieBox::boxInsideCollideChk2D(point2d * TLpos, point2d * BRpos, point2d * 
  * @param circlePos			pointer to circle's position
  * @param radius			the size of the circle's collision box
  * @param collisionPos		the collision position to check.
- * @param showCollisionBox  show Collision circle For debugging set to 0 by default. 1 is for the volumetric display. 2 is for touch screen. 
+ * @param showCollisionBox  show Collision circle For debugging set to 0 by default. 1 is for the volumetric display. 2 is for touch screen.
  *
  * @returns 1 if collision position is within (inside) the circle otherwise returns 0
  *
  */
-int VoxieBox::ciricle2DChk(point2d * circlePos, float radius, point2d * collisionPos, int showCollisionBox)
+int VoxieBox::ciricle2DChk(point2d* circlePos, float radius, point2d* collisionPos, int showCollisionBox)
 {
 	int result = 0;
 	float x, y;
@@ -361,24 +361,24 @@ int VoxieBox::ciricle2DChk(point2d * circlePos, float radius, point2d * collisio
 
 
 	switch (showCollisionBox) {
-		case 1:
-			if (result) collisionCol = 0x00ff00;
+	case 1:
+		if (result) collisionCol = 0x00ff00;
 
-			while (angle < 2 * PI) {
-				// calculate x, y from a vector with known length and angle
-				x = radius * cos(angle);
-				y = radius * sin(angle);
-				voxie_drawvox(&vf, x + circlePos->x, y + circlePos->y, 0, 0x00ff00);
-				angle += 0.05;
-			}
+		while (angle < 2 * PI) {
+			// calculate x, y from a vector with known length and angle
+			x = radius * cos(angle);
+			y = radius * sin(angle);
+			voxie_drawvox(&vf, x + circlePos->x, y + circlePos->y, 0, 0x00ff00);
+			angle += 0.05;
+		}
 
-			voxie_drawvox(&vf, collisionPos->x, collisionPos->y, 0, collisionCol);
+		voxie_drawvox(&vf, collisionPos->x, collisionPos->y, 0, collisionCol);
 		break;
-		case 2:
-			if (result) collisionCol = 0x00ff00;
-			debugDrawPix((int)collisionPos->x, (int)collisionPos->y, collisionCol);
-			debugDrawCircle((int)circlePos->x, (int)circlePos->y, radius, 0x003300);
-			break;
+	case 2:
+		if (result) collisionCol = 0x00ff00;
+		debugDrawPix((int)collisionPos->x, (int)collisionPos->y, collisionCol);
+		debugDrawCircle((int)circlePos->x, (int)circlePos->y, radius, 0x003300);
+		break;
 
 	}
 
@@ -396,7 +396,7 @@ int VoxieBox::ciricle2DChk(point2d * circlePos, float radius, point2d * collisio
  * To check to just see if a position is inside of a box use boxInsideCollidChk()
  */
 
-int VoxieBox::boxCollideChk(point3d * LUTpos1, point3d * RDBpos1, point3d * LUTpos2, point3d * RDBpos2, bool showCollisionBox)
+int VoxieBox::boxCollideChk(point3d* LUTpos1, point3d* RDBpos1, point3d* LUTpos2, point3d* RDBpos2, bool showCollisionBox)
 {
 	int result = 0;
 	int collisionCol = 0xff0000;
@@ -409,13 +409,13 @@ int VoxieBox::boxCollideChk(point3d * LUTpos1, point3d * RDBpos1, point3d * LUTp
 		LUTpos1->y < RDBpos2->y
 		&&
 		RDBpos1->z > LUTpos2->z &&
-		LUTpos1->z < RDBpos2->z 
+		LUTpos1->z < RDBpos2->z
 
-		
+
 		)
 
 		result = 1;
-	
+
 
 	if (showCollisionBox) {
 		if (result) collisionCol = 0x00ff00;
@@ -439,7 +439,7 @@ int VoxieBox::boxCollideChk(point3d * LUTpos1, point3d * RDBpos1, point3d * LUTp
  *
  * @returns 1 if there is a collision and 0 if not
  */
-int VoxieBox::sphereCollideChk(point3d * sphereAPos, double sphereARadius, point3d * sphereBPos, double sphereBRadius, bool showCollisionBox) {
+int VoxieBox::sphereCollideChk(point3d* sphereAPos, double sphereARadius, point3d* sphereBPos, double sphereBRadius, bool showCollisionBox) {
 	float sidea = fabs(sphereAPos->x - sphereBPos->x);
 	float sideb = fabs(sphereAPos->y - sphereBPos->y);
 	sidea = sidea * sidea;
@@ -449,40 +449,40 @@ int VoxieBox::sphereCollideChk(point3d * sphereAPos, double sphereARadius, point
 	int result = 0;
 	int collisionCol = 0xff0000;
 
-	
+
 	if (distance < sphereARadius + sphereBRadius && sphereAPos->z - sphereARadius < sphereBPos->z + sphereBRadius && sphereAPos->z + sphereARadius > sphereBPos->z - sphereBRadius) {
-		result =  1;
+		result = 1;
 	}
 
 	if (showCollisionBox) {
 		if (result) collisionCol = 0x00ff00;
 		drawSphere(*sphereAPos, sphereARadius, 0, collisionCol);
 		drawSphere(*sphereBPos, sphereBRadius, 0, collisionCol);
-		
+
 	}
 
 	return result;
 }
 
 //! Clips a point to ensures it is within the volumes display's bounds. 
-/** 
+/**
  * Adjust a point if it is outside of the volume.
  * @param  pos		  pointer of the point3d to check
  * @param  radius	  the size of radius to check
  *
- * @return in bits of what dimension is outside the range for Up/Down 1st bit x, 2nd bit y, 3rd bit z. For Spinner 1st bit x or y, 2nd bit z 
+ * @return in bits of what dimension is outside the range for Up/Down 1st bit x, 2nd bit y, 3rd bit z. For Spinner 1st bit x or y, 2nd bit z
  */
-int VoxieBox::clipInsideVolume(point3d * pos, float radius)
+int VoxieBox::clipInsideVolume(point3d* pos, float radius)
 {
 	int response = 0;
 
 	if (vw.clipshape == 0) { // if up/down display
-		
-		if (pos->x > vw.aspx - radius)	{ response += 1; pos->x = vw.aspx - radius;  }
-		if (pos->x < -vw.aspx + radius)	{ response += 1; pos->x = -vw.aspx + radius; }
-		if (pos->y > vw.aspy - radius)	{ response += 2; pos->y = vw.aspy - radius;	}
-		if (pos->y < -vw.aspy + radius) { response += 2; pos->y = -vw.aspy + radius;	}
-		if (pos->z > vw.aspz - radius)  { response += 4; pos->z = vw.aspz - radius;  }
+
+		if (pos->x > vw.aspx - radius) { response += 1; pos->x = vw.aspx - radius; }
+		if (pos->x < -vw.aspx + radius) { response += 1; pos->x = -vw.aspx + radius; }
+		if (pos->y > vw.aspy - radius) { response += 2; pos->y = vw.aspy - radius; }
+		if (pos->y < -vw.aspy + radius) { response += 2; pos->y = -vw.aspy + radius; }
+		if (pos->z > vw.aspz - radius) { response += 4; pos->z = vw.aspz - radius; }
 		if (pos->z < -vw.aspz + radius) { response += 4; pos->z = -vw.aspz + radius; }
 	}
 	else { // if spinner
@@ -492,10 +492,10 @@ int VoxieBox::clipInsideVolume(point3d * pos, float radius)
 			centrePoint.z = pos->z;
 			moveToPos(pos, point3d{ 0,0,pos->z }, 1, float(0.0001));
 		}
-		
 
-		if (pos->z > vw.aspz - radius)	{ response += 2; pos->z = vw.aspz - radius; }
-		if (pos->z < -vw.aspz + radius)	{ response += 2; pos->z = -vw.aspz + radius; }
+
+		if (pos->z > vw.aspz - radius) { response += 2; pos->z = vw.aspz - radius; }
+		if (pos->z < -vw.aspz + radius) { response += 2; pos->z = -vw.aspz + radius; }
 	}
 
 	return response;
@@ -503,7 +503,7 @@ int VoxieBox::clipInsideVolume(point3d * pos, float radius)
 }
 
 //! @return returns the internal mouse position as a point3d (x, y, z) 
-point3d VoxieBox::getMousePosition() 
+point3d VoxieBox::getMousePosition()
 {
 	return point3d{ mousePos.x, mousePos.y, mousePos.z };
 }
@@ -513,7 +513,7 @@ point3d VoxieBox::getMousePosition()
  *  Call this once per frame to update variables in voxie_inputs_t structure.
  *  returns typically returns a 1. returns a 0 when the program wants to quit.
  *	run as a while loop " while (voxiebox::breath() )"
- *  using breath() with no parameters uses internal voxie_input_t structure (in) 
+ *  using breath() with no parameters uses internal voxie_input_t structure (in)
  *	to input updates.
  *
  *  Note the VxCpp version of breath() also updates: the internal timers,
@@ -526,11 +526,11 @@ point3d VoxieBox::getMousePosition()
  *
  *  @return typically returns a 1, returns a 0 when the program wants to quit.
  */
-int VoxieBox::breath() 
+int VoxieBox::breath()
 {
 	return breath(&in);
 
-} 
+}
 
 //! A breath is a complete volume sweep.
 /**  Call this once per frame to update variables in voxie_inputs_t structure.
@@ -542,22 +542,22 @@ int VoxieBox::breath()
  *  Note the VxCpp version of breath() also updates: the internal timers,
  *  checks if the hardware is a rotating or up / down display,
  *  calls other input checks (for nav, joy and keyboard),
- *  listens for key input to rotate the emulator screen, 
+ *  listens for key input to rotate the emulator screen,
  *  and the 'Esc' key to quit the application,
- *  tracks the mouse position and updates the rainbow color variable. 
+ *  tracks the mouse position and updates the rainbow color variable.
  *  (most of) These are common tasks a typical VX developer would have to do themselves.
  *
- * @param in pointer to the voxie_inputs_t to update the input state ( voxie_inputs_t() manages the mouse input ) 
+ * @param in pointer to the voxie_inputs_t to update the input state ( voxie_inputs_t() manages the mouse input )
  * @return typically returns a 1, returns a 0 when the program wants to quit.
  */
-int VoxieBox::breath(voxie_inputs_t * input)
+int VoxieBox::breath(voxie_inputs_t* input)
 {
 	// update timers
 	oldTime = time;
 	time = voxie_klock();
 	deltaTime = time - oldTime;
 	averageTime += (deltaTime - averageTime) * .1;
-	
+
 	// emulator rotation controls 
 	int i = 0;
 	i = (this->voxie_keystat(0x1b) & 1) - (this->voxie_keystat(0x1a) & 1); // keys '[' and ']'
@@ -570,7 +570,7 @@ int VoxieBox::breath(voxie_inputs_t * input)
 			vw.emudist = max(vw.emudist - (float)i * deltaTime * 2048.0, 400.0); //Ctrl+[,]
 		else
 			vw.emuhang += (float)i * deltaTime * 2.0; //[,]
-		
+
 		this->init();
 	}
 
@@ -607,11 +607,11 @@ int VoxieBox::breath(voxie_inputs_t * input)
 //! start building the frame buffer.
 /**
   *	 All volumetric and secondary (touch) screen draw calls need to happen between VoxieBox::startFrame() and VoxieBox::endFrame()
-  *	 the startframe() function prepares the vxTypes::voxie_frame_t struct to start a new frame and empty out the voxel buffer. 
+  *	 the startframe() function prepares the vxTypes::voxie_frame_t struct to start a new frame and empty out the voxel buffer.
   *  any draw call used after this point is loaded into the voxel buffer.
-  *  the startFrame() function uses the internal vf voxie_frame_t to manage its voxel data. It is possible for a developer to 
-  *  write directly to the vf for their own low-level drawing. 
-  *	
+  *  the startFrame() function uses the internal vf voxie_frame_t to manage its voxel data. It is possible for a developer to
+  *  write directly to the vf for their own low-level drawing.
+  *
   *  The startFrame function also sets the view to the correct aspect ration (traditionally a user would call 'voxie_setview()' after the frame to set the views dimensions)
   *  the startFrame function also draws a border around the display (if VoxieBox::setBorder() has been set to true)
   *
@@ -624,43 +624,43 @@ void VoxieBox::startFrame()
 	else				voxie_setview(&vf, -vw.aspx, -vw.aspy, -vw.aspz, vw.aspx, vw.aspy, vw.aspz); // normal
 
 	int i = 0, n = 0, j = 0;
-	float r = vw.aspr *.99;
+	float r = vw.aspr * .99;
 
-	
+
 
 	if (drawBorder == true) { //draw wire frame box
 		// Check if hardware is up/down or spinner  
-		if (vw.clipshape == 0) 	voxie_drawbox(&vf, -vw.aspx + 1e-3f, -vw.aspy + 1e-3f, -vw.aspz, +vw.aspx - 1e-3f, +vw.aspy - 1e-3f, +vw.aspz, 1, 0xffffff);
-		 else { // if spinner draw around the outside of the shape
+		if (vw.clipshape == 0) 	voxie_drawbox(&vf, -vw.aspx + 1e-3f, -vw.aspy + 1e-3f, -vw.aspz, +vw.aspx - 1e-3f, +vw.aspy - 1e-3f, +vw.aspz, 1, drawBorderCol);
+		else { // if spinner draw around the outside of the shape
 			n = 64;
 			for (j = -64; j <= 64; j++)
 			{
 				if (j == -62) j = 62;
-				 for (i = 0; i < n; i++)
+				for (i = 0; i < n; i++)
 				{
-					voxie_drawlin(&vf, cos((float)(i + 0)*PI*2.0 / (float)n)*(r), sin((float)(i + 0)*PI*2.0 / (float)n)*(r), (float)j*vw.aspz / 64.f,
-						cos((float)(i + 1)*PI*2.0 / (float)n)*(r), sin((float)(i + 1)*PI*2.0 / (float)n)*(r), (float)j*vw.aspz / 64.f, 0xffffff);
+					voxie_drawlin(&vf, cos((float)(i + 0) * PI * 2.0 / (float)n) * (r), sin((float)(i + 0) * PI * 2.0 / (float)n) * (r), (float)j * vw.aspz / 64.f,
+						cos((float)(i + 1) * PI * 2.0 / (float)n) * (r), sin((float)(i + 1) * PI * 2.0 / (float)n) * (r), (float)j * vw.aspz / 64.f, 0xffffff);
 				}
 			}
 
 			n = 32;
 			for (i = 0; i < n; i++)
 			{
-				voxie_drawlin(&vf, cos((float)(i + 0)*PI*2.0 / (float)n)*(r), sin((float)(i + 0)*PI*2.0 / (float)n)*(r), -vw.aspz,
-					cos((float)(i + 0)*PI*2.0 / (float)n)*(r), sin((float)(i + 0)*PI*2.0 / (float)n)*(r), +vw.aspz, 0xffffff);
+				voxie_drawlin(&vf, cos((float)(i + 0) * PI * 2.0 / (float)n) * (r), sin((float)(i + 0) * PI * 2.0 / (float)n) * (r), -vw.aspz,
+					cos((float)(i + 0) * PI * 2.0 / (float)n) * (r), sin((float)(i + 0) * PI * 2.0 / (float)n) * (r), +vw.aspz, 0xffffff);
 			}
 		}
-	
+
 	}
-	
+
 }
 
 //! function to signify the end of a volumetric frame. 
 /*
- * Call this once after all draw calls and within the VoxieBox::Breath() loop. Sends the voxel buffer to the 
- * volumetric display and secondary screen. 
- * Note : Any draw calls before VoxieBox::startFrame() and after VoxieBox::endFrame will not render onto 
- * the volume. 
+ * Call this once after all draw calls and within the VoxieBox::Breath() loop. Sends the voxel buffer to the
+ * volumetric display and secondary screen.
+ * Note : Any draw calls before VoxieBox::startFrame() and after VoxieBox::endFrame will not render onto
+ * the volume.
  */
 void VoxieBox::endFrame()
 {
@@ -680,7 +680,7 @@ double VoxieBox::getTime()
 
 //! Returns the system's current VPS (volumes per second).
 /**
- * @return the current VPS value. At least 15 VPS on a Up/Down system and At least 30 VPS for a Spinner is recommended.   
+ * @return the current VPS value. At least 15 VPS on a Up/Down system and At least 30 VPS for a Spinner is recommended.
  */
 double VoxieBox::getVPS()
 {
@@ -691,21 +691,22 @@ double VoxieBox::getVPS()
 /**
  *  @param posX	X position for output
  *  @param posY	Y position for output
+ *  @return VPS amount
  */
-void VoxieBox::showVPS(int posX, int posY)
-{	
+double VoxieBox::showVPS(int posX, int posY)
+{
 	int pcol = 0x006666;
 	int wcol = 0x00ffff;
 
 	if (getVPS() <= 60) { pcol = 0x006600; wcol = 0x00FF60; }
-	if (getVPS() <= 40) { pcol = 0x666600; wcol = 0x00FF00;	}
+	if (getVPS() <= 40) { pcol = 0x666600; wcol = 0x00FF00; }
 	if (getVPS() <= 15) { pcol = 0x663300; wcol = 0xFFFF00; }
-	if (getVPS() <= 10) { pcol = 0x660000; wcol = 0xFF3030;	}
-	if (getVPS() <= 5)  { pcol = 0xDD0000; wcol = 0xFF0000;	}
-	
+	if (getVPS() <= 10) { pcol = 0x660000; wcol = 0xFF3030; }
+	if (getVPS() <= 5) { pcol = 0xDD0000; wcol = 0xFF0000; }
+
 	debugDrawBoxFill(posX, posY, posX + 235, posY + 66, pcol);
-//	debugText(posX, posY, 0xffffff, -1, "VPS %2.2f\n\nRun Time %2.1f (delta %2.3f) \nVxBxCPP.DLL ver	 : %lld\nVoxieBox.DLL ver	: %lld\nCompiled On : %s, %s ", getVPS(), getTime(), getDeltaTime(), getVxCppVersion(), voxie_getversion(), __DATE__, __TIME__);
-	
+	//	debugText(posX, posY, 0xffffff, -1, "VPS %2.2f\n\nRun Time %2.1f (delta %2.3f) \nVxBxCPP.DLL ver	 : %lld\nVoxieBox.DLL ver	: %lld\nCompiled On : %s, %s ", getVPS(), getTime(), getDeltaTime(), getVxCppVersion(), voxie_getversion(), __DATE__, __TIME__);
+
 	if (getVPS() > 60) { debugText(posX + 155, posY, 0x00FF00, -1, "Great VPS"); }
 	if (getVPS() <= 15 && int(getTime()) % 2) { debugText(posX + 150, posY, 0xFF6666, -1, "Low VPS"); }
 
@@ -721,7 +722,8 @@ void VoxieBox::showVPS(int posX, int posY)
 	debugText(posX + 20, posY, 0xffffff, -1, "VoxieBox.DLL ver   : %lld", voxie_getversion());
 	posY += 11;
 	debugText(posX + 20, posY, 0xffffff, -1, "Compiled On : %s, %s ", __DATE__, __TIME__);
-	
+
+	return getVPS();
 }
 
 /**
@@ -743,7 +745,7 @@ void VoxieBox::reportVoxieFrame(int posX, int posY) {
 * @param posY the Y position of the report
 * @param VF a pointer for the voxie_frame_t struct to report on
 */
-void VoxieBox::reportVoxieFrame(int posX, int posY, voxie_frame_t * VF)
+void VoxieBox::reportVoxieFrame(int posX, int posY, voxie_frame_t* VF)
 {
 	int col = 0xffff00;
 	debugDrawBoxFill(posX, posY, posX + 160, posY + 65, 0x333300);
@@ -772,14 +774,14 @@ void VoxieBox::reportVoxieWind(int posX, int posY) {
 * @param posY the Y position of the report
 * @param VW a pointer fo the voxie_wind_t struct to report on
 */
-void VoxieBox::reportVoxieWind(int posX, int posY, voxie_wind_t * VW )
+void VoxieBox::reportVoxieWind(int posX, int posY, voxie_wind_t* VW)
 {
 
 	int col[7] = { 0xAA0000, 0xFF9900, 0xFFFF00, 0x00FF00, 0x00FFFF, 0x4444FF, 0x9900FF };
 	int i = 0;
 	int displayDetect = VW->dispnum;
 	if (displayDetect > 3) displayDetect = 3;
-	debugDrawBoxFill(posX, posY, posX + 850, posY + 170 + (displayDetect * 36) , 0x3333333);
+	debugDrawBoxFill(posX, posY, posX + 850, posY + 170 + (displayDetect * 36), 0x3333333);
 	debugText(posX + 350, posY, 0xFFFFFF, -1, "Voxie Window Report");
 
 	posY += 24;
@@ -798,7 +800,7 @@ void VoxieBox::reportVoxieWind(int posX, int posY, voxie_wind_t * VW )
 			VW->disp[i].mono_r, VW->disp[i].mono_g, VW->disp[i].mono_b,
 			VW->disp[i].mirrorx, VW->disp[i].mirrory);
 	}
-	
+
 
 	posY += 36 + (displayDetect * 36);
 	// Sync & Hardware
@@ -861,8 +863,8 @@ void VoxieBox::setView(float xMin, float yMin, float zMin, float xMax, float yMa
 
 /**
  *  Same setView() but using point3D for coordinates instead of 6 floats.
- *  
- *  @param LUT the Left, Upper, Top position 
+ *
+ *  @param LUT the Left, Upper, Top position
  *  @param RDB the Right, Down, Bottom position
  */
 void VoxieBox::setView(point3d LUT, point3d RDB)
@@ -877,7 +879,7 @@ void VoxieBox::setView(point3d LUT, point3d RDB)
  *  @param y0 y point on the center of the mask plane
  *  @param z0 z point on the center of the mask plane
  *  @param nx The normal vector; the magnitude of this vector determines the thickness of the plane.
- *  @param ny The normal vector; the magnitude of this vector determines the thickness of the plane. 
+ *  @param ny The normal vector; the magnitude of this vector determines the thickness of the plane.
  *  @param nz The normal vector; the magnitude of this vector determines the thickness of the plane.
  */
 void VoxieBox::setMaskPlane(float x0, float y0, float z0, float nx, float ny, float nz)
@@ -886,7 +888,7 @@ void VoxieBox::setMaskPlane(float x0, float y0, float z0, float nx, float ny, fl
 }
 
 
-/** changes the global normal vector (vw.normhax) for shading. Pass in three 0's to disable. 
+/** changes the global normal vector (vw.normhax) for shading. Pass in three 0's to disable.
  * Alters the global normal vector for shading. Shading only works with models which have vertices
  * Pass 3 0's to disable shading.
  * @param horizontalAngle the horizontal angle -180 to 180
@@ -911,11 +913,11 @@ void VoxieBox::flushGfx(void)
 
 
 /** Frees a filename from VoxieBox.dll internal cache (any filename passed to voxie_drawmeshtex() / drawMesh, voxie_drawheimap() / drawHeightMap, voxie_drawspr() / drawModel)
- *  @param fileName the file path and file name of the file to remove from the internal cache 
+ *  @param fileName the file path and file name of the file to remove from the internal cache
  *  NOTE: Pass a '*' file name to remove entire internal cache
  *
  */
-void VoxieBox::freeGfx(char * fileName)
+void VoxieBox::freeGfx(char* fileName)
 {
 	voxie_free(fileName);
 }
@@ -932,10 +934,10 @@ void VoxieBox::freeGfx(char * fileName)
  *  @param  xo xo keystone adjusted output point
  *	@param  yo yo keystone adjusted output point
  */
-void VoxieBox::setProject(int dispNum, int dir, float x, float y, int z, float * xo, float * yo)
+void VoxieBox::setProject(int dispNum, int dir, float x, float y, int z, float* xo, float* yo)
 {
-	voxie_project(dispNum, dir, x, y, z, xo, yo); 
-	
+	voxie_project(dispNum, dir, x, y, z, xo, yo);
+
 }
 
 /**
@@ -1044,7 +1046,7 @@ void VoxieBox::setAspectZ(float newAspectZ)
 
 //! Set all the internal voxie_wind_t's aspect ratio values and update the voxie_wind_t
 /**
- *  @param newAspect the new aspect ratios for the volumetric display. 
+ *  @param newAspect the new aspect ratios for the volumetric display.
  */
 void VoxieBox::setAspect(point3d newAspect)
 {
@@ -1064,97 +1066,99 @@ void VoxieBox::shutdown()
 }
 
 //! loads the VoxieBox.dll library into memory to activate VoxieBox.dll's functions. 
-int VoxieBox::voxie_load(voxie_wind_t *vw)
+int VoxieBox::voxie_load(voxie_wind_t* vw)
 {
 #if defined(_WIN32)
 
 	hvoxie = LoadLibrary("voxiebox.dll");
-	
-	if (!hvoxie) { 
-		const char * result = std::to_string(GetLastError()).c_str(); 
+
+	if (!hvoxie) {
+		const char* result = std::to_string(GetLastError()).c_str();
 		MessageBox(0, result, "", MB_OK);
-		return(-1); 
+		return(-1);
 	};
 
-	voxie_loadini_int = (void(__cdecl *)(voxie_wind_t*))GetProcAddress(hvoxie, "voxie_loadini_int");
-	voxie_getvw = (void(__cdecl *)(voxie_wind_t*))GetProcAddress(hvoxie, "voxie_getvw");
-	voxie_init = (int(__cdecl *)(voxie_wind_t*))GetProcAddress(hvoxie, "voxie_init");
-	voxie_uninit_int = (void(__cdecl *)(int))GetProcAddress(hvoxie, "voxie_uninit_int");
-	voxie_mountzip = (void(__cdecl *)(char*))GetProcAddress(hvoxie, "voxie_mountzip");
-	voxie_free = (void(__cdecl *)(char*))GetProcAddress(hvoxie, "voxie_free");
-	voxie_getversion = (__int64(__cdecl *)(void))GetProcAddress(hvoxie, "voxie_getversion");
-	voxie_gethwnd = (HWND(__cdecl *)(void))GetProcAddress(hvoxie, "voxie_gethwnd");
-	voxie_breath = (int(__cdecl *)(voxie_inputs_t*))GetProcAddress(hvoxie, "voxie_breath");
-	voxie_quitloop = (void(__cdecl *)(void))GetProcAddress(hvoxie, "voxie_quitloop");
-	voxie_klock = (double(__cdecl *)(void))GetProcAddress(hvoxie, "voxie_klock");
-	voxie_keystat = (int(__cdecl *)(int))GetProcAddress(hvoxie, "voxie_keystat");
-	voxie_keyread = (int(__cdecl *)(void))GetProcAddress(hvoxie, "voxie_keyread");
-	voxie_touch_custom = (void(__cdecl *)(const touchkey_t *, int))GetProcAddress(hvoxie, "voxie_touch_custom");
-	voxie_xbox_read = (int(__cdecl *)(int, voxie_xbox_t *))GetProcAddress(hvoxie, "voxie_xbox_read");
-	voxie_xbox_write = (void(__cdecl *)(int, float, float))GetProcAddress(hvoxie, "voxie_xbox_write");
-	voxie_nav_read = (int(__cdecl *)(int, voxie_nav_t *))GetProcAddress(hvoxie, "voxie_nav_read");
-	voxie_touch_read = (int(__cdecl *)(int *index, int *xVal, int *yVal, int *packetIndex))GetProcAddress(hvoxie, "voxie_touch_read");
-	voxie_menu_reset = (void(__cdecl *)(int(*)(int, char*, double, int, void*), void*, char*))GetProcAddress(hvoxie, "voxie_menu_reset");
-	voxie_menu_addtab = (void(__cdecl *)(char*, int, int, int, int))GetProcAddress(hvoxie, "voxie_menu_addtab");
-	voxie_menu_additem = (void(__cdecl *)(char*, int, int, int, int, int, int, int, int, double, double, double, double, double))GetProcAddress(hvoxie, "voxie_menu_additem");
-	voxie_menu_updateitem = (void(__cdecl *)(int, char*, int, double))GetProcAddress(hvoxie, "voxie_menu_updateitem");
-	voxie_volcap = (void(__cdecl *)(const char*, int, int))GetProcAddress(hvoxie, "voxie_volcap");
-	voxie_setview = (void(__cdecl *)(voxie_frame_t*, float, float, float, float, float, float))GetProcAddress(hvoxie, "voxie_setview");
-	voxie_setmaskplane = (void(__cdecl *)(voxie_frame_t*, float, float, float, float, float, float))GetProcAddress(hvoxie, "voxie_setmaskplane");
-	voxie_setnorm = (void(__cdecl *)(float nx, float ny, float nz))GetProcAddress(hvoxie, "voxie_setnorm");
-	voxie_frame_start = (int(__cdecl *)(voxie_frame_t*))GetProcAddress(hvoxie, "voxie_frame_start");
-	voxie_flush = (void(__cdecl *)(void))GetProcAddress(hvoxie, "voxie_flush");
-	voxie_frame_end = (void(__cdecl *)(void))GetProcAddress(hvoxie, "voxie_frame_end");
-	voxie_setleds = (void(__cdecl *)(int, int, int, int))GetProcAddress(hvoxie, "voxie_setleds");
-	voxie_drawvox = (void(__cdecl *)(voxie_frame_t*, float, float, float, int))GetProcAddress(hvoxie, "voxie_drawvox");
-	voxie_drawbox = (void(__cdecl *)(voxie_frame_t*, float, float, float, float, float, float, int, int))GetProcAddress(hvoxie, "voxie_drawbox");
-	voxie_drawlin = (void(__cdecl *)(voxie_frame_t*, float, float, float, float, float, float, int))GetProcAddress(hvoxie, "voxie_drawlin");
-	voxie_drawpol = (void(__cdecl *)(voxie_frame_t*, pol_t*, int, int))GetProcAddress(hvoxie, "voxie_drawpol");
-	voxie_drawmeshtex = (void(__cdecl *)(voxie_frame_t*, char*, poltex_t*, int, int*, int, int, int))GetProcAddress(hvoxie, "voxie_drawmeshtex");
-	voxie_drawsph = (void(__cdecl *)(voxie_frame_t*, float, float, float, float, int, int))GetProcAddress(hvoxie, "voxie_drawsph");
-	voxie_drawcone = (void(__cdecl *)(voxie_frame_t*, float, float, float, float, float, float, float, float, int, int))GetProcAddress(hvoxie, "voxie_drawcone");
-	voxie_drawspr = (int(__cdecl *)(voxie_frame_t*, const char*, point3d*, point3d*, point3d*, point3d*, int))GetProcAddress(hvoxie, "voxie_drawspr");
-	voxie_drawspr_ext = (int(__cdecl *)(voxie_frame_t*, const char*, point3d*, point3d*, point3d*, point3d*, int, float, float, int))GetProcAddress(hvoxie, "voxie_drawspr_ext");
-	voxie_printalph = (void(__cdecl *)(voxie_frame_t*, point3d*, point3d*, point3d*, int, const char*))GetProcAddress(hvoxie, "voxie_printalph");
-	voxie_printalph_ext = (void(__cdecl *)(voxie_frame_t*, point3d*, point3d*, point3d*, float, int, const char*))GetProcAddress(hvoxie, "voxie_printalph_ext");
-	voxie_drawcube = (void(__cdecl *)(voxie_frame_t*, point3d*, point3d*, point3d*, point3d*, int, int))GetProcAddress(hvoxie, "voxie_drawcube");
-	voxie_drawheimap = (float(__cdecl *)(voxie_frame_t*, char*, point3d*, point3d*, point3d*, point3d*, int, int, int))GetProcAddress(hvoxie, "voxie_drawheimap");
-	voxie_drawdicom = (void(__cdecl *)(voxie_frame_t*, voxie_dicom_t*, const char *, point3d*, point3d*, point3d*, point3d*, int*, int*))GetProcAddress(hvoxie, "voxie_drawdicom");
-	voxie_debug_print6x8 = (void(__cdecl *)(int x, int y, int fcol, int bcol, const char *st))      GetProcAddress(hvoxie, "voxie_debug_print6x8");
-	voxie_debug_drawpix = (void(__cdecl *)(int x, int y, int col))                                 GetProcAddress(hvoxie, "voxie_debug_drawpix");
-	voxie_debug_drawhlin = (void(__cdecl *)(int x0, int x1, int y, int col))                        GetProcAddress(hvoxie, "voxie_debug_drawhlin");
-	voxie_debug_drawline = (void(__cdecl *)(float x0, float y0, float x1, float y1, int col))       GetProcAddress(hvoxie, "voxie_debug_drawline");
-	voxie_debug_drawcirc = (void(__cdecl *)(int xc, int yc, int r, int col))                        GetProcAddress(hvoxie, "voxie_debug_drawcirc");
-	voxie_debug_drawrectfill = (void(__cdecl *)(int x0, int y0, int x1, int y1, int col))               GetProcAddress(hvoxie, "voxie_debug_drawrectfill");
-	voxie_debug_drawcircfill = (void(__cdecl *)(int x, int y, int r, int col))               GetProcAddress(hvoxie, "voxie_debug_drawcircfill");
-	voxie_debug_drawtile =	(void(__cdecl *)(tiletype *src, int x, int y))					 GetProcAddress(hvoxie, "voxie_debug_drawtile");
-	voxie_playsound = (int(__cdecl *)(const char*, int, int, int, float))GetProcAddress(hvoxie, "voxie_playsound");
-	voxie_playsound_update = (void(__cdecl *)(int, int, int, int, float))GetProcAddress(hvoxie, "voxie_playsound_update");
-	voxie_playsound_seek = (void(__cdecl *)(int, double, int))GetProcAddress(hvoxie, "voxie_playsound_seek");
-	voxie_setaudplaycb = (void(__cdecl *)(void(*userplayfunc)(int*, int)))GetProcAddress(hvoxie, "voxie_setaudplaycb");
-	voxie_setaudreccb = (void(__cdecl *)(void(*userrecfunc)(int*, int)))GetProcAddress(hvoxie, "voxie_setaudreccb");
-	voxie_rec_open = (int(__cdecl *)(voxie_rec_t*, char*, int))GetProcAddress(hvoxie, "voxie_rec_open");
-	voxie_rec_play = (int(__cdecl *)(voxie_rec_t*, int))      GetProcAddress(hvoxie, "voxie_rec_play");
-	voxie_rec_close = (void(__cdecl *)(voxie_rec_t*))          GetProcAddress(hvoxie, "voxie_rec_close");
-		
-	//Ken's ZIP functions
-	kpzload = (void(__cdecl *)(const char* fileName, INT_PTR* fptr, INT_PTR* bpl, INT_PTR* xsiz, INT_PTR* ysiz))        GetProcAddress(hvoxie, "kpzload");
-	kpgetdim = (int(__cdecl *)(const char * buffer, int nby, int * xsiz, int * ysiz))                  GetProcAddress(hvoxie, "kpgetdim");
-	kprender = (int(__cdecl *)(const char * buffer, int nby, INT_PTR fptr, int bpl, int xsiz, int ysiz, int xoff, int yoff))GetProcAddress(hvoxie, "kprender");
-	kzaddstack = (int(__cdecl *)(const char * fileName))GetProcAddress(hvoxie, "kzaddstack");
-	kzuninit = (void(__cdecl *)(void))       GetProcAddress(hvoxie, "kzuninit");
-	kzsetfil = (void(__cdecl *)(FILE* fileName))      GetProcAddress(hvoxie, "kzsetfil");
-	kzopen = (INT_PTR(__cdecl *)(const char* ))GetProcAddress(hvoxie, "kzopen");
-	kzfindfilestart = (void(__cdecl *)(const char* st))GetProcAddress(hvoxie, "kzfindfilestart");
-	kzfindfile = (int(__cdecl *)(kzfind_t * find, kzfileinfo_t *fileinfo))      GetProcAddress(hvoxie, "kzfindfile");
-	kzread = (int(__cdecl *)(kzfile_t * kzfile, void * buffer, unsigned int leng))  GetProcAddress(hvoxie, "kzread");
-	kzfilelength = (int(__cdecl *)(kzfile_t * kzfile))       GetProcAddress(hvoxie, "kzfilelength");
+	voxie_loadini_int = (void(__cdecl*)(voxie_wind_t*))GetProcAddress(hvoxie, "voxie_loadini_int");
+	voxie_getvw = (void(__cdecl*)(voxie_wind_t*))GetProcAddress(hvoxie, "voxie_getvw");
+	voxie_init = (int(__cdecl*)(voxie_wind_t*))GetProcAddress(hvoxie, "voxie_init");
+	voxie_uninit_int = (void(__cdecl*)(int))GetProcAddress(hvoxie, "voxie_uninit_int");
+	voxie_mountzip = (void(__cdecl*)(char*))GetProcAddress(hvoxie, "voxie_mountzip");
+	voxie_free = (void(__cdecl*)(char*))GetProcAddress(hvoxie, "voxie_free");
+	voxie_getversion = (__int64(__cdecl*)(void))GetProcAddress(hvoxie, "voxie_getversion");
+	voxie_gethwnd = (HWND(__cdecl*)(void))GetProcAddress(hvoxie, "voxie_gethwnd");
+	voxie_breath = (int(__cdecl*)(voxie_inputs_t*))GetProcAddress(hvoxie, "voxie_breath");
+	voxie_quitloop = (void(__cdecl*)(void))GetProcAddress(hvoxie, "voxie_quitloop");
+	voxie_klock = (double(__cdecl*)(void))GetProcAddress(hvoxie, "voxie_klock");
+	voxie_keystat = (int(__cdecl*)(int))GetProcAddress(hvoxie, "voxie_keystat");
+	voxie_keyread = (int(__cdecl*)(void))GetProcAddress(hvoxie, "voxie_keyread");
+	voxie_touch_custom = (void(__cdecl*)(const touchkey_t*, int))GetProcAddress(hvoxie, "voxie_touch_custom");
+	voxie_xbox_read = (int(__cdecl*)(int, voxie_xbox_t*))GetProcAddress(hvoxie, "voxie_xbox_read");
+	voxie_xbox_write = (void(__cdecl*)(int, float, float))GetProcAddress(hvoxie, "voxie_xbox_write");
+	voxie_nav_read = (int(__cdecl*)(int, voxie_nav_t*))GetProcAddress(hvoxie, "voxie_nav_read");
+	voxie_touch_read = (int(__cdecl*)(int* index, int* xVal, int* yVal, int* packetIndex))GetProcAddress(hvoxie, "voxie_touch_read");
+	voxie_menu_reset = (void(__cdecl*)(int(*)(int, char*, double, int, void*), void*, char*))GetProcAddress(hvoxie, "voxie_menu_reset");
+	voxie_menu_addtab = (void(__cdecl*)(char*, int, int, int, int))GetProcAddress(hvoxie, "voxie_menu_addtab");
+	voxie_menu_additem = (void(__cdecl*)(char*, int, int, int, int, int, int, int, int, double, double, double, double, double))GetProcAddress(hvoxie, "voxie_menu_additem");
+	voxie_menu_updateitem = (void(__cdecl*)(int, char*, int, double))GetProcAddress(hvoxie, "voxie_menu_updateitem");
+	voxie_volcap = (void(__cdecl*)(const char*, int, int))GetProcAddress(hvoxie, "voxie_volcap");
+	voxie_setview = (void(__cdecl*)(voxie_frame_t*, float, float, float, float, float, float))GetProcAddress(hvoxie, "voxie_setview");
+	voxie_setmaskplane = (void(__cdecl*)(voxie_frame_t*, float, float, float, float, float, float))GetProcAddress(hvoxie, "voxie_setmaskplane");
+	voxie_setnorm = (void(__cdecl*)(float nx, float ny, float nz))GetProcAddress(hvoxie, "voxie_setnorm");
+	voxie_frame_start = (int(__cdecl*)(voxie_frame_t*))GetProcAddress(hvoxie, "voxie_frame_start");
+	voxie_flush = (void(__cdecl*)(void))GetProcAddress(hvoxie, "voxie_flush");
+	voxie_frame_end = (void(__cdecl*)(void))GetProcAddress(hvoxie, "voxie_frame_end");
+	voxie_setleds = (void(__cdecl*)(int, int, int, int))GetProcAddress(hvoxie, "voxie_setleds");
+	voxie_drawvox = (void(__cdecl*)(voxie_frame_t*, float, float, float, int))GetProcAddress(hvoxie, "voxie_drawvox");
+	voxie_drawbox = (void(__cdecl*)(voxie_frame_t*, float, float, float, float, float, float, int, int))GetProcAddress(hvoxie, "voxie_drawbox");
+	voxie_drawlin = (void(__cdecl*)(voxie_frame_t*, float, float, float, float, float, float, int))GetProcAddress(hvoxie, "voxie_drawlin");
+	voxie_drawpol = (void(__cdecl*)(voxie_frame_t*, pol_t*, int, int))GetProcAddress(hvoxie, "voxie_drawpol");
+	voxie_drawmeshtex = (void(__cdecl*)(voxie_frame_t*, char*, poltex_t*, int, int*, int, int, int))GetProcAddress(hvoxie, "voxie_drawmeshtex");
+	voxie_drawsph = (void(__cdecl*)(voxie_frame_t*, float, float, float, float, int, int))GetProcAddress(hvoxie, "voxie_drawsph");
+	voxie_drawcone = (void(__cdecl*)(voxie_frame_t*, float, float, float, float, float, float, float, float, int, int))GetProcAddress(hvoxie, "voxie_drawcone");
+	voxie_drawspr_getextents = (int(__cdecl*)(const char*, extents_t*, int))GetProcAddress(hvoxie, "voxie_drawspr_getextents");
+	voxie_drawspr = (int(__cdecl*)(voxie_frame_t*, const char*, point3d*, point3d*, point3d*, point3d*, int))GetProcAddress(hvoxie, "voxie_drawspr");
+	voxie_drawspr_ext = (int(__cdecl*)(voxie_frame_t*, const char*, point3d*, point3d*, point3d*, point3d*, int, float, float, int))GetProcAddress(hvoxie, "voxie_drawspr_ext");
+	voxie_printalph = (void(__cdecl*)(voxie_frame_t*, point3d*, point3d*, point3d*, int, const char*))GetProcAddress(hvoxie, "voxie_printalph");
+	voxie_printalph_ext = (void(__cdecl*)(voxie_frame_t*, point3d*, point3d*, point3d*, float, int, const char*))GetProcAddress(hvoxie, "voxie_printalph_ext");
+	voxie_drawcube = (void(__cdecl*)(voxie_frame_t*, point3d*, point3d*, point3d*, point3d*, int, int))GetProcAddress(hvoxie, "voxie_drawcube");
+	voxie_drawheimap = (float(__cdecl*)(voxie_frame_t*, char*, point3d*, point3d*, point3d*, point3d*, int, int, int))GetProcAddress(hvoxie, "voxie_drawheimap");
+	voxie_drawdicom = (void(__cdecl*)(voxie_frame_t*, voxie_dicom_t*, const char*, point3d*, point3d*, point3d*, point3d*, int*, int*))GetProcAddress(hvoxie, "voxie_drawdicom");
+	voxie_debug_print6x8 = (void(__cdecl*)(int x, int y, int fcol, int bcol, const char* st))      GetProcAddress(hvoxie, "voxie_debug_print6x8");
+	voxie_debug_drawpix = (void(__cdecl*)(int x, int y, int col))                                 GetProcAddress(hvoxie, "voxie_debug_drawpix");
+	voxie_debug_drawhlin = (void(__cdecl*)(int x0, int x1, int y, int col))                        GetProcAddress(hvoxie, "voxie_debug_drawhlin");
+	voxie_debug_drawline = (void(__cdecl*)(float x0, float y0, float x1, float y1, int col))       GetProcAddress(hvoxie, "voxie_debug_drawline");
+	voxie_debug_drawcirc = (void(__cdecl*)(int xc, int yc, int r, int col))                        GetProcAddress(hvoxie, "voxie_debug_drawcirc");
+	voxie_debug_drawrectfill = (void(__cdecl*)(int x0, int y0, int x1, int y1, int col))               GetProcAddress(hvoxie, "voxie_debug_drawrectfill");
+	voxie_debug_drawcircfill = (void(__cdecl*)(int x, int y, int r, int col))               GetProcAddress(hvoxie, "voxie_debug_drawcircfill");
+	voxie_debug_drawtile = (void(__cdecl*)(tiletype * src, int x, int y))					 GetProcAddress(hvoxie, "voxie_debug_drawtile");
+	voxie_playsound = (int(__cdecl*)(const char*, int, int, int, float))GetProcAddress(hvoxie, "voxie_playsound");
+	voxie_playsound_update = (void(__cdecl*)(int, int, int, int, float))GetProcAddress(hvoxie, "voxie_playsound_update");
+	voxie_playsound_seek = (void(__cdecl*)(int, double, int))GetProcAddress(hvoxie, "voxie_playsound_seek");
+	voxie_setaudplaycb = (void(__cdecl*)(void(*userplayfunc)(int*, int)))GetProcAddress(hvoxie, "voxie_setaudplaycb");
+	voxie_setaudreccb = (void(__cdecl*)(void(*userrecfunc)(int*, int)))GetProcAddress(hvoxie, "voxie_setaudreccb");
+	voxie_rec_open = (int(__cdecl*)(voxie_rec_t*, char*, int))GetProcAddress(hvoxie, "voxie_rec_open");
+	voxie_rec_play = (int(__cdecl*)(voxie_rec_t*, int))      GetProcAddress(hvoxie, "voxie_rec_play");
+	voxie_rec_close = (void(__cdecl*)(voxie_rec_t*))          GetProcAddress(hvoxie, "voxie_rec_close");
 
-	kzseek = (int(__cdecl *)(kzfile_t * kzfile, int offset, int whence))    GetProcAddress(hvoxie, "kzseek");
-	kztell = (int(__cdecl *)(kzfile_t * kzfile))       GetProcAddress(hvoxie, "kztell");
-	kzgetc = (int(__cdecl *)(kzfile_t * kzfile))       GetProcAddress(hvoxie, "kzgetc");
-	kzeof = (int(__cdecl *)(kzfile_t * kzfile))       GetProcAddress(hvoxie, "kzeof");
-	kzclose = (void(__cdecl *)(kzfile_t * kzfile))       GetProcAddress(hvoxie, "kzclose");
+	//Ken's ZIP functions
+	kpzload = (int(__cdecl*)(const char* fileName, INT_PTR * fptr, INT_PTR * bpl, INT_PTR * xsiz, INT_PTR * ysiz))        GetProcAddress(hvoxie, "kpzload");
+	kpgetdim = (int(__cdecl*)(const char* buffer, int nby, int* xsiz, int* ysiz))                  GetProcAddress(hvoxie, "kpgetdim");
+	kprender = (int(__cdecl*)(const char* buffer, int nby, INT_PTR fptr, int bpl, int xsiz, int ysiz, int xoff, int yoff))GetProcAddress(hvoxie, "kprender");
+	kzaddstack = (int(__cdecl*)(const char* fileName))GetProcAddress(hvoxie, "kzaddstack");
+	kzuninit = (void(__cdecl*)(void))       GetProcAddress(hvoxie, "kzuninit");
+	kzsetfil = (kzfile_t*(__cdecl*)(FILE * fileName))      GetProcAddress(hvoxie, "kzsetfil");
+	kzopen = (kzfile_t * (__cdecl*)(const char*))GetProcAddress(hvoxie, "kzopen");
+	kzopen_ext = (kzfile_t * (__cdecl*)(const char*, const char*, const char*))GetProcAddress(hvoxie, "kzopen_ext");
+	kzfindfilestart = (kzfind_t * (__cdecl*)(const char*))GetProcAddress(hvoxie, "kzfindfilestart");
+	kzfindfile = (int(__cdecl*)(kzfind_t * find, kzfileinfo_t * fileinfo))      GetProcAddress(hvoxie, "kzfindfile");
+	kzread = (int(__cdecl*)(kzfile_t * kzfile, void* buffer, unsigned int leng))  GetProcAddress(hvoxie, "kzread");
+	kzfilelength = (int(__cdecl*)(kzfile_t * kzfile))       GetProcAddress(hvoxie, "kzfilelength");
+
+	kzseek = (int(__cdecl*)(kzfile_t * kzfile, int offset, int whence))    GetProcAddress(hvoxie, "kzseek");
+	kztell = (int(__cdecl*)(kzfile_t * kzfile))       GetProcAddress(hvoxie, "kztell");
+	kzgetc = (int(__cdecl*)(kzfile_t * kzfile))       GetProcAddress(hvoxie, "kzgetc");
+	kzeof = (int(__cdecl*)(kzfile_t * kzfile))       GetProcAddress(hvoxie, "kzeof");
+	kzclose = (void(__cdecl*)(kzfile_t * kzfile))       GetProcAddress(hvoxie, "kzclose");
 #endif
 
 	voxie_loadini_int(vw);
@@ -1170,19 +1174,19 @@ void VoxieBox::voxie_uninit(int mode)
 }
 
 //! Renders a string (printf-style) unto the volumetric display.
-/** 
- *  Used for displaying text on the volumetric display. Best to 
- *  keep the text to be near the top or bottom of the display and flat for maximum readability 
+/**
+ *  Used for displaying text on the volumetric display. Best to
+ *  keep the text to be near the top or bottom of the display and flat for maximum readability
  *
- *	@param pos	the left, up, top position for the text to start. 
- *	@param r right vector use r.x value to set the width of the text. Set r.y and r.z to 0 for straight text 
+ *	@param pos	the left, up, top position for the text to start.
+ *	@param r right vector use r.x value to set the width of the text. Set r.y and r.z to 0 for straight text
  *	@param d down vector use d.y value to set the height of the text. Set d.x and d.z to 0 for straight text
  *	@param col int hex color value. (0xRGB)
  *	@param fmt*	Extension for C/C++ allowing use of this function printf-style. Example '(char*) Hello World Show a int %d", myInt'
  *
  *  Must be called between startFrame() & endFrame() functions.
  */
-void VoxieBox::drawText(point3d *pos, point3d *rVector, point3d *dVector, int col, const char *fmt, ...)
+void VoxieBox::drawText(point3d* pos, point3d* rVector, point3d* dVector, int col, const char* fmt, ...)
 {
 	va_list arglist;
 	char st[1024];
@@ -1192,7 +1196,7 @@ void VoxieBox::drawText(point3d *pos, point3d *rVector, point3d *dVector, int co
 #if defined(_WIN32)
 	if (_vsnprintf((char*)&st, sizeof(st) - 1, fmt, arglist)) st[sizeof(st) - 1] = 0;
 #else
-	if (vsprintf(((char*))&st, fmt, arglist)) st[sizeof(st) - 1] = 0; //FUK:unsafe!
+	if (vsprintf(((char*)) & st, fmt, arglist)) st[sizeof(st) - 1] = 0; //FUK:unsafe!
 #endif
 	va_end(arglist);
 
@@ -1213,21 +1217,21 @@ void VoxieBox::drawText(point3d *pos, point3d *rVector, point3d *dVector, int co
  *
  *  Must be called between startFrame() & endFrame() functions.
  */
-void VoxieBox::drawText(point3d *pos, point3d *rVector, point3d *dVector, float size, int col, const char *fmt, ...)
+void VoxieBox::drawTextExt(point3d* pos, point3d* rVector, point3d* dVector, float size, int col, const char* fmt, ...)
 {
 	va_list arglist;
-	char st[1024];
+	char st[2024];
 
 	if (!fmt) return;
 	va_start(arglist, fmt);
 #if defined(_WIN32)
 	if (_vsnprintf((char*)&st, sizeof(st) - 1, fmt, arglist)) st[sizeof(st) - 1] = 0;
 #else
-	if (vsprintf(((char*))&st, fmt, arglist)) st[sizeof(st) - 1] = 0; //FUK:unsafe!
+	if (vsprintf(((char*)) & st, fmt, arglist)) st[sizeof(st) - 1] = 0; //FUK:unsafe!
 #endif
 	va_end(arglist);
 
-	voxie_printalph_ext(&vf, pos, rVector, dVector, size, col, st);
+voxie_printalph_ext(&vf, pos, rVector, dVector, size, col, st);
 }
 
 
@@ -1247,74 +1251,74 @@ void VoxieBox::drawText(point3d *pos, point3d *rVector, point3d *dVector, float 
  *
  *  Must be called between startFrame() & endFrame() functions.
  */
- void VoxieBox::drawTextSimp(point3d * pos, float textWidth, float textHeight, float hang, float vang, float tilt, int col, char * fmt, ...)
- {
-	 va_list arglist;
-	 point3d vx, vy;
-	 float f, ch, sh, cv, sv;
-	 char buf[1024];
+void VoxieBox::drawTextSimp(point3d* pos, float textWidth, float textHeight, float hang, float vang, float tilt, int col, char* fmt, ...)
+{
+	va_list arglist;
+	point3d vx, vy;
+	float f, ch, sh, cv, sv;
+	char buf[1024];
 
-	 if (!fmt) return;
-	 va_start(arglist, fmt);
+	if (!fmt) return;
+	va_start(arglist, fmt);
 #if defined(_WIN32)
-	 if (_vsnprintf((char *)&buf, sizeof(buf) - 1, fmt, arglist)) buf[sizeof(buf) - 1] = 0;
+	if (_vsnprintf((char*)&buf, sizeof(buf) - 1, fmt, arglist)) buf[sizeof(buf) - 1] = 0;
 #else
-	 if (vsprintf((char *)&buf, fmt, arglist)) buf[sizeof(buf) - 1] = 0; //NOTE:unsafe!
+	if (vsprintf((char*)&buf, fmt, arglist)) buf[sizeof(buf) - 1] = 0; //NOTE:unsafe!
 #endif
-	 va_end(arglist);
+	va_end(arglist);
 
-	 f = hang * (PI / 180.f); ch = cos(f); sh = sin(f);
-	 f = vang * (PI / 180.f); cv = cos(f); sv = sin(f);
-	 f = tilt * (PI / 180.f);
+	f = hang * (PI / 180.f); ch = cos(f); sh = sin(f);
+	f = vang * (PI / 180.f); cv = cos(f); sv = sin(f);
+	f = tilt * (PI / 180.f);
 
-	 vx.x = ch;
-	 vx.y = sh;
-	 vx.z = 0.f;
+	vx.x = ch;
+	vx.y = sh;
+	vx.z = 0.f;
 
-	 vy.x = -sh * cv;
-	 vy.y = ch * cv;
-	 vy.z = -sv;
+	vy.x = -sh * cv;
+	vy.y = ch * cv;
+	vy.z = -sv;
 
-	 this->rotVex(f, &vx, &vy);
+	this->rotVex(f, &vx, &vy);
 
-	 f = textWidth * .5f; vx.x *= f; vx.y *= f; vx.z *= f;
-	 f = textHeight * .5f; vy.x *= f; vy.y *= f; vy.z *= f;
-	 voxie_printalph(&vf, pos, &vx, &vy, col, buf);
+	f = textWidth * .5f; vx.x *= f; vx.y *= f; vx.z *= f;
+	f = textHeight * .5f; vy.x *= f; vy.y *= f; vy.z *= f;
+	voxie_printalph(&vf, pos, &vx, &vy, col, buf);
 
 
- }
+}
 
 //! display text and/or variables unto to secondary (touch) screen. Supports in printf() format specifiers. -1 for transparent color
 /**
  *				@example debugText(100,100, 0xffffff, -1, "Integer value %d, float value %1.2f", myInt, myFloat);
- *              would display a white text message 100 pixels from the left and 100 pixels from the top of touch the screen. 
- *				The message will say "Integer value X, float value Y" with X and Y being the values of those variables. 
- * 
+ *              would display a white text message 100 pixels from the left and 100 pixels from the top of touch the screen.
+ *				The message will say "Integer value X, float value Y" with X and Y being the values of those variables.
+ *
  *   @param x  x position to render text on the secondary (touch) screen
  *   @param y  y position to render text on the secondary (touch) screen
  *   @param fcol foreground color expressed as hexadecimal value (RGB) (-1 to indicate transparent)
  *   @param bcol background color expressed as hexadecimal value (RGB) (-1 to indicate transparent)
  *   @param fmt  ASCII null terminated text string (must be pre-formatted by caller).
  *
- *   Note: must be called within the start and end of the frame functions to appear.  
+ *   Note: must be called within the start and end of the frame functions to appear.
  */
-void VoxieBox::debugText(int x, int y, int fcol, int bcol, const char *fmt, ...)
+void VoxieBox::debugText(int x, int y, int fcol, int bcol, const char* fmt, ...)
 {
-	
+
 	va_list arglist;
 	char st[1024];
 
 	if (!fmt) return;
 	va_start(arglist, fmt);
 #if defined(_WIN32)
-	if (_vsnprintf((char *)&st, sizeof(st) - 1, fmt, arglist)) st[sizeof(st) - 1] = 0;
+	if (_vsnprintf((char*)&st, sizeof(st) - 1, fmt, arglist)) st[sizeof(st) - 1] = 0;
 #else
-	if (vsprintf((char *)&st, fmt, arglist)) st[sizeof(st) - 1] = 0; //FUK:unsafe!
+	if (vsprintf((char*)&st, fmt, arglist)) st[sizeof(st) - 1] = 0; //FUK:unsafe!
 #endif
 	va_end(arglist);
 
 	voxie_debug_print6x8(x, y, fcol, bcol, st);
-	
+
 }
 
 //! Draws a vertical bar for help tracking variables onto the secondary (touch) screen.
@@ -1336,12 +1340,12 @@ double VoxieBox::debugBar(int posx, int posy, double currentVal, double maxVal, 
 	const int POINTS = 4;
 	int BAR_WIDTH = 25;
 	int BAR_HEIGHT = 200;
-	
+
 	if (type == 2 || type == 3) {
 		BAR_WIDTH = 10;
 		BAR_HEIGHT = 50;
 	}
-	
+
 	int BAR_BACKGROUND_COL = 0x404040;
 	int MARKER_COL = 0x808080;
 	int BAR_COL[6] = { 0xFFFFFF,0x00FF90, 0x00FF00, 0x90FF00, 0xFFFF00, 0xFF0000 };
@@ -1383,14 +1387,14 @@ double VoxieBox::debugBar(int posx, int posy, double currentVal, double maxVal, 
 	if (type < 3) voxie_debug_drawrectfill(x + 10, y + (BAR_HEIGHT - (BAR_HEIGHT * vdisplay)), x + 10 + BAR_WIDTH, y + (BAR_HEIGHT), col);
 	else {
 		vdisplay /= 2;
-	
-		voxie_debug_drawrectfill(x + 10, y + (BAR_HEIGHT /2 - (BAR_HEIGHT * vdisplay) - 2), x + 10 + BAR_WIDTH, y + (BAR_HEIGHT / 2 - (BAR_HEIGHT * vdisplay) + 2), col);
+
+		voxie_debug_drawrectfill(x + 10, y + (BAR_HEIGHT / 2 - (BAR_HEIGHT * vdisplay) - 2), x + 10 + BAR_WIDTH, y + (BAR_HEIGHT / 2 - (BAR_HEIGHT * vdisplay) + 2), col);
 	}
 	return v * 100;
 }
 
 //! draws a cursor unto the volumetric display at the position specified.  
-/** 
+/**
  *  Draws a cursor on the display based on various input types that can be used.
  *  Supports custom positions or Mouse, Gamepad or SpaceNav
  *  @param pos			the position of the cursor to track
@@ -1400,7 +1404,7 @@ double VoxieBox::debugBar(int posx, int posy, double currentVal, double maxVal, 
  *
  *  Note : as with all drawing calls, Must be called between startFrame() & endFrame() functions.
  */
-void VoxieBox::drawCursor(point3d * pos, int inputType, int inputID, int col) {
+void VoxieBox::drawCursor(point3d* pos, int inputType, int inputID, int col) {
 
 	int curscolor = col;
 	int cursFillState = 0;
@@ -1414,48 +1418,48 @@ void VoxieBox::drawCursor(point3d * pos, int inputType, int inputID, int col) {
 
 	switch (inputType) {
 	default:
-		case 0: // mouse
+	case 0: // mouse
 		if (getMouseButtonState() != 0) cursFillState = 1;
 		break;
-			case 1: // joystick
+	case 1: // joystick
 		if (getJoyButtonIsDown(inputID, JOY_A)) cursFillState = 1;
 		if (getJoyButtonIsDown(inputID, JOY_B)) cursFillState = 1;
-			break;
-		case 2: // spaceNav
-		if (getNavButtonState(inputID) != 0) cursFillState = 1;
-			break;
-		case 3:
-			if (getMouseButtonState() != 0) cursFillState = 1;
-			for (i = 0; i < 4; i++) { if(getJoyButtonIsDown(i, JOY_A)) cursFillState = 1; }
-			for (i = 0; i < 4; i++) { if(getJoyButtonIsDown(i, JOY_B)) cursFillState = 1; }
-			for (i = 0; i < 4; i++) { if (getNavButtonState(i)) cursFillState = 1; }
 		break;
-			case 4:
+	case 2: // spaceNav
+		if (getNavButtonState(inputID) != 0) cursFillState = 1;
+		break;
+	case 3:
+		if (getMouseButtonState() != 0) cursFillState = 1;
+		for (i = 0; i < 4; i++) { if (getJoyButtonIsDown(i, JOY_A)) cursFillState = 1; }
+		for (i = 0; i < 4; i++) { if (getJoyButtonIsDown(i, JOY_B)) cursFillState = 1; }
+		for (i = 0; i < 4; i++) { if (getNavButtonState(i)) cursFillState = 1; }
+		break;
+	case 4:
 
 		break;
-		case 5:
-			cursFillState = 1;
-			break;
+	case 5:
+		cursFillState = 1;
+		break;
 	}
 
 	drawSphere(pos->x, pos->y, pos->z, CURSOR_RADIUS, cursFillState, curscolor);
 	drawVox(pos->x, pos->y, pos->z, curscolor);
 
-	if (inputType <= 1 ) { // if mouse or joy
+	if (inputType <= 1) { // if mouse or joy
 
 		drawLine(pos->x + LINE_WIDTH, pos->y, pos->z, pos->x - LINE_WIDTH, pos->y, pos->z, curscolor);
 		drawLine(pos->x, pos->y + LINE_WIDTH, pos->z, pos->x, pos->y - LINE_WIDTH, pos->z, curscolor);
 		drawLine(pos->x, pos->y, pos->z + LINE_WIDTH, pos->x, pos->y, pos->z - LINE_WIDTH, curscolor);
 
-	
+
 	}
 	else { // for spacenav - incorporates angle
 		z = getNavAngleDeltaAxis(inputID, 2) * .025;
 		x = getNavAngleDeltaAxis(inputID, 0) * .025;
 		y = getNavAngleDeltaAxis(inputID, 1) * .025;
 
-		drawLine(pos->x + (LINE_WIDTH), pos->y + z, pos->z + x, pos->x - (LINE_WIDTH), pos->y - z, pos->z - x, curscolor);	
-		drawLine(pos->x - z, pos->y + (LINE_WIDTH ), pos->z + y, pos->x + z, pos->y - LINE_WIDTH, pos->z - y, curscolor);
+		drawLine(pos->x + (LINE_WIDTH), pos->y + z, pos->z + x, pos->x - (LINE_WIDTH), pos->y - z, pos->z - x, curscolor);
+		drawLine(pos->x - z, pos->y + (LINE_WIDTH), pos->z + y, pos->x + z, pos->y - LINE_WIDTH, pos->z - y, curscolor);
 		drawLine(pos->x - x, pos->y - y, pos->z + LINE_WIDTH, pos->x + x, pos->y + y, pos->z - LINE_WIDTH, curscolor);
 
 	}
@@ -1464,9 +1468,9 @@ void VoxieBox::drawCursor(point3d * pos, int inputType, int inputID, int col) {
 
 //! returns the internal (in) voxie_inputs_t struct.
 /**
- * could be useful for users who want access to what the internal mouse inputs variables are at 
- * the internal voxie_inputs_t (which really just hold the mouse input variables) when updated when breath() is called.  
- * you can use setMouseState to override these values. 
+ * could be useful for users who want access to what the internal mouse inputs variables are at
+ * the internal voxie_inputs_t (which really just hold the mouse input variables) when updated when breath() is called.
+ * you can use setMouseState to override these values.
  *
  * @return the internal mouse state as a voxie_inputs_t
  */
@@ -1478,7 +1482,7 @@ voxie_inputs_t VoxieBox::getMouseState()
 /**
  * Probably not that useful but its here for some advanced use case
  * see voxie_inputs_t to understand the mouse structure*
- *  
+ *
  * @param newMouse the new mouse settings to pass in (pass in a full voxie_inputs_t struct)
  */
 void VoxieBox::setMouseState(voxie_inputs_t newMouse)
@@ -1524,7 +1528,7 @@ void VoxieBox::setMouseZSensitivity(float newAmount)
 }
 //! Set the time between mouse clicks to register a 'double click' (which triggers a true setting for getMouseDoubleClick())
 /**
- * @param timeThreshold		the time in seconds for 2 clicks to register as a 'double click' 
+ * @param timeThreshold		the time in seconds for 2 clicks to register as a 'double click'
  * Note use with VoxieBox::getMouseDoubleClick() to register double clicks.
  *
  * @see VoxieBox::getMouseDoubleClick()
@@ -1547,7 +1551,7 @@ double VoxieBox::getMouseDoubleClickThreshold()
 /**
  * @return Returns the current mouse Z sensitivity. Default is 0.0005
  */
-float VoxieBox::getMouseZSensitivity() 
+float VoxieBox::getMouseZSensitivity()
 {
 	return this->mouseZSensitivity;
 }
@@ -1577,7 +1581,7 @@ double VoxieBox::getNavSensitivity(int spaceNavID)
 
 //! Reports mouse input state information onto secondary (touch) screen
 /**
- *	This report uses the internal voxie_input_t struct as reference 
+ *	This report uses the internal voxie_input_t struct as reference
  *	(this could be overwritten with VoxieBox::setMouseState)
  *
  *	@param posX			the pixel x (horizontal) position to display the report
@@ -1601,7 +1605,7 @@ void VoxieBox::reportMouse(int posX, int posY, bool showCursor)
 	debugText(posX, posY, 0x33FFFF, -1, "But State:  Prev But State:   Ori:");
 	debugText(posX, posY, 0xFFFFFF, -1, "          %d                %d      %d",
 		getMouseButtonState(), getMousePrevButtonState(), getMouseOrientation()
-		);
+	);
 
 	posY += 13;
 
@@ -1612,12 +1616,12 @@ void VoxieBox::reportMouse(int posX, int posY, bool showCursor)
 	debugText(posX, posY, 0x33FFFF, -1, "LEFT   BUTTON (1)");
 	if (getMouseButtonOnUp(MOUSE_LEFT_BUTTON))			debugText(posX, posY, 0xFF00FF, -1, "                  U");
 	if (getMouseButtonOnDown(MOUSE_LEFT_BUTTON))			debugText(posX, posY, 0xFFFFFF, -1, "                   O");
-	if (getMouseButtonIsDown(MOUSE_LEFT_BUTTON))			debugText(posX, posY, 0x00FF00, -1,	"                    D");
+	if (getMouseButtonIsDown(MOUSE_LEFT_BUTTON))			debugText(posX, posY, 0x00FF00, -1, "                    D");
 	if (getMouseButtonDownTime(MOUSE_LEFT_BUTTON) > 1)	debugText(posX, posY, 0xFF0000, -1, "                     H");
 	if (getMouseDoubleClick(MOUSE_LEFT_BUTTON))			debugText(posX, posY, 0x00FFFF, -1, "                      C");
 
-	debugText(posX, posY, 0xFFFF00, -1,                                          "                        %1.2f", getMouseButtonDownTime(MOUSE_LEFT_BUTTON));
-	
+	debugText(posX, posY, 0xFFFF00, -1, "                        %1.2f", getMouseButtonDownTime(MOUSE_LEFT_BUTTON));
+
 	posY += 13;
 
 	debugText(posX, posY, 0x33FFFF, -1, "RIGHT  BUTTON (2)");
@@ -1635,20 +1639,20 @@ void VoxieBox::reportMouse(int posX, int posY, bool showCursor)
 	if (getMouseButtonOnDown(MOUSE_MIDDLE_BUTTON))		debugText(posX, posY, 0xFFFFFF, -1, "                   O");
 	if (getMouseButtonIsDown(MOUSE_MIDDLE_BUTTON))		debugText(posX, posY, 0x00FF00, -1, "                    D");
 	if (getMouseButtonDownTime(MOUSE_MIDDLE_BUTTON) > 1)	debugText(posX, posY, 0xFF0000, -1, "                     H");
-	if (getMouseDoubleClick(MOUSE_MIDDLE_BUTTON) )		debugText(posX, posY, 0x00FFFF, -1, "                      C");
+	if (getMouseDoubleClick(MOUSE_MIDDLE_BUTTON))		debugText(posX, posY, 0x00FFFF, -1, "                      C");
 
 	debugText(posX, posY, 0xFFFF00, -1, "                        %1.2f", getMouseButtonDownTime(MOUSE_MIDDLE_BUTTON));
 
-	if (showCursor) drawCursor(&mousePos, 0, 0, 0xffffff );
+	if (showCursor) drawCursor(&mousePos, 0, 0, 0xffffff);
 
 }
 
 
 //! Add custom touch keys. (enable touch keyboard under 'Misc' menu tab) 
-/** 
+/**
  *	pass through an array of const touchkey_t setup your own custom touch screen layout
  *  Make sure 'touch controls' are enabled via on the misc. tab on the VoxieMenu
- *  @params touchkey_t * touchkey		pointer to an array of const touchkey_t structs with definitions. 
+ *  @params touchkey_t * touchkey		pointer to an array of const touchkey_t structs with definitions.
  *  @params sizeOfArray				size of how many touch buttons in the array to add
  *
  *  Note : call touchAddCustomLayout(NULL,NULL) to return to default layout
@@ -1684,7 +1688,7 @@ void VoxieBox::reportMouse(int posX, int posY, bool showCursor)
 				// .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
 				// .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .     .  .  .  .  .  .  .  .  .  .  .  .  .  .  .  .
 
-				example: 
+				example:
 				touchkey_t = { "Touch\nonly\nFunc0", 80,100,200,200,0x405060,-1,0x8080 };
 				voxie->getKeyIsDown(0x80) { ... your custom function here ... }
 
@@ -1695,49 +1699,49 @@ void VoxieBox::reportMouse(int posX, int posY, bool showCursor)
  * or adding 'touchcontrols=1' to voxiebox.ini
  */
 
-void VoxieBox::AddTouchKeyboardLayout(const touchkey_t * touchkey , int  sizeOfArray )
+void VoxieBox::AddTouchKeyboardLayout(const touchkey_t* touchkey, int  sizeOfArray)
 {
 	voxie_touch_custom(touchkey, sizeOfArray);
 }
 
 
-/**! reads out the current Touch input states - raw return codes from the voxiebox.dll 
- * use this function if you want to manage advanced touch input manually. 
+/**! reads out the current Touch input states - raw return codes from the voxiebox.dll
+ * use this function if you want to manage advanced touch input manually.
  * @param	touchIndex		index of finger in this packet
  * @param	xVal			the x value coordinate of touch instance
  * @param	yVal			the y value coordinate of touch instance
  * @param	packetState		if (packetState&1): this is 1st  packet in path
  *							if (packetState&2): this is last packet in path ('touchIndex' will not exist in later calls)
  *
- * 
+ *
  * @returns 0:no more data left (touchIndex,xVal,yVal,packetState not written)
  *          1:got more data (touchIndex,xVal,yVal,packetState written)
  *
  *					@example	This function should be called in a while loop until 0 is returned, ex:
  *								while (voxie_touch_read(&i,&x,&y,&j)) { //process i,x,y,j }
  */
-int VoxieBox::touchManualRead(int * touchIndex, int * xVal, int * yVal, int * packetState)
+int VoxieBox::touchManualRead(int* touchIndex, int* xVal, int* yVal, int* packetState)
 {
 	return this->voxie_touch_read(touchIndex, xVal, yVal, packetState);
 }
 
-/**! set to run to allow the secondary (touch) to be used as an input device.  
+/**! set to run to allow the secondary (touch) to be used as an input device.
  * if you don't allow this any touch on the touchscreen will open up the voxieMenu
- * @param option set to true or false to enable 
+ * @param option set to true or false to enable
  *
  */
 void VoxieBox::setEnableTouchInput(bool option)
 {
 	switch (option) {
-		case 1: //set this to disable menu touch
-			if (!(vw.hacks >> 6 & 1)) vw.hacks += 64; 
-			touchUpdate = true;
-			voxie_init(&vw);
+	case 1: //set this to disable menu touch
+		if (!(vw.hacks >> 6 & 1)) vw.hacks += 64;
+		touchUpdate = true;
+		voxie_init(&vw);
 		break;
-		case 0: //set this to enable menu touch
-			if (vw.hacks >> 6 & 1) vw.hacks -= 64; 
-			touchUpdate = false;
-			voxie_init(&vw);
+	case 0: //set this to enable menu touch
+		if (vw.hacks >> 6 & 1) vw.hacks -= 64;
+		touchUpdate = false;
+		voxie_init(&vw);
 		break;
 	}
 }
@@ -1772,7 +1776,7 @@ int VoxieBox::getTouchDeltaX(int index)
  */
 int VoxieBox::getTouchDeltaY(int index)
 {
-	if (index > TOUCH_MAX - 1|| index < -1) index = -1;
+	if (index > TOUCH_MAX - 1 || index < -1) index = -1;
 
 	if (index == -1) return touch.gDeltaY;
 
@@ -1791,9 +1795,9 @@ int VoxieBox::getTouchPosX(int index)
 	return this->touch.tPoint[index].posx;
 
 }
-/** returns the a touch point's Y position. To determine what touch point an index is used   
- *	@param index the index of the touch point to check 
- *	@return a pixel vertical Y location of the touch point 
+/** returns the a touch point's Y position. To determine what touch point an index is used
+ *	@param index the index of the touch point to check
+ *	@return a pixel vertical Y location of the touch point
  *  Note : A for loop (i = 0; i < TOUCH_MAX; i++) can be used to iterate though all the touch points
  */
 int VoxieBox::getTouchPosY(int index)
@@ -1802,8 +1806,8 @@ int VoxieBox::getTouchPosY(int index)
 
 	return this->touch.tPoint[index].posy;
 }
-/** returns the touch point's state. Requires to know which touch point index to check 
- *	@param index the index of the touch point to check 
+/** returns the touch point's state. Requires to know which touch point index to check
+ *	@param index the index of the touch point to check
  *	@return 0 = not pressed, 1 = is down, 2 = is held, 3 = just pressed, 4 = on up
  */
 int VoxieBox::getTouchState(int index)
@@ -1836,7 +1840,7 @@ float VoxieBox::getTouchDistanceDelta()
  *	@param drawCollision	set to true to draw the collision box on the secondary (touch) screen
  *	@returns 0 = no touch, 1 = touch is down, 2 = touch is held, 3 = touch just pressed 4 = touch on up.
  */
-int VoxieBox::getTouchPressState(point2d TLpos, point2d BRpos, bool drawCollision )
+int VoxieBox::getTouchPressState(point2d TLpos, point2d BRpos, bool drawCollision)
 {
 	int i = 0;
 	int result = TOUCH_STATE_NOT_PRESSED;
@@ -1847,25 +1851,25 @@ int VoxieBox::getTouchPressState(point2d TLpos, point2d BRpos, bool drawCollisio
 
 		tp.x = touch.tPoint[i].posx;
 		tp.y = touch.tPoint[i].posy;
-	
+
 		if (boxInsideCollideChk2D(&TLpos, &BRpos, &tp, drawCollision)) {
 
 			if (touch.tPoint[i].onUp)				result = TOUCH_STATE_ON_UP;
 			else  if (touch.tPoint[i].justPressed)	result = TOUCH_STATE_JUST_PRESSED;
 			else if (touch.tPoint[i].isHeld)		result = TOUCH_STATE_IS_HELD;
-			else if	(touch.tPoint[i].isDown)		result = TOUCH_STATE_IS_DOWN;
+			else if (touch.tPoint[i].isDown)		result = TOUCH_STATE_IS_DOWN;
 
 			break;
 		}
 
 	}
 
-	return result; 
+	return result;
 }
 
 /** checks if a touch input has been registered within a 2D circle returns a positive number if touch has been detected
  *  @param CirPos			the X Y circle position
- *	@param radius			the radius of the circle. 
+ *	@param radius			the radius of the circle.
  *  @param drawCollision	set to true to draw the collision box on the secondary (touch) screen
  *	@returns 0 = no touch, 1 = touch is down, 2 = touch is held, 3 = touch just pressed 4 = touch on up.
  */
@@ -1959,20 +1963,20 @@ int VoxieBox::getTouchPressIndexCir(point2d CirPos, float radius, bool drawColli
 }
 
 //! gets a pointer to the internal vxInputTypes.h::touchInput_t struct. @returns a touchInput_t * pointer
-touchInput_t * VoxieBox::getTouchInputStruct()
+touchInput_t* VoxieBox::getTouchInputStruct()
 {
 	return &this->touch;
 }
 
-/** Replaces the internal touchInput_t struct with a new one could be to make your own touch I/O. 
+/** Replaces the internal touchInput_t struct with a new one could be to make your own touch I/O.
  *	@param newTouchInput * pointer to the new touchInput_t struct to replace
  */
-void VoxieBox::setTouchInputStruct(touchInput_t * newTouchInput)
+void VoxieBox::setTouchInputStruct(touchInput_t* newTouchInput)
 {
-	memcpy(&this->touch, newTouchInput,  sizeof(touchInput_t));
+	memcpy(&this->touch, newTouchInput, sizeof(touchInput_t));
 }
 
-/**  sets the touch sensitivity (1 is default. the higher the value the more sensitivity) @returns float value of sensitivity.   
+/**  sets the touch sensitivity (1 is default. the higher the value the more sensitivity) @returns float value of sensitivity.
  * @param newSensitivityValue the new sensitivity value.
  */
 void VoxieBox::setTouchSensitivity(float newSensitivityValue)
@@ -1996,6 +2000,11 @@ void VoxieBox::enableTouchFocusPinch(bool choice)
 {
 	touch.focusPinch = choice;
 }
+/** Returns the number of active touches currently on the touch screen */
+int VoxieBox::getTouchCurrentNoPress()
+{
+	return currentActiveTouches;
+}
 /** Shows a debug report for advanced touch input
  *
  *	@param posX			the horizontal X position of the secondary (touch) screen to display the report
@@ -2006,13 +2015,13 @@ void VoxieBox::reportTouch(int posX, int posY)
 {
 
 	debugDrawBoxFill(posX, posY, posX + 500, posY + 180, 0x502020);
-	debugText(posX +  175, posY, 0xffffff, -1, "Touch Report");
+	debugText(posX + 175, posY, 0xffffff, -1, "Touch Report");
 	posY += 13;
 	int i = 0xffffff;
-	debugText(posX, posY, 0xffc080, -1, "Touch Total %d  Ext Enabled %d, Sense %1.2f Pin Priority %d Focus Pinch %d", touch.currentTouchNo, vw.hacks >> 6 & 1, touch.sensitivity, touch.pinchPriority, touch.focusPinch);
+	debugText(posX, posY, 0xffc080, -1, "Touch Total %d  Ext Enabled %d, Sense %1.2f Pin Priority %d Focus Pinch %d", getTouchCurrentNoPress(), vw.hacks >> 6 & 1, touch.sensitivity, touch.pinchPriority, touch.focusPinch);
 	posY += 13;
 	debugText(posX, posY, 0xffc080, -1, "Pinch A:%d 0X %1.0f 0Y %1.0f 1X %1.0f 1Y %1.0f\nDist %1.2f ODist %1.2f Delta %1.2f\nAng %1.2f OAng %1.2f AngD %1.2f", touch.pinchActive, touch.opinch0.x, touch.opinch0.y, touch.opinch1.x, touch.opinch1.y, touch.pinchDistance, touch.opinchDistance, touch.pinchDistanceDelta, touch.pinchRotation, touch.opinchRotation, touch.pinchRotationDelta);
-	
+
 	if (touch.pinchRotationDelta > TOUCH_ANGLE_DEAD_ZONE) i = 0x00ff00;
 	else if (touch.pinchRotationDelta < -TOUCH_ANGLE_DEAD_ZONE) i = 0xff0000;
 	posY += 26;
@@ -2023,7 +2032,7 @@ void VoxieBox::reportTouch(int posX, int posY)
 	else if (touch.pinchDistanceDelta < -TOUCH_DISTANCE_DEAD_ZONE) i = 0xff0000;
 
 	debugText(posX, posY, i, -1, "             Distance");
-	
+
 	posY += 13;
 	for (i = 0; i < TOUCH_MAX; i++) {
 
@@ -2039,9 +2048,10 @@ void VoxieBox::reportTouch(int posX, int posY)
 }
 
 //!  toggles a white border around the perimeter of the volumetric display.
-void VoxieBox::setBorder(bool option)
+void VoxieBox::setBorder(bool option, int color)
 {
 	drawBorder = option;
+	drawBorderCol = color;
 }
 
 
@@ -2063,7 +2073,7 @@ void VoxieBox::setEnableLegacyJoyInput(bool option)
 	manualJoyManage = option;
 }
 //! Set to true to handle Nav input manually. Disables many of the nav input functions.	Set to false by default
-void VoxieBox::setEnableLegacyNavInput(bool option) 
+void VoxieBox::setEnableLegacyNavInput(bool option)
 {
 	manualNavManage = option;
 }
@@ -2122,25 +2132,25 @@ void VoxieBox::setJoyInputToDirectInput()
 //! Returns 1 if controller's button is pressed down. See vxInputTypes::JoyButtonCodes for reference on Joy Button Codes  
 /**
  * @param controllerID	Which game controller to check (0 - 3)
- * @param joyButtonCode Which button press to check 
+ * @param joyButtonCode Which button press to check
  *
- *  	    JOY_DPAD_UP				= 0,	//!< bit 0 value 1			Digital Dpad Up				
- *	        JOY_DPAD_DOWN			= 1,	//!< bit 1 value 2			Digital Dpad Down 
+ *  	    JOY_DPAD_UP				= 0,	//!< bit 0 value 1			Digital Dpad Up
+ *	        JOY_DPAD_DOWN			= 1,	//!< bit 1 value 2			Digital Dpad Down
  *	        JOY_DPAD_LEFT			= 2,	//!< bit 2 value 4			Digital Dpad Left
  * 	        JOY_DPAD_RIGHT			= 3,	//!< bit 3 value 8			Digital Dpad Right
  *	        JOY_START				= 4,	//!< bit 4 value 16			Start Button
  *       	JOY_BACK				= 5,	//!< bit 5 value 32			Back Button
  *       	JOY_LEFT_THUMB			= 6,	//!< bit 6 value 64			Left Thumb Stick Button (when you press 'down' on the left analog stick)
  *       	JOY_RIGHT_THUMB			= 7,	//!< bit 7 value 128		Right Thumb Stick Button (when you press 'down' on the right analog stick)
- *       	JOY_LEFT_SHOULDER		= 8,	//!< bit 8 value 256		Left Shoulder Bumper Button - not the Shoulder triggers are analog 
- *       	JOY_RIGHT_SHOULDER		= 9,	//!< bit 9 value 512		Right Shoulder Bumper Button - not the Shoulder triggers are analog 
+ *       	JOY_LEFT_SHOULDER		= 8,	//!< bit 8 value 256		Left Shoulder Bumper Button - not the Shoulder triggers are analog
+ *       	JOY_RIGHT_SHOULDER		= 9,	//!< bit 9 value 512		Right Shoulder Bumper Button - not the Shoulder triggers are analog
  *       	JOY_A					= 12,	//!< bit 12 value 1,024		The 'A' Button on a standard Xbox Controller
  *       	JOY_B					= 13,	//!< bit 13 value 2,048		The 'B' Button on a standard Xbox Controller
  *      	JOY_X					= 14,	//!< bit 14 value 4,096		The 'X' Button on a standard Xbox Controller
  *       	JOY_Y					= 15	//!< bit 15 value 8,192		The 'Y' Button on a standard Xbox Controller
  *
- * 
- * @returns 1 if controller's button is held down and 0 if not 
+ *
+ * @returns 1 if controller's button is held down and 0 if not
  *
  */
 int VoxieBox::getJoyButtonIsDown(int controllerID, int joyButtonCode)
@@ -2152,26 +2162,26 @@ int VoxieBox::getJoyButtonIsDown(int controllerID, int joyButtonCode)
 /**
  * @param controllerID	Which game controller to check (0 - 3)
  * @param joyButtonCode Which button press to check
- * 
- *  	    JOY_DPAD_UP				= 0,	//!< bit 0 value 1			Digital Dpad Up				
- *	        JOY_DPAD_DOWN			= 1,	//!< bit 1 value 2			Digital Dpad Down 
+ *
+ *  	    JOY_DPAD_UP				= 0,	//!< bit 0 value 1			Digital Dpad Up
+ *	        JOY_DPAD_DOWN			= 1,	//!< bit 1 value 2			Digital Dpad Down
  *	        JOY_DPAD_LEFT			= 2,	//!< bit 2 value 4			Digital Dpad Left
  * 	        JOY_DPAD_RIGHT			= 3,	//!< bit 3 value 8			Digital Dpad Right
  *	        JOY_START				= 4,	//!< bit 4 value 16			Start Button
  *       	JOY_BACK				= 5,	//!< bit 5 value 32			Back Button
  *       	JOY_LEFT_THUMB			= 6,	//!< bit 6 value 64			Left Thumb Stick Button (when you press 'down' on the left analog stick)
  *       	JOY_RIGHT_THUMB			= 7,	//!< bit 7 value 128		Right Thumb Stick Button (when you press 'down' on the right analog stick)
- *       	JOY_LEFT_SHOULDER		= 8,	//!< bit 8 value 256		Left Shoulder Bumper Button - not the Shoulder triggers are analog 
- *       	JOY_RIGHT_SHOULDER		= 9,	//!< bit 9 value 512		Right Shoulder Bumper Button - not the Shoulder triggers are analog 
+ *       	JOY_LEFT_SHOULDER		= 8,	//!< bit 8 value 256		Left Shoulder Bumper Button - not the Shoulder triggers are analog
+ *       	JOY_RIGHT_SHOULDER		= 9,	//!< bit 9 value 512		Right Shoulder Bumper Button - not the Shoulder triggers are analog
  *       	JOY_A					= 12,	//!< bit 12 value 1,024		The 'A' Button on a standard Xbox Controller
  *       	JOY_B					= 13,	//!< bit 13 value 2,048		The 'B' Button on a standard Xbox Controller
  *      	JOY_X					= 14,	//!< bit 14 value 4,096		The 'X' Button on a standard Xbox Controller
  *       	JOY_Y					= 15	//!< bit 15 value 8,192		The 'Y' Button on a standard Xbox Controller
  *
- * 
- * @returns 1 if controller's button is just pressed  0 if not. 
- * 
- * Note : this function works differently to 'IsDown' is down just registers if the button is being 
+ *
+ * @returns 1 if controller's button is just pressed  0 if not.
+ *
+ * Note : this function works differently to 'IsDown' is down just registers if the button is being
  * pressed while on down is the first instance of the button being pressed before it is released again.
  */
 int VoxieBox::getJoyButtonOnDown(int controllerID, int joyButtonCode)
@@ -2207,20 +2217,25 @@ int VoxieBox::getJoyButtonOnUp(int controllerID, int joyButtonCode)
 	return !((vx[controllerID].but >> joyButtonCode) & 1) && ((ovxbut[controllerID] >> joyButtonCode) & 1);
 }
 
+//!	Returns the game controller's state as voxie_xbox_t structure. Use the SpaceNavID to determine which one (0 = 1st, 1 = 2nd etc...)
+voxie_xbox_t VoxieBox::getJoyStateRaw(int controllerID)
+{
+	return vx[controllerID];
+}
 
 //! Updates the game controller's input state. Used to manage game controller inputs when setEnableLegacyJoyInput() is set to true
 /**
- *  Use this function to manually update gamepad inputs. 
- *  The return state is designed to be used within a for loop. 
+ *  Use this function to manually update gamepad inputs.
+ *  The return state is designed to be used within a for loop.
  *  This function is only needed when setEnableLegacyJoyInput() is set to true
  *
  *	@param id which controller to query (0-3)
  *	@param voxie_xbox_t structure to be filled in by function (if successful)
  *	@return 1 = success (safe to check next controller (id+1)) , 0=fail
  */
-int VoxieBox::updateJoyState(int controllerID, voxie_xbox_t * vx)
+int VoxieBox::updateJoyStateRaw(int controllerID, voxie_xbox_t* vx)
 {
-	return voxie_xbox_read( controllerID,  vx);
+	return voxie_xbox_read(controllerID, vx);
 }
 
 //! Activates vibration motors in XBox controller. XInput controllers only. To stop Be sure to call again with lmot=0.f, rmot=0.f!
@@ -2245,11 +2260,11 @@ int VoxieBox::getJoyNum()
 }
 
 //! @return returns the number of SpaceNavs detected by the system.
-/** Note for a SpaceNav to be detected it must be moved (is detected when any of the SpaceNav's axis movements) 
+/** Note for a SpaceNav to be detected it must be moved (is detected when any of the SpaceNav's axis movements)
  *
  *
  */
-int VoxieBox::getNavNum() 
+int VoxieBox::getNavNum()
 {
 	return navplays;
 }
@@ -2283,14 +2298,20 @@ double VoxieBox::getJoyButtonDownTime(int controllerID, int joyButtonCode)
 }
 
 
+//!	Returns the 3DConnexion Space Navigator controller state as voxie_nav_t structure. Use the SpaceNavID to determine which one (0 = 1st, 1 = 2nd etc...)
+voxie_nav_t VoxieBox::getNavStateRaw(int spaceNavID)
+{
+	return nav[spaceNavID];
+}
+
 /**	Copies 3DConnexion Space Navigator controller state to voxie_nav_t structure
  * @param id  which controller to query (ignored for now)
  * @param nav  structure to be filled in by function (if successful)
  * @return 1=success (safe to check next controller (id+1)), 0=fail
- * 
- * Works similar to VoxieBox::updateJoyState() use if setEnableLegacyNavInput() is set to true. Otherwise Nav updates are maintained by VxCpp.dll
+ *
+ * Works similar to VoxieBox::updateJoyStateRaw() use if setEnableLegacyNavInput() is set to true. Otherwise Nav updates are maintained by VxCpp.dll
  */
-int VoxieBox::updateNavState(int spaceNavID, voxie_nav_t * nav)
+int VoxieBox::updateNavStateRaw(int spaceNavID, voxie_nav_t* nav)
 {
 	return voxie_nav_read(spaceNavID, nav);
 }
@@ -2302,7 +2323,7 @@ int VoxieBox::updateNavState(int spaceNavID, voxie_nav_t * nav)
  * @param showCursor (true by default) draw the cursor of the position of the SpaceNav
  *
  *
- * Note: Space Navs are only detected by the system after an inital movement. 
+ * Note: Space Navs are only detected by the system after an inital movement.
  */
 void VoxieBox::reportNav(int posX, int posY, bool showCursor)
 {
@@ -2329,18 +2350,18 @@ void VoxieBox::reportNav(int posX, int posY, bool showCursor)
 	debugText(posX, nposY, 0xFFFFFF, -1, "Dead Zone On:    Threshold: ");
 	debugText(posX, nposY, 0xFF00FF, -1, "              %d              %1.3f", enableNavDeadZone, getNavDeadZone());
 
-	for (i = 0;  i < navplays; i++) {
+	for (i = 0; i < navplays; i++) {
 		navDDelta = getNavDirectionDelta(i);
 		navADelta = getNavAngleDelta(i);
 		nposY += 14;
 		nposY += 14;
-		debugText(posX, nposY, 0xFFFFFF, -1,						"Sensitivity:  %0.5f", getNavSensitivity(i));
+		debugText(posX, nposY, 0xFFFFFF, -1, "Sensitivity:  %0.5f", getNavSensitivity(i));
 		debugText(posX, nposY, col[getNavOrientation(i)], -1, "                            Ori: %d", getNavOrientation(i));
 
 		nposY += 14;
 		debugText(posX, nposY, 0xffFFff, -1, "Pos	X:      , Y:      , Z:   ");
 		debugText(posX, nposY, 0x00FF00, -1, "        %+1.2f     %+1.2f     %+1.2f",
-			navPos[i].x , navPos[i].y, navPos[i].z);
+			navPos[i].x, navPos[i].y, navPos[i].z);
 		nposY += 14;
 		debugText(posX, nposY, 0xFF0000, -1, "              %+3.3f", navDDelta.x);
 		debugText(posX, nposY, 0x00FF00, -1, "                          %+3.3f", navDDelta.y);
@@ -2354,14 +2375,14 @@ void VoxieBox::reportNav(int posX, int posY, bool showCursor)
 		nposY += 20;
 		debugText(posX, nposY, 0xffffff, -1, "But State :   Prev State : ");
 		debugText(posX, nposY, 0xffff00, -1, "           %d              %d", getNavButtonState(i), getNavPrevButtonState(i));
-		
+
 		nposY += 14;
 		debugText(posX, nposY, 0x33FFFF, -1, "LEFT    BUTTON (1)");
 		if (getNavButtonOnUp(i, NAV_LEFT_BUTTON))			debugText(posX, nposY, 0xFF00FF, -1, "                  U");
 		if (getNavButtonOnDown(i, NAV_LEFT_BUTTON))			debugText(posX, nposY, 0xFFFFFF, -1, "                   O");
 		if (getNavButtonIsDown(i, NAV_LEFT_BUTTON))			debugText(posX, nposY, 0x00FF00, -1, "                    D");
 		if (getNavButtonDownTime(i, NAV_LEFT_BUTTON) > 1)	debugText(posX, nposY, 0xFF0000, -1, "                     H");
-		if (getNavDoubleClick(i, NAV_LEFT_BUTTON))			debugText(posX, nposY, 0x00FFFF, -1,  "                      C");
+		if (getNavDoubleClick(i, NAV_LEFT_BUTTON))			debugText(posX, nposY, 0x00FFFF, -1, "                      C");
 		debugText(posX, nposY, 0xFFFF00, -1, "                        %1.2f", getNavButtonDownTime(i, NAV_LEFT_BUTTON));
 		nposY += 14;
 		debugText(posX, nposY, 0xFFFF33, -1, "RIGHT   BUTTON (2)");
@@ -2378,7 +2399,7 @@ void VoxieBox::reportNav(int posX, int posY, bool showCursor)
 		if (fabs(plotPos.x) < getNavDeadZone() && fabs(plotPos.y) < getJoyDeadZone()) navCol = 0xff0000;
 
 		debugDrawCircFill(posX + 215, nposY, 25, 0x9d9d9d);
-		debugDrawCircFill(posX + 215, nposY, 0 + ( getNavDeadZone() * 25), 0x904040);
+		debugDrawCircFill(posX + 215, nposY, 0 + (getNavDeadZone() * 25), 0x904040);
 		navZsize = (4 * (1 + (-navPos[i].z * 2)));
 		if (navZsize > 13) navZsize = 13;
 		if (navZsize < 0) navZsize = 1;
@@ -2398,7 +2419,7 @@ void VoxieBox::reportNav(int posX, int posY, bool showCursor)
 
 
 //! Function used to reset the voxie menu and set a new custom menu update function (the menu which is on the secondary touch screen)
-/**	
+/**
  *
  * This function is essential if you want to make your own menu tabs as you'll need to create a function which holds all your menu's logic
  * The menu_update function is where a user makes their own function which manages the menu's input.
@@ -2422,7 +2443,7 @@ void VoxieBox::reportNav(int posX, int posY, bool showCursor)
  *
  *
  *
- *            @example Example of custom menu call back function 
+ *            @example Example of custom menu call back function
  *			  enum {MENU_SPEED_BUTTON_1,MENU_SPEED_BUTTON_2,MENU_SPEED_BUTTON_3,MENU_SPEED_SLIDER,MENU_FILE};
  *			  static int gspeed = 1;
  *            static int user_menu_update(int id, char *st, double v, int how, void *userdata)
@@ -2443,21 +2464,21 @@ void VoxieBox::reportNav(int posX, int posY, bool showCursor)
  * Note: call with voxie_menu_reset(0,0); to remove the user menu
 
  */
-void VoxieBox::menuReset(int(*menu_update)(int id, char *st, double val, int how, void *userdata), void * userdata, char * bgImageFileName)
+void VoxieBox::menuReset(int(*menu_update)(int id, char* st, double val, int how, void* userdata), void* userdata, char* bgImageFileName)
 {
 	voxie_menu_reset(menu_update, userdata, bgImageFileName);
 }
 
 //! Add custom menu tab on secondary (touch) screen  menu (NOTE: there's only space for 2 more tabs on the 7" 1024x600 LCD screen)
 /**  @param	st	name of tab
- *   @param	x	horizontal position for the tab item area 
+ *   @param	x	horizontal position for the tab item area
  *	 @param y	vertical position for tab item area
  *	 @param	xs	width in pixels of the tab item area
  *	 @param ys	height in pixels of the tab item area
- *  
- *  menu functions only needs to be called once. Not every volume/frame.  
+ *
+ *  menu functions only needs to be called once. Not every volume/frame.
  */
-void VoxieBox::menuAddTab(char *st, int x, int y, int xs, int ys)
+void VoxieBox::menuAddTab(char* st, int x, int y, int xs, int ys)
 {
 	voxie_menu_addtab(st, x, y, xs, ys);
 }
@@ -2474,10 +2495,10 @@ void VoxieBox::menuAddTab(char *st, int x, int y, int xs, int ys)
 * @param type the type of menu item to create see vxInputTypes.h::menuTypes
 *           MENU_TEXT:     text (decoration only)
 *           MENU_LINE:     line (decoration only)
-*           MENU_BUTTON+3: push button (single button)
-*           MENU_BUTTON+1: push button (first in group - auto-depresses others so only 1 on)
-*           MENU_BUTTON  : push button (in middle of group)
-*           MENU_BUTTON+2: push button (last in group - auto-depresses others so only 1 on)
+*           MENU_BUTTON_MIDDLE+3: push button (single button)
+*           MENU_BUTTON_MIDDLE+1: push button (first in group - auto-depresses others so only 1 on)
+*           MENU_BUTTON_MIDDLE  : push button (in middle of group)
+*           MENU_BUTTON_MIDDLE+2: push button (last in group - auto-depresses others so only 1 on)
 *           MENU_HSLIDER:  horizontal slider
 *           MENU_VSLIDER:  vertical slider
 *           MENU_EDIT:     edit text box
@@ -2487,12 +2508,12 @@ void VoxieBox::menuAddTab(char *st, int x, int y, int xs, int ys)
 *           MENU_PICKFILE: file selector. Specify type in 2nd string. Ex: "Browse\r*.kv6"
 *  @param col color of item (typically 0xffffff)
 *  @param startingVal the starting value of menu item
-*  @param minVal min value  
-*  @param maxVal max value 
+*  @param minVal min value
+*  @param maxVal max value
 *  @param minStepVal  minor step in value increase/decrease amount
 *  @param majStepVal  major step in value increase/decrease amount
 */
-void VoxieBox::menuAddItem(char * label, int x, int y, int xSize, int ySize, int id, int type, int state, int col, double startingVal, double minVal, double maxVal, double minStepVal, double majStepVal)
+void VoxieBox::menuAddItem(char* label, int x, int y, int xSize, int ySize, int id, int type, int state, int col, double startingVal, double minVal, double maxVal, double minStepVal, double majStepVal)
 {
 	voxie_menu_additem(label, x, y, xSize, ySize, id, type, state, col, startingVal, minVal, maxVal, minStepVal, majStepVal);
 
@@ -2508,15 +2529,15 @@ void VoxieBox::menuAddItem(char * label, int x, int y, int xSize, int ySize, int
  *	@param  state	the state of the item (if applicable)
  *	@param	v		the value (if applicable)
  */
-void VoxieBox::updateMenu(int id, char * st, int state, double v)
+void VoxieBox::updateMenu(int id, char* st, int state, double v)
 {
-	voxie_menu_updateitem(id,  st, state, v);
+	voxie_menu_updateitem(id, st, state, v);
 }
 
 
 /** Draws single pixel on the secondary (touch) screen. Must be called within the startFrame() & endFrame() functions.
  *  @param x		x position of pixel location
- *  @param y		y position of pixel location 
+ *  @param y		y position of pixel location
  *  @param col		24-bit RGB color
  */
 void VoxieBox::debugDrawPix(int x, int y, int col = 0xffffff)
@@ -2527,7 +2548,7 @@ void VoxieBox::debugDrawPix(int x, int y, int col = 0xffffff)
 /** Draws horizontal line on the secondary (touch) screen.
  *
  * Drawing is always from left to right. Must be called between startFrame() & endFrame() functions.
- *  
+ *
  * @param xStartPos coordinate of the starting x pixel. Needs to be the left most pixel.
  * @param xEndPos	coordinate of the ending x pixel. Needs to be the right most pixel.
  * @param y			coordinate of the y pixel. Where the line is drawn on the y axis.
@@ -2535,7 +2556,7 @@ void VoxieBox::debugDrawPix(int x, int y, int col = 0xffffff)
  */
 void VoxieBox::debugDrawHLine(int xStartPos, int xEndPos, int y, int col = 0xffffff)
 {
-	voxie_debug_drawhlin(xStartPos, xEndPos,y,col);
+	voxie_debug_drawhlin(xStartPos, xEndPos, y, col);
 }
 /** Draws a line on the secondary (touch) screen. Must be called between startFrame() & endFrame() functions.
  *
@@ -2548,23 +2569,23 @@ void VoxieBox::debugDrawHLine(int xStartPos, int xEndPos, int y, int col = 0xfff
 
 void VoxieBox::debugDrawLine(float xStartPos, float yStartPos, float xEndPos, float yEndPos, int col = 0xffffff)
 {
-	voxie_debug_drawline(xStartPos, yStartPos, xEndPos, yEndPos,col);
+	voxie_debug_drawline(xStartPos, yStartPos, xEndPos, yEndPos, col);
 }
 
 /** Draw circle on the secondary (touch) screen. Must be called between startFrame() & endFrame() functions.
  *
  * @param y			y coordinate of the circle's center.
- * @param x			x coordinate of the circle's center. 
+ * @param x			x coordinate of the circle's center.
  * @param radius	radius size in pixels.
  * @param col		24-bit RGB color of the line.
- */ 
+ */
 void VoxieBox::debugDrawCircle(int xCenterPos, int yCenterPos, int radius, int col)
 {
-	 voxie_debug_drawcirc(xCenterPos, yCenterPos, radius, col);
+	voxie_debug_drawcirc(xCenterPos, yCenterPos, radius, col);
 }
 
 //! Draw filled rectangle on the secondary (touch) screen.  Must be called between startFrame() & endFrame() functions. 
-/** 
+/**
  *	@param	xStartPos	left most starting position of box
  *	@param	yStartPos	top most starting position of box
  *	@param	xEndPos		right most ending position of box
@@ -2573,24 +2594,24 @@ void VoxieBox::debugDrawCircle(int xCenterPos, int yCenterPos, int radius, int c
  */
 void VoxieBox::debugDrawBoxFill(int xStartPos, int yStartPos, int xEndPos, int yEndPos, int col)
 {
-	voxie_debug_drawrectfill(xStartPos, yStartPos, xEndPos, yEndPos,col);
+	voxie_debug_drawrectfill(xStartPos, yStartPos, xEndPos, yEndPos, col);
 }
 
 //! Draw filled circle on the secondary (touch) screen.  Must be called between startFrame() & endFrame() functions. 
-/**  
+/**
  *	@param xCenterPos	x horizontal circle's center position
  *	@param yCenterPos	y vertical circle's center position
  *  @param radius	radius of circle. Size in pixels
  *	@param col	24-bit hexadecimal RGB color value
- */ 
+ */
 void VoxieBox::debugDrawCircFill(int xCenterPos, int yCenterPos, int radius, int col)
 {
-	voxie_debug_drawcircfill(xCenterPos, yCenterPos, radius,col);
+	voxie_debug_drawcircfill(xCenterPos, yCenterPos, radius, col);
 }
 
 //!  Draws a texture onto the secondary (touch) screen. 
 /**
- * @param tiletype * source		pointer to a tile type    
+ * @param tiletype * source		pointer to a tile type
  * @param int	xpos			the x position to render onto the secondary (touch) screen
  * @param int	ypos			the y position to render onto the secondary (touch) screen
  *
@@ -2611,12 +2632,80 @@ void VoxieBox::debugDrawCircFill(int xCenterPos, int yCenterPos, int radius, int
  *							example.f = (INT_PTR)malloc(balls.p*balls.y);	// create pointer to 1st pixel
  *							voxie->_kpzload((char*)"example.jpg", &example.f, &example.p, &example.x, &example.y); 		// load the image into file memory pass in the pointers
  *
- *							to render your tiletype unto the 2D display call 
+ *							to render your tiletype unto the 2D display call
  *							voxie->debugDrawTile(&example, xposition, yposition);
  */
-void VoxieBox::debugDrawTile(tiletype * source, int xpos, int ypos)
+void VoxieBox::debugDrawTile(tiletype* source, int xpos, int ypos)
 {
 	voxie_debug_drawtile(source, xpos, ypos);
+}
+//! sets an  the internal font to be a custom bitmap. @TODO finish description
+bool VoxieBox::debugCustomFontSet(const char* fileName, int index)
+{
+
+	int i = index;
+
+	if (i > 20) i = 20;
+	if (index == -1) i = customFontLastIndex;
+
+	bool result = false;
+	customFont[i].f = 0;
+	customFont[i].p = 0;
+	customFont[i].x = 0;
+	customFont[i].y = 0;
+
+
+	this->_kpzload(fileName, &customFont[i].f, &customFont[i].p, &customFont[i].x, &customFont[i].y);
+	if (customFont[i].f == 0 && customFont[i].p == 0 && customFont[i].x == 0 && customFont[i].y == 0) result = false;
+	else result = true;
+
+	if (customFontInit[i] == false && result == true) customFontInit[i] = true;
+
+	return result;
+}
+void VoxieBox::debugCustomFont(int xpos, int ypos, int customFontIndex, const char* fmt, ...)
+{
+
+
+	int i = customFontIndex;
+	tiletype src;
+	va_list arglist;
+	int c, xo, yo;
+	char st[2048], * cptr;
+
+	int s = 0;
+
+	if ((!fmt) || !(customFontInit[i])) return;
+	va_start(arglist, fmt);
+	_vsnprintf(st, sizeof(st), fmt, arglist);
+	va_end(arglist);
+	int moveBase = 0;
+	src.x = customFont[i].x; src.y = customFont[i].y / 96; src.p = customFont[i].p;
+	xo = 0; yo = 0;
+
+	for (cptr = st; cptr[0]; cptr++)
+	{
+		c = (int)cptr[0];
+		if ((c < 32) || (c >= 128))
+		{ 
+			if ((c == '\r') || (c == '\n')) { xo -= customFont[i].x * s; s = 0; yo += src.y; }
+			else if (c == '\t') xo += customFont[i].x * 3;
+			else if (c == '\b') xo += (customFont[i].x >> 1);
+			continue;
+
+		}
+
+		// move the tile down if the character's base is intended to be lower...
+		moveBase = 0;
+		if (c == 'q' || c == 'p' || c == 'g' ) moveBase = src.y * .25;
+		if (c == 'y') moveBase = src.y * .17;
+
+		src.f = (INT_PTR)((int)(c - 32) * src.y * customFont[i].p + customFont[i].f);
+		this->debugDrawTile(&src, xo + xpos, yo + ypos + moveBase + (*(char*)src.f)/*hack offset*/);
+		xpos += customFont[i].x;
+		s += 1;
+	}
+
 }
 //! Returns the internal mouse's X delta movement. Reads from internal (in) voxie_input_t.
 /**
@@ -2660,7 +2749,7 @@ int VoxieBox::getMouseButtonState()
 }
 //! Returns the internal mouse previous button state. Reads from the internal (in) voxie_input_t.  
 /**
- * Could be used to write your own input functions. 
+ * Could be used to write your own input functions.
  *
  * @return Returns the internal mouse previous button state. Reads from the internal (in) voxie_input_t.
  */
@@ -2680,7 +2769,7 @@ int VoxieBox::getMouseButtonIsDown(int buttonCode)
 //! Returns the state of mouse's buttonCode. @return 1 if button has been pressed during this update frame otherwise 0 if not just pressed. 
 /**
  * @param buttonCode the buttonCode for the button to check. 0 = Left, 1 = Right, 2 = Center (mouse wheel button).
- * Note : This input check is for the instance of it being just pressed. It will return 0 if you held down a button. 
+ * Note : This input check is for the instance of it being just pressed. It will return 0 if you held down a button.
  */
 int VoxieBox::getMouseButtonOnDown(int buttonCode)
 {
@@ -2691,7 +2780,7 @@ int VoxieBox::getMouseButtonOnDown(int buttonCode)
  * @param buttonCode the mouse button code you wish to check for (0 = left, 1 = right, 2 = both)
  * @return true if just released otherwise false
  */
-int VoxieBox::getMouseButtonOnUp(int buttonCode )
+int VoxieBox::getMouseButtonOnUp(int buttonCode)
 {
 	int a = !((in.bstat >> buttonCode) & 1);
 	int b = ((in.obstat >> buttonCode) & 1);
@@ -2715,7 +2804,7 @@ double VoxieBox::getMouseButtonDownTime(int buttonCode)
  *
  *  @return 1 if double click has been registered otherwise return 0.
  *
- *  To adjust double click threshold @see setMouseoubleClickThreshold() 
+ *  To adjust double click threshold @see setMouseoubleClickThreshold()
  */
 int VoxieBox::getMouseDoubleClick(int buttonCode)
 {
@@ -2734,7 +2823,7 @@ int VoxieBox::getMouseDoubleClick(int buttonCode)
  *	not plot if the intensity of the color component is less than 255. This is by design to allow
  *	shades. If you want the voxel to always plot, use 255's in each color component.
  */
-void VoxieBox::drawVox(point3d pos, int col  = 0xffffff)
+void VoxieBox::drawVox(point3d pos, int col = 0xffffff)
 {
 	voxie_drawvox(&vf, pos.x, pos.y, pos.z, col);
 }
@@ -2747,8 +2836,8 @@ void VoxieBox::drawVox(point3d pos, int col  = 0xffffff)
  *	@param  x	x position of the voxel's location
  *	@param  y	y position of the voxel's location
  *	@param  z	z position of the voxel's location
- *	@param  col 24-bit hexadecimal color value 
- *	
+ *	@param  col 24-bit hexadecimal color value
+ *
  *	NOTE: The intensity of each color component in col is used for dithering, meaning a voxel might
  *	not plot if the intensity of the color component is less than 255. This is by design to allow
  *	shades. If you want the voxel to always plot, use 255's in each color component.
@@ -2767,7 +2856,7 @@ void VoxieBox::drawVox(float x, float y, float z, int col = 0xffffff)
  *  @param  posLeftUpTop			left up top corner of the box
  *  @param  posRightDownBottom		bottom, right, down corner of the box
  *  @param  fillmode				The fillmode type 0:dots, 1:lines, 2:surfaces, 3:solid
- *  @param  col						RGB 24-bit hexadecimal color value 
+ *  @param  col						RGB 24-bit hexadecimal color value
  *
  *  Must be called between startFrame() & endFrame() functions.
  */
@@ -2781,7 +2870,7 @@ void VoxieBox::drawBox(point3d posLeftUpTop, point3d posRightDownBottom, int fil
 
  *  @param  x0			left for the LeftUpTop coordinate.
  *  @param  y0			up for the LeftUpTop coordinate.
- *  @param  z0			top for the LeftUpTop coordinate. 
+ *  @param  z0			top for the LeftUpTop coordinate.
  *  @param  x1			right for the RightDownBottom coordinate.
  *  @param  y1			down for the RightDownBottom coordinate.
  *  @param  z1			bottom for the RightDownBottom coordinate.
@@ -2799,7 +2888,7 @@ void VoxieBox::drawBox(float x0, float y0, float z0, float x1, float y1, float z
 /**
  *	@param startPos point3d of first (starting) position.
  *	@param endPos point3d of second (end) position.
- *   
+ *
  *  Must be called between startFrame() & endFrame() functions.
  */
 void VoxieBox::drawLine(point3d startPos, point3d endPos, int col = 0xffffff)
@@ -2812,7 +2901,7 @@ void VoxieBox::drawLine(point3d startPos, point3d endPos, int col = 0xffffff)
 /**
  *  @param xStartPos	x position for 1st (starting) point
  *  @param yStartPos	y position for 1st (starting) point
- *  @param zStartPos	z position for 1st (starting) point 
+ *  @param zStartPos	z position for 1st (starting) point
  *  @param xEndPos		x position for 2nd (ending) point
  *  @param yEndPos		y position for 2nd (ending) point
  *  @param zEndPos		z position for 2nd (ending) point
@@ -2830,7 +2919,7 @@ void VoxieBox::drawLine(float xStartPos, float yStartPos, float zStartPos, float
 /**
  *	@param pt			pointer to the pol_t array (consists list of vertices and their 'next point index')
  *	@param pt_count		the number of vertices in the pol_t array
- *	@param p2			is an index to the next point on the loop. Holes/multiple loops are supported. 
+ *	@param p2			is an index to the next point on the loop. Holes/multiple loops are supported.
  *  @param col			24-bit hexadecimal color value (RGB)
  *
  *           @example For example, this would draw a flat draw a rectangle:
@@ -2845,7 +2934,7 @@ void VoxieBox::drawLine(float xStartPos, float yStartPos, float zStartPos, float
  *  Must be called between startFrame() & endFrame() functions.
 */
 
-void VoxieBox::drawPoly(pol_t * pt, int ptCount, int col = 0xffffff)
+void VoxieBox::drawPoly(pol_t* pt, int ptCount, int col = 0xffffff)
 {
 	voxie_drawpol(&vf, pt, ptCount, col);
 }
@@ -2856,14 +2945,14 @@ void VoxieBox::drawPoly(pol_t * pt, int ptCount, int col = 0xffffff)
 *  @param  fileNam 	    texture filename or pointer to tiletype structure if (flags&8) or leave null for no texture
 *						Be sure to fill .u and .v fields of poltex_t when using a texture.
 *  @param  verticeList	pointer to the list of vertices array (as a poltex_t data type)
-*  @param  verticeNum	max number of vertices in the vertices array 
+*  @param  verticeNum	max number of vertices in the vertices array
 *  @param  meshList		pointer to the list of facets as vertex indices or -1 to end current primitive and start next one, -2 to end loop
 *  @param  meshNum		number of entries in mesh array
 *  @param  flags		mostly fill mode and texture settings +0:dots, +1:lines, +2:surfaces, +3:solid, +8:texnam is tiletype * instead of filename
 *  @param  col			24-bit hexadecimal color value (RGB)
 *
 *			@example
-*          
+*
 *           //Example for fillmode 0 (dots) mesh and meshn are ignored - pass 0's in their place.
 *           poltex_t vt[4]; int i = 0;
 *           vt[0].x =-0.8; vt[0].y =-0.8; vt[0].z = 0.0; vt[0].col = 0xffffff;
@@ -2891,7 +2980,7 @@ void VoxieBox::drawPoly(pol_t * pt, int ptCount, int col = 0xffffff)
 *           mesh[i++] = 0; mesh[i++] = 1; mesh[i++] = 2; mesh[i++] = -1; //-1 = end of polygonal facet
 *           mesh[i++] = 1; mesh[i++] = 0; mesh[i++] = 3; mesh[i++] = -1;
 *           mesh[i++] = 2; mesh[i++] = 1; mesh[i++] = 3; mesh[i++] = -1;
-*           mesh[i++] = 0; mesh[i++] = 2; mesh[i++] = 3; mesh[i++] = -1; 
+*           mesh[i++] = 0; mesh[i++] = 2; mesh[i++] = 3; mesh[i++] = -1;
 *           voxie_drawmeshtex(&vf,0,vt,4,mesh,i,2 (or 3) ,0xffffff);
 *
 *           //Example for fillmode 2 (complex poly w/hole: 2-triangle donut)
@@ -2908,7 +2997,7 @@ void VoxieBox::drawPoly(pol_t * pt, int ptCount, int col = 0xffffff)
 *
 *	Must be called between startFrame() & endFrame() functions.
 */
-void VoxieBox::drawMesh(char * fileName, poltex_t * verticeList, int verticeNum, int * meshList, int meshNum, int flags, int col = 0xffffff)
+void VoxieBox::drawMesh(char* fileName, poltex_t* verticeList, int verticeNum, int* meshList, int meshNum, int flags, int col = 0xffffff)
 {
 	voxie_drawmeshtex(&vf, fileName, verticeList, verticeNum, meshList, meshNum, flags, col);
 }
@@ -2929,7 +3018,7 @@ void VoxieBox::drawMesh(char * fileName, poltex_t * verticeList, int verticeNum,
  *  Must be called between startFrame() & endFrame() functions.
  */
 
-void VoxieBox::drawCone(point3d startPos, float startRadius, point3d endPos, float endRadius, int fillmode, int col = 0xffffff )
+void VoxieBox::drawCone(point3d startPos, float startRadius, point3d endPos, float endRadius, int fillmode, int col = 0xffffff)
 {
 	voxie_drawcone(&vf, startPos.x, startPos.y, startPos.z, startRadius, endPos.x, endPos.y, endPos.z, endRadius, fillmode, col);
 }
@@ -2960,32 +3049,32 @@ void VoxieBox::drawCone(float xStartPos, float yStartPos, float zStartPos, float
 
 //! Renders 3D model (.obj, .ply, .stl, .kv6). Displays a filename mesh onto the volumetric display.
 /**
- *  known as voxie_drawspr ("draw sprite") in the voxiebox.h / voxiebox.dll. Renamed to "draw model" 
+ *  known as voxie_drawspr ("draw sprite") in the voxiebox.h / voxiebox.dll. Renamed to "draw model"
  *  as a more apt description.
  *
  *  @param		fileName	filename. Cached internally. Currently supports .KV6,.STL,.OBJ,.PLY
  *  @param      pos			position of center of model (pivot)
- *  @param      rVector		right vector set to {1,0,0} for a unwarped normal view 
+ *  @param      rVector		right vector set to {1,0,0} for a unwarped normal view
  *  @param		dVector		down vector set to {0,1,0} for an unwarped normal view
  *	@param		fVector		forward vector set to {0,0,1} for an unwarped normal view
  *  @param		col			color multiplier. 24-bit color, each 8 bits scales intensity of respective
  *			                component. 64=1.0 or no scale. Use 0x404040 for no change; 0x808080 to draw as
  *				            double brightness, etc.. (currently ignored)
  *
- *  
+ *
  *  @return	1=found file & valid, 0=bad file
  *
  *  Note : the col parameter works differently to most col values. As it is scaled 0x404040 is equal
- *  to 0xFFFFFF color values are scaled up by x 4. You can use VoxieBox::colorHexDivide(col, 4) to 
- *  divide the intended color by a 4th to render it in its true color. This is useful when you want 
+ *  to 0xFFFFFF color values are scaled up by x 4. You can use VoxieBox::colorHexDivide(col, 4) to
+ *  divide the intended color by a 4th to render it in its true color. This is useful when you want
  *  your model to be shown at the correct color.
  *
  *  For more options when using this function @see VoxieBox::drawModelExt
  *  Must be called between startFrame() & endFrame() functions.
  */
- int VoxieBox::drawModel(const char * fileName, point3d *pos, point3d *rVector, point3d *dVector, point3d *fVector, int col = 0x404040)
+int VoxieBox::drawModel(const char* fileName, point3d* pos, point3d* rVector, point3d* dVector, point3d* fVector, int col = 0x404040)
 {
-	return voxie_drawspr(&vf, fileName, pos, rVector, dVector, fVector, col );
+	return voxie_drawspr(&vf, fileName, pos, rVector, dVector, fVector, col);
 }
 
 
@@ -3018,9 +3107,29 @@ void VoxieBox::drawCone(float xStartPos, float yStartPos, float zStartPos, float
  *  For a more simpler function @see VoxieBox::drawModel
  *  Must be called between startFrame() & endFrame() functions.
  */
-int VoxieBox::drawModelExt(const char * fileName, point3d *pos, point3d *rVector, point3d *dVector, point3d *fVector, int color, float forceScale, float fdrawratio, int flags)
+int VoxieBox::drawModelExt(const char* fileName, point3d* pos, point3d* rVector, point3d* dVector, point3d* fVector, int color, float forceScale, float fdrawratio, int flags)
 {
 	return voxie_drawspr_ext(&vf, fileName, pos, rVector, dVector, fVector, color, forceScale, fdrawratio, flags);
+}
+
+
+//! Returns the extents of a 3D model (.obj, .kv6, .stl etc...)
+/**
+ *  Works out the distance of what a 3d model extends to.
+ *  Useful to help calculate the forceScale option found in VoxieBox::drawModelExt()
+ *
+ *	@param		filename	of the model object to analyze
+ *  @param		extentsPtr	pointer to the extents struct to write the data to
+ *  @param		flags		Bit 0:0=normal, 1:wireframe
+ *
+ *  @see VoxieInput.h::extents_t and VoxieBox::drawModelExt()
+ *
+ *  @returns a 1 if file found and valid, 0 if bad file
+ *
+ */
+int VoxieBox::drawModelGetExtents(const char* filename, extents_t* extentsPtr, int flags)
+{
+	return  voxie_drawspr_getextents(filename, extentsPtr, flags);
 }
 
 
@@ -3039,16 +3148,16 @@ int VoxieBox::drawModelExt(const char * fileName, point3d *pos, point3d *rVector
  *
  *  Must be called between startFrame() & endFrame() functions.
  */
-void VoxieBox::drawCube(point3d * pos, point3d * rVector, point3d * dVector, point3d * fVector, int fillmode = 2, int col = 0xffffff)
+void VoxieBox::drawCube(point3d* pos, point3d* rVector, point3d* dVector, point3d* fVector, int fillmode = 2, int col = 0xffffff)
 {
 	voxie_drawcube(&vf, pos, rVector, dVector, fVector, fillmode, col);
 }
 
 //! Renders a heightmap (.jpg, .png or tiletype data) onto the volumetric display
 /**
- *  A heightmap is a 2D image which also contains a height channel along side it. 
- *  Open up some of the heightmap examples for a demo. Demview uses them to render all its information. 
- *  
+ *  A heightmap is a 2D image which also contains a height channel along side it.
+ *  Open up some of the heightmap examples for a demo. Demview uses them to render all its information.
+ *
  *  @param  fileName	filename or pointer to 2d array containing image & heightmap stored alpha channel.
  *  @param  pos			the position of the top-left corner of the heightmap.
  *  @param  rVector		the right vector. rVector.x indicates how wide the height map is also holds rotational data
@@ -3065,16 +3174,16 @@ void VoxieBox::drawCube(point3d * pos, point3d * rVector, point3d * dVector, poi
  *                   (1<<3): 0=filnam is filename string, 1=filnam is tiletype * or pointer to 2d array.
  *                   (1<<4): 0=texture clamp    , 1=texture wrap
  *                   (1<<5): 0=8-bit height     , 1=mapzen.com terrarium style height
- *   
  *
- *  Note : about scaling and sizing the rVector.z, dVector.z, fVector.x, fVector.y are all not used to render the heightMap 
- *  but their values are important for storing rotational information.  the height / scale of the heightmap is the difference 
+ *
+ *  Note : about scaling and sizing the rVector.z, dVector.z, fVector.x, fVector.y are all not used to render the heightMap
+ *  but their values are important for storing rotational information.  the height / scale of the heightmap is the difference
  *	between pos.z and fVector.z values. pos.z is height=0, pos.z+fVector.z is height=255
  *
  *  @return average height in middle region, range:{0..255}
  *  Must be called between startFrame() & endFrame() functions.
  */
-float VoxieBox::drawHeightMap(char * fileName, point3d * pos, point3d * rVector, point3d * dVector, point3d * fVector, int colorKey, int reserved, int flags)
+float VoxieBox::drawHeightMap(char* fileName, point3d* pos, point3d* rVector, point3d* dVector, point3d* fVector, int colorKey, int reserved, int flags)
 {
 	return voxie_drawheimap(&vf, fileName, pos, rVector, dVector, fVector, colorKey, reserved, flags);
 }
@@ -3119,7 +3228,7 @@ void VoxieBox::drawSphere(float x, float y, float z, float radius, int fillmode,
  *
  *  vxInputTypes.h contains an enum for all the scancodes which all start with the prefix 'KB_'
  *  @return 0 = no press, no change, 1 = just pressed, 3 = held down.
- */ 
+ */
 int VoxieBox::getKeyState(int scancode)
 {
 
@@ -3157,7 +3266,7 @@ int VoxieBox::getKeyOnDown(int scancode)
 {
 
 	if (manualKeyManage == true) {
-		if (voxie_keystat(scancode) == 1 ) return 1;
+		if (voxie_keystat(scancode) == 1) return 1;
 	}
 	else {
 
@@ -3174,7 +3283,7 @@ int VoxieBox::getKeyOnDown(int scancode)
  *
  * @returns in seconds the duration of the key's being held down. Returns -1 if legacyKeyInput is enabled
  *
- * Note: VoxieBox::setEnableLegacyKeyInput() to be set to false to work otherwise will always return -1; 
+ * Note: VoxieBox::setEnableLegacyKeyInput() to be set to false to work otherwise will always return -1;
  */
 double VoxieBox::getKeyDownTime(int scancode)
 {
@@ -3218,10 +3327,10 @@ int VoxieBox::getKeyOnUp(int scancode)
 
 /**
 * Returns buffered ASCII keyboard input. Useful for typing stuff like your name, for example.
-* You may continue to call this function in a while loop until it returns 0. This function only works when 
+* You may continue to call this function in a while loop until it returns 0. This function only works when
 * setEnableLegacyKeyInput() is set to true. Otherwise use getKeyHistory() instead.
-*     @return 
-*                     0: buffer is empty otherwise 
+*     @return
+*                     0: buffer is empty otherwise
 *             bits  7-0: ASCII code ('A'=65,'a'=97,'0'=48,etc..)
 *             bits 15-8: Keyboard Scan Code
 *             bit    16: Left  Shift was down at time of this keypress
@@ -3249,22 +3358,22 @@ int VoxieBox::getKeyStreamScanCode()
  *
  *
  * @return the controls button state. Each bit represents a button. @see vxInputTypes::JoyButtonCodes for details.
- * 
- *	          JOY_DPAD_UP			= 0,	//!< bit 0 value 1			Digital Dpad Up				
- *	          JOY_DPAD_DOWN			= 1,	//!< bit 1 value 2			Digital Dpad Down 
+ *
+ *	          JOY_DPAD_UP			= 0,	//!< bit 0 value 1			Digital Dpad Up
+ *	          JOY_DPAD_DOWN			= 1,	//!< bit 1 value 2			Digital Dpad Down
  *	          JOY_DPAD_LEFT			= 2,	//!< bit 2 value 4			Digital Dpad Left
  *	          JOY_DPAD_RIGHT		= 3,	//!< bit 3 value 8			Digital Dpad Right
  *	          JOY_START				= 4,	//!< bit 4 value 16			Start Button
  *	          JOY_BACK				= 5,	//!< bit 5 value 32			Back Button
  *	          JOY_LEFT_THUMB		= 6,	//!< bit 6 value 64			Left Thumb Stick Button (when you press 'down' on the left analog stick)
  *	          JOY_RIGHT_THUMB		= 7,	//!< bit 7 value 128		Right Thumb Stick Button (when you press 'down' on the right analog stick)
- *	          JOY_LEFT_SHOULDER		= 8,	//!< bit 8 value 256		Left Shoulder Bumper Button - not the Shoulder triggers are analog 
- *	          JOY_RIGHT_SHOULDER	= 9,	//!< bit 9 value 512		Right Shoulder Bumper Button - not the Shoulder triggers are analog 
+ *	          JOY_LEFT_SHOULDER		= 8,	//!< bit 8 value 256		Left Shoulder Bumper Button - not the Shoulder triggers are analog
+ *	          JOY_RIGHT_SHOULDER	= 9,	//!< bit 9 value 512		Right Shoulder Bumper Button - not the Shoulder triggers are analog
  *	          JOY_A					= 12,	//!< bit 12 value 1,024		The 'A' Button on a standard Xbox Controller
  *	          JOY_B					= 13,	//!< bit 13 value 2,048		The 'B' Button on a standard Xbox Controller
  *	          JOY_X					= 14,	//!< bit 14 value 4,096		The 'X' Button on a standard Xbox Controller
  *	          JOY_Y					= 15	//!< bit 15 value 8,192		The 'Y' Button on a standard Xbox Controller
- *               
+ *
  */
 int VoxieBox::getJoyButtonState(int controllerID) {
 
@@ -3277,7 +3386,7 @@ int VoxieBox::getJoyButtonState(int controllerID) {
 *	@param posX			the X position to render the report
 *   @param posY			the Y position to render the report
 */
-void VoxieBox::reportJoy(int posX, int posY )
+void VoxieBox::reportJoy(int posX, int posY)
 {
 	if (manualJoyManage == true) {
 
@@ -3308,24 +3417,24 @@ void VoxieBox::reportJoy(int posX, int posY )
 
 	for (i = 0; i < getJoyNum(); i++) {
 		b = getJoyButtonState(i);
-		nPosY = posY + 39 + (i * 110); 
-		debugText(posX, nPosY, 0xFFFFFF, -1,						  "Joy %d :", i + 1);
-		if (getJoyButtonIsDown(i, JOY_A)) debugText(posX, nPosY, 0x00FF00, -1,			   "         A");
-		if (getJoyButtonIsDown(i, JOY_B)) debugText(posX, nPosY, 0xFF0000, -1,			   "          B");
-		if (getJoyButtonIsDown(i, JOY_X)) debugText(posX, nPosY, 0x0000FF, -1,			   "           X");
-		if (getJoyButtonIsDown(i, JOY_Y)) debugText(posX, nPosY, 0xFFFF00, -1,			   "            Y");
-		if (getJoyButtonIsDown(i, JOY_BACK)) debugText(posX, nPosY, 0x333333, -1,		   "             Bk");
-		if (getJoyButtonIsDown(i, JOY_START)) debugText(posX, nPosY, 0xFFFFFF, -1,		   "               St");
-		if (getJoyButtonIsDown(i, JOY_LEFT_SHOULDER)) debugText(posX, nPosY, 0x9d9d9d, -1,  "                 L");
+		nPosY = posY + 39 + (i * 110);
+		debugText(posX, nPosY, 0xFFFFFF, -1, "Joy %d :", i + 1);
+		if (getJoyButtonIsDown(i, JOY_A)) debugText(posX, nPosY, 0x00FF00, -1, "         A");
+		if (getJoyButtonIsDown(i, JOY_B)) debugText(posX, nPosY, 0xFF0000, -1, "          B");
+		if (getJoyButtonIsDown(i, JOY_X)) debugText(posX, nPosY, 0x0000FF, -1, "           X");
+		if (getJoyButtonIsDown(i, JOY_Y)) debugText(posX, nPosY, 0xFFFF00, -1, "            Y");
+		if (getJoyButtonIsDown(i, JOY_BACK)) debugText(posX, nPosY, 0x333333, -1, "             Bk");
+		if (getJoyButtonIsDown(i, JOY_START)) debugText(posX, nPosY, 0xFFFFFF, -1, "               St");
+		if (getJoyButtonIsDown(i, JOY_LEFT_SHOULDER)) debugText(posX, nPosY, 0x9d9d9d, -1, "                 L");
 		if (getJoyButtonIsDown(i, JOY_RIGHT_SHOULDER)) debugText(posX, nPosY, 0x9d9d9d, -1, "                  R");
-		if (getJoyButtonIsDown(i, JOY_LEFT_THUMB)) debugText(posX, nPosY, 0xFF00FF, -1,     "                   Al");
-		if (getJoyButtonIsDown(i, JOY_RIGHT_THUMB)) debugText(posX, nPosY, 0x00FFFF, -1,    "                     Ar");
-		if (getJoyButtonIsDown(i, JOY_DPAD_UP)) debugText(posX, nPosY, 0xFFFFFF, -1,		   "                       U");
-		if (getJoyButtonIsDown(i, JOY_DPAD_DOWN)) debugText(posX, nPosY, 0xFFFFFF, -1,	   "                        D");
-		if (getJoyButtonIsDown(i, JOY_DPAD_LEFT)) debugText(posX, nPosY, 0xFFFFFF, -1,	   "                         L");
-		if (getJoyButtonIsDown(i, JOY_DPAD_RIGHT)) debugText(posX, nPosY, 0xFFFFFF, -1,	   "                          R");
-		debugText(posX, nPosY, 0xFFFFFF, -1,									   "                           Raw:%d", getJoyButtonState(i));
-	//	debugText(posX, nPosY, 0xFFFFFF, -1,                                               "                            %d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d", b >> 0 & 1, b >> 1 & 1, b >> 2 & 1, b >> 3 & 1, b >> 4 & 1, b >> 5 & 1, b >> 6 & 1, b >> 7 & 1, b >> 8 & 1, b >> 9 & 1, b >> 10 & 1, b >> 11 & 1, b >> 12 & 1, b >> 13 & 1, b >> 14 & 1, b >> 15 & 1);
+		if (getJoyButtonIsDown(i, JOY_LEFT_THUMB)) debugText(posX, nPosY, 0xFF00FF, -1, "                   Al");
+		if (getJoyButtonIsDown(i, JOY_RIGHT_THUMB)) debugText(posX, nPosY, 0x00FFFF, -1, "                     Ar");
+		if (getJoyButtonIsDown(i, JOY_DPAD_UP)) debugText(posX, nPosY, 0xFFFFFF, -1, "                       U");
+		if (getJoyButtonIsDown(i, JOY_DPAD_DOWN)) debugText(posX, nPosY, 0xFFFFFF, -1, "                        D");
+		if (getJoyButtonIsDown(i, JOY_DPAD_LEFT)) debugText(posX, nPosY, 0xFFFFFF, -1, "                         L");
+		if (getJoyButtonIsDown(i, JOY_DPAD_RIGHT)) debugText(posX, nPosY, 0xFFFFFF, -1, "                          R");
+		debugText(posX, nPosY, 0xFFFFFF, -1, "                           Raw:%d", getJoyButtonState(i));
+		//	debugText(posX, nPosY, 0xFFFFFF, -1,                                               "                            %d%d%d%d%d%d%d%d%d%d%d%d%d%d%d%d", b >> 0 & 1, b >> 1 & 1, b >> 2 & 1, b >> 3 & 1, b >> 4 & 1, b >> 5 & 1, b >> 6 & 1, b >> 7 & 1, b >> 8 & 1, b >> 9 & 1, b >> 10 & 1, b >> 11 & 1, b >> 12 & 1, b >> 13 & 1, b >> 14 & 1, b >> 15 & 1);
 
 		nPosY += 13;
 		debugText(posX, nPosY, 0xFFFF00, -1, "State:");
@@ -3359,21 +3468,21 @@ void VoxieBox::reportJoy(int posX, int posY )
 		if (getJoyButtonOnUp(i, JOY_DPAD_DOWN))				debugText(posX, nPosY, 0xFF00FF, -1, "                        U");
 		if (getJoyButtonOnUp(i, JOY_DPAD_LEFT))				debugText(posX, nPosY, 0xFF00FF, -1, "                         U");
 		if (getJoyButtonOnUp(i, JOY_DPAD_RIGHT))			debugText(posX, nPosY, 0xFF00FF, -1, "                          U");
-	
-		if (getJoyButtonDownTime(i, JOY_A)				> 1)						debugText(posX, nPosY, 0xFF0000, -1, "         H");
-		if (getJoyButtonDownTime(i, JOY_B)				> 1)						debugText(posX, nPosY, 0xFF0000, -1, "          H");
-		if (getJoyButtonDownTime(i, JOY_X)				> 1)						debugText(posX, nPosY, 0xFF0000, -1, "           H");
-		if (getJoyButtonDownTime(i, JOY_Y)				> 1)						debugText(posX, nPosY, 0xFF0000, -1, "            H");
-		if (getJoyButtonDownTime(i, JOY_BACK)			> 1)						debugText(posX, nPosY, 0xFF0000, -1, "             H ");
-		if (getJoyButtonDownTime(i, JOY_START)			> 1)						debugText(posX, nPosY, 0xFF0000, -1, "               H ");
-		if (getJoyButtonDownTime(i, JOY_LEFT_SHOULDER)  > 1)						debugText(posX, nPosY, 0xFF0000, -1, "                 H");
+
+		if (getJoyButtonDownTime(i, JOY_A) > 1)						debugText(posX, nPosY, 0xFF0000, -1, "         H");
+		if (getJoyButtonDownTime(i, JOY_B) > 1)						debugText(posX, nPosY, 0xFF0000, -1, "          H");
+		if (getJoyButtonDownTime(i, JOY_X) > 1)						debugText(posX, nPosY, 0xFF0000, -1, "           H");
+		if (getJoyButtonDownTime(i, JOY_Y) > 1)						debugText(posX, nPosY, 0xFF0000, -1, "            H");
+		if (getJoyButtonDownTime(i, JOY_BACK) > 1)						debugText(posX, nPosY, 0xFF0000, -1, "             H ");
+		if (getJoyButtonDownTime(i, JOY_START) > 1)						debugText(posX, nPosY, 0xFF0000, -1, "               H ");
+		if (getJoyButtonDownTime(i, JOY_LEFT_SHOULDER) > 1)						debugText(posX, nPosY, 0xFF0000, -1, "                 H");
 		if (getJoyButtonDownTime(i, JOY_RIGHT_SHOULDER) > 1)						debugText(posX, nPosY, 0xFF0000, -1, "                  H");
-		if (getJoyButtonDownTime(i, JOY_LEFT_THUMB)		> 1)						debugText(posX, nPosY, 0xFF0000, -1, "                   H ");
-		if (getJoyButtonDownTime(i, JOY_RIGHT_THUMB)	> 1)						debugText(posX, nPosY, 0xFF0000, -1, "                     H ");
-		if (getJoyButtonDownTime(i, JOY_DPAD_UP)		> 1)						debugText(posX, nPosY, 0xFF0000, -1, "                       H");
-		if (getJoyButtonDownTime(i, JOY_DPAD_DOWN)		> 1)						debugText(posX, nPosY, 0xFF0000, -1, "                        H");
-		if (getJoyButtonDownTime(i, JOY_DPAD_LEFT)		> 1) 						debugText(posX, nPosY, 0xFF0000, -1, "                         H");
-		if (getJoyButtonDownTime(i, JOY_DPAD_RIGHT)		> 1)						debugText(posX, nPosY, 0xFF0000, -1, "                          H");
+		if (getJoyButtonDownTime(i, JOY_LEFT_THUMB) > 1)						debugText(posX, nPosY, 0xFF0000, -1, "                   H ");
+		if (getJoyButtonDownTime(i, JOY_RIGHT_THUMB) > 1)						debugText(posX, nPosY, 0xFF0000, -1, "                     H ");
+		if (getJoyButtonDownTime(i, JOY_DPAD_UP) > 1)						debugText(posX, nPosY, 0xFF0000, -1, "                       H");
+		if (getJoyButtonDownTime(i, JOY_DPAD_DOWN) > 1)						debugText(posX, nPosY, 0xFF0000, -1, "                        H");
+		if (getJoyButtonDownTime(i, JOY_DPAD_LEFT) > 1) 						debugText(posX, nPosY, 0xFF0000, -1, "                         H");
+		if (getJoyButtonDownTime(i, JOY_DPAD_RIGHT) > 1)						debugText(posX, nPosY, 0xFF0000, -1, "                          H");
 
 		heldTime = 0;
 		for (j = 0; j < 16; j++) {
@@ -3390,17 +3499,17 @@ void VoxieBox::reportJoy(int posX, int posY )
 		if (fabs(lAnaPos.x) < getJoyDeadZone() && fabs(lAnaPos.y) < getJoyDeadZone()) lStickCol = 0xff0000;
 
 		debugDrawCircFill(posX + 30, nPosY, 25, 0x9d9d9d);
-		debugDrawCircFill(posX + 30, nPosY, 0 + (getJoyDeadZone() * 25) , 0x904040);
+		debugDrawCircFill(posX + 30, nPosY, 0 + (getJoyDeadZone() * 25), 0x904040);
 
 		debugDrawCircFill(posX + 30 + (lAnaPos.x * 25), nPosY + (lAnaPos.y * 25), 5, lStickCol);
-		debugText(posX + 5, nPosY + 30, lStickCol, -1, "X:%+1.3f\nY:%+1.3f", getJoyAnalogAxisValue(i,0), getJoyAnalogAxisValue(i, 1));
+		debugText(posX + 5, nPosY + 30, lStickCol, -1, "X:%+1.3f\nY:%+1.3f", getJoyAnalogAxisValue(i, 0), getJoyAnalogAxisValue(i, 1));
 
 		rAnaPos = getJoyAnalogAxisValueP2D(i, 1);
 		rStickCol = 0x00ff00;
 		if (fabs(rAnaPos.x) < getJoyDeadZone() && fabs(rAnaPos.y) < getJoyDeadZone()) rStickCol = 0xff0000;
 
 		debugDrawCircFill(posX + 190, nPosY, 25, 0x9d9d9d);
-		debugDrawCircFill(posX + 190,  nPosY, 0 + (getJoyDeadZone() * 25), 0x904040);
+		debugDrawCircFill(posX + 190, nPosY, 0 + (getJoyDeadZone() * 25), 0x904040);
 
 		debugDrawCircFill(posX + 190 + (rAnaPos.x * 25), nPosY + (rAnaPos.y * 25), 5, rStickCol);
 		debugText(posX + 165, nPosY + 30, rStickCol, -1, "X:%+1.3f\nY:%+1.3f", getJoyAnalogAxisValue(i, 2), getJoyAnalogAxisValue(i, 3));
@@ -3419,7 +3528,7 @@ void VoxieBox::reportJoy(int posX, int posY )
 /**
  *  @param deadZoneValue	the value to set the deadzone threshold a number between 0 and 1 0 no deadzone... 1 deadzone everywhere
  *							default is 0.3
- *  
+ *
  */
 void VoxieBox::setJoyDeadZone(double deadZoneValue)
 {
@@ -3430,7 +3539,7 @@ void VoxieBox::setJoyDeadZone(double deadZoneValue)
 	}
 }
 //! Set the internal deadzone for Space Navigators. (dead zone is the area where not input is detected)
-/** 
+/**
  *  @param deadZoneValue new value to set deadzone. For Space Navigators between 0 and 350. default is 0.1
  *
  *
@@ -3455,8 +3564,8 @@ double VoxieBox::getNavDeadZone()
 /**
  * @param spaceNavID		the ID number of the spaceNav you want to edit (0,1,2,3)
  * @param orientation		the orientation of the controller 0 = front,  1 = 180 ' (behind),  2 = 90 ' CCW (right side),  3 = 90 ' CW (left side)
- *                                     
- */               
+ *
+ */
 void VoxieBox::setNavOrientation(int spaceNavID, int orientation)
 {
 	navOri[spaceNavID] = orientation % 4;
@@ -3468,7 +3577,7 @@ void VoxieBox::setNavOrientation(int spaceNavID, int orientation)
  * @param orientation		the orientation of the controller 0 = front,  1 = 180 ' (behind),  2 = 90 ' CCW (right side),  3 = 90 ' CW (left side)
  *
  */
-void VoxieBox::setMouseOrientation( int orientation)
+void VoxieBox::setMouseOrientation(int orientation)
 {
 	mouseOri = orientation % 4;
 }
@@ -3476,7 +3585,7 @@ void VoxieBox::setMouseOrientation( int orientation)
 //! returns the orientation set for a specific Space Nav
 /**
  * @param spaceNavID the SpaceNav's ID of which one you want to return its orientation information
- * @return 0 = front (normal), 1 = 180 ' (behind), 2 = 90 ' CCW (right side), 3 = 90 ' CW (left side) 
+ * @return 0 = front (normal), 1 = 180 ' (behind), 2 = 90 ' CCW (right side), 3 = 90 ' CW (left side)
  */
 int VoxieBox::getNavOrientation(int spaceNavID)
 {
@@ -3486,7 +3595,7 @@ int VoxieBox::getNavOrientation(int spaceNavID)
 //! returns the orientation set for the mouse
 /**
  * @param spaceNavID the SpaceNav's ID of which one you want to return its orientation information
- * @return 0 = front (normal), 1 = 180 ' (behind), 2 = 90 ' CCW (right side), 3 = 90 ' CW (left side) 
+ * @return 0 = front (normal), 1 = 180 ' (behind), 2 = 90 ' CCW (right side), 3 = 90 ' CW (left side)
  */
 int VoxieBox::getMouseOrientation()
 {
@@ -3496,8 +3605,8 @@ int VoxieBox::getMouseOrientation()
 //! returns the orientation set for a specific game controller
 /**
  * @param controllerID the joy's ID of which one you want to return its orientation information
- * 
- * @return 0 = front (normal), 1 = 180 ' (behind), 2 = 90 ' CCW (right side), 3 = 90 ' CW (left side) 
+ *
+ * @return 0 = front (normal), 1 = 180 ' (behind), 2 = 90 ' CCW (right side), 3 = 90 ' CW (left side)
  */
 int VoxieBox::getJoyOrientation(int controllerID)
 {
@@ -3509,8 +3618,8 @@ int VoxieBox::getJoyOrientation(int controllerID)
 /**
  * @param controllerID the ID number of the controller you want to adjust (0,1,2,3)
  * @param orientation of the controller 0 = front, 1 = 180 ' (behind), 2 = 90 ' CCW (right side), 3 = 90 ' CW (left side)
- *                                      
- *                                    
+ *
+ *
  */
 void VoxieBox::setJoyOrientation(int controllerID, int orientation)
 {
@@ -3529,7 +3638,7 @@ double VoxieBox::getJoyDeadZone()
 //! Returns a controllers analog trigger value. 0 = 0% pressed ... 1 = 100% pressed. Presented as a float 
 /**
  *  @param controllerID		the ID number of the controller you want to adjust (0 = port 1,1 = port 2, 2 = port 3, 3 = port 4)
- *  @param joyTriggerCode	the trigger to check 0 = left, 1 = right. 
+ *  @param joyTriggerCode	the trigger to check 0 = left, 1 = right.
  *
  *  @returns a number between 0 and 1 which represents the analog's trigger value. 0 not pressed, 1 is fully pressed.
  */
@@ -3563,7 +3672,7 @@ float VoxieBox::getJoyTriggerValue(int controllerID, int joyTriggerCode)
 
 
 float VoxieBox::normaliseAnaStickToFloat(short input) {
-		return ( input  / (MAXSHORT * .5) ) * .5;
+	return (input / (MAXSHORT * .5)) * .5;
 }
 
 float VoxieBox::normaliseNavToFloat(int input) {
@@ -3579,7 +3688,7 @@ float VoxieBox::normaliseNavToFloat(int input) {
  * 2 = CCW 90' right side
  * 3 = CW 90'  left side
  */
-//TODO these should be pointers and maybe can be using radians / degrees to rotate instead of force 90 
+ //TODO these should be pointers and maybe can be using radians / degrees to rotate instead of force 90 
 point2d VoxieBox::oriCorrection(int oriType, float xValue, float yValue)
 {
 
@@ -3594,9 +3703,9 @@ point2d VoxieBox::oriCorrection(int oriType, float xValue, float yValue)
 		returnVal.x = -returnVal.x;
 		returnVal.y = -returnVal.y;
 		break;
-	case 2: 
+	case 2:
 		returnVal.x = yValue;
-		returnVal.y = -xValue;		
+		returnVal.y = -xValue;
 		break;
 	case 3:
 		returnVal.x = -yValue;
@@ -3631,20 +3740,20 @@ point2d VoxieBox::getJoyAnalogAxisValueP2D(int controllerID, int stick) {
 
 	point2d a = { 0,0 };
 
-	if (manualJoyManage == false )
+	if (manualJoyManage == false)
 
-	switch (stick) {
-	default:
-	case 0:
-		a.x = normaliseAnaStickToFloat(vx[controllerID].tx0);
-		a.y = normaliseAnaStickToFloat(vx[controllerID].ty0);
-		break;
-	case 1:
-		a.x = normaliseAnaStickToFloat(vx[controllerID].tx1);
-		a.y = normaliseAnaStickToFloat(vx[controllerID].ty1);
-		break;
+		switch (stick) {
+		default:
+		case 0:
+			a.x = normaliseAnaStickToFloat(vx[controllerID].tx0);
+			a.y = normaliseAnaStickToFloat(vx[controllerID].ty0);
+			break;
+		case 1:
+			a.x = normaliseAnaStickToFloat(vx[controllerID].tx1);
+			a.y = normaliseAnaStickToFloat(vx[controllerID].ty1);
+			break;
 
-	}
+		}
 
 	a.y = -a.y; // the voxiebox.dll has the y inverted for some reason?! 
 	a = oriCorrection(getJoyOrientation(controllerID), a.x, a.y);
@@ -3671,7 +3780,7 @@ point2d VoxieBox::getJoyAnalogAxisValueP2D(int controllerID, int stick) {
  * @param controllerID  the controller ID you want to check (0 = player 1, 1 = player 2... etc)
  * @param axis			the controller's Axis to check (vxInputTypes.h::ControllerAxis) 0 left stick x, 1 left stick y, 2 right stick x, 3 right stick y
  *
- * @return the single analog axis as a float. Range between -1 and 1, 0 is centred. To get both the X and Y values together @see getJoyAnalogAxisValueP2D()  
+ * @return the single analog axis as a float. Range between -1 and 1, 0 is centred. To get both the X and Y values together @see getJoyAnalogAxisValueP2D()
  */
 float VoxieBox::getJoyAnalogAxisValue(int controllerID, int axis) {
 
@@ -3693,16 +3802,16 @@ float VoxieBox::getJoyAnalogAxisValue(int controllerID, int axis) {
 	}
 
 	switch (axis) {
-		case JOY_LEFT_STICK_X:
-		case JOY_RIGHT_STICK_X:
-			f = a.x;
-			break;
-		case JOY_LEFT_STICK_Y:
-		case JOY_RIGHT_STICK_Y:
-			f = a.y;
-			break;
+	case JOY_LEFT_STICK_X:
+	case JOY_RIGHT_STICK_X:
+		f = a.x;
+		break;
+	case JOY_LEFT_STICK_Y:
+	case JOY_RIGHT_STICK_Y:
+		f = a.y;
+		break;
 	}
-	
+
 	if (enableJoyDeadZone == true) {
 		if (joyDeadZoneCheck(f)) return f;
 		return 0;
@@ -3737,17 +3846,17 @@ void VoxieBox::reportKeyboard(int posX, int posY)
 	debugText(posX, posY + 12, 0x00FFFF, -1, "\n              %c", keyHistory.history[0].inputCodeRaw);
 	debugText(posX, posY + 12, 0xFF0000, -1, "\nLast Pressed:    (Raw:%#08x) %#04x", keyHistory.history[0].inputCodeRaw, keyHistory.history[0].inputCode);
 
-	if (voxie_keystat(KB_Shift_Left) || voxie_keystat(KB_Shift_Right)) 	debugText(posX , posY + 9, 0x00FF00, -1, "Shft");
+	if (voxie_keystat(KB_Shift_Left) || voxie_keystat(KB_Shift_Right)) 	debugText(posX, posY + 9, 0x00FF00, -1, "Shft");
 	if (voxie_keystat(KB_Control_Left) || voxie_keystat(KB_Control_Right)) 	debugText(posX + 30, posY + 9, 0xFF00FF, -1, "Ctrl");
 	if (voxie_keystat(KB_Alt_Left) || voxie_keystat(KB_Alt_Right)) 	debugText(posX + 60, posY + 9, 0x00FFFFF, -1, "Alt");
-	
+
 	//if (lastPressedKeyTime > 0) debugText(posX + 140, posY + 30, 0xff0000, -1, "%1.2f", time - lastPressedKeyTime);
 
 	if (keyHistory.history[0].duration) debugText(posX + 140, posY + 30, 0xff0000, -1, "%1.2f", keyHistory.history[0].duration);
-	
-	debugText(posX, posY + 30, 0xffff00, -1, "   %c", keyHistory.history[0].inputCodeRaw );
-	debugText(posX, posY + 30, 0xff0000, -1, "%d    %#04x (state : %d)", 1, keyHistory.history[0].inputCodeRaw >>8, voxie_keystat(keyHistory.history[0].inputCode));
-	
+
+	debugText(posX, posY + 30, 0xffff00, -1, "   %c", keyHistory.history[0].inputCodeRaw);
+	debugText(posX, posY + 30, 0xff0000, -1, "%d    %#04x (state : %d)", 1, keyHistory.history[0].inputCodeRaw >> 8, voxie_keystat(keyHistory.history[0].inputCode));
+
 	if (getKeyDownTime(keyHistory.history[0].inputCode) > 1) 	debugText(posX, posY + 30, 0xffffff, -1, "                               H");
 	if (getKeyIsDown(keyHistory.history[0].inputCode) == 1) 	debugText(posX, posY + 30, 0x00ffff, -1, "                              D");
 	if (getKeyOnDown(keyHistory.history[0].inputCode) == 1) 	debugText(posX, posY + 30, 0x00ff00, -1, "                             O");
@@ -3778,7 +3887,7 @@ voxie_keyboard_history_t  VoxieBox::getKeyHistory()
 
 
 //! draw a DICOM file onto the volumetric display. - for help with this function call contact voxon photonics directly.
-void VoxieBox::drawDicom(voxie_dicom_t *vd, const char *gfilnam, point3d *gp, point3d *gr, point3d *gd, point3d *gf, int *animn, int *loaddone) {
+void VoxieBox::drawDicom(voxie_dicom_t* vd, const char* gfilnam, point3d* gp, point3d* gr, point3d* gd, point3d* gf, int* animn, int* loaddone) {
 
 	voxie_drawdicom(&vf, vd, gfilnam, gp, gr, gd, gf, animn, loaddone);
 
@@ -3794,23 +3903,23 @@ void VoxieBox::endBreath() {
 
 
 //! Call this to tell Voxiebox library you want to exit the breath() loop and quit the application.
-/** 
+/**
 * forces VoxieBox::breath() to return non-zero on its next call.
-* 
+*
 * By default a clean exit is set to true (VoxieBox::setEnsureCleanExitOnQuitLoop())
 * if VoxieBox::setEnsureCleanExitOnQuitLoop() is set to true. VoxieBox::endFrame() is called and GFX stored in memory is cleared.
 *
 */
-void VoxieBox::quitLoop() 
+void VoxieBox::quitLoop()
 {
 
 	if (enableCleanExit)	endFrame();
-		
+
 	voxie_quitloop();
 
 	if (enableCleanExit) {
 		freeGfx((char*)"*");
-		
+
 	}
 
 }
@@ -3827,7 +3936,7 @@ void VoxieBox::quitLoop()
  *   -1 if file not found or other error related to loading.
  *   -2 if none of the MAX audio voice slots were free. New sounds don't play if list is full.
  */
-int VoxieBox::playSound(const char *fileName, int sourceChannel, int volumeLeft, int volumeRight, float playBackSpeed)
+int VoxieBox::playSound(const char* fileName, int sourceChannel, int volumeLeft, int volumeRight, float playBackSpeed)
 {
 
 	return voxie_playsound(fileName, sourceChannel, volumeLeft, volumeRight, playBackSpeed);
@@ -3837,7 +3946,7 @@ int VoxieBox::playSound(const char *fileName, int sourceChannel, int volumeLeft,
 
 //! Update a currently playing sound 
 /** Use a returned voxie::playSound value as the handle (an int that is assigned to that specific sound)
- *	update a sound is great for fades or adjusting volumes set the volperc0, or volperc1 
+ *	update a sound is great for fades or adjusting volumes set the volperc0, or volperc1
  *  use to a negative number to turn off the sound and free it from memory.
  *
  *  @param handle			the current sound to handleID to effect (use the int that gets returned when using VoxieBox::playSound() )
@@ -3855,7 +3964,7 @@ void VoxieBox::updateSound(int handleID, int sourceChannel, int volumeLeft, int 
 }
 
 /** Updates a sound's play position to . Requires the audio's handle ID
- *  @param handleID		the handleID for the audio (when VoxieBox::playSound is called it returns an int value which is its handleID) 
+ *  @param handleID		the handleID for the audio (when VoxieBox::playSound is called it returns an int value which is its handleID)
  *	@param second		the time in seconds to move the sound position to. Can use the decimal for exact position
  *  @param seekType		the seek type SEEK_SET (0), SEEK_CUR(1), SEEK_END(2). Most cases SEEK_SET (value of 0). Works similar to the fseek() function
  */
@@ -3865,9 +3974,9 @@ void VoxieBox::updateSoundPosition(int handleID, double second, int seekType)
 }
 //!  Define a custom audio callback function to play PCM / raw audio data
 /**
- *  This function is used to play PCM / audio data (not a file). 
+ *  This function is used to play PCM / audio data (not a file).
  *
- *	If used, this function will be called from a separate thread, every 3ms (for Voxiebox mode), 
+ *	If used, this function will be called from a separate thread, every 3ms (for Voxiebox mode),
  *  or every 20ms (for emulated mode).
  *	Format is set by Voxiebox library. To get sample rate and number of channels, read samprate and
  *	nchans from the voxie_wind_t structure after the call to voxie_init(). The sample format is
@@ -3876,14 +3985,14 @@ void VoxieBox::updateSoundPosition(int handleID, double second, int seekType)
  *  @param userplayfunc	the custom call back function
  *  @param *sampleBuffer	the sample audio buffer passed in from memory
  *  @param sampleRate		the sample rate of the audio (determined by the voxie_wind_t vw.playsamprate)
- *              
+ *
  *           @example // An example of an custom audio callback.
  *                     // Once called this function will always be called on a separate thread. Use a global variable to turn it on / off
- *					static int gPlaySound = -1; // if this is set to 0 it will mute. It will play when set to -1 
+ *					static int gPlaySound = -1; // if this is set to 0 it will mute. It will play when set to -1
  *					static int frequencyToPlay = 26162; // middle C note
  *					static void simplemix (int *ibuf, int nsamps)
  *					{
- *						static int cnt[2]; 
+ *						static int cnt[2];
  *						int i, c; // c is number of channels to play (vw.playnchans)
  *
  * 						for(i=0;i<nsamps;i++,ibuf+=vw.playnchans)
@@ -3892,11 +4001,11 @@ void VoxieBox::updateSoundPosition(int handleID, double second, int seekType)
  *					}
  *
  *
- *		      Now that a custom audio callback has been defined. Call it within your VX program and it should play. 
- *	
+ *		      Now that a custom audio callback has been defined. Call it within your VX program and it should play.
+ *
  * Note : The playback function will continue to be called until stopped. To kill the call back overwrite the user function with a 0 by writing playPCMData(0) in your program.
  */
-void VoxieBox::setAudioPlayCallBack(void(*userplayfunc)(int *sampleBuffer, int sampleRate))
+void VoxieBox::setAudioPlayCallBack(void(*userplayfunc)(int* sampleBuffer, int sampleRate))
 {
 
 	voxie_setaudplaycb(userplayfunc);
@@ -3907,15 +4016,15 @@ void VoxieBox::setAudioPlayCallBack(void(*userplayfunc)(int *sampleBuffer, int s
 
 
 //!  Define a custom audio callback function to record PCM audio data (not a file) 
-/** 
+/**
  *  this function is used to capture audio from the device. How to use this function is still being documented
  *  important voxie_wind_t variables to have set before recording.
  *  @param  userplayfunc	the custom call back function
  *  @param  recsamprate		recording sample rate - to use, must write before voxie_init()
  *  @param  recnchans		number of audio channels in recording callback
- *  
+ *
  */
-void VoxieBox::setAudioRecordCallBack(void(*userrecfunc)(int *sampleBuffer, int sampleRate))
+void VoxieBox::setAudioRecordCallBack(void(*userrecfunc)(int* sampleBuffer, int sampleRate))
 {
 	voxie_setaudreccb(userrecfunc);
 }
@@ -3925,15 +4034,15 @@ void VoxieBox::setAudioRecordCallBack(void(*userrecfunc)(int *sampleBuffer, int 
 *  Once a zip has been mounted all file names which are withing the zip folder can be referenced as if they were in the local directory
 *  Example you have a zip file with 'example.png' within it. Once you mount that zip you refer 'example.png' in your program to access that file
 *
-*  @param filename the path and filename of the zip file to mount. (path is relative) 
+*  @param filename the path and filename of the zip file to mount. (path is relative)
 */
-void VoxieBox::mountZip(char * filename)
+void VoxieBox::mountZip(char* filename)
 {
 	voxie_mountzip(filename);
 }
 
 //! Causes a screen capture of the volumetric buffer to occur on the next frame. Captured as a PLY file
-/**  
+/**
  *  Writes to the next available nonexistent numbered file: VOXIE0000.PNG, VOXIE0001.PNG, ..
  *  will output in the current .exe folder unless VoxieBox.ini contains "volcapdir=" variable
  *  where a custom output directory can be set (default for voxiebox.ini is "volcapdir=c:\voxon\media\MyCaptures\"
@@ -3945,7 +4054,7 @@ void VoxieBox::captureVolumeAsPly()
 
 //! Causes a screen capture of the volumetric buffer to occur on the next frame. Captured as a PNG file
 /**  Writes to the next available nonexistent numbered file: VOXIE0000.PNG, VOXIE0001.PNG, ..
- *   will output in the current .exe folder unless VoxieBox.ini contains "volcapdir=" variable 
+ *   will output in the current .exe folder unless VoxieBox.ini contains "volcapdir=" variable
  *   where a custom output directory can be set (default for voxiebox.ini is "volcapdir=c:\voxon\media\MyCaptures\"
  */
 void VoxieBox::captureVolumeAsPng()
@@ -3955,11 +4064,11 @@ void VoxieBox::captureVolumeAsPng()
 
 //! Causes a capture of the volumetric buffer to occur on the next frame, or video capture to start /stop.
 /** @param fileName the file name of the capture - if null writes to the next available nonexistent numbered file: VOXIE0000.PNG, VOXIE0001.PNG, ..
- *  @param volumeCaptureMode the capture mode to use. Off (Stop recording) = 0, Single PLY = 1, Single PNG = 2, Single REC = 3, Video Rec = 4, Single VCB = 5, Video VCB = 6; 
- *  @param targetVPS if 
+ *  @param volumeCaptureMode the capture mode to use. Off (Stop recording) = 0, Single PLY = 1, Single PNG = 2, Single REC = 3, Video Rec = 4, Single VCB = 5, Video VCB = 6;
+ *  @param targetVPS if
  * Note : 	If fileName is NULL, writes to the next available nonexistent numbered file: VOXIE0000.PNG, VOXIE0001.PNG, ..
  */
-void VoxieBox::captureVolume(const char *fileName, int volumeCaptureMode, int targetVPS = 15)
+void VoxieBox::captureVolume(const char* fileName, int volumeCaptureMode, int targetVPS = 15)
 {
 
 	voxie_volcap(fileName, volumeCaptureMode, targetVPS);
@@ -3974,40 +4083,40 @@ void VoxieBox::captureVolumeStop()
 }
 
 //! returns a timestamp of the compile date of VxCpp.dll expressed as an __int64. (format: YYYYMMDDHHmmss)
-/** 
- * 
+/**
+ *
  * Returns compile date and time of VxCpp.dll as a 64-bit int in this format:
  * year*1e10 + month*1e8 + day*1e6 + hour*1e4 + minute*1e2 + second
  * For example, April 8, 2024 at 16:38:44 would be: 20240408163844
- */ 
-    
+ */
+
 __int64 VoxieBox::getVxCppVersion()
 {
-	#define MONTH ((__DATE__[0]=='F') ?  2 : (__DATE__[0]=='S') ? 9 : (__DATE__[0]=='O') ? 10 : (__DATE__[0]=='N') ? 11 : \
+#define MONTH ((__DATE__[0]=='F') ?  2 : (__DATE__[0]=='S') ? 9 : (__DATE__[0]=='O') ? 10 : (__DATE__[0]=='N') ? 11 : \
 						(__DATE__[0]=='D') ? 12 : (__DATE__[1]=='p') ? 4 : (__DATE__[0]=='A') ?  8 : (__DATE__[2]=='y') ?  5 : \
 						(__DATE__[2]=='l') ?  7 : (__DATE__[2]=='r') ? 3 : (__DATE__[1]=='a') ?  1 : (__DATE__[1]=='u') ?  6 : 0)
-		return (__DATE__[7] & 15) * 10000000000000I64 +
-			(__DATE__[8] & 15) * 1000000000000I64 +
-			(__DATE__[9] & 15) * 100000000000I64 +
-			(__DATE__[10] & 15) * 10000000000I64 +
-			MONTH * 100000000I64 +
-			(__DATE__[4] & 15) * 10000000I64 +
-			(__DATE__[5] & 15) * 1000000I64 +
-			(__TIME__[0] & 15) * 100000I64 +
-			(__TIME__[1] & 15) * 10000I64 +
-			(__TIME__[3] & 15) * 1000I64 +
-			(__TIME__[4] & 15) * 100I64 +
-			(__TIME__[6] & 15) * 10I64 +
-			(__TIME__[7] & 15);
+	return (__DATE__[7] & 15) * 10000000000000I64 +
+		(__DATE__[8] & 15) * 1000000000000I64 +
+		(__DATE__[9] & 15) * 100000000000I64 +
+		(__DATE__[10] & 15) * 10000000000I64 +
+		MONTH * 100000000I64 +
+		(__DATE__[4] & 15) * 10000000I64 +
+		(__DATE__[5] & 15) * 1000000I64 +
+		(__TIME__[0] & 15) * 100000I64 +
+		(__TIME__[1] & 15) * 10000I64 +
+		(__TIME__[3] & 15) * 1000I64 +
+		(__TIME__[4] & 15) * 100I64 +
+		(__TIME__[6] & 15) * 10I64 +
+		(__TIME__[7] & 15);
 }
 
 
 //! returns a scrolling color as an RGB hexadecimal value 
 /**
- * @param offSet	offset (any whole number) to offset the color cycle to a different period in the cycle 
- * @return color as an RGB hexadecimal value 
+ * @param offSet	offset (any whole number) to offset the color cycle to a different period in the cycle
+ * @return color as an RGB hexadecimal value
  */
-int VoxieBox::scrollCol(int offSet = 0 )
+int VoxieBox::scrollCol(int offSet)
 {
 
 	int input = (rainbowCounter + offSet) % COL_SCROLL_MAX;
@@ -4026,16 +4135,16 @@ void VoxieBox::setColScrollSpeed(double speed)
 }
 
 //! Updates/"moves" a point from the current position towards the destination point. Returns 1 if currentPos collides with destinnationPos otherwise returns a 0.  
-/** 
- *  
- @param currentPos point3d pointer to the current position 
+/**
+ *
+ @param currentPos point3d pointer to the current position
  *  @param currentPos point3d to the destination position
  *  @param speed the speed in which the point is traveling
  *  @param accuracy the accuracy to determine if the current position has reached the destination Pos
  *
  *  @returns 1 if currentPos has arrived at the destinationPos (within the accuracy provided) otherwise 0
  */
-int VoxieBox::moveToPos(point3d * currentPos, point3d destinationPos, float speed, float accuracy)
+int VoxieBox::moveToPos(point3d* currentPos, point3d destinationPos, float speed, float accuracy)
 {
 	float acc = accuracy; // accuracy
 
@@ -4110,7 +4219,7 @@ int VoxieBox::colorHexDivide(int color, float divideAmount) {
  * @param speed			the speed or rate of the color change
  * @param destcolor		the destination color. The color to tween to.
  *
- * @return returns a new color value that is one step closer to the destination color. 
+ * @return returns a new color value that is one step closer to the destination color.
  */
 int VoxieBox::tweenCol(int color, int speed, int destcolor) {
 
@@ -4147,7 +4256,7 @@ int VoxieBox::tweenCol(int color, int speed, int destcolor) {
  * @param color		the color value to brighten
  * @param amount	the amount of color to add range (0 - 255) each value is 1 hex value.
  *
- * @return the new brightened color value. 
+ * @return the new brightened color value.
  */
 int VoxieBox::brightenCol(int color, int amount) {
 
@@ -4190,19 +4299,30 @@ int VoxieBox::randomCol() {
 	return  RANDOM_COLOR[rand() % sizeof(RANDOM_COLOR) / sizeof(RANDOM_COLOR[0])];
 
 }
+//! returns a random position inside the volume
+point3d VoxieBox::randomPos()
+{
+	point3d pos = { 0 };
+
+	pos.x = (float)((rand() & 32767) - 16384) / 16384.f * vw.aspx;
+	pos.y = (float)((rand() & 32767) - 16384) / 16384.f * vw.aspy;
+	pos.z = (float)((rand() & 32767) - 16384) / 16384.f * vw.aspz;
+
+	return pos;
+}
 
 //! Compare two point2d with a degree of accuracy. returns true if the two points are the same within the accuracy amount specified
 /**
  *  @param a			pointer to the 1st point2d to compare
  *  @param b			pointer to the 2nd point2d to compare
- *	@param accuracy     the accuracy to compare the two points 
+ *	@param accuracy     the accuracy to compare the two points
  *
  *  @return true if the two points are the same within the accuracy amount specified
  */
-int VoxieBox::pointSame(point2d * a, point2d * b, point2d accuracy = { 0.001, 0.001 })
+int VoxieBox::pointSame(point2d* a, point2d* b, point2d accuracy = { 0.001, 0.001 })
 {
 	if (a->x + accuracy.x >= b->x && a->x - accuracy.x <= b->x &&
-		a->y + accuracy.y >= b->y && a->y - accuracy.y <= b->y ) return 1;
+		a->y + accuracy.y >= b->y && a->y - accuracy.y <= b->y) return 1;
 
 	return 0;
 }
@@ -4216,11 +4336,11 @@ int VoxieBox::pointSame(point2d * a, point2d * b, point2d accuracy = { 0.001, 0.
  *
  *  @return true if the two points are the same within the accuracy amount specified
  */
-int VoxieBox::pointSame(point3d * a, point3d * b, point3d accuracy = { 0.001, 0.001, 0.001 })
+int VoxieBox::pointSame(point3d* a, point3d* b, point3d accuracy = { 0.001, 0.001, 0.001 })
 {
 	if (a->x + accuracy.x >= b->x && a->x - accuracy.x <= b->x &&
 		a->y + accuracy.y >= b->y && a->y - accuracy.y <= b->y &&
-		a->z + accuracy.z >= b->z && a->z - accuracy.z <= b->z ) return 1;
+		a->z + accuracy.z >= b->z && a->z - accuracy.z <= b->z) return 1;
 
 	return 0;
 }
@@ -4237,7 +4357,7 @@ void VoxieBox::updateKeyboardHistory()
 	// this for loop needs to happened before voxie_keyread as that will flush it
 	for (i = 0; i < KEY_HISTORY_LENGTH; i++) {
 
-			// >> 8)&0xFF only passes through the scancode....
+		// >> 8)&0xFF only passes through the scancode....
 		if (voxie_keystat(keyHistory.history[i].inputCode) && keyHistory.history[i].isHeld == true) {
 
 			keyHistory.history[i].state = 3;
@@ -4265,25 +4385,25 @@ void VoxieBox::updateKeyboardHistory()
 
 			for (i = 1; i < KEY_HISTORY_LENGTH; i++) {
 
-				keyHistory.history[i].inputCodeRaw		= okeyHistory.history[i - 1].inputCodeRaw;
-				keyHistory.history[i].inputCode			= okeyHistory.history[i - 1].inputCode;
-				keyHistory.history[i].startTime			= okeyHistory.history[i - 1].startTime;
-				keyHistory.history[i].startLastPressed	= okeyHistory.history[i - 1].startLastPressed;
-				keyHistory.history[i].duration			= okeyHistory.history[i - 1].duration;
-				keyHistory.history[i].isHeld			= okeyHistory.history[i - 1].isHeld;
-				keyHistory.history[i].onUp				= okeyHistory.history[i - 1].onUp;
-				keyHistory.history[i].state				= okeyHistory.history[i - 1].state;
+				keyHistory.history[i].inputCodeRaw = okeyHistory.history[i - 1].inputCodeRaw;
+				keyHistory.history[i].inputCode = okeyHistory.history[i - 1].inputCode;
+				keyHistory.history[i].startTime = okeyHistory.history[i - 1].startTime;
+				keyHistory.history[i].startLastPressed = okeyHistory.history[i - 1].startLastPressed;
+				keyHistory.history[i].duration = okeyHistory.history[i - 1].duration;
+				keyHistory.history[i].isHeld = okeyHistory.history[i - 1].isHeld;
+				keyHistory.history[i].onUp = okeyHistory.history[i - 1].onUp;
+				keyHistory.history[i].state = okeyHistory.history[i - 1].state;
 
 			}
 
 			keyHistory.history[0].inputCodeRaw = k;
-			keyHistory.history[0].inputCode = (k>>8)&0xFF;
+			keyHistory.history[0].inputCode = (k >> 8) & 0xFF;
 			keyHistory.history[0].startLastPressed = keyHistory.history[0].startTime;
 			keyHistory.history[0].startTime = time;
-			keyHistory.history[0].duration	= 0;
-			keyHistory.history[0].isHeld	= true;
-			keyHistory.history[0].onUp		= false;
-			keyHistory.history[0].state		= 1;
+			keyHistory.history[0].duration = 0;
+			keyHistory.history[0].isHeld = true;
+			keyHistory.history[0].onUp = false;
+			keyHistory.history[0].state = 1;
 
 		}
 	}
@@ -4294,12 +4414,12 @@ void VoxieBox::updateKeyboardHistory()
 
 //! Updates all Space Nav inputs used internally to manage SpaceNav input states
 /**
- * Set VoxieBox::setEnableLegacyNavInput() to true if you want to manage input behavior manually 
+ * Set VoxieBox::setEnableLegacyNavInput() to true if you want to manage input behavior manually
  *
  *
  */
 void VoxieBox::updateNavInput() {
-	
+
 	int j = 0;
 	int b = 0;
 	int i = 1;
@@ -4307,7 +4427,7 @@ void VoxieBox::updateNavInput() {
 	for (navplays = 0; navplays < 4; navplays++) {
 
 		onavbut[navplays] = nav[navplays].but;
-		if (voxie_nav_read(navplays, &nav[navplays]) == 0) break; 
+		if (voxie_nav_read(navplays, &nav[navplays]) == 0) break;
 
 		navPos[navplays].x += (((getNavDirectionDeltaAxis(navplays, 0)) * i) * this->navSensitivity[navplays]) * deltaTime;
 		navPos[navplays].y += (((getNavDirectionDeltaAxis(navplays, 1)) * i) * this->navSensitivity[navplays]) * deltaTime;
@@ -4384,15 +4504,15 @@ void VoxieBox::updateNavInput() {
 //! Returns the previous button values. Used for a legacy way to create your own button functions. Useful if setEnableLegacyNavInput() is set to true. 
 /**
  * @param spaceNavID	the ID number of the Space Nav to check (0 = 1st detected,  1 = 2nd detected etc)
- * 
- * @return  the button values from the previous volume update. 
+ *
+ * @return  the button values from the previous volume update.
  */
-int	VoxieBox::getNavPrevButtonState(int spaceNavID) 
+int	VoxieBox::getNavPrevButtonState(int spaceNavID)
 {
 	return onavbut[spaceNavID];
 }
 //! Return a point3d of the Nav's tracked position. Used primary when the Space Nav is being used as a cursor.
-/** 
+/**
  * @param spaceNavID	the ID number of the Space Nav to check (0 = 1st detected,  1 = 2nd detected etc)
  *
  * @return a point3d of the internally tracked Space Nav position
@@ -4406,10 +4526,10 @@ point3d VoxieBox::getNavPosition(int spaceNavID)
 //! Returns the button values (presented as binary of each button) for the Space Navigator. 0 = none, 1 = left, 2 = right, 3 = both.
 /**
  * @param SpaceNavID	the ID number of the Space Nav to check (0 = 1st detected,  1 = 2nd detected etc)
- * 
+ *
  * @return bits 0 and 1 are the left and right buttons respectfully, 0 = no button pressed, 1 = left button pressed, 2 = right button pressed, 3 = both buttons pressed
  */
-int VoxieBox::getNavButtonState(int spaceNavID) 
+int VoxieBox::getNavButtonState(int spaceNavID)
 {
 	return nav[spaceNavID].but;
 }
@@ -4417,7 +4537,7 @@ int VoxieBox::getNavButtonState(int spaceNavID)
 //! Returns 1 if particular Space Nav's button is being pressed. Button codes are based on vxInputTypes.h::NavButton(). 0 = left button, 1 = right button. 
 /**
  *  @param SpaceNavID	the ID number of the Space Nav to check (0 = 1st detected,  1 = 2nd detected etc)
- *  @param buttonCode   the button code to check based on vxInputTypes.h::NavButton(). 0 = left button, 1 = right button. 
+ *  @param buttonCode   the button code to check based on vxInputTypes.h::NavButton(). 0 = left button, 1 = right button.
  *
  *  @return 1 if particular button is currently being pressed otherwise 0.
  */
@@ -4461,7 +4581,7 @@ int VoxieBox::getNavButtonOnUp(int spaceNavID, int buttonCode)
  *  @param buttonCode   the button code to check based on vxInputTypes.h::NavButton(). 0 = left button, 1 = right button.
 
  *
- *  @return in seconds how long a Space Nav's button has been held down, otherwise returns a 0. 
+ *  @return in seconds how long a Space Nav's button has been held down, otherwise returns a 0.
  */
 double VoxieBox::getNavButtonDownTime(int spaceNavID, int buttonCode) {
 
@@ -4505,7 +4625,7 @@ double VoxieBox::getNavDoubleClickThreshold()
 /**
  * @param spaceNavID	the ID number of the Space Nav to check (0 - 3)
  *
- * @return the angle delta (what angle input has been altered since the last volume update)  
+ * @return the angle delta (what angle input has been altered since the last volume update)
  */
 point3d VoxieBox::getNavAngleDelta(int spaceNavID)
 {
@@ -4538,7 +4658,7 @@ point3d VoxieBox::getNavAngleDelta(int spaceNavID)
 	else {
 		return pReturn;
 	}
-	
+
 }
 
 
@@ -4552,7 +4672,7 @@ point3d VoxieBox::getNavDirectionDelta(int spaceNavID)
 {
 	point3d pReturn{ nav[spaceNavID].dx , nav[spaceNavID].dy, nav[spaceNavID].dz };
 	point2d a = { 0 };
-	
+
 	if (manualNavManage == false) { // if using modern way convert the data to be between -1 and 1
 		if (pReturn.x != 0)	pReturn.x = normaliseNavToFloat(int(pReturn.x));
 		if (pReturn.y != 0)	pReturn.y = normaliseNavToFloat(int(pReturn.y));
@@ -4593,7 +4713,7 @@ float VoxieBox::getNavDirectionDeltaAxis(int spaceNavID, int axis)
 	switch (axis) {
 	case 0:
 	default:
-		return a.x; 
+		return a.x;
 		break;
 	case 1:
 		return a.y;
@@ -4603,7 +4723,7 @@ float VoxieBox::getNavDirectionDeltaAxis(int spaceNavID, int axis)
 		break;
 
 	}
-	
+
 }
 
 //! returns a single axis of a spaceNav's angle delta (range is -1 to 1, 0 is centered). Axis 0 = x, 1 = y, 2 = z
@@ -4672,12 +4792,12 @@ void VoxieBox::updateJoyInput()
 			break;
 		}
 
-		
+
 
 
 		for (j = 0; j < 16; j++) {
 
-			if ( (b >> j & 1) && (ovxbut[vxnplays] >> j & 1) ) { // b 1 && o 1 -- button held
+			if ((b >> j & 1) && (ovxbut[vxnplays] >> j & 1)) { // b 1 && o 1 -- button held
 
 				joyHistory[vxnplays].history[j].duration = time - joyHistory[vxnplays].history[j].startTime;
 				joyHistory[vxnplays].history[j].state = 1;
@@ -4697,7 +4817,7 @@ void VoxieBox::updateJoyInput()
 				joyHistory[vxnplays].history[j].duration = 0;
 			}
 
-			if ( !(b >> j & 1) && (ovxbut[vxnplays] >> j & 1)) { // b 0 && o 1 -- button up
+			if (!(b >> j & 1) && (ovxbut[vxnplays] >> j & 1)) { // b 0 && o 1 -- button up
 
 				joyHistory[vxnplays].history[j].inputCodeRaw = j;
 				joyHistory[vxnplays].history[j].inputCode = j;
@@ -4736,7 +4856,7 @@ void VoxieBox::updateJoyInput()
 }
 
 //! Internal function for managing zip files. 
-int VoxieBox::_kzaddstack(const char * fileName) {
+int VoxieBox::_kzaddstack(const char* fileName) {
 
 	return kzaddstack(fileName);
 
@@ -4749,93 +4869,98 @@ void VoxieBox::_kzuninit()
 }
 
 //! Internal function for managing zip files. 
-void VoxieBox::_kzsetfil(FILE * fileName)
+kzfile_t * VoxieBox::_kzsetfil(FILE* fileName)
 {
-	kzsetfil(fileName);
+	return kzsetfil(fileName);
 }
 
 //! Internal function for managing zip files. 
-INT_PTR VoxieBox::_kzopen(const char * st)
+kzfile_t* VoxieBox::_kzopen(const char* st)
 {
 	return kzopen(st);
 }
 
-//! Internal function for managing zip files. 
-void VoxieBox::_kzfindfilestart(const char * st)
+kzfile_t* VoxieBox::_kzopen_ext(const char* st0 , const char* st1 , const char* st2)
 {
-	kzfindfilestart(st);
+	return kzopen_ext(st0, st1, st2);
 }
 
 //! Internal function for managing zip files. 
-int VoxieBox::_kzfindfile(kzfind_t * find, kzfileinfo_t * fileinfo)
+kzfind_t* VoxieBox::_kzfindfilestart(const char* st)
 {
-	return kzfindfile(find,fileinfo);
+	return kzfindfilestart(st);
 }
 
 //! Internal function for managing zip files. 
-unsigned int VoxieBox::_kzread(kzfile_t * kzfile, void * buffer, unsigned int leng)
+int VoxieBox::_kzfindfile(kzfind_t* find, kzfileinfo_t* fileinfo)
+{
+	return kzfindfile(find, fileinfo);
+}
+
+//! Internal function for managing zip files. 
+unsigned int VoxieBox::_kzread(kzfile_t* kzfile, void* buffer, unsigned int leng)
 {
 	return kzread(kzfile, buffer, leng);
 }
 
 //! Internal function for managing zip files. 
-unsigned int VoxieBox::_kzfilelength(kzfile_t * kzfile)
+unsigned int VoxieBox::_kzfilelength(kzfile_t* kzfile)
 {
 	return kzfilelength(kzfile);
 }
 
 //! Internal function for managing zip files. 
-unsigned int VoxieBox::_kztell(kzfile_t * kzfile)
+unsigned int VoxieBox::_kztell(kzfile_t* kzfile)
 {
 	return kztell(kzfile);
 }
 
 //! Internal function for managing zip files. 
-int VoxieBox::_kzseek(kzfile_t * kzfile, int offset, int whence)
+int VoxieBox::_kzseek(kzfile_t* kzfile, int offset, int whence)
 {
 	return kzseek(kzfile, offset, whence);
 }
 
 //! Internal function for managing zip files. 
-int VoxieBox::_kzgetc(kzfile_t * kzfile)
+int VoxieBox::_kzgetc(kzfile_t* kzfile)
 {
 	return kzgetc(kzfile);
 }
 
 //! Internal function for managing zip files. 
-int VoxieBox::_kzeof(kzfile_t * kzfile)
+int VoxieBox::_kzeof(kzfile_t* kzfile)
 {
 	return kzeof(kzfile);
 }
 
 //! Internal function for managing zip files. 
-void VoxieBox::_kzclose(kzfile_t * kzfile)
+void VoxieBox::_kzclose(kzfile_t* kzfile)
 {
 	kzclose(kzfile);
 }
 
 //! Internal function for managing image files. 
-int VoxieBox::_kpgetdim(const char * buffer, int nby, int * xsiz, int * ysiz)
+int VoxieBox::_kpgetdim(const char* buffer, int nby, int* xsiz, int* ysiz)
 {
 	return kpgetdim(buffer, nby, xsiz, ysiz);
 }
 
 //! Internal function for managing image files. 
-int VoxieBox::_kprender(const char * buffer, int nby, INT_PTR fptr, int bpl, int xsiz, int ysiz, int xoff, int yoff)
+int VoxieBox::_kprender(const char* buffer, int nby, INT_PTR fptr, int bpl, int xsiz, int ysiz, int xoff, int yoff)
 {
 	return kprender(buffer, nby, fptr, bpl, xsiz, ysiz, xoff, yoff);
 }
 
 //! Internal function for managing zip files. 
-void VoxieBox::_kpzload(const char * fileName, INT_PTR * fptr, INT_PTR * bpl, INT_PTR * xsiz, INT_PTR * ysiz)
+int VoxieBox::_kpzload(const char* fileName, INT_PTR* fptr, INT_PTR* bpl, INT_PTR* xsiz, INT_PTR* ysiz)
 {
-	kpzload(fileName, fptr, bpl, xsiz, ysiz);
+	return kpzload(fileName, fptr, bpl, xsiz, ysiz);
 }
 
 //! Internal function for clearing up touch input data
-void VoxieBox::touchClear(touchInput_t * touchInputPtr, int index)
+void VoxieBox::touchClear(touchInput_t* touchInputPtr, int index)
 {
-	
+
 	touchInputPtr->tPoint[index].oposx = NULL;
 	touchInputPtr->tPoint[index].oposy = NULL;
 	touchInputPtr->tPoint[index].deltax = NULL;
@@ -4878,8 +5003,8 @@ void VoxieBox::touchDraw()
 
 			// draw pinch
 			if (touch.currentTouchNo > 1 && x == -1 || touch.currentTouchNo > 1 && y == -1) {
-				if (touch.tPoint[i].active == true && x == -1)		{	x = i; touch.pinch0Index = i; }
-				else if (touch.tPoint[i].active == true && y == -1) {	y = i; touch.pinch1Index = i; }
+				if (touch.tPoint[i].active == true && x == -1) { x = i; touch.pinch0Index = i; }
+				else if (touch.tPoint[i].active == true && y == -1) { y = i; touch.pinch1Index = i; }
 				if (x != -1 && y != -1) {
 
 					touch.pinchActive = true;
@@ -4902,7 +5027,7 @@ void VoxieBox::touchDraw()
 }
 
 //! Internal function for managing touch inputs
-void VoxieBox::updateTouch()  
+void VoxieBox::updateTouch()
 {
 	//if (!touchUpdate) return;
 
@@ -4950,7 +5075,7 @@ void VoxieBox::updateTouch()
 		touch.opinch1.y = touch.tPoint[y].posy;
 
 
-		
+
 		touch.pinchDistanceDelta = (touch.pinchDistance - touch.opinchDistance);
 		touch.pinchRotationDelta = (touch.pinchRotation - touch.opinchRotation);
 
@@ -4992,7 +5117,10 @@ void VoxieBox::updateTouch()
 		touch.currentTouchNo++;
 	}
 
+
 	if (touch.currentTouchNo > TOUCH_MAX) touch.currentTouchNo = TOUCH_MAX;
+
+
 
 	// update loop for touch controls
 	for (i = 0; i < TOUCH_MAX; i++) {
@@ -5026,6 +5154,9 @@ void VoxieBox::updateTouch()
 
 		touch.tPoint[i].ostate = touch.tPoint[i].state;
 
+
+
+
 		if (touch.tPoint[i].state == 2 && touch.tPoint[i].onUp == false) { // 2 is off
 			touchClear(&touch, i);
 			continue;
@@ -5033,9 +5164,15 @@ void VoxieBox::updateTouch()
 
 	}
 
+	touch.currentTouchNo = 0;
+	for (i = 0; i < TOUCH_MAX; i++) {
+		if (touch.tPoint[i].state != -1) touch.currentTouchNo++;
+	}
+	currentActiveTouches = touch.currentTouchNo;
+
 }
 //! internal function to help manage the pinch touch state
-void VoxieBox::touchPinchClear(touchInput_t * touchInputPtr)
+void VoxieBox::touchPinchClear(touchInput_t* touchInputPtr)
 {
 	if (touchInputPtr->pinchLastUpdate + 0.1 < this->time) {
 

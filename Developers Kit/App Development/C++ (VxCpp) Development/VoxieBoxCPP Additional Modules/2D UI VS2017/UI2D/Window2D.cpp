@@ -187,9 +187,9 @@ void Window2D::drawScrollBar()
 	 
 	for (i = 0; i < scrollBarBorderThickness; i++) {
 		voxiePtr->debugDrawLine(x, y + i, w, y + i, fgcol);			// top
-		voxiePtr->debugDrawLine(x + i, y, x + i, h + 2, fgcol);		// left
+		voxiePtr->debugDrawLine(x + i, y, x + i, h + 1, fgcol);		// left
 		voxiePtr->debugDrawLine(w - i, y, w - i, h, fgcol);			// right
-		voxiePtr->debugDrawLine(x, h - i, w + 2, h - i , fgcol);	// bottom
+		voxiePtr->debugDrawLine(x, h - i, w + 1, h - i , fgcol);	// bottom
 	}
 
 	// draw scroll bar
@@ -202,9 +202,9 @@ void Window2D::drawScrollBar()
 
 	for (i = 0; i < scrollBarBorderThickness; i++) {
 		voxiePtr->debugDrawLine(x, my + i, w, my + i, mfgcol);			// top
-		voxiePtr->debugDrawLine(x + i , my, x + i, mh + 2, mfgcol);		// left
+		voxiePtr->debugDrawLine(x + i , my, x + i, mh + 1, mfgcol);		// left
 		voxiePtr->debugDrawLine(w - i , my, w - i, mh, mfgcol);			// right
-		voxiePtr->debugDrawLine(x, mh - i, w + 2, mh - i, mfgcol);		// bottom
+		voxiePtr->debugDrawLine(x, mh - i, w + 1, mh - i, mfgcol);		// bottom
 	}
 
 	scrollBarMarkerRelPos = scrollBarMarkerPos - posY - scrollBarBorderPadding;
@@ -218,35 +218,7 @@ void Window2D::drawScrollBar()
 
 }
 
-void Window2D::scrollBarCalc()
-{
-	scrollBarPosX = (this->posX + this->widthX) - scrollBarBorderPadding - scrollBarWidth;
-	scrollBarPosY = (this->posY) + scrollBarBorderPadding;
-	scrollBarMarkerPos = scrollBarPosY;
 
-	int i = 0;
-	int x = 0;
-	int y = 0;
-
-	scrollBarTotalElements = elements.size();
-	scrollBarElementsPerRow = 1;
-	
-	for (i = 0; i < elements.size(); i++) {
-			if ((x * elementXSpacing) + (this->posX) + 10 + this->scrollBarWidth + elements[i]->getWidth() > this->posX + this->widthX) {
-				y++;
-				scrollBarElementsPerRow = x;
-				x = 0;		
-			}
-			if ((y * elementYSpacing) > this->posY + this->heightY) {
-				enableScrollBar = true;
-			}
-			x++;
-	}
-
-	scrollBarTrackLength = (scrollBarPosY + heightY) - (scrollBarPosY + scrollBarHeight + scrollBarBorderPadding + 5);
-	scrollBarTicks = scrollBarTrackLength / (scrollBarTotalElements / scrollBarElementsPerRow) ;
-
-}
 
 void Window2D::setEnableTitle(bool choice)
 {
@@ -308,6 +280,16 @@ void Window2D::setElementSpacing(int xSpace, int ySpace)
 
 }
 
+void Window2D::setForceScrollBarState(int choice)
+{
+	forceScrollBar = choice;
+}
+
+int Window2D::getForceScrollBar()
+{
+	return forceScrollBar;
+}
+
 
 void Window2D::updateElementsPos()
 {
@@ -315,23 +297,33 @@ void Window2D::updateElementsPos()
 	int y = 0;
 	int x = 0;
 	int titlesPerRow = 0;
+	int scrollBarCalcTemp = 0;
 	if (autoArrangeElements) enableScrollBar = false;
+
+	if (elements.size() == 0) return;
+
+	// do we need a scroll bar?
+	if ((elements.size() * elementXSpacing) + (this->posX) + elementXLeftOffset + this->scrollBarWidth > this->posX + this->widthX) {
+		scrollBarCalcTemp = this->scrollBarWidth;
+	}
+
+
 	for (i = 0; i < elements.size(); i++) {
 
 		if (this->autoArrangeElements == 1) {
 
-			if ((x * elementXSpacing) + (this->posX) + 10 + this->scrollBarWidth + elements[i]->getWidth() > this->posX + this->widthX) {
+			if ((x * elementXSpacing) + (this->posX) + elementXLeftOffset + scrollBarCalcTemp + elements[i]->getWidth() > this->posX + this->widthX) {
 				y++;
 				x = 0;
 				titlesPerRow = x;
 			}
 
-			elements[i]->setRelPosX( (x  * elementXSpacing) + 10 + this->posX);
-			elements[i]->setRelPosY( (y  * elementXSpacing) + 20 + this->posY);
+			elements[i]->setRelPosX((x * elementXSpacing) + elementXLeftOffset + this->posX);
+			elements[i]->setRelPosY((y * elementYSpacing) + elementYTopOffset + this->posY);
 
 			if ((y * elementYSpacing) > this->posY + this->heightY) {
 				enableScrollBar = true;
-				
+
 			}
 
 			x++;
@@ -360,33 +352,39 @@ void Window2D::updateElementsPos()
 
 			// cull from starting row 
 			if (scrollBarElementsPerRow != 0 || scrollBarTicks != 0) {
-				if (i < (scrollBarMarkerRelPos / scrollBarTicks) *  scrollBarElementsPerRow) {
-					elements[i]->setRelPosY(-100);
+				if (i < (scrollBarMarkerRelPos / scrollBarTicks) * scrollBarElementsPerRow) {
+					elements[i]->setRelPosY(-1000 + elements[i]->getHeight());
 					continue;
 				}
 			}
-//			if (this->scrollBarMarkerPos > elements[i]->getRelPosY()) { elements[i]->setRelPosY(-100);  continue; }
+			//			if (this->scrollBarMarkerPos > elements[i]->getRelPosY()) { elements[i]->setRelPosY(-100);  continue; }
 
-			if ((x * elementXSpacing) + (this->posX) + 10 + this->scrollBarWidth + elements[i]->getWidth() > this->posX + this->widthX) {
+			if ((x * elementXSpacing) + (this->posX) + elementXLeftOffset + scrollBarCalcTemp + elements[i]->getWidth() > this->posX + this->widthX) {
 				y++;
 				x = 0;
 			}
 
-			elements[i]->setRelPosX((x  * elementXSpacing) + 10 + this->posX);
-			elements[i]->setRelPosY((y  * elementYSpacing) + 20 + this->posY - offset);
+			elements[i]->setRelPosX((x * elementXSpacing) + elementXLeftOffset + this->posX);
+			elements[i]->setRelPosY((y * elementYSpacing) + elementYTopOffset + this->posY - offset);
 
-			if (elements[i]->getRelPosY() + elementYSpacing  > this->posY + this->heightY) {
-				
-				elements[i]->setRelPosY(-100);  continue;
+			if (elements[i]->getRelPosY() + elementYSpacing > this->posY + this->heightY) {
+
+				elements[i]->setRelPosY(-1000 + elements[i]->getHeight());
+				continue;
 			}
 
 
 			x++;
 
 		}
-		
+
 
 	}
+
+
+
+	if (forceScrollBar < 0) enableScrollBar = false;
+	if (forceScrollBar > 0) enableScrollBar = true;
 
 
 	if (enableScrollBar) {
@@ -395,6 +393,36 @@ void Window2D::updateElementsPos()
 
 	}
 
+
+}
+
+void Window2D::scrollBarCalc()
+{
+	scrollBarPosX = (this->posX + this->widthX) - scrollBarBorderPadding - scrollBarWidth;
+	scrollBarPosY = (this->posY) + scrollBarBorderPadding;
+	scrollBarMarkerPos = scrollBarPosY;
+
+	int i = 0;
+	int x = 0;
+	int y = 0;
+
+	scrollBarTotalElements = elements.size();
+	scrollBarElementsPerRow = 1;
+
+	for (i = 0; i < elements.size(); i++) {
+		if ((x * elementXSpacing) + (this->posX) + elementXLeftOffset + this->scrollBarWidth + elements[i]->getWidth() > this->posX + this->widthX) {
+			y++;
+			scrollBarElementsPerRow = x;
+			x = 0;
+		}
+		if ((y * elementYSpacing) > this->posY + this->heightY) {
+			enableScrollBar = true;
+		}
+		x++;
+	}
+
+	scrollBarTrackLength = (scrollBarPosY + heightY) - (scrollBarPosY + scrollBarHeight + scrollBarBorderPadding + 5);
+	scrollBarTicks = scrollBarTrackLength / (scrollBarTotalElements / scrollBarElementsPerRow);
 
 }
 

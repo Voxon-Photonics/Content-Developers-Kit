@@ -141,9 +141,9 @@ int \mbox{\hyperlink{structvoxie__wind__t_a35cd67d05fcd805f605f6caa65ae2b69}{dis
 \mbox{\Hypertarget{structvoxie__wind__t_a17bc582f0c9cfac3a6162c856a6c7afa}\label{structvoxie__wind__t_a17bc582f0c9cfac3a6162c856a6c7afa}} 
 int \mbox{\hyperlink{structvoxie__wind__t_a17bc582f0c9cfac3a6162c856a6c7afa}{sndfx\+\_\+nspk}}
 \begin{DoxyCompactList}\small\item\em variable to hold the number of physical speakers \{1 = VX1 default, 2 = stereo system\} \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{structvoxie__wind__t_a72f1b099c37cf3b54ec23d37ad067f96}\label{structvoxie__wind__t_a72f1b099c37cf3b54ec23d37ad067f96}} 
-int \mbox{\hyperlink{structvoxie__wind__t_a72f1b099c37cf3b54ec23d37ad067f96}{reserved}}
-\begin{DoxyCompactList}\small\item\em reserved variable for future features \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structvoxie__wind__t_a4a05d0b4ecd4c89db95f179887fe1b46}\label{structvoxie__wind__t_a4a05d0b4ecd4c89db95f179887fe1b46}} 
+int \mbox{\hyperlink{structvoxie__wind__t_a4a05d0b4ecd4c89db95f179887fe1b46}{hwdispnum}}
+\begin{DoxyCompactList}\small\item\em variable to manage the number of hardware displays \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structvoxie__wind__t_a440edbc3ee8c2ed37e60e1a3a647d87e}\label{structvoxie__wind__t_a440edbc3ee8c2ed37e60e1a3a647d87e}} 
 float \mbox{\hyperlink{structvoxie__wind__t_a440edbc3ee8c2ed37e60e1a3a647d87e}{freq}}
 \begin{DoxyCompactList}\small\item\em starting value in Hz (must be set before first call to voxie\+\_\+init()); obsolete -\/ not used by current hardware \end{DoxyCompactList}\item 
@@ -174,9 +174,15 @@ int \mbox{\hyperlink{structvoxie__wind__t_a695b8f49193b4c79d4df4de15a8203bf}{ldo
 \mbox{\Hypertarget{structvoxie__wind__t_a55ba9375e72ab2c41881ce0451e45592}\label{structvoxie__wind__t_a55ba9375e72ab2c41881ce0451e45592}} 
 int \mbox{\hyperlink{structvoxie__wind__t_a55ba9375e72ab2c41881ce0451e45592}{normhax}}
 \begin{DoxyCompactList}\small\item\em Used by global normal shading stores the vertical and horizontal angle and amplitude \+: (vang/$\ast$-\/90..90$\ast$/$<$$<$20) + ((hang/$\ast$-\/180..180$\ast$/\&4095)$<$$<$8) + amp/$\ast$0..255$\ast$/. 0=disable. \end{DoxyCompactList}\item 
-\mbox{\Hypertarget{structvoxie__wind__t_a349d05d0274aad1aa2c4c66e2dda5151}\label{structvoxie__wind__t_a349d05d0274aad1aa2c4c66e2dda5151}} 
-int \mbox{\hyperlink{structvoxie__wind__t_a349d05d0274aad1aa2c4c66e2dda5151}{upndow}}
-\begin{DoxyCompactList}\small\item\em screen shape\+: 0=sawtooth, 1=triangle \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structvoxie__wind__t_a7e7f75f7ed9af55ae09544f4342726f7}\label{structvoxie__wind__t_a7e7f75f7ed9af55ae09544f4342726f7}} 
+unsigned char \mbox{\hyperlink{structvoxie__wind__t_a7e7f75f7ed9af55ae09544f4342726f7}{upndow}}
+\begin{DoxyCompactList}\small\item\em volumetric up down sweep technique\+: 0=sawtooth, 1=triangle \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structvoxie__wind__t_af9eeae0d5fd00e81058c5fe6752f8a45}\label{structvoxie__wind__t_af9eeae0d5fd00e81058c5fe6752f8a45}} 
+unsigned char \mbox{\hyperlink{structvoxie__wind__t_af9eeae0d5fd00e81058c5fe6752f8a45}{scrshape}}
+\begin{DoxyCompactList}\small\item\em screen shape 0=helix, 1=peanut/hurricane \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{structvoxie__wind__t_afb6e5deb424074c13fd2796d43bfb4b7}\label{structvoxie__wind__t_afb6e5deb424074c13fd2796d43bfb4b7}} 
+unsigned char \mbox{\hyperlink{structvoxie__wind__t_afb6e5deb424074c13fd2796d43bfb4b7}{filler}} \mbox{[}2\mbox{]}
+\begin{DoxyCompactList}\small\item\em not sure need to ask Ken what this is \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{structvoxie__wind__t_afa473ad037c7a2caf348b0c6beb31e12}\label{structvoxie__wind__t_afa473ad037c7a2caf348b0c6beb31e12}} 
 int \mbox{\hyperlink{structvoxie__wind__t_afa473ad037c7a2caf348b0c6beb31e12}{nblades}}
 \begin{DoxyCompactList}\small\item\em screen shape\+: 0=VX1 (not spinner), 1=/$\vert$, 2=/$\vert$/$\vert$, .. \end{DoxyCompactList}\item 

@@ -11,8 +11,8 @@
   ],
   "Type": "Application",
   "Developer": "Ken Silverman",
-  "Version": "03/02/2021",
-  "BuildDate": "20220203",
+  "Version": "24/11/2022",
+  "BuildDate": "20221124",
   "LocalExecutableFile": "voxieos.exe",
   "LinkID": "NULL",
   "Params": [

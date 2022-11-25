@@ -1,24 +1,20 @@
-﻿  Window2D.cpp
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(45): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(60): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(61): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(62): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(69): warning C4244: 'initializing': conversion from 'double' to 'int', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(189): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(190): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(191): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(192): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(204): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(205): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(206): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(207): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(231): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
-d:\matdev\dev\development visual studio\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\window2d.cpp(353): warning C4244: '=': conversion from 'double' to 'int', possible loss of data
+﻿  MainTest.cpp
+  PinchBox2D.cpp
+d:\matdev\dev\development gits\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(23): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+d:\matdev\dev\development gits\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(23): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development gits\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(24): warning C4838: conversion from 'int' to 'float' requires a narrowing conversion
+d:\matdev\dev\development gits\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(24): warning C4244: 'initializing': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development gits\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(91): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development gits\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(92): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development gits\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(114): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development gits\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(115): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\matdev\dev\development gits\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(333): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development gits\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(336): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development gits\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(339): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\matdev\dev\development gits\voxieboxcpp\voxieboxcpp additional modules\2d ui vs2017\ui2d\pinchbox2d.cpp(342): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
   Generating code
-  3 of 210 functions ( 1.4%) were compiled, the rest were copied from previous compilation.
+  0 of 213 functions ( 0.0%) were compiled, the rest were copied from previous compilation.
     0 functions were new in current compilation
-    3 functions had inline decision re-evaluated but remain unchanged
+    0 functions had inline decision re-evaluated but remain unchanged
   Finished generating code
-  UI2D.vcxproj -> D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VoxieBoxCPP\VoxieBoxCPP Additional Modules\2D UI VS2017\x64\Release\UI2D.exe
+  UI2D.vcxproj -> D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\2D UI VS2017\x64\Release\UI2D.exe

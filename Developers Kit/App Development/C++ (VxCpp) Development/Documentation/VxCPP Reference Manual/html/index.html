@@ -20,7 +20,7 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="vx++ logo_small.png"/></td>
+  <td id="projectlogo"><img alt="Logo" src="vx++ logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">VX++ Framework (VxCpp.dll)
    </div>
@@ -84,31 +84,31 @@ Benefits of Using the VX++ Framework</h1>
            * Supports all function calls from VoxieBox.h / VoxieBox.dll
 
 
-           "Quality of life features"   
+           "Quality of life features"
 
-           *  Embedded Hotkeys for rotation for emulator/simulator mode 
+           *  Embedded Hotkeys for rotation for emulator/simulator mode
                  (use '[' and ']' to rotate the view. R Ctrl + '[' or ']' zooms in or out R Shift + '[' or ']' adjust vertical view)
            *  Automatically detect Up/Down or Spinner hardware
            *  Easier Debuging Reporting for Voxie Window, Voxie Frame and all inputs types
-           *  Extended input function checks for mouse, keyboard, SpaceNav and gamepads all inputs have functions to check for onDown(), 
-                 onUp(), duration(), and isDown()  
-           *  Internally managed Input for Game controllers and SpaceNav. More advanced Key stroke history. 
+           *  Extended input function checks for mouse, keyboard, SpaceNav and gamepads all inputs have functions to check for onDown(),
+                 onUp(), duration(), and isDown()
+           *  Internally managed Input for Game controllers and SpaceNav. More advanced Key stroke history.
            *  Various boolean function calls to turn on/off features such as 'drawBorder' 'clipMouse' or 'invertZAxis'
-           *  Embedded cursor (for mouse or otherwise) 
-           *  DrawQuad() function to easily draw a textured Quad on the display. 
-           *  All Quality of life features can be disabled / enabled independently. 
+           *  Embedded cursor (for mouse or otherwise)
+           *  DrawQuad() function to easily draw a textured Quad on the display.
+           *  All Quality of life features can be disabled / enabled independently.
 
 
            "Included helper functions"
 
-           *  Simple collision detection for sphere, box and 'is inside a box' 
-           *  Color management included palette for the display, functions to tween color to color, color scroll, get a random color, 
+           *  Simple collision detection for sphere, box and 'is inside a box'
+           *  Color management included palette for the display, functions to tween color to color, color scroll, get a random color,
                  color divide and color brighten.
            *  Simple Move To Point function for moving a position to another.
 </pre><h1><a class="anchor" id="developing_sec"></a>
 Developing with VxCpp.dll and making your own VX++ App</h1>
 <p>Developing with VxCpp.dll is similar to developing with the voxiebox.dll. A VX application needs to load in the voxiebox.dll (Ken's Voxon SDK library) a VX++ application loads in the voxiebox.dll by an entry function in VxCpp.dll "CreateVoxieBoxObject" calling this function creates a new '<a class="el" href="class_voxie_box.html" title="VoxieBox class.">VoxieBox</a>' an object Once the <a class="el" href="class_voxie_box.html" title="VoxieBox class.">VoxieBox</a> object is created it can be accessed using an pointer to the <a class="el" href="class_i_voxie_box.html" title="Interface for VoxieBox class.">IVoxieBox</a> interface.</p>
-<p>A simple hello world example... </p><pre class="fragment">           // VX++ APP HELLO WORLD EXAMPLE 
+<p>A simple hello world example... </p><pre class="fragment">           // VX++ APP HELLO WORLD EXAMPLE
            // You may use this as a template to start creating your own volumetric applications.
            #include "VxCpp.h"
            int main(HINSTANCE hidistributenst, HINSTANCE hpinst, LPSTR cmdline, int ncmdshow)
@@ -120,21 +120,21 @@ Developing with VxCpp.dll and making your own VX++ App</h1>
                // Access and call "CreateVoxieBoxObject" function from VxCpp.dll. The CreateVoxieBoxObject function creates a new VoxieBox object.
                CREATE_VOXIEBOX pEntryFunction = (CREATE_VOXIEBOX)GetProcAddress(hVoxieDLL, "CreateVoxieBoxObject");
                // Set a new IVoxieBox pointer to point to the entry function (the voxiebox object) now 'voxie' get access to the VoxieBox class
-               IVoxieBox* voxie = pEntryFunction(); 
+               IVoxieBox* voxie = pEntryFunction();
 
-               // variables to setup text positions to display 'Hello World' -- feel free to delete this 
+               // variables to setup text positions to display 'Hello World' -- feel free to delete this
                point3d textPos     { -0.5, 0, 0 };     // text postions x,y,z values
                point3d textWidth   { 0.1,  0, 0 };     // text rVector  x,y,z ... the x value determines the width of the text the other values deal with rotating text
                point3d textHeight  { 0, 0.15, 0 }; // text dVector  x,y,z ... the y value determines the height of the text the other values deal with rotating text
 
                voxie-&gt;setBorder(true); // if true draws a border around the perimeter of the display
 
-               // Update loop for program -- breath() -- is a complete volume sweep. Called once per volume. 
-               while (voxie-&gt;breath()) 
+               // Update loop for program -- breath() -- is a complete volume sweep. Called once per volume.
+               while (voxie-&gt;breath())
                {
                    voxie-&gt;startFrame();   // The start of drawing the Voxieframe (all voxie draw calls need to be within this and the endFrame() function)
                    voxie-&gt;drawText(&amp;textPos, &amp;textWidth, &amp;textHeight, 0xffffff, "Hello World"); // draw text onto the volumetric display.
-                   textPos.z = cos(voxie-&gt;getTime()) / 5; // move the text's Z position over time using cos (creates a moving up and down effect)*                         
+                   textPos.z = cos(voxie-&gt;getTime()) / 5; // move the text's Z position over time using cos (creates a moving up and down effect)*
                    voxie-&gt;debugText(35, 100, 0xffffff, -1, "Hello World On the Touch Screen!"); // draw text onto the secondary (touch) screen.
                    voxie-&gt;showVPS(); //show VPS data and VxCpp.DLL version unto the touch screen.
                    voxie-&gt;endFrame(); // the end of drawing to the volumetric display.

@@ -1,0 +1,528 @@
+--------------------------------------------------------------
+
+# Voxatron API
+
+author: zep // hey@lexaloffle.com
+
+version: 0.3.5b
+
+--------------------------------------------------------------
+
+
+# Introduction
+	
+	Voxatron Lua scripting is based on the PICO-8 fantasy console, with additional 
+	support for features of Voxatron's engine such as volumetric drawing and actors
+	physics. It is possible to create cartridges using only Lua scripting (and so 
+	accessing the display, input and audio directly), or to mix it with other features 
+	of Voxatron's engine.
+
+## Program Structure
+
+	A Voxatron cartridge with a single script behaves much like a PICO-8 cartridge;
+	Three special functions are called if they exist: (note the underscores)
+	
+		_init()      called once on startup
+		_update()    called 30 times a second
+		_draw()      called each time a frame is drawn
+
+	It is also possible to mix Lua scripting with Voxatron's engine features. Scripts 
+	can be placed inside an actor definition: (note: no underscores)
+	
+		init()       called once when the actor is created
+		update()     called 30 times a second (usually enough for most things)
+		draw()       called each time the actor is drawn
+
+	
+	Scripts can also be placed directly into rooms as objects. All scripts in the
+	resource tree are run on startup, in the order they appear in the resource tree, but
+	actor callbacks are only called once the actor is active (and once that component
+	is active).
+
+	The physics and state tree evaluation happens internally at 120fps. If you need
+	extra precision at the cost of performance, update60 and update120 can also be used.
+	
+	Default implementations of _draw and _update120 are provided, but can be redefined:
+
+	old_draw = _draw
+	function _draw()
+		old_draw() -- draw the room and objects
+		sphere(64,64,32,20,7) -- this will be added to every frame, everywhere
+	end
+	
+## Resource Tree References
+
+	The "Resource Tree" is the collection of all actors, props, audio etc. contained
+	in the single cartridge, and is visible at the bottom right of Designer. Many
+	functions reference an item in the resource tree, which can be either by numeric
+	id (the definition id, or sometimes "DEF ID") or a string (the object's name, if 
+	it is unique).
+
+	For example:
+	
+		play_sound("BLAM")
+		play_sound(143) 
+	
+	These both mean the same thing if resource has been given the name "BLAM".
+	Resource names are case sensitive.
+
+
+--------------------------------------------------------------
+# Core Library
+
+
+## Graphics
+
+	clv
+	
+		Clear the volume
+	
+	vset x y z [col]
+	vget x y z
+	
+		Get or set the voxel colour at x,y,z
+	
+	box x0 y0 z0 x1 y1 z0 [col]
+	boxfill x0 y0 z0 x1 y1 z0 [col]
+	
+		Draw a wireframe or filled box
+	
+	line3d x0 y0 z0 x1 y1 z0 [col]
+	
+		Draw a line 
+		
+	sphere x0 y0 z0 radius [col]
+	
+		Draw a filled sphere
+		(warning: the drawing behaviour will change a little in 0.3.5c!)
+
+	draw_voxmap id, x,y,z, [col], [a])
+	
+		Draw voxmap at x,y,z. Angle a (0..1 -- 0 means facing right) and colour col.
+
+	blit_voxmap src_id, dest_id, sx,sy,sz, dx,dy,dz, w,l,h
+
+		Blit a section of voxmap from source position sx,sy,sz to destination dx,dy,dz
+		of size w,l,h.
+
+		Use id -1 for the display, and -2 for the map.
+		// Warning: using a dest_id of > 0 is currently experimental
+		// The object definition data is modified, but not stored with savegames.
+
+
+## Audio
+
+	play_sound id
+	
+		Play a sound
+		Any existing instances of the sound are cut off
+	
+	stop_sound id
+	
+		Stop any instances of sound id from playing.
+		If no parameters supplied, stop all sound.
+		
+	play_music id [fade_len]
+	
+		Play music
+		Any current playing music will be cut off
+		fade_len is the number of seconds to fade down (default: 0)
+		play_music("mytune", 1) -- fade in over 1 second
+		
+	stop_music [fade_len]
+	
+		Stop currently playing music
+		stop_music(0.5) -- fade out over half a second
+
+## Input
+
+	button n [player_index]
+	
+		Find the state of button n
+		Returns 0..1
+		player_index defaults to 0
+
+		buttons:
+			0..5    LEFT RIGHT UP DOWN X O
+			6..9    Right Stick: LEFT RIGHT UP DOWN
+			10..14  (System buttons)
+			15..16  HOIST/THROW ACTION // don't have names for these yet.
+			17..18  SL SR (Shoulder buttons, used for item selection)
+			19..20  TL TR (Triggers; sometimes used for Jump)
+
+		button() can also be called from a player actor:
+
+			this:button(n)		
+
+			Returns nil if this does is not an active player.
+	
+	
+
+## Math
+
+	max x y
+	min x y
+	mid x y z
+
+		Returns the maximum, minimum, or middle value of parameters
+		For example, mid(7,5,10) returns 7
+
+	flr  x
+	ceil x
+
+		Returns the closest integer that is equal to or below / above x 
+		
+		?flr ( 4.1) -->  4
+		?ceil( 4.1) -->  5
+		?flr (-2.3) --> -3
+		?ceil(-2.3) --> -2
+
+
+	cos x
+	sin x
+
+		Returns the cosine of x, where 1.0 indicates a full circle
+		sin is inverted to suit screenspace
+		e.g. sin(0.25) returns -1
+
+		If you'd prefer radian-based trig functions without the y inversion, 
+		paste the following snippet near the start of your program:
+	
+		cos1 = cos function cos(angle) return cos1(angle/(3.1415*2)) end
+		sin1 = sin function sin(angle) return sin1(-angle/(3.1415*2)) end
+	
+
+	atan2 dx dy
+
+		Converts dx, dy into an angle from 0..1
+		As with cos/sin, angle is taken to run anticlockwise in screenspace
+		e.g. atan(1, -1) returns 0.125
+
+	sqrt x
+
+		Return the square root of x
+	
+	abs x
+
+		Returns the absolute (positive) value of x
+
+	rnd x
+		Returns a random number n, where 0 <= n < x
+		If you want an integer, use flr(rnd(x))
+	
+	srand x
+		Sets the random number seed
+		The seed is automatically randomized on cart startup
+
+
+	Binary Operations
+
+		band x y
+		bor  x y
+		bxor x y
+		bnot x
+		rotl x y
+		rotr x y
+		shl  x n -- shift left n bits
+		shr  x n -- arithmetic right shift
+		lshr x n -- logical right shift
+
+
+## PICO-8
+
+	set_pico8_cart id
+	
+		Set the PICO_8 cartridge. Subsequent calls that reference PICO-8 resources
+		will apply to this cartridge: spr() map() sfx() music()
+
+	set_draw_slice z [vertical]
+
+		Set the xy slice (or 128x64 xz slice if vertical is true) that PICO-8 draw calls 
+		should apply to:
+
+			line x0 y0 z1 y1 col
+			circ x y radius col
+			circfill x y radius col
+			pset x y col
+			pget x y
+			print str x y col
+	
+	
+--------------------------------------------------------------
+#  Actors
+
+	Actors can be created either by placing objects into the world in the room
+	editor, or by spawning them from Lua code (see 4.1).
+
+	Actor state, attributes, modifiers and inventory functions all take the
+	actor as the first parameter, and so can be called using Lua's ':' operator:
+
+		x,y,z = foo:get_xyz()
+
+		-- means the same as:
+		x,y,z = get_xyz(foo)
+		
+
+## Actor State
+	
+	get_xyz / set_xyz / add_xyz
+	
+		actor position (taken to be at the center of the actor's feet)
+		
+		x,y,z = this:get_xyz()
+		this:set_xyz(x, y, z)
+
+		--use nil for any component to skip it:
+		this:set_xyz(nil, nil, 0) -- move actor to top of room
+
+	get_dxyz / set_dxyz / add_dxyz
+	
+		actor velocity
+		
+	get_facing / set_facing / add_facing
+	
+		The direction the actor is facing. range 0..1
+		0 means facing east, and 0.25 means facing north.
+		
+	get_dir / set_dir / add_dir
+	
+		The direction a monster is heading / accelerating
+
+	get_life / set_life / add_life
+	
+		Actor's life
+		You can kill an actor using set_life(0), but if you don't want any
+		side-effects, this:delete() can be used.
+
+
+	get_t [component_id]
+	set_t t [component_id]
+
+		time active in seconds 
+
+		If a component id is specified, the active time of that component is
+		returned, or 0 if not active.
+
+		Alternatively, time() can be used inside a component to return the 
+		active time of that component.
+
+		Note that if you need to compare time in second against frame numbers,
+		it is safe to use expressions like:
+
+			if (this:get_t() == 28/120) foo() -- do something at frame 28
+
+		If a component has been active for more than 32767 seconds (the highest
+		16-bit signed integer), 32767 is returned.
+
+
+## Actor Attributes
+
+	set_attr attr value
+	get_attr attr
+	
+		Set the value of an actor's attribute.
+		e.g. set_attr(WIDTH, 32)
+		
+		Attributes:
+			WIDTH LENGTH HEIGHT
+			GRAVITY
+			BOUNCE
+			FRICTION
+			DENSITY
+
+		Teams:
+			MORTALITY
+			ATTACK_DAMAGE		
+			POINTS
+			TEAM
+		
+		Behaviour:
+			SPEED
+			JUMP_HEIGHT
+			JUMP_FREQ
+			TURN_SPEED
+		
+		Interaction:
+			PUSHABLE
+			STANDABLE
+			THROWABLE
+			HOISTABLE
+			
+			LOCK_X LOCK_Y LOCK_Z
+			LOCK_FACING
+			
+			COLLIDE_GROUND
+			COLLIDE_BULLETS
+
+			COLLECT_TOP .. _SIDES _BOTTOM
+			ATTACK_TOP  .. _SIDES _BOTTOM
+
+
+	Some read-only system information:
+
+		get_attr(-1) -> definition id
+		get_attr(-2) -> instance id
+		get_attr(-3) -> (string) definition label
+		get_attr(-4) -> player number (if an active player)
+		
+
+## Actor Components
+
+	Activate or deactivate actor components (animations, modifiers etc. inside the 
+	actor's resource sub-tree). These follow any activation rules set in the editor 
+	under "Activation Control" -- for example, priority groups and delay properties. 
+	
+	The id is the number or name (if one is set) of the component definition.
+
+	activate id
+	deactivate id
+	is_active id
+
+	for example:
+		this:activate("attacking")
+		this:is_active("attacking")
+
+
+
+## Inventories
+
+	Every player actor has a collection of inventory items. Like actors, each inventory 
+	item id is the reference to that item's definition in the resource tree, and can be
+	a string (the name of the item) or the definition id number.
+	
+	Each inventory item has a quanity which can be zero or even negative. So there is
+	a difference between an item being carried but with zero quantity (say, an empty
+	jetpack), and the item not being present in the player's inventory at all.
+
+	collect id [qty]
+	
+		Collect qty of item id. This function respects properties of the object like
+		maximum carry capacity and priority groups. i.e. it behaves exactly as if the
+		item were collected as a pickup in the world. For example:
+	
+		player:collect("apple")    -- collect the default ADD_QTY apples 
+		player:collect("apple", 3) -- collect 3 apples
+		
+		Returns true iff the item could be collected
+	
+	set_inventory id qty
+	add_inventory id qty
+	
+		These 2 functions perform 'raw' operations on inventory items, ignoring for
+		example the maximum carry capacity. It is possible to use a negative value of
+		qty in both cases. For example, to spend a potion when some event occurs, it
+		might looks something like:
+		
+		if (player:get_life() <= 0 and player:get_inventory("heal_potion") > 0) then
+		  player:add_inventory("heal_potion", -1)
+		else
+		  -- doesn't look good for the player
+		end
+		
+		(This supposes that there is a definition of "red_potion", and that the variable
+		"player" refers to a player actor)
+	
+	get_inventory id
+		
+		Returns the quantity of an inventory item carried or zero if the item is not
+		carried.
+
+	is_carrying id
+	
+		Return true if the item is present in the player's inventory, even if it has
+		a quanity of zero.
+	
+	weild id
+	deweild id
+	is_weilding id
+
+		Follows weild rules defined in the inventory item object.
+
+
+--------------------------------------------------------------
+#  Actors
+
+
+##4.1 Spawning Actors
+
+	spawn id x y z [dx dy dz] [facing]
+	
+		Spawn an instance of the object (with definition: id) in the current room
+		Returns a reference to the actor, or nil if unsuccessful
+		
+		a = spawn("car", 64,64,63)
+		a:warp_in() -- set warp-in delay
+
+
+##4.2 Managing Actors
+
+	get_actors [type] [def_id] [group_id] [dist] [[x y z] | [actor]]
+	
+		returns a list of actor references according to the filters:
+
+			type:     PLAYER MONSTER DOOR PICKUP ACTOR (default)
+						or: provide an id to select by object definition
+			def_id:   definition id
+			group_id: group id
+
+		dist: maximum distance 
+
+			Results are sorted by distance, with closest first.
+			When x,y,z is supplied, distance is measued from the center of each actor
+			When actor is supplied, distance is the shortest distance between any 
+				2 points on each actor (distance < 1 they are visually touching) 
+		
+		examples:
+		
+			-- find closest player to center of a single-screen room
+			x=64 y=64 z=64
+			pl = get_actors(PLAYER)[1]
+
+			-- find all monsters within 20 voxels of the player pl
+			x,y,z = pl:get_xyz()
+			monsters = get_actors(MONSTER, nil,nil, 20,pl)
+
+			-- bump them all upwards
+			for m in all(monsters) do
+				m:add_dxyz(nil, nil, -1)
+			end
+	
+
+	is_valid
+
+		true if the actor still exists. When an actor is killed or deleted, any reference
+		to that actor (a) is no longer valid, and a:is_valid() will return false.
+
+
+	delete
+
+		Remove an actor from the world.
+		
+		Example:
+		
+			if (this.x < -100) this:delete()
+
+
+	
+--------------------------------------------------------------
+#  Camera Control
+
+
+	set_world_camera x y z
+	
+		set the world camera position
+		x,y,z is the top left far corner
+		defaults to 0,0,0 
+		set_world_camera() to reset (and automatically follow players)
+
+	get_world_camera
+	
+
+	set_display_camera e
+
+		set the elevation of the camera viewing the virtual display -1 .. 1
+		A value of 0 is common 
+
+
+
+

@@ -37,6 +37,7 @@ Options:
    /o: select input device: OpenNI2 library
    /k: select input device: Microsoft Kinect v2
    /r: select input device: RealSense 2 (SR300, D415, ..)
+   /a: select input device: Microsoft Azure 
 
    /w: select output device: render in a 2d window (default)
    /v: select output device: enable Voxiebox mode (must have voxiebox.dll and voxiebox.ini in directory)

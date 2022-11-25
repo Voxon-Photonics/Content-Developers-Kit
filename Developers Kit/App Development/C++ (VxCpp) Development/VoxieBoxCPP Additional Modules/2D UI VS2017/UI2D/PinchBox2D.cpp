@@ -31,7 +31,8 @@ int PinchBox2D::isTouched()
 	this->pinchDistanceDelta = 0; 
 	this->pinchRotationDelta = 0; 
 
-
+	touchState = 0;
+	doubleTouch = false;
 	// workout single touch
 
 	if (voxiePtr->getTouchPressState(tl, br) >= 1) {
@@ -46,8 +47,19 @@ int PinchBox2D::isTouched()
 		rSTouchX = voxiePtr->getTouchPosX(lockedIndex) - posX;
 		rSTouchY = voxiePtr->getTouchPosY(lockedIndex) - posY;
 
+		touchState = voxiePtr->getTouchPressState(tl, br);
+
+		if (lastTouchTime > voxiePtr->getTime() - this->doubleTouchThreshold) {
+			doubleTouch = true;
+		}
+
+
+		if (touchState == 4) {
+			this->lastTouchTime = voxiePtr->getTime();
+		}
 
 		result = 1;
+
 
 
 	}
@@ -83,6 +95,10 @@ int PinchBox2D::isTouched()
 			gDeltaX += voxiePtr->getTouchDeltaX(i);
 			gDeltaY += voxiePtr->getTouchDeltaY(i);
 			pinchesInside++;
+
+	
+
+
 		}
 
 
@@ -129,6 +145,16 @@ int PinchBox2D::isTouched()
 	return result;
 }
 
+int PinchBox2D::getTouchState()
+{
+	return this->touchState;
+}
+
+bool PinchBox2D::hasDoubleTouched()
+{
+	return this->doubleTouch;
+}
+
 bool PinchBox2D::isPinchActive()
 {
 	return this->pinchActive;
@@ -159,11 +185,12 @@ void PinchBox2D::draw()
 
 	if (debug) {
 
-		voxiePtr->debugText(x, y, 0x00ff00, 0x111111, "SR Touch: X:%d Y:%d\nG Touch X:%d Y:%d\nDelta ST X:%d Y:%d \nRel Pinch Pos X:%d Y:%d\nGlo Pinch Pos X:%d Y:%d\nPinch Rot %1.2f Dis %1.2f\nHat %d MinPinch %d", 
+		voxiePtr->debugText(x, y, 0x00ff00, 0x111111, "SR Touch: X:%d Y:%d \nG Touch X:%d Y:%d State:%d\nDelta ST X:%d Y:%d \nRel Pinch Pos X:%d Y:%d\nGlo Pinch Pos X:%d Y:%d\nPinch Rot %1.2f Dis %1.2f\nHat %d MinPinch %d\ndoubletouch %d threshold %1.2f lasttouchTime %1.2f", 
 		getRSingleTouchX(), getRSingleTouchY(), getGSingleTouchX(), 
-		getGSingleTouchY(), getDeltaSingleTouchX(), getDeltaSingleTouchY(),
+		getGSingleTouchY(), getTouchState(), getDeltaSingleTouchX(), getDeltaSingleTouchY(),
 		getRelPositionX(), getRelPositionY(), getGlobalDeltaX(), getGlobalDeltaY(), 
-		getPinchRotationDelta(), getPinchDistanceDelta(), getHatPos(), getMinPinchResponse());
+		getPinchRotationDelta(), getPinchDistanceDelta(), getHatPos(), getMinPinchResponse(),
+		hasDoubleTouched(), this->doubleTouchThreshold, this->lastTouchTime);
 
 	}
 

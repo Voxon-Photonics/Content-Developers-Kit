@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['mousebutton_1036',['MouseButton',['../vx_input_types_8h.html#ac1ec3647c005eacad401b06e7e18f711',1,'vxInputTypes.h']]]
+  ['mousebutton_1069',['MouseButton',['../vx_input_types_8h.html#ac1ec3647c005eacad401b06e7e18f711',1,'vxInputTypes.h']]]
 ];

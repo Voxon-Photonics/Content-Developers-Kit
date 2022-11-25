@@ -17,6 +17,7 @@
 #else
 
 #include <X11/Xlib.h>
+#include <unistd.h>
 #define __int64 long long
 #define INT_PTR intptr_t
 #define MAX_PATH 260
@@ -86,14 +87,16 @@ typedef struct
 	int hwsync_frame0, hwsync_phase, hwsync_amp[4], hwsync_pha[4], hwsync_levthresh, voxie_vol;                         //Actuator
 	int ilacemode, drawstroke, dither, smear, usekeystone, flip, menu_on_voxie; float aspx, aspy, aspz, gamma, density; //Render
 	int sndfx_vol, voxie_aud, excl_audio, sndfx_aud[2], playsamprate, playnchans, recsamprate, recnchans;               //Audio
-	int isrecording, hacks, dispcur, sndfx_nspk, reserved;                                                              //Misc.
+	int isrecording, hacks, dispcur, sndfx_nspk, hwdispnum;                                                             //Misc.
 	float freq, phase;                                                                                                  //Obsolete
 
 	int thread_override_hack; //0:default thread behavior, 1..n:force n threads for voxie_drawspr()/voxie_drawheimap(); bound to: {1 .. #CPU cores (1 less on hw)}
 	int motortyp; //0=DCBrush+A*, 1=CP+FreqIn+A*, 2=BL_Airplane+A*, 3=VSpin1.0+CP+FreqIn, 4=VSpin1.0+BL+A4915, 5=VSpin1.0+BL+WS2408
 	int clipshape; //0=rectangle (vw.aspx,vw.aspy), 1=circle (vw.aspr)
 	int goalrpm, cpmaxrpm, ianghak, ldotnum, normhax;
-	int upndow; //0=sawtooth, 1=triangle
+	unsigned char upndow; //0=sawtooth, 1=triangle
+	unsigned char scrshape; //0=helix, 1=peanut/hurricane
+	unsigned char filler[2];
 	int nblades; //0=VX1 (not spinner), 1=/|, 2=/|/|, ..
 	int usejoy; //-1=none, 0=joyInfoEx, 1=XInput
 	int dimcaps;
@@ -130,9 +133,6 @@ EXTERN void   BEFUN voxie_xbox_write AFFUN (int id, float lmot, float rmot);
 
 typedef struct { float dx, dy, dz, ax, ay, az; int but; } voxie_nav_t;
 EXTERN int    BEFUN voxie_nav_read AFFUN (int id, voxie_nav_t *nav);
-
-//typedef struct { point3d pt, vec; int navx, navy, but; } voxie_laser_t;
-//EXTERN int    BEFUN voxie_laser_read AFFUN (int id, voxie_laser_t *las);
 
 	//Touch controls (lo-level)
 EXTERN int    BEFUN voxie_touch_read AFFUN (int *i, int *x, int *y, int *j);
@@ -179,6 +179,7 @@ EXTERN void BEFUN voxie_project      AFFUN (int disp, int dir, float x, float y,
 #define FILLMODE_SOL  3
 typedef struct { float x, y, z; int p2; } pol_t;
 typedef struct { float x, y, z, u, v; int col; } poltex_t;
+typedef struct { float x0, y0, z0, sc, x1, y1, z1, dum; } extents_t;
 EXTERN void BEFUN voxie_drawvox     AFFUN (voxie_frame_t *vf, float fx, float fy, float fz, int col);
 EXTERN void BEFUN voxie_drawbox     AFFUN (voxie_frame_t *vf, float x0, float y0, float z0, float x1, float y1, float z1, int fillmode, int col);
 EXTERN void BEFUN voxie_drawlin     AFFUN (voxie_frame_t *vf, float x0, float y0, float z0, float x1, float y1, float z1, int col);
@@ -186,6 +187,7 @@ EXTERN void BEFUN voxie_drawpol     AFFUN (voxie_frame_t *vf, pol_t *pt, int n, 
 EXTERN void BEFUN voxie_drawmeshtex AFFUN (voxie_frame_t *vf, const char *fnam, const poltex_t *vt, int vtn, const int *mesh, int meshn, int flags, int col);
 EXTERN void BEFUN voxie_drawsph     AFFUN (voxie_frame_t *vf, float fx, float fy, float fz, float rad, int issol, int col);
 EXTERN void BEFUN voxie_drawcone    AFFUN (voxie_frame_t *vf, float x0, float y0, float z0, float r0, float x1, float y1, float z1, float r1, int fillmode, int col);
+EXTERN int  BEFUN voxie_drawspr_getextents AFFUN (const char *fnam, extents_t *zo, int flags);
 EXTERN int  BEFUN voxie_drawspr     AFFUN (voxie_frame_t *vf, const char *fnam, point3d *p, point3d *r, point3d *d, point3d *f, int col);
 EXTERN int  BEFUN voxie_drawspr_ext AFFUN (voxie_frame_t *vf, const char *fnam, point3d *p, point3d *r, point3d *d, point3d *f, int col, float forcescale, float fdrawratio, int flags);
 
@@ -246,7 +248,7 @@ typedef struct
 {
 	STRUC kzfile_t *kzfil; //Warning: do not use this from user code - for internal use only.
 	double timleft;
-	float *frametim;
+	float *frametim, playspeed;
 	int *frameseek, framemal, kztableoffs, error;
 	int playmode, framecur, framenum;
 	int currep, animmode/*0=forward, 1=ping-pong, 2=reverse*/;
@@ -292,7 +294,6 @@ int voxie_load (voxie_wind_t *vw)
 	voxie_xbox_read    = (   int (__cdecl *)(int, voxie_xbox_t *))GetProcAddress(hvoxie,"voxie_xbox_read");
 	voxie_xbox_write   = (  void (__cdecl *)(int, float, float))GetProcAddress(hvoxie,"voxie_xbox_write");
 	voxie_nav_read     = (   int (__cdecl *)(int, voxie_nav_t *))GetProcAddress(hvoxie,"voxie_nav_read");
- //voxie_laser_read   = (   int (__cdecl *)(int, voxie_laser_t *))GetProcAddress(hvoxie,"voxie_laser_read");
 	voxie_touch_read   = (   int (__cdecl *)(int*,int*,int*,int*))GetProcAddress(hvoxie,"voxie_touch_read");
 	voxie_menu_reset   = (  void (__cdecl *)(int(*)(int,char*,double,int,void*),void*,char*))GetProcAddress(hvoxie,"voxie_menu_reset");
 	voxie_menu_addtab  = (  void (__cdecl *)(const char*,int,int,int,int))GetProcAddress(hvoxie,"voxie_menu_addtab");
@@ -314,6 +315,7 @@ int voxie_load (voxie_wind_t *vw)
 	voxie_drawmeshtex  = (  void (__cdecl *)(voxie_frame_t*,const char*,const poltex_t*,int,const int*,int,int,int))GetProcAddress(hvoxie,"voxie_drawmeshtex");
 	voxie_drawsph      = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,int,int))GetProcAddress(hvoxie,"voxie_drawsph");
 	voxie_drawcone     = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,float,float,float,float,int,int))GetProcAddress(hvoxie,"voxie_drawcone");
+	voxie_drawspr_getextents = (int (__cdecl *)(const char*,extents_t*,int))GetProcAddress(hvoxie,"voxie_drawspr_getextents");
 	voxie_drawspr      = (   int (__cdecl *)(voxie_frame_t*,const char*,point3d*,point3d*,point3d*,point3d*,int))GetProcAddress(hvoxie,"voxie_drawspr");
 	voxie_drawspr_ext  = (   int (__cdecl *)(voxie_frame_t*,const char*,point3d*,point3d*,point3d*,point3d*,int,float,float,int))GetProcAddress(hvoxie,"voxie_drawspr_ext");
 	voxie_printalph    = (  void (__cdecl *)(voxie_frame_t*,point3d*,point3d*,point3d*,int,const char*))GetProcAddress(hvoxie,"voxie_printalph");

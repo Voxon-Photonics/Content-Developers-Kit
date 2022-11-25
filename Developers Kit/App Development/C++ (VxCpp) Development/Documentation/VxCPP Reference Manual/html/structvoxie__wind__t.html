@@ -20,7 +20,7 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="vx++ logo_small.png"/></td>
+  <td id="projectlogo"><img alt="Logo" src="vx++ logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">VX++ Framework (VxCpp.dll)
    </div>
@@ -249,10 +249,10 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struc
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvoxie__wind__t.html#a17bc582f0c9cfac3a6162c856a6c7afa">sndfx_nspk</a></td></tr>
 <tr class="memdesc:a17bc582f0c9cfac3a6162c856a6c7afa"><td class="mdescLeft">&#160;</td><td class="mdescRight">variable to hold the number of physical speakers {1 = VX1 default, 2 = stereo system} <br /></td></tr>
 <tr class="separator:a17bc582f0c9cfac3a6162c856a6c7afa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a72f1b099c37cf3b54ec23d37ad067f96"><td class="memItemLeft" align="right" valign="top"><a id="a72f1b099c37cf3b54ec23d37ad067f96"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvoxie__wind__t.html#a72f1b099c37cf3b54ec23d37ad067f96">reserved</a></td></tr>
-<tr class="memdesc:a72f1b099c37cf3b54ec23d37ad067f96"><td class="mdescLeft">&#160;</td><td class="mdescRight">reserved variable for future features <br /></td></tr>
-<tr class="separator:a72f1b099c37cf3b54ec23d37ad067f96"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a05d0b4ecd4c89db95f179887fe1b46"><td class="memItemLeft" align="right" valign="top"><a id="a4a05d0b4ecd4c89db95f179887fe1b46"></a>
+int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvoxie__wind__t.html#a4a05d0b4ecd4c89db95f179887fe1b46">hwdispnum</a></td></tr>
+<tr class="memdesc:a4a05d0b4ecd4c89db95f179887fe1b46"><td class="mdescLeft">&#160;</td><td class="mdescRight">variable to manage the number of hardware displays <br /></td></tr>
+<tr class="separator:a4a05d0b4ecd4c89db95f179887fe1b46"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a440edbc3ee8c2ed37e60e1a3a647d87e"><td class="memItemLeft" align="right" valign="top"><a id="a440edbc3ee8c2ed37e60e1a3a647d87e"></a>
 float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvoxie__wind__t.html#a440edbc3ee8c2ed37e60e1a3a647d87e">freq</a></td></tr>
 <tr class="memdesc:a440edbc3ee8c2ed37e60e1a3a647d87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">starting value in Hz (must be set before first call to voxie_init()); obsolete - not used by current hardware <br /></td></tr>
@@ -293,10 +293,18 @@ int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="struc
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvoxie__wind__t.html#a55ba9375e72ab2c41881ce0451e45592">normhax</a></td></tr>
 <tr class="memdesc:a55ba9375e72ab2c41881ce0451e45592"><td class="mdescLeft">&#160;</td><td class="mdescRight">Used by global normal shading stores the vertical and horizontal angle and amplitude : (vang/*-90..90*&zwj;/&lt;&lt;20) + ((hang/*-180..180*&zwj;/&amp;4095)&lt;&lt;8) + amp/*0..255*&zwj;/. 0=disable. <br /></td></tr>
 <tr class="separator:a55ba9375e72ab2c41881ce0451e45592"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a349d05d0274aad1aa2c4c66e2dda5151"><td class="memItemLeft" align="right" valign="top"><a id="a349d05d0274aad1aa2c4c66e2dda5151"></a>
-int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvoxie__wind__t.html#a349d05d0274aad1aa2c4c66e2dda5151">upndow</a></td></tr>
-<tr class="memdesc:a349d05d0274aad1aa2c4c66e2dda5151"><td class="mdescLeft">&#160;</td><td class="mdescRight">screen shape: 0=sawtooth, 1=triangle <br /></td></tr>
-<tr class="separator:a349d05d0274aad1aa2c4c66e2dda5151"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e7f75f7ed9af55ae09544f4342726f7"><td class="memItemLeft" align="right" valign="top"><a id="a7e7f75f7ed9af55ae09544f4342726f7"></a>
+unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvoxie__wind__t.html#a7e7f75f7ed9af55ae09544f4342726f7">upndow</a></td></tr>
+<tr class="memdesc:a7e7f75f7ed9af55ae09544f4342726f7"><td class="mdescLeft">&#160;</td><td class="mdescRight">volumetric up down sweep technique: 0=sawtooth, 1=triangle <br /></td></tr>
+<tr class="separator:a7e7f75f7ed9af55ae09544f4342726f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af9eeae0d5fd00e81058c5fe6752f8a45"><td class="memItemLeft" align="right" valign="top"><a id="af9eeae0d5fd00e81058c5fe6752f8a45"></a>
+unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvoxie__wind__t.html#af9eeae0d5fd00e81058c5fe6752f8a45">scrshape</a></td></tr>
+<tr class="memdesc:af9eeae0d5fd00e81058c5fe6752f8a45"><td class="mdescLeft">&#160;</td><td class="mdescRight">screen shape 0=helix, 1=peanut/hurricane <br /></td></tr>
+<tr class="separator:af9eeae0d5fd00e81058c5fe6752f8a45"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afb6e5deb424074c13fd2796d43bfb4b7"><td class="memItemLeft" align="right" valign="top"><a id="afb6e5deb424074c13fd2796d43bfb4b7"></a>
+unsigned char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvoxie__wind__t.html#afb6e5deb424074c13fd2796d43bfb4b7">filler</a> [2]</td></tr>
+<tr class="memdesc:afb6e5deb424074c13fd2796d43bfb4b7"><td class="mdescLeft">&#160;</td><td class="mdescRight">not sure need to ask Ken what this is <br /></td></tr>
+<tr class="separator:afb6e5deb424074c13fd2796d43bfb4b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afa473ad037c7a2caf348b0c6beb31e12"><td class="memItemLeft" align="right" valign="top"><a id="afa473ad037c7a2caf348b0c6beb31e12"></a>
 int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structvoxie__wind__t.html#afa473ad037c7a2caf348b0c6beb31e12">nblades</a></td></tr>
 <tr class="memdesc:afa473ad037c7a2caf348b0c6beb31e12"><td class="mdescLeft">&#160;</td><td class="mdescRight">screen shape: 0=VX1 (not spinner), 1=/|, 2=/|/|, .. <br /></td></tr>

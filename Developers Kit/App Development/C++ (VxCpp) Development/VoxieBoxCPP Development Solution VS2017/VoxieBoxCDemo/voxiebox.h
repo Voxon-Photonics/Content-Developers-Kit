@@ -142,7 +142,7 @@ extern "C" {
 	EXTERN void BEFUN voxie_touch_custom AFFUN(const touchkey_t *touchkey, int num);
 
 	//Menus:
-	enum { MENU_TEXT = 0, MENU_LINE, MENU_BUTTON, MENU_HSLIDER = MENU_BUTTON + 4, MENU_VSLIDER, MENU_EDIT, MENU_EDIT_DO, MENU_TOGGLE, MENU_PICKFILE };
+	enum { MENU_TEXT = 0, MENU_LINE, MENU_BUTTON_MIDDLE, MENU_HSLIDER = MENU_BUTTON_MIDDLE + 4, MENU_VSLIDER, MENU_EDIT, MENU_EDIT_DO, MENU_TOGGLE, MENU_PICKFILE };
 	EXTERN void BEFUN voxie_menu_reset      AFFUN(int(*menu_update)(int id, char *st, double val, int how, void *userdata), void *userdata, char *bkfilnam);
 	EXTERN void BEFUN voxie_menu_addtab     AFFUN(const char *st, int x, int y, int xs, int ys);
 	EXTERN void BEFUN voxie_menu_additem    AFFUN(const char *st, int x, int y, int xs, int ys, int id, int type, int down, int col, double v, double v0, double v1, double vstp0, double vstp1);

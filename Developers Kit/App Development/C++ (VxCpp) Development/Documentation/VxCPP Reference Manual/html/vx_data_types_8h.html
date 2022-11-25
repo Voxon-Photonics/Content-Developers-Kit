@@ -20,7 +20,7 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="vx++ logo_small.png"/></td>
+  <td id="projectlogo"><img alt="Logo" src="vx++ logo.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">VX++ Framework (VxCpp.dll)
    </div>
@@ -97,6 +97,9 @@ Classes</h2></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structpoltex__t.html">poltex_t</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">3D point with texture coordinate and color (ARGB32). Used by <a class="el" href="class_voxie_box.html#aab94cfd1251732ff5bcb5a3aa2d13d4d" title="Draws a mesh from a list of vertices can render in as dots, lines, polygons, or filled mesh.">VoxieBox::drawMesh()</a>  <a href="structpoltex__t.html#details">More...</a><br /></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structextents__t.html">extents_t</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extents a datatype to hold size extent of a 3D model. (the range a model extends to)  <a href="structextents__t.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structtiletype.html">tiletype</a></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">2D array of pixels can be used with <a class="el" href="class_voxie_box.html#aab94cfd1251732ff5bcb5a3aa2d13d4d" title="Draws a mesh from a list of vertices can render in as dots, lines, polygons, or filled mesh.">VoxieBox::drawMesh</a>, <a class="el" href="class_voxie_box.html#a2364111ffd69401b54067d8172165ed5" title="Renders a heightmap (.jpg, .png or tiletype data) onto the volumetric display.">VoxieBox::drawHeightMap</a> and the 2D display (via <a class="el" href="structvoxie__frame__t.html" title="Struct which holds all the frame data (frame is a 2D slice of the volumetric image) which gets loaded...">voxie_frame_t</a>)  <a href="structtiletype.html#details">More...</a><br /></td></tr>
@@ -210,6 +213,10 @@ typedef struct <a class="el" href="structpol__t.html">pol_t</a>&#160;</td><td cl
 typedef struct <a class="el" href="structpoltex__t.html">poltex_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vx_data_types_8h.html#a2911724e2f20483c2e9aa7c3701aee89">poltex_t</a></td></tr>
 <tr class="memdesc:a2911724e2f20483c2e9aa7c3701aee89"><td class="mdescLeft">&#160;</td><td class="mdescRight">3D point with texture coordinate and color (ARGB32). Used by <a class="el" href="class_voxie_box.html#aab94cfd1251732ff5bcb5a3aa2d13d4d" title="Draws a mesh from a list of vertices can render in as dots, lines, polygons, or filled mesh.">VoxieBox::drawMesh()</a> <br /></td></tr>
 <tr class="separator:a2911724e2f20483c2e9aa7c3701aee89"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa4170f3563de673f81e71fc6c848a31d"><td class="memItemLeft" align="right" valign="top"><a id="aa4170f3563de673f81e71fc6c848a31d"></a>
+typedef struct <a class="el" href="structextents__t.html">extents_t</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vx_data_types_8h.html#aa4170f3563de673f81e71fc6c848a31d">extents_t</a></td></tr>
+<tr class="memdesc:aa4170f3563de673f81e71fc6c848a31d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Extents a datatype to hold size extent of a 3D model. (the range a model extends to) <br /></td></tr>
+<tr class="separator:aa4170f3563de673f81e71fc6c848a31d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad7a492b037d1684fa4660224fe4c42b5"><td class="memItemLeft" align="right" valign="top"><a id="ad7a492b037d1684fa4660224fe4c42b5"></a>
 typedef struct <a class="el" href="structtiletype.html">tiletype</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="vx_data_types_8h.html#ad7a492b037d1684fa4660224fe4c42b5">tiletype</a></td></tr>
 <tr class="memdesc:ad7a492b037d1684fa4660224fe4c42b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">2D array of pixels can be used with <a class="el" href="class_voxie_box.html#aab94cfd1251732ff5bcb5a3aa2d13d4d" title="Draws a mesh from a list of vertices can render in as dots, lines, polygons, or filled mesh.">VoxieBox::drawMesh</a>, <a class="el" href="class_voxie_box.html#a2364111ffd69401b54067d8172165ed5" title="Renders a heightmap (.jpg, .png or tiletype data) onto the volumetric display.">VoxieBox::drawHeightMap</a> and the 2D display (via <a class="el" href="structvoxie__frame__t.html" title="Struct which holds all the frame data (frame is a 2D slice of the volumetric image) which gets loaded...">voxie_frame_t</a>) <br /></td></tr>

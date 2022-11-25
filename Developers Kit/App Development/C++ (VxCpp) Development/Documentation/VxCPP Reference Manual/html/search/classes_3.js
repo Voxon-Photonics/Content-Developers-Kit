@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['tiletype_645',['tiletype',['../structtiletype.html',1,'']]],
-  ['touchinput_5ft_646',['touchInput_t',['../structtouch_input__t.html',1,'']]],
-  ['touchkey_5ft_647',['touchkey_t',['../structtouchkey__t.html',1,'']]],
-  ['touchpoint_5ft_648',['touchPoint_t',['../structtouch_point__t.html',1,'']]]
+  ['point2d_658',['point2d',['../structpoint2d.html',1,'']]],
+  ['point3d_659',['point3d',['../structpoint3d.html',1,'']]],
+  ['pol_5ft_660',['pol_t',['../structpol__t.html',1,'']]],
+  ['poltex_5ft_661',['poltex_t',['../structpoltex__t.html',1,'']]]
 ];

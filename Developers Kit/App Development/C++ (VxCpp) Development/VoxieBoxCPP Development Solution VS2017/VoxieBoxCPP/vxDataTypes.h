@@ -74,6 +74,20 @@ typedef struct poltex_t {
 
 } poltex_t;
 
+//! Extents a datatype to hold size extent of a 3D model. (the range a model extends to)
+typedef struct extents_t { 
+	
+	float x0,		//!< first x value length (left)
+		  y0,		//!< first y value length (up)
+		  z0,		//!< first x value length (top)
+		  sc,		//!< scale value
+		  x1,		//!< second x value length (right)
+		  y1,		//!< second y value length (down)
+		  z1,		//!< second z value length (bottom)
+		  dum;		//!< @TODO dummy data?! 
+
+} extents_t;
+
 //! 2D array of pixels can be used with VoxieBox::drawMesh, VoxieBox::drawHeightMap and the 2D display (via voxie_frame_t)
 typedef struct tiletype { 
 
@@ -189,7 +203,7 @@ typedef struct voxie_wind_t {
 			hacks,					//!< bit0!=0:exclusive mouse; bit1!=0:disable REC/TCP options under File menu (for Voxieplay)
 			dispcur,				//!< current display selected in menus {0..dispnum-1}
 			sndfx_nspk,				//!< variable to hold the number of physical speakers {1 = VX1 default, 2 = stereo system}
-			reserved;				//!< reserved variable for future features
+			hwdispnum;				//!< variable to manage the number of hardware displays
 	// Obsolete 
 
 	float	freq,					//!< starting value in Hz (must be set before first call to voxie_init()); obsolete - not used by current hardware
@@ -208,7 +222,9 @@ typedef struct voxie_wind_t {
 			ldotnum,				//!< dot number the size of a single voxel. affects brightness. Range:{0..3}, 0=default
 			normhax;				//!< Used by global normal shading stores the vertical and horizontal angle and amplitude : (vang/*-90..90*/<<20) + ((hang/*-180..180*/&4095)<<8) + amp/*0..255*/. 0=disable.
 	
-	int		upndow;					//!< screen shape: 0=sawtooth, 1=triangle
+	unsigned char	upndow;			//!< volumetric up down sweep technique: 0=sawtooth, 1=triangle
+	unsigned char	scrshape;		//!< screen shape 0=helix, 1=peanut/hurricane
+	unsigned char	filler[2];		//!< not sure need to ask Ken what this is
 	int		nblades;				//!< screen shape: 0=VX1 (not spinner), 1=/|, 2=/|/|, ..
 	int		usejoy;					//!< usb gamepad input API -1=none, 0=joyInfoEx (directInput), 1=XInput
 	int		dimcaps;				//!< dim top & bottom by sine - up/dn (VX1) mode only. 0 is default.
@@ -473,6 +489,9 @@ typedef struct voxie_nav_history_t {
 	voxie_input_state_t history[NAV_HISTORY_LENGTH];
 
 } voxie_nav_history_t;
+
+
+
 
 static int const COL_SCROLL_MAX = 90;
 static int const PALETTE_COLOR_MAX = 90;

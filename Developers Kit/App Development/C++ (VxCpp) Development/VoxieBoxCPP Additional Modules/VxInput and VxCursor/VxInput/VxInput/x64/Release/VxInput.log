@@ -1,0 +1,22 @@
+﻿  Main.cpp
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\vxCursor.h(55,29): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\vxCursor.h(58,21): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\Main.cpp(25,33): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\Main.cpp(31,47): error C2039: 'randomPos': is not a member of 'IVoxieBox'
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\Headers and DLLs\vxCPP.h(171): message : see declaration of 'IVoxieBox'
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\Main.cpp(52,50): error C2039: 'randomPos': is not a member of 'IVoxieBox'
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\Headers and DLLs\vxCPP.h(171): message : see declaration of 'IVoxieBox'
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\Main.cpp(72,50): warning C4305: 'argument': truncation from 'double' to 'float'
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\Main.cpp(74,7): warning C4305: 'argument': truncation from 'double' to 'float'
+  VxCursor.cpp
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\VxCursor.h(55,29): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\VxCursor.h(58,21): warning C4305: 'initializing': truncation from 'double' to 'float'
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\VxCursor.cpp(28,49): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\VxCursor.cpp(61,11): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\VxCursor.cpp(71,50): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\VxCursor.cpp(85,49): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\VxCursor.cpp(99,49): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\VxCursor.cpp(142,56): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\VxCursor.cpp(143,56): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+D:\MatDev\DEV\DEVELOPMENT GITS\VoxieBoxCPP\VoxieBoxCPP Additional Modules\VxInput and VxCursor\VxInput\VxInput\VxCursor.cpp(144,55): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
+  VxInput.cpp

@@ -24,6 +24,10 @@ public:
 	void autoArrangeElementsStyle(int option);
 	void setElementSpacing(int xSpace, int ySpace);
 
+
+	void setForceScrollBarState(int choice); // 0 = normal automatic, 1 = always on, -1 always off
+	int getForceScrollBar();
+
 	void addElement(Element2D * newElement2DPtr);
 	void flushElements();
 	void removeElement(int elementIndex);
@@ -41,6 +45,10 @@ private:
 
 	int			elementXSpacing = 110;
 	int			elementYSpacing = 110;
+	int			elementXLeftOffset = 10; // the offset from the X border
+	int			elementYTopOffset = 10; // the offset from the Y border
+
+	int			forceScrollBar = 0; // 0 = normal automatic, 1 = always on, -1 always off
 
 
 	int			color					= 0x303030;
@@ -64,7 +72,6 @@ private:
 	int         scrollBarMarkerRelPos   = 0;
 	int			scrollBarTrackLength	= 0;
 	int			scrollBarHeight			= 50;
-
 	int			scrollBarWidth			= 50;
 	int			scrollBarColor			= 0x006000;
 	int			scrollBarTrackColor		= 0x303000;

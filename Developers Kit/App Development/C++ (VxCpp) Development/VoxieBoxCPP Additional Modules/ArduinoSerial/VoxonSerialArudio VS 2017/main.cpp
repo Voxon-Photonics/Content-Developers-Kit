@@ -13,7 +13,7 @@
 
 
 //connection varaibles ..
-char com_port[] = "\\\\.\\COM18";
+char com_port[] = "\\\\.\\COM1 ";
 char* to_send = nullptr;
 bool is_sent = false;
 bool closed_ = false;

@@ -8,6 +8,7 @@
 
 // VX++ APP HELLO WORLD EXAMPLE 
 // You may use this as a template to start creating your own volumetric applications.
+
 #include "pch.h"
 #include "VxCpp.h"
 
@@ -46,4 +47,7 @@ int main(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdshow)
 	delete voxie;
 	return 0;   // After the program quits the de-constructor for voxiebox frees the DLLs from memory if you wanted to do this manually call the voxie->Shutdown()
 }
+
+
+
 

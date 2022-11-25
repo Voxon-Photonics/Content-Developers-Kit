@@ -11,7 +11,7 @@
   "Type": "Platform",
   "Developer": "Lexaloffle",
   "Version": "0.35b7",
-  "BuildDate": "20210608",
+  "BuildDate": "20221124",
   "LocalExecutableFile": "vox.exe",
   "LinkID": "NULL",
   "Params": [
