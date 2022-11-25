@@ -16,7 +16,7 @@ It is developed for a range of skill sets - beginner, professional and in-betwee
 Our goals for the Developer Kit are as follows:
 
 ·     **To be easy**, **empowering** and **effective** 
-·     **To be extendable **- users can use the examples provided it to build upon their vision.
+·     **To be extendable**- users can use the examples provided it to build upon their vision.
 ·     **To be enabling** - users can see the potential for volumetric experiences and be inspired. 
 
 The latest stable version of the Developers Kit is hosted on our website : www.voxon.co
