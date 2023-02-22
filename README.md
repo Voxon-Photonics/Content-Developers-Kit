@@ -1,6 +1,6 @@
 # Voxon Developers Kit
 
- Welcome to the Voxon Developers Kit. the official pathway **to developing content for Voxon’s volumetric technology.**  Inside the Developers Kit are a range of tools, documents, and examples to develop volumetric media and software. 
+Welcome to the Voxon Developers Kit. the official pathway **to developing content for Voxon’s volumetric technology.**  Inside the Developers Kit are a range of tools, documents, and examples to develop volumetric media and software. 
 
 The Developer Kit aims to:
 
@@ -45,7 +45,7 @@ To install the Developers Kit either run the *Voxon Installer* obtained from our
 
 ## Runtime Version
 
-voxiebox.dll : 24/05/21
+voxiebox.dll : 16/11/22
 
 
 
