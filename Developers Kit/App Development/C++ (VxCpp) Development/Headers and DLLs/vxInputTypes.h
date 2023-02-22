@@ -41,7 +41,7 @@ enum JoyButtonCodes
 
 };
 //! \enum Controller Axis Enum helps identify which analog input is being used 
-enum ControllerAxis { 
+enum ControllerAxis {  
 	JOY_LEFT_STICK_X,			//!< 0 Analog Left Stick X axis
 	JOY_LEFT_STICK_Y,			//!< 1 Analog Left Stick Y axis
 	JOY_RIGHT_STICK_X,			//!< 2 Analog Right Stick X axis

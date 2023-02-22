@@ -1012,6 +1012,7 @@ public:
 	//Internal functions:
 
 	//Global functions (these 2 not multi-thread safe!):
+	//Global functions (these 2 not multi-thread safe!):
 	int					_kzaddstack(const char* fileName);
 	void				_kzuninit();
 

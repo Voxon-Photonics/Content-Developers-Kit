@@ -223,12 +223,28 @@ static int menu_keystonecal_update (int id, char *st, double v, int how, void *u
 				voxie_init(&vw);
 			} //else { .. }
 			break;
-		case MENU_IANGHAK: vw.ianghak = ((int)v)&65535; voxie_init(&vw); break;
+		case MENU_IANGHAK:
+			{
+			int i = ((int)v)&1023;
+			if (grabdispall)
+			{
+				vw.ianghak = i*((1<<20)+(1<<10)+1);
+			}
+			else
+			{
+				vw.ianghak = (((    i                                  ) & 1023) << (((vw.dispcur+0)%3)*10))
+							  + ((((vw.ianghak >> (((vw.dispcur+1)%3)*10))) & 1023) << (((vw.dispcur+1)%3)*10))
+							  + ((((vw.ianghak >> (((vw.dispcur+2)%3)*10))) & 1023) << (((vw.dispcur+2)%3)*10));
+			}
+			}
+			voxie_init(&vw);
+			break;
 		case MENU_DISP_CUR: case MENU_DISP_CUR+1: case MENU_DISP_CUR+2:
 			vw.dispcur = id-MENU_DISP_CUR; grabdispall = 0;
 			voxie_init(&vw);
 			voxie_menu_updateitem(MENU_MIRRORX,0,vw.disp[vw.dispcur].mirrorx!=0,0.0);
 			voxie_menu_updateitem(MENU_MIRRORY,0,vw.disp[vw.dispcur].mirrory!=0,0.0);
+			voxie_menu_updateitem(MENU_IANGHAK,0,0,(vw.ianghak>>(vw.dispcur*10))&1023);
 			break;
 		case MENU_DISP_ALL: grabdispall = 1; break;
 		case MENU_MIRRORX: case MENU_MIRRORY:
@@ -2345,16 +2361,9 @@ int main (int argc, char **argv)
 					{
 						voxie_menu_additem("Rotate keystone..",224, 72,128, 64,0           ,MENU_TEXT    ,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 						voxie_menu_additem("Left 5"           ,194, 90,112,80,MENU_ROTLEFT5 ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-						voxie_menu_additem("Right 5"          ,320, 90,112,80,MENU_ROTRIGHT5,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 						voxie_menu_additem("Left .1"          ,194,180,112,80,MENU_ROTLEFT ,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
+						voxie_menu_additem("Right 5"          ,320, 90,112,80,MENU_ROTRIGHT5,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 						voxie_menu_additem("Right .1"         ,320,180,112,80,MENU_ROTRIGHT,MENU_BUTTON+3,0,0x908070,0.0,0.0,0.0,0.0,0.0);
-
-						if (vw.nblades > 0)
-						{
-							voxie_menu_additem("Vertical Offset",340,300,240, 64,MENU_IANGHAK ,MENU_HSLIDER ,0  ,0x908070,(double)vw.ianghak,0.0,65536.0,64.0,1024.0);
-						}
-
-						voxie_menu_additem("Reset to safe defaults\rReset to safe defaults",180,408,288,48,MENU_KEYSTONE_RESET,MENU_TOGGLE,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 
 						voxie_menu_additem("Mirror X:", 494, 80, 64, 64,0                   ,MENU_TEXT    ,0                                ,0x908070, 0.0,0.0,0.0,0.0,0.0);
 						voxie_menu_additem("Off\rOn"  , 486, 98,128, 64,MENU_MIRRORX        ,MENU_TOGGLE  ,(vw.disp[vw.dispcur].mirrorx!=0) ,0x908070, 0.0,0.0,0.0,0.0,0.0);
@@ -2371,6 +2380,15 @@ int main (int argc, char **argv)
 							voxie_menu_additem(tbuf ,i*64-(vw.dispnum+1)*32+140,300, 64, 64,MENU_DISP_CUR+i     ,MENU_BUTTON+(i==0),(i==vw.dispcur)&&(!grabdispall),0x908070, 0.0,0.0,0.0,0.0,0.0);
 						}
 						voxie_menu_additem("All",i*64-(vw.dispnum+1)*32+140,300, 64, 64,MENU_DISP_ALL       ,MENU_BUTTON+2,grabdispall!=0,0x908070, 0.0,0.0,0.0,0.0,0.0);
+					}
+					if ((!vw.useemu) && (vw.nblades > 0))
+					{
+						voxie_menu_additem("Vertical Offset",340,300,240, 64,MENU_IANGHAK ,MENU_HSLIDER ,0  ,0x908070,(double)((vw.ianghak>>(vw.dispcur*10))&1023),0.0,1024.0,1.0,16.0);
+					}
+
+					if (!vw.useemu)
+					{
+						voxie_menu_additem("Reset to safe defaults\rReset to safe defaults",180,408,288,48,MENU_KEYSTONE_RESET,MENU_TOGGLE,0,0x908070,0.0,0.0,0.0,0.0,0.0);
 					}
 
 					break;
@@ -2978,12 +2996,19 @@ dofireworks:;
 
 				if (vw.nblades > 0)
 				{
-					//if (voxie_keystat(0x10) == 1) { if (voxie_keystat(0x2a)|voxie_keystat(0x36)) vw.ianghak -= 64; else vw.ianghak -= 256; vw.ianghak &= 65535; voxie_init(&vw); } //Q
-					//if (voxie_keystat(0x1e) == 1) { if (voxie_keystat(0x2a)|voxie_keystat(0x36)) vw.ianghak += 64; else vw.ianghak += 256; vw.ianghak &= 65535; voxie_init(&vw); } //A
-					if (voxie_keystat(0x10)) { if (voxie_keystat(0x2a)|voxie_keystat(0x36)) vw.ianghak -= 64; else vw.ianghak -= 256; vw.ianghak &= 65535; voxie_init(&vw); } //Q
-					if (voxie_keystat(0x1e)) { if (voxie_keystat(0x2a)|voxie_keystat(0x36)) vw.ianghak += 64; else vw.ianghak += 256; vw.ianghak &= 65535; voxie_init(&vw); } //A
+					i = (voxie_keystat(0x1e)!=0) - (voxie_keystat(0x10)!=0); //'A' - 'Q'
+					if (i)
+					{
+						if (!(voxie_keystat(0x2a)|voxie_keystat(0x36))) i *= 4;
+						i &= 1023;
+						if (vw.hwdispnum < vw.dispnum) j = 1; else j = grabdispall;
+						vw.ianghak = ((((vw.ianghak >> (((vw.dispcur  )%3)*10)) + i  ) & 1023) << (((vw.dispcur+0)%3)*10))
+									  + ((((vw.ianghak >> (((vw.dispcur+1)%3)*10)) + i*j) & 1023) << (((vw.dispcur+1)%3)*10))
+									  + ((((vw.ianghak >> (((vw.dispcur+2)%3)*10)) + i*j) & 1023) << (((vw.dispcur+2)%3)*10));
+						voxie_init(&vw);
+						voxie_menu_updateitem(MENU_IANGHAK,0,0,(vw.ianghak>>(vw.dispcur*10))&1023);
+					}
 				}
-
 
 					//Projection compensation GUI
 				if ((!(bstatus&1)) && (!(vx[0].but&0xf000)) && (!(nav[0].but&1)))
@@ -3107,8 +3132,8 @@ dofireworks:;
 						for(z=-1;z<=1;z+=2)
 						{
 							point3d p, r, d;
-							r.x = 0.12f; d.x = 0.00f; p.x = (float)x*.25f - r.x*3*.5f - d.x*.5f;
-							r.y = 0.00f; d.y = 0.12f; p.y = (float)y*.25f - r.y*3*.5f - d.y*.5f;
+							r.x = 0.12f; d.x = 0.00f; p.x = (float)x*.25f*vw.aspx - r.x*3*.5f - d.x*.5f;
+							r.y = 0.00f; d.y = 0.12f; p.y = (float)y*.25f*vw.aspy - r.y*3*.5f - d.y*.5f;
 							r.z = 0.00f; d.z = 0.00f; p.z = (float)z*vw.aspz*.98f;
 							if (z < 0) voxie_printalph_(&vf,&p,&r,&d,0xffffff,"TOP");
 									else voxie_printalph_(&vf,&p,&r,&d,0xffffff,"BOT");

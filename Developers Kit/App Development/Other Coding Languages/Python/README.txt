@@ -1,18 +1,11 @@
-Voxon Python
+VxPy - this is a pre-release version of the Voxon Python Wrapper
 
-Requirements:
-Python 3.X 64-bit
-voxiebox.dll
-
-Usage:
-python voxon_python.py
+Not all functions of the Voxon Runtime have been ported yet.
 
 
-Notes:
-This is an example program demonstrating the core loop of the voxon runtime operating in python. An example of how a developer may choose to structure a mesh is available in suzanne.py.
+1) Make sure Pyhton 3.11 is installed on your system
+2) Make sure the Voxon Developers Kit is installed on your system.
+3) To install VxPy run the 'installToLib.bat' file located within the VxPy
+4) Load in any scripts in the VxPy Example folder. 
 
-To extend this example, 
-- read through voxiebox.txt (located in Development Kit / Documentation) for runtime functions and their parameters / return values
-- define selected functions in Runtime::__init__ 
-- call functions as self.vxDLL.<functionName> within core loop
-- ensure any draw calls occur between voxie_frame_start and voxie_frame_end (This includes debug message calls)
+For more infomation contact Matt@Voxon.co

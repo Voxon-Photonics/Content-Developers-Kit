@@ -16,55 +16,6 @@ Overly sparse and very incomplete history:
 02/10/2018: Reorganize voxie_wind_t structure for support of multiple displays.
 
 ----------------------------------------------------------------------------------------------------
-File description:
-
-Voxiebox DLL files:
-   voxiebox.dll            Compiled library
-   voxiebox.ini            Settings file loaded by voxiebox.dll
-   voxiebox_menu0.ini      Included from voxiebox.ini
-   voxiebox.h              Header for C/C++ usage of voxiebox.dll
-   voxiebox.txt            This document
-
-Voxiesimp files:
-   voxiesimp.exe           Compiled executable (from C# because it's smaller)
-   voxiesimp.c             Simple example for C/C++
-   voxiesimp.cs            Simple example for C#
-   voxiesimp.java          Simple example for Java
-   jna.jar                 Java DLL support library
-   javcomp.bat             Command line Java compile
-
-Voxiedemo files:
-   voxiedemo.exe           Compiled example program
-   voxiedemo.c             Source code in C/C++
-   voxiedemo.txt           Documentation on modes/keys
-   voxiedemo.ini           Settings for voxiedemo
-   voxiedemo_user.ini      Included from voxiedemo.ini
-   voxiedemo_dotmunch.ini  Included from voxiedemo.ini
-   anim.ini                Saved positions & orientations of models for voxiedemo (VoxieOS uses posori.ini)
-   icons.zip               Selection screen models
-   canyon.png              Heightmap example
-   chessdat.zip            Chess models
-   mun_data.zip            Dot munch models
-   flystomp.zip            Fly stomp data
-   caco.kv6                Ken's silly mascot
-   meathead.stl            Ken's silly mascot #2
-
-Standard file formats supported:
-   ZIP/TAR/GZ              Archives
-   STL/OBJ/PLY             3D polygon formats
-   PNG/JPG/GIF/BMP/TGA/PCX Image formats
-   DCM/DCS                 DICOM/DICOS medical formats
-   ONI                     Heightmap movie file (from OpenNI2)
-   MOL                     Molecule format
-   WAV/FLAC/VOC            Built-in audio formats
-   MP3/M4A/WMA             Other audio formats provided by Windows Media (IMFSourceReader); others supported.
-
-Voxon's own file formats supported:
-   KV6/KVS                 Ken Silverman's 3D voxel formats: KV6 from Voxlap, KVS surface voxel octrees from PND3D
-   KNI                     A movie file containing color images, depth images, infrared images, and audio. Used for depth cameras. See knife.exe/kniview.exe
-   REC                     A recording of a sequence of Voxiebox graphics and audio commands. Can create a REC file in the runtime Voxiebox menu.
-
-----------------------------------------------------------------------------------------------------
 Window setup functions:
 
 typedef struct { float x, y; } point2d; //Used for 2D points
