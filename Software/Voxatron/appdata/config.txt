@@ -1,0 +1,106 @@
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+// Configuration for Voxatron
+// 
+// config.txt is read on startup and saved on exit.
+// To generate the default config.txt, delete this file.
+// 
+// - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+
+
+// :: Video Settings
+
+window_size 0 0 // window width, height
+screen_size 0 0 // screen width, height (stretched to window) 
+show_fps 0 // Draw frames per second in the corner
+
+
+// :: Window Settings
+
+windowed 0 // 1 to start up in windowed mode
+window_position -1 -1 // x and y position of window (-1, -1 to let the window manager decide)
+frameless 0 // 1 to use a window with no frame
+fullscreen_method 1 // 0 maximized window (linux)  1 borderless desktop-sized window  2 fullscreen
+
+
+// :: System Settings
+
+foreground_sleep_ms 2 // number of milliseconds to sleep each frame. Try 10 to conserve battery power
+
+background_sleep_ms 10 // number of milliseconds to sleep each frame when running in the background
+
+sessions 1 // number of times program has been run
+
+// (scancode) hold this key down and left-click to simulate right-click
+rmb_key 0 // 0 for none  226 for LALT
+
+// Desktop for saving screenshots etc. Defaults to $HOME/Desktop
+desktop_path 
+
+
+
+// :: Audio Settings
+
+sound_volume 256 // 0..256
+music_volume 256 // 0..256
+mix_buffer_size 1024 // usually 1024. Try 2048 if you get choppy sound
+
+
+// :: 
+
+version 0.3.5b7
+ff_version 62
+current_player 1
+path 
+// maximum length of gif in seconds (1..30, default 8)
+gif_len 8
+
+soft_shadows 1
+small_nav_thumbs 0
+player_cp 0 2
+player_cp 1 2
+player_cp 2 2
+player_cp 3 2
+
+controller_profile _keys
+
+leftx-          k80 k4 
+leftx+          k79 k7 
+lefty-          k82 k26 
+lefty+          k81 k22 
+x               k27 
+y               k29 
+rightx-         k13 k92 k95 k89 
+rightx+         k15 k94 k97 k91 
+righty-         k12 k96 k95 k97 
+righty+         k14 k90 k89 k91 
+dpup            k18 
+dpdown          k19 
+a               k6 k225 
+b               k25 k224 
+leftshoulder    k20 
+rightshoulder   k8 
+lefttrigger     k9 
+righttrigger    k10 k44 
+
+controller_profile _keys_mouse
+
+leftx-          k4 
+leftx+          k7 
+lefty-          k26 
+lefty+          k22 
+x               m0 
+y               m1 
+rightx-         M-0
+rightx+         M+0
+righty-         M-1
+righty+         M+1
+dpup            k18 
+dpdown          k19 
+a               k6 k225 
+b               k25 k224 
+leftshoulder    k20 
+rightshoulder   k8 
+lefttrigger     k9 
+righttrigger    k10 k44 
+
+

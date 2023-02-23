@@ -1,0 +1,28 @@
+codo_init
+  platform: Windows
+  codo_system_init
+  codo_reset_timer
+  codo_gui_init
+  codo_keys_init
+  codo_text_init
+  codo_video_init
+  codo_mouse_init
+  codo_joystick_init
+ok
+codo_set_screen 78 50 32 100
+codo_sound_init mix_buffer_size: 1024
+codo_load_pod_set: /Voxatron/vox.dat ok
+initializing cart -1 
+ preparing world state
+ running cart
+ ok
+codo_exit
+  cmusic_stop
+  codo_main_exit
+  codo_config_save
+  codo_sound_exit
+  codo_video_exit
+  codo_joystick_exit
+  codo_system_exit
+  codo_items_created: 2394
+ok

@@ -1,0 +1,10 @@
+|1  |101   |101 |zep                | |snow dragon
+|18 |118   |118 |benjamin_soule      | |hug arena
+|12  |112    |112 |zep      | |voxatron arena
+|10  |110    |110 |zep      | |arena 2p
+|3  |103   |103 |zep                 | |chaos fortress
+|7  |107   |107 |zep                 | |park scene
+|17 |117   |117 |zep                 | |zen garden
+|9  |109   |109 |zep      | |bloot
+|11  |111    |111 |zep      | |the jelly room
+|15 |115   |115 |zep                 | |gallery of curiosities
