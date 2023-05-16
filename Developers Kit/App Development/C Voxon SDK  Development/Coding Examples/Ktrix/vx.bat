@@ -1,0 +1,1 @@
+nmake ktrix.c && ktrix.exe
