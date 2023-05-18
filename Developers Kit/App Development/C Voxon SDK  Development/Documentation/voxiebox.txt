@@ -1,21 +1,7 @@
 (C) 2021 VOXON Photonics. All rights Reserved
 Voxiebox SDK by Ken Silverman: Runs Voxiebox under Windows 7/8/10 64-bit, with support for emulation in a window.
 ----------------------------------------------------------------------------------------------------
-Overly sparse and very incomplete history:
-06/04/2013: Voxiebox SDK first internal release to company.
-06/05/2013: Function documentation written.
-06/10/2013: Update for Java; structure changes.
-07/18/2013: Add voxi_drawheimap(). Add sndfx_aud[] to voxi_wind_t structure.
-07/22/2013: Add voxi_playsound().
-08/27/2013: Add functions for XBox controller; improve voxi_drawcube(); implement voxi_drawbox();
-            add voxi_drawspr().
-12/22/2013: Add voxi_setaudmixcb(), voxi_wind_t:samprate, voxi_wind_t:nchans.
-01/23/2014: Many changes made for initial semi-public release.
-02/19/2014: Rename voxi_* to voxie_* for consistency.
-11/26/2017: Updated lots of stuff, including menus, voxie_drawmeshtex(), .REC file playback functions.
-02/10/2018: Reorganize voxie_wind_t structure for support of multiple displays.
 
-----------------------------------------------------------------------------------------------------
 Window setup functions:
 
 typedef struct { float x, y; } point2d; //Used for 2D points
@@ -428,9 +414,6 @@ typedef struct { float x, y, z; } point3d;
    //Used by voxie_drawpol(). 3D point with index to next point on loop (starting at 0)
 typedef struct { float x, y, z; int p2; } pol_t;
 
-   //Used by voxie_drawmeshtex(). 3D point with texture coordinate and color (ARGB32).
-typedef struct { float x, y, z, u, v; int col; } poltex_t;
-
    //Draw single voxel at specified location.
    //  fx,fy,fz: location
    //       col: 24-bit color
@@ -485,6 +468,9 @@ void voxie_drawcube (voxie_frame_t *vf, point3d *p, point3d *r, point3d *d, poin
    //NOTE: For more advanced features, use voxie_drawmeshtex() instead. This function is provided
    //      more for convenience.
 void voxie_drawpol (voxie_frame_t *vf, pol_t *pt, int n, int col);
+
+   //Used by voxie_drawmeshtex(). 3D point with texture coordinate and color (ARGB32):
+typedef struct { float x, y, z, u, v; int col; } poltex_t;
 
    //Draw multiple dots, lines, polygons, or filled mesh.
    //      //For fillmode 0, mesh and meshn are ignored - pass 0's in their place.
@@ -544,8 +530,56 @@ void voxie_drawpol (voxie_frame_t *vf, pol_t *pt, int n, int col);
    //NOTE: All rendering functions eventually end up calling this general rendering function, at
    //   least internally. The only exceptions to this rule are: voxie_drawsph() and voxie_drawcone()
    //   when using solid filled.
-void voxie_drawmeshtex (voxie_frame_t *vf, char *texnam, const poltex_t *vt, int vtn,
+void voxie_drawmeshtex (voxie_frame_t *vf, const char *texnam, const poltex_t *vt, int vtn,
                         const int *mesh, int meshn, int flags, int col);
+
+   //Used by voxie_drawmeshtex_ext():
+typedef struct { float u, v; int col; } uvcol_t;
+typedef struct { int xyzi, uvci; } inds_t; //if (xyzi&0x80000000) start new loop
+
+   //vf, texnam, flags, col - same as voxie_drawmeshtex().
+   //   xyz  : raw vertex data: float x, y, z; stored consecutively in memory
+   //   xyzn : ^ number of xyz's. Limit:<=(1<<31)
+   //   uvc  : texture coordinate / vertex color data
+   //   uvcn : ^ number of uvc's. Limit:<(1<<32)
+   //   ind  : index data; list of polygon loops:
+   //            ind[?].xyzi: index to xyz:{0..xyzn-1}
+   //               Add 0x80000000 (1<<31) to xyzi if point begins a new polygon loop.
+   //               Vertices must NOT be listed twice (to begin and end a loop).
+   //            ind[?].uvci: index to uvc:{0..uvcn-1}
+   //   indn: ^ number of ind's
+   //NOTE: these structures are optimized for Blender, which stores data in this way.
+   //
+   //      //Example for fillmode 2: texture-mapped tetrahedron where: vertices not restricted to
+   //      //   using same uv or color for different faces
+   //   point3d xyz[4]; uvcol_t uvc[4]; ind_t ind[12];
+   //   xyz[0].x =-.4f; xyz[0].y =-.4f; xyz[0].z =-.4f;
+   //   xyz[1].x =-.4f; xyz[1].y =+.4f; xyz[1].z =+.4f;
+   //   xyz[2].x =+.4f; xyz[2].y =-.4f; xyz[2].z =+.4f;
+   //   xyz[3].x =+.4f; xyz[3].y =+.4f; xyz[3].z =-.4f;
+   //   uvc[0].u = 0.f; uvc[0].v = 0.f; uvc[0].col = 0x400000; //+---+
+   //   uvc[1].u = 1.f; uvc[1].v = 0.f; uvc[1].col = 0x004000; //| / |
+   //   uvc[2].u = 0.f; uvc[2].v = .5f; uvc[2].col = 0x000040; //+---+
+   //   uvc[3].u = 1.f; uvc[3].v = .5f; uvc[3].col = 0x400000; //| / |
+   //   uvc[4].u = 0.f; uvc[4].v = .5f; uvc[4].col = 0x004000; //+---+
+   //   uvc[5].u = 1.f; uvc[5].v = 0.f; uvc[5].col = 0x000040;
+   //   uvc[6].u = 0.f; uvc[6].v = .5f; uvc[6].col = 0x400000;
+   //   uvc[7].u = 1.f; uvc[7].v = .5f; uvc[7].col = 0x004000;
+   //   uvc[8].u = 0.f; uvc[8].v = 1.f; uvc[8].col = 0x000040;
+   //   uvc[9].u = 1.f; uvc[9].v = 1.f; uvc[9].col = 0x400000;
+   //   uvc[10].u= 0.f; uvc[10].v= .5f; uvc[10].col= 0x004000;
+   //   uvc[11].u= 1.f; uvc[11].v= 1.f; uvc[11].col= 0x000040;
+   //   ind[0].xyzi = 0+(1<<31); ind[1].xyzi = 1; ind[2].xyzi = 2;
+   //   ind[3].xyzi = 1+(1<<31); ind[4].xyzi = 0; ind[5].xyzi = 3;
+   //   ind[6].xyzi = 2+(1<<31); ind[7].xyzi = 1; ind[8].xyzi = 3;
+   //   ind[9].xyzi = 0+(1<<31); ind[10].xyzi= 2; ind[11].xyzi= 3;
+   //   for(i=0;i<12;i++) ind[i].uvci = i;
+   //   voxie_drawmeshtex_ext(&vf,"tetratex.png",xyz,4,uvc,12,ind,12,2,0xffffff);
+void voxie_drawmeshtex_ext (voxie_frame_t *vf, const char *texnam,
+                            const point3d *xyz, int xyzn,
+                            const uvcol_t *uvc, int uvcn,
+                            const inds_t *inds, int indsn,
+                            int flags, int col);
 
    //Draw sphere
    //  fx,fy,fz: center location
