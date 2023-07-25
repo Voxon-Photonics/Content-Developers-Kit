@@ -1,4 +1,3 @@
-// This source code is provided by the Voxon Developers Kit with an open-source license. You may use this code in your own projects with no restrictions.
 #define WINDOWS_IGNORE_PACKING_MISMATCH
 #if 0
 !if 1
@@ -44,7 +43,8 @@ poltex_t vt[POLTEX_MAX];
 int mesh[MESH_MAX];
 
 /*
-Have a master VT anad load it in
+A program to help understand how meshes and the draw mesh command works
+Have a master VT and load it in
 put a center point to make all the map square
 
 */
@@ -88,7 +88,7 @@ void newVert(point3d pos, int col, int noMesh) {
 		}
 
 		if (gNextShape % 4 == 0  && curs.mode == 1 && noMesh == 0) {
-			// make a square
+			// make a quad
 			vt[gVertNo - 4].u = 0; vt[gVertNo - 4].v = 0;           
 			vt[gVertNo - 3].u = 1; vt[gVertNo - 3].v = 0;
 			vt[gVertNo - 2].u = 1; vt[gVertNo - 2].v = 1;
@@ -100,16 +100,9 @@ void newVert(point3d pos, int col, int noMesh) {
 			newMesh(-1);
 			gNextShape = 0;
 
-
 		}
 
-	
 	}
-
-	
-  
-
-
 
 }
 
@@ -271,13 +264,11 @@ int WINAPI WinMain(HINSTANCE hinst, HINSTANCE hpinst, LPSTR cmdline, int ncmdsho
 			}
 			vt[curs.lineValue].z = curs.pos.z;
 		
-
 		}
 
 		if (in.bstat == 2 && in.obstat != 2) {
 
 			if (curs.lineState == 0) newVert(curs.pos,0xFFFFFF,0);
-		
 
 		}
 

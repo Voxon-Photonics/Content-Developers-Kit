@@ -1,3 +1,21 @@
+# Version 1.1.1.5 (2023-02-23)
+ 
+## Major Changes
+### Features
+* 2D / 3D toggle feature so you can hibernate the VX1
+* Support for a Helix (circle) display
+* New Example Scene, Showing 3D Models and VoxieText Script
+* Embedded Emulation rotational controls press '[' ']' + Right Shift || Right Ctrl to rotate emulation display
+
+
+### Bugs
+
+* Improved stability - Start / Stop in the Unity Editor shouldn't crash   
+Unity anymore (Crashes can still occur when using the inspector at times - working on this)
+
+* Postscript Build Process now creates a VX.bat and copies supporting DLLs again
+
+
 # Version 1.1.1.4 (2022-02-07)
 
 ## Major Changes

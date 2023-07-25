@@ -1,0 +1,513 @@
+{
+    "keyboard": {
+        "buckets": [
+            -1,
+            18,
+            -1,
+            7,
+            -1,
+            17,
+            25,
+            -1,
+            10,
+            22,
+            4,
+            9,
+            -1,
+            20,
+            2,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            15,
+            3,
+            23,
+            -1,
+            -1,
+            -1,
+            -1,
+            26,
+            1,
+            -1,
+            -1,
+            14,
+            8,
+            24
+        ],
+        "hashCodes": [
+            1916751281,
+            664832977,
+            1276278643,
+            109670392,
+            1543969273,
+            1367191786,
+            1189819442,
+            129721337,
+            1310036502,
+            270061605,
+            887131951,
+            635503392,
+            1770631151,
+            238608307,
+            1514610389,
+            539769306,
+            1292635699,
+            770650028,
+            2048286257,
+            735420560,
+            316855433,
+            267793820,
+            633867507,
+            1225379049,
+            2058798806,
+            1467693251,
+            504116224,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "next": [
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            -1,
+            6,
+            5,
+            -1,
+            -1,
+            -1,
+            -1,
+            12,
+            -1,
+            -1,
+            11,
+            19,
+            -1,
+            -1,
+            0,
+            16,
+            13,
+            21,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ],
+        "count": 27,
+        "version": 27,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
+            "SpaceBar",
+            "Quit",
+            "Left",
+            "Right",
+            "Up",
+            "Down",
+            "RotLeft",
+            "RotRight",
+            "Hide",
+            "Cam_Reset",
+            "Cam_Reset_Rot",
+            "Cam_Reset_Scale",
+            "Cam_Forward",
+            "Cam_Backward",
+            "Cam_Up",
+            "Cam_Down",
+            "Cam_Left",
+            "Cam_Right",
+            "Cam_ScaleUp",
+            "Cam_Rotation",
+            "Cam_Print",
+            "Cam_SpeedSlow",
+            "Cam_SpeedFast",
+            "Cam_Save",
+            "Cam_Load",
+            "Cam_Control",
+            "Cam_ScaleDown",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
+        "values": [
+            57,
+            1,
+            30,
+            32,
+            17,
+            31,
+            16,
+            18,
+            41,
+            53,
+            49,
+            50,
+            200,
+            208,
+            54,
+            157,
+            203,
+            205,
+            30,
+            45,
+            25,
+            29,
+            56,
+            31,
+            38,
+            56,
+            44,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+        ]
+    },
+    "mouse": {
+        "buckets": [
+            -1,
+            1,
+            -1
+        ],
+        "hashCodes": [
+            1276278643,
+            109670392,
+            0
+        ],
+        "next": [
+            -1,
+            0,
+            0
+        ],
+        "count": 2,
+        "version": 2,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
+            "Left",
+            "Right",
+            ""
+        ],
+        "values": [
+            1,
+            2,
+            0
+        ]
+    },
+    "spaceNav": {
+        "buckets": [
+            -1,
+            1,
+            0
+        ],
+        "hashCodes": [
+            1637139197,
+            790082812,
+            0
+        ],
+        "next": [
+            -1,
+            -1,
+            0
+        ],
+        "count": 2,
+        "version": 2,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
+            "LeftButton",
+            "RightButton",
+            ""
+        ],
+        "values": [
+            1,
+            2,
+            0
+        ]
+    },
+    "j1Buttons": {
+        "buckets": [
+            0,
+            -1,
+            -1
+        ],
+        "hashCodes": [
+            842948034,
+            0,
+            0
+        ],
+        "next": [
+            -1,
+            0,
+            0
+        ],
+        "count": 1,
+        "version": 1,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
+            "Jump",
+            "",
+            ""
+        ],
+        "values": [
+            8,
+            0,
+            0
+        ]
+    },
+    "j1Axis": {
+        "buckets": [
+            -1,
+            -1,
+            -1
+        ],
+        "hashCodes": [
+            0,
+            0,
+            0
+        ],
+        "next": [
+            0,
+            0,
+            0
+        ],
+        "count": 0,
+        "version": 0,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
+            "",
+            "",
+            ""
+        ],
+        "values": [
+            0,
+            0,
+            0
+        ]
+    },
+    "j2Buttons": {
+        "buckets": [
+            0,
+            -1,
+            -1
+        ],
+        "hashCodes": [
+            842948034,
+            0,
+            0
+        ],
+        "next": [
+            -1,
+            0,
+            0
+        ],
+        "count": 1,
+        "version": 1,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
+            "Jump",
+            "",
+            ""
+        ],
+        "values": [
+            8,
+            0,
+            0
+        ]
+    },
+    "j2Axis": {
+        "buckets": [
+            -1,
+            -1,
+            -1
+        ],
+        "hashCodes": [
+            0,
+            0,
+            0
+        ],
+        "next": [
+            0,
+            0,
+            0
+        ],
+        "count": 0,
+        "version": 0,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
+            "",
+            "",
+            ""
+        ],
+        "values": [
+            0,
+            0,
+            0
+        ]
+    },
+    "j3Buttons": {
+        "buckets": [
+            0,
+            -1,
+            -1
+        ],
+        "hashCodes": [
+            842948034,
+            0,
+            0
+        ],
+        "next": [
+            -1,
+            0,
+            0
+        ],
+        "count": 1,
+        "version": 1,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
+            "Jump",
+            "",
+            ""
+        ],
+        "values": [
+            8,
+            0,
+            0
+        ]
+    },
+    "j3Axis": {
+        "buckets": [
+            -1,
+            -1,
+            -1
+        ],
+        "hashCodes": [
+            0,
+            0,
+            0
+        ],
+        "next": [
+            0,
+            0,
+            0
+        ],
+        "count": 0,
+        "version": 0,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
+            "",
+            "",
+            ""
+        ],
+        "values": [
+            0,
+            0,
+            0
+        ]
+    },
+    "j4Buttons": {
+        "buckets": [
+            0,
+            -1,
+            -1
+        ],
+        "hashCodes": [
+            842948034,
+            0,
+            0
+        ],
+        "next": [
+            -1,
+            0,
+            0
+        ],
+        "count": 1,
+        "version": 1,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
+            "Jump",
+            "",
+            ""
+        ],
+        "values": [
+            8,
+            0,
+            0
+        ]
+    },
+    "j4Axis": {
+        "buckets": [
+            -1,
+            -1,
+            -1
+        ],
+        "hashCodes": [
+            0,
+            0,
+            0
+        ],
+        "next": [
+            0,
+            0,
+            0
+        ],
+        "count": 0,
+        "version": 0,
+        "freeList": -1,
+        "freeCount": 0,
+        "keys": [
+            "",
+            "",
+            ""
+        ],
+        "values": [
+            0,
+            0,
+            0
+        ]
+    }
+}

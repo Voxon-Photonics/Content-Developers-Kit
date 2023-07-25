@@ -1,0 +1,13 @@
+{
+    "filename": "_ModelSpawnerSettings.json",
+    "enableSounds": true,
+    "enableKeyboard": true,
+    "enableMouse": true,
+    "enableJoypad": true,
+    "enableSpaceMouse": true,
+    "showText": true,
+    "drawGuides": true,
+    "moveSpeed": 2.0,
+    "rotSpeed": 2.0,
+    "scaleSpeed": 2.0
+}
