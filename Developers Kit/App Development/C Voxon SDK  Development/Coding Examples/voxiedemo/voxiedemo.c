@@ -2997,10 +2997,12 @@ dofireworks:;
 				if (vw.nblades > 0)
 				{
 					i = (voxie_keystat(0x1e)!=0) - (voxie_keystat(0x10)!=0); //'A' - 'Q'
-					if (i)
+					j = (voxie_keystat(0x1f)==1) - (voxie_keystat(0x11)==1); //'S' - 'W' (jump 1 24-bit frame at a time)
+					if ((i) || ((j) && (vw.bitspervol > 0)))
 					{
 						if (!(voxie_keystat(0x2a)|voxie_keystat(0x36))) i *= 4;
-						i &= 1023;
+						if (j) i = j*(24<<10)/vw.bitspervol;
+
 						if (vw.hwdispnum < vw.dispnum) j = 1; else j = grabdispall;
 						vw.ianghak = ((((vw.ianghak >> (((vw.dispcur  )%3)*10)) + i  ) & 1023) << (((vw.dispcur+0)%3)*10))
 									  + ((((vw.ianghak >> (((vw.dispcur+1)%3)*10)) + i*j) & 1023) << (((vw.dispcur+1)%3)*10))
@@ -3027,23 +3029,11 @@ dofireworks:;
 				{
 					if ((!(obstatus&1)) && (!(ovxbut[0]&0xf000)))
 					{
-						if (vw.nblades <= 0) //obsolete? handles vw.flip
-						{
-							switch(vw.flip)
-							{
-								case 0: cornind = ((keystone.curx >= 0.f) ^ (keystone.cury >= 0.f))*1 + (keystone.cury >= 0.f)*2; break;
-								case 1: cornind = ((keystone.cury <  0.f) ^ (keystone.curx >= 0.f))*1 + (keystone.curx >= 0.f)*2; break;
-								case 2: cornind = ((keystone.curx <  0.f) ^ (keystone.cury <  0.f))*1 + (keystone.cury <  0.f)*2; break;
-								case 3: cornind = ((keystone.cury >= 0.f) ^ (keystone.curx <  0.f))*1 + (keystone.curx <  0.f)*2; break;
-							}
-							cornind += (keystone.curz >= 0.f)*4;
-						}
-						else
-						{
-							grabcornx = (int)(floor(keystone.curx/vw.aspx*2.f+.5));
-							grabcorny = (int)(floor(keystone.cury/vw.aspy*2.f+.5));
-							grabcornz = (int)(floor(keystone.curz/vw.aspz*2.f+.5));
-						}
+						grabcornx = (int)(floor(keystone.curx/vw.aspx*2.f+.5));
+						grabcorny = (int)(floor(keystone.cury/vw.aspy*2.f+.5));
+						grabcornz = (int)(floor(keystone.curz/vw.aspz*2.f+.5));
+						if (vw.flip&1) { i = grabcornx; grabcornx = -grabcorny; grabcorny = i; }
+						if (vw.flip&2) { grabcornx *= -1; grabcorny *= -1; }
 					}
 					gx = (fx*.0025f + vx[0].tx0*+.0000001f + nav[0].dx*dtim*.01f)*(1.f/16.f);
 					gy = (fy*.0025f + vx[0].ty0*-.0000001f + nav[0].dy*dtim*.01f)*(1.f/16.f);
@@ -3053,52 +3043,33 @@ dofireworks:;
 					if (voxie_keystat(0x38)|voxie_keystat(0xb8)|grabdispall) { i0 = 0; i1 = vw.dispnum; }
 					for(i=i0;i<i1;i++)
 					{
-						if (vw.nblades <= 0) //obsolete? handles vw.flip
+						for(j=8-1;j>=0;j--)
 						{
+							if ((((j&3) == 0) || ((j&3) == 3)) && (grabcornx > 0)) continue;
+							if ((((j&3) == 1) || ((j&3) == 2)) && (grabcornx < 0)) continue;
+							if ((((j&3) == 0) || ((j&3) == 1)) && (grabcorny > 0)) continue;
+							if ((((j&3) == 2) || ((j&3) == 3)) && (grabcorny < 0)) continue;
+							if (( j <  4                     ) && (grabcornz > 0)) continue;
+							if (( j >= 4                     ) && (grabcornz < 0)) continue;
+
 							float fx2, fy2;
-							fx2 = vw.disp[i].keyst[cornind].x; fy2 = vw.disp[i].keyst[cornind].y;
-							if (vw.nblades <= 0) fz = (float)((cornind>>2)*((vw.framepervol*24-1)>>1));
-												 else fz = (float)((cornind>=4)*2-1)*vw.aspz;
+							fx2 = vw.disp[i].keyst[j].x; fy2 = vw.disp[i].keyst[j].y;
+							if (vw.nblades <= 0) fz = (float)((j>>2)*((vw.framepervol*24-1)>>1));
+												 else fz = (float)((j>=4)*2-1)*vw.aspz;
 							voxie_project(i,-1,fx2   ,fy2   ,fz,&fx2,&fy2);
 							voxie_project(i,+1,fx2+gx,fy2+gy,fz,&fx2,&fy2);
-							vw.disp[i].keyst[cornind].x = fx2; vw.disp[i].keyst[cornind].y = fy2;
-						}
-						else
-						{
-							for(j=8-1;j>=0;j--)
-							{
-								if ((((j&3) == 0) || ((j&3) == 3)) && (grabcornx > 0)) continue;
-								if ((((j&3) == 1) || ((j&3) == 2)) && (grabcornx < 0)) continue;
-								if ((((j&3) == 0) || ((j&3) == 1)) && (grabcorny > 0)) continue;
-								if ((((j&3) == 2) || ((j&3) == 3)) && (grabcorny < 0)) continue;
-								if (( j <  4                     ) && (grabcornz > 0)) continue;
-								if (( j >= 4                     ) && (grabcornz < 0)) continue;
-
-								float fx2, fy2;
-								fx2 = vw.disp[i].keyst[j].x; fy2 = vw.disp[i].keyst[j].y;
-								if (vw.nblades <= 0) fz = (float)((j>>2)*((vw.framepervol*24-1)>>1));
-													 else fz = (float)((j>=4)*2-1)*vw.aspz;
-								voxie_project(i,-1,fx2   ,fy2   ,fz,&fx2,&fy2);
-								voxie_project(i,+1,fx2+gx,fy2+gy,fz,&fx2,&fy2);
-								vw.disp[i].keyst[j].x = fx2; vw.disp[i].keyst[j].y = fy2;
-							}
+							vw.disp[i].keyst[j].x = fx2; vw.disp[i].keyst[j].y = fy2;
 						}
 					}
 					voxie_init(&vw);
 
 					igind = cornind;
-					if (vw.nblades <= 0)
-					{
-						fp.x = ((float)(keystone.curx >= 0)*2.f-1.f)*vw.aspx;
-						fp.y = ((float)(keystone.cury >= 0)*2.f-1.f)*vw.aspy;
-						fp.z = ((float)(keystone.curz >= 0)*2.f-1.f)*vw.aspz;
-					}
-					else
-					{
-						fp.x = (float)min(max(grabcornx,-1),1);
-						fp.y = (float)min(max(grabcorny,-1),1);
-						fp.z = (float)min(max(grabcornz,-1),1)*vw.aspz;
-					}
+
+					fp.x = (float)min(max(grabcornx,-1),1);
+					fp.y = (float)min(max(grabcorny,-1),1);
+					fp.z = (float)min(max(grabcornz,-1),1)*vw.aspz;
+					if (vw.flip&1) { f = fp.x; fp.x = fp.y; fp.y = -f; }
+					if (vw.flip&2) { fp.x *= -1; fp.y *= -1; }
 				}
 
 				f = .03f; //Draw cursor
@@ -3233,7 +3204,7 @@ dofireworks:;
 					//wavy texture-mapped flag
 				poltex_t vt[4]; int mesh[8];
 				#define XN 10
-				#define YN 8
+				#define YN 10
 				voxie_setview(&vf,-vw.aspx,-vw.aspy,-vw.aspz,+vw.aspx,+vw.aspy,+vw.aspz);
 				mesh[0] = 0; mesh[1] = 1; mesh[2] = 2; mesh[3] = -1; //-1 = end of polygonal facet
 				mesh[4] = 0; mesh[5] = 2; mesh[6] = 3; mesh[7] = -1;
@@ -3242,10 +3213,10 @@ dofireworks:;
 					{
 						for(i=4-1;i>=0;i--)
 						{
-							vt[i].u = (x+((i==1)||(i==2)))*(1.f/XN);
-							vt[i].v = (y+((i==2)||(i==3)))*(1.f/YN);
-							vt[i].x = vt[i].u*2.f-1.f;
-							vt[i].y = vt[i].v*1.f-.5f;
+							vt[i].u = (x+((i==2)||(i==3)))*(1.f/XN);
+							vt[i].v = (y+((i==3)||(i==0)))*(1.f/YN);
+							vt[i].x = vt[i].u*2.f-1.0f;
+							vt[i].y = vt[i].v*1.f-0.5f;
 							vt[i].z = cos(vt[i].u*5.f + vt[i].v*5.f + tim*4.f)*vw.aspz*.95f;
 							vt[i].col = 0xffffff;
 						}

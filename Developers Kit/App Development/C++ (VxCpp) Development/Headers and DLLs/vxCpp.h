@@ -180,9 +180,9 @@ public:
 	// Core Functions 
 
 
-		//! A 'breath' is the 'update loop' for a VX application. A single breath is a single volume. breath() passes in the default voxie_window and input
+	//! A 'breath' is the 'update loop' for a VX application. A single breath is a single volume. breath() passes in the default voxie_window and input struct
 	virtual int breath() = 0;
-	//! Breath() function which can be used with customised input struct.   
+	//! Breath() function which can be used with custom input struct.   
 	virtual int breath(voxie_inputs_t* input) = 0;
 	//! Signifies the start of the volumetric frame. Call this once before all draw calls. Prepares the internal vf voxie_frame_t() voxel buffer to receive volumetric content.  
 	virtual void startFrame() = 0;
@@ -202,7 +202,7 @@ public:
 	// Settings
 
 
-		//! Toggles a white border around the perimeter of the volumetric display. Set to false by default.
+	//! Toggles a colored border around the perimeter of the volumetric display. Set to false by default. default color is white.
 	virtual void setBorder(bool option, int color = 0xffffff) = 0;
 	//! Toggles the use of the 'esc' key to escape a Voxon program (by calling VoxieBox::quitLoop()). Set to true by default.
 	virtual void setEnableExitOnEsc(bool option) = 0;

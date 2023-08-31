@@ -1,11 +1,70 @@
 # Voxon Runtime Readme
-24/11/2022 - Matthew Vecchio for Voxon Photonics
+28/07/2023 - Matthew Vecchio for Voxon Photonics
 
-By default the Voxon Runtime files are located in C:\Voxon\System\Runtime
+By default, the Voxon Runtime files are located in C:\Voxon\System\Runtime
 
 These runtime files make our volumetric technology possible. When used with Voxon Hardware the volumetric display is created. When ran on a standard Windows computer they launch a simulation. 
-  
+
+
+
+## Voxiebox.DLL update history
+
+Here is a list of major updates included in each public version of the VoxieBox.dll
+
+**FEB 17 2021 Runtime**
  
+ * DICOS (security version of DICOM data) supported.
+ * Set custom capture folder via voxiebox.ini.
+ * Vertex colour interpolation for surfaces for all render modes.
+ * Global normal shading added.
+
+**MAY 21st 2021 Runtime**
+
+* JoyGetPosEx (useJoy=0) now auto detects controllers without pioir movement.
+* Frame Per Vol option removed from Advanced Menu.
+* VCB recording added.
+* Lockscreen password feature added.
+* .Wav files with advanced waveHeader now supported.
+* Temperature throttling enabled.
+* Voxie_debug_drawtile() function added.
+
+
+**SEPTEMBER 27th 2021 Runtime**
+
+* voxie_playsound_seek() function added.
+* .KVS file format now supported.
+  
+  
+**FEBRUARY 8th 2022 Runtime**
+
+* voxie_printalpha_ext() function added.
+* sndfx_nspk setting added for stereo volumetric displays.
+  
+  
+**NOVEMBER 16th 2022 Runtime**
+
+* Individual dotsize adjustment added
+* VCB playback shaper and clearer
+* Audio playback now supports .Wav 24bit format 
+* Global Normal Shading now uses a logarithmic scale instead of linear
+* Exclusive mouse moved from Voxiebox.ini to Voxiebox_menu0.ini
+* Autosleep function added.
+* OBJS with no materials assigned show as pure white instead of blue-ish
+
+**DECEMBER 8th 2022 Runtime**
+
+* Added ability to remove shutdown button from file menu. Put "vw.hacks |= (1<<9);" between voxie_load()&voxie_init() to make shutdown button not appear. 
+
+**July 28th 2023 Runtime**
+
+* Moving SpaceMouse now wakes from hibernation
+* DLL checks for previous running VoxieBox process(es) and terminates it/them
+* BigPak (VoxieBox UDP networking protocol) has new functions for Blender Plugin, projector ID, voxie_debug_print6x8() and playing sounds.
+* Added Hacks to disable shutdown button 
+* Removed debug code from voxieHeightMap() function
+* Emulation modes renamed to VX1 and VXR 
+* Fix Page Flipping Bug in 3 Projector Mode
+
 
 
 ## Voxon Runtime File List:
@@ -53,7 +112,7 @@ useemulation=0;
 //	0 = Launch on Voxon Hardware (if found)
 //	1 = Launch in simulator (Perspective View)
 //  2 = Launch in simulator (Solid Perspective)
-//  3 = Launch in simulator (Othographic View)
+//  3 = Launch in simulator (Orthographic View)
 
 
 
@@ -82,7 +141,7 @@ showadvancedmenu=0;
 
 logfile=voxiebox.log 
 
-// the name of the log file to write everytime the Voxiebox.dll is accessed. note there is no ';' at end of the value. Output is in the same directory as where the voxiebox.dll resides, unless you hardcode a path.
+// the name of the log file to write every time the Voxiebox.dll is accessed. note there is no ';' at end of the value. Output is in the same directory as where the voxiebox.dll resides, unless you hardcode a path.
 
 
  
@@ -93,13 +152,14 @@ loginterval=-1;
 
 logusecsv=0;          	
 
-// If enabled the voxiebox.log file is separated by comma separted value (csv) format.
+// If enabled the voxiebox.log file is separated by comma separated value (csv) format.
+
 
 
 
 voxie_vol_limit=70;    
 
-// **HW Only** the maximum value the motor coils can extrude. **WARNING** adjusting this value can damange your  system. Value is usually between 60...85 value is different with each device depending on the resonator and the effiecentcy of the coils. When this value is set correctly the volumetric display should reach 8cm volume WITH the dome on when the motor is set to '100'. (The motor tab in the VX menu)
+// **HW Only** the maximum value the motor coils can extrude. **WARNING** adjusting this value can damage your  system. Value is usually between 60...85 value is different with each device depending on the resonator and the efficiency of the coils. When this value is set correctly the volumetric display should reach 8cm volume WITH the dome on when the motor is set to '100'. (The motor tab in the VX menu)
 
 
 
@@ -177,9 +237,9 @@ openmenubyslashonly=0;
 
 menu_keyscancode=0x2b;  
 
-// Choose an alternative button to bring in the voxieMenu. Keyboard scancode uses same syntax as 
+// Choose an alternative button to bring in the voxieMenu. Keyboard scan code uses same syntax as 
 // Voxon development use the 'keyview.exe' utility found in C:\Voxon\System\Utilities to see values. 
-// some recomended values:
+// some recommended values:
 // 0x2b = Backlash, 0x0f = Tab, 0x0e = Backspace, 0x3f = F5, 0x1c = Enter.
 
 
@@ -193,7 +253,7 @@ excl_bitspersamp=24;
 // This results in a faster and more stable connection but other background apps don't have access // to audio.
 //
 // if exclusive audio is enabled the sample rate and bit rate must be set for the sound to be 
-// audiable.
+// audible.
 /
 // excl_audio=1 = exclusive (faster & more stable), 
 // excl_audio=0 = shared (if audio access to other programs is required)
@@ -217,7 +277,7 @@ lock_touch_message=Enter passkey
 // Lock touch allows the touch screen to be locked with a passcode.
 // lock_touch_pw=1234 password for the touch lock screen must be a numeric code. **NOTE** This 
 // setting does not end with a semicolon ;
-// lock_touch_message=Enter passkey = Set a message to prompt user to enter passwword. **NOTE** This // setting does not end with a semicolon ; 
+// lock_touch_message=Enter passkey = Set a message to prompt user to enter password. **NOTE** This // setting does not end with a semicolon ; 
 //
 // Some extra fun settings with the lock_touch, there are two hidden options if a user gets the 
 // passcode wrong you can insult them and make them wait! Play a trick on somebody!  
@@ -236,8 +296,24 @@ flipmode=2;
 // xdim=912; 	= Set the x resolution for the volumetric display, default 912.
 // ydim=1140;	= Set the y resolution for the volumetric display, default 1140.
 // projrate=120; = Set projector refresh rate in hertz. 120 default.
-// flipmode=2;  = DirectX graphical setting this option switches the DXGI_SWAP_EFFECT_DISCARD flag. 
+// flipmode=2;  = DirectX graphical setting this option switches the DXGI_SWAP_EFFECT_DISCARD flag: 
 // 0=DXGI_SWAP_EFFECT_DISCARD, 1/2/3=DXGI_SWAP_EFFECT_SEQUENTIAL using 1/2/3 backbuffers
+
+
+
+#### Graphic Card / Direct X settings :
+
+	bufcount=3; 
+
+	// **HW Only** DirectX buffer settings for graphical calls. 0 = always bad don't use. 1 = may work w/flipmode 0  2= may work with flipmode 2, 3 = usually safe with all flipmodes (recommended)  
+
+	dxgibpp=24; 
+
+	// **HW Only** Direct X bits to use for color data : 24 = default, 30 = if 24 isn't working with the display driver use to fix 'bigramp' issues.
+
+	flipord=-1; 
+
+	// **HW Only** For multi-display sync: -1:cycle order each frame (recommended), 0-5:flip in specific order. Default is -1;
 
 
 
@@ -273,11 +349,11 @@ hdmisawphak=?;
 // rgbswapingame=?; = (0...5) Swaps the order of each group of 8 bits in the 24-bit color that is
 // interpreted by the LC4500 firmware
 // 
-// rgbswaponexit=?; = (0...5) Swaps OS's Desktop colours being wrong on the proj display upon exit
+// rgbswaponexit=?; = (0...5) Swaps OS's Desktop colours being wrong on the projected display upon exit
 // of a VX app this should only exist if there is some hardware issue
 //
-// usbswaphak=?;  = (0...5) swaps USB projector dectection order if using multiple projectors
-// hdmisawphak=?; = (0...5) swaps HDMI projector dectection order if using multiple projectors
+// usbswaphak=?;  = (0...5) swaps USB projector detection order if using multiple projectors
+// hdmisawphak=?; = (0...5) swaps HDMI projector detection order if using multiple projectors
 
 
 
@@ -311,7 +387,7 @@ user_col1g=0x00ff00;
 user_col2b=0x0000ff; 
 
 
-// Defining a user colour mode for a multiprojector display. See a few examples below:
+// Defining a user colour mode for a multi-projector display. See a few examples below:
 
 	user_dispnum=3; user_col0r=0xff0000; user_col1g=0x00ff00; user_col2b=0x0000ff; //R,G,B :)
 	user_dispnum=3; user_col0b=0x0000ff; user_col1r=0xff0000; user_col2g=0x00ff00; //R,G,B wrong!
@@ -363,7 +439,7 @@ menu_on_voxie=0;
 The voxie_menu_0.ini file is a human readable / editable configuration file. It contains most 
 of the user settings. An interesting setting to note is that the keystone configuration is stored in the voxie_menu_0.ini. So, if the voxiebox_menu_0.ini is absent from the runtime, nothing will display on the hardware when a VX app is launched. 
 
-Most of the voxieBox_menu_0.ini settings can be set using the various menu tabs althought looking at these values can provide some insights on how your system is working.
+Most of the voxieBox_menu_0.ini settings can be set using the various menu tabs although looking at these values can provide some insights on how your system is working.
 
 When ‘Save Settings’ is pressed from the ‘File’ tab in voxie menu a new voxie_menu_0.ini is written with the new settings. It is written where voxiebox.dll resides. 
 
@@ -378,7 +454,7 @@ ilacemode=0;
 
 // 0 = monochrome or RBG interlaced 6 = two color mode
 
-// sensemasks and outcol determines in two colormode what are colours interpreted and then what colour they are output as the snsemasks work as filters and anaylise the image data  in order.. sensemask0=0xff0000 would take all the RED channel colours and outcol0=0x0000ff would render all the sensemask0 data as BLUE. sensemask1=0xffff00 would take all the RED and GREEN color data and output it as outcol1's value. S
+// sensemasks and outcol determines in two colormode what are colours interpreted and then what colour they are output as the snsemasks work as filters and analyse the image data  in order.. sensemask0=0xff0000 would take all the RED channel colours and outcol0=0x0000ff would render all the sensemask0 data as BLUE. sensemask1=0xffff00 would take all the RED and GREEN color data and output it as outcol1's value. S
 
 sensemask0=0xff0000; outcol0=0xff0000; 
 sensemask1=0x00ff00; outcol1=0x00ff00;
@@ -485,7 +561,7 @@ gamma=2;
 
 // 0.0 - 4.0 the gamma level
 // higher value = richer color but less brightness. 
-// lower  balue =  less saturated but more brightness.
+// lower value =  less saturated but more brightness.
 
   
   
@@ -501,25 +577,25 @@ framepervol=8;
 
 // How many images are used for a volumetric sweep. This setting is for advanced users only. 
 // 8 would be for a standard VX1 operating at 15 Hertz.
-// Unless you are expertmining with custom displays don't play with this setting. 
+// Unless you are experimenting with custom displays don't play with this setting. 
 
 
 
 hwsync_frame0=1; 
 
-// **HW ONLY** 1 is default value can be between 0 - 20, this number adjusts the sync point for the //image. Used to 'tune' in the volumetric image. It can be asjusted within the 'Motor' tab if  	 'showadvancedmenu=1' is set in voxiebox.ini there will be a course values.
+// **HW ONLY** 1 is default value can be between 0 - 20, this number adjusts the sync point for the //image. Used to 'tune' in the volumetric image. It can be adjusted within the 'Motor' tab if  	 'showadvancedmenu=1' is set in voxiebox.ini there will be a course values.
   
   
   
 hwsync_phase=8.000000; 
 
-// **HW ONLY** 1 is default value can be between 0 - 20, this number adjusts the sync point for the //image. Used to 'tune' in the volumetric image. It can be asjusted within the 'Motor' tab if  	 'showadvancedmenu=1' is set in voxiebox.ini there will be a fine values.
+// **HW ONLY** 1 is default value can be between 0 - 20, this number adjusts the sync point for the //image. Used to 'tune' in the volumetric image. It can be adjusted within the 'Motor' tab if  	 'showadvancedmenu=1' is set in voxiebox.ini there will be a fine values.
 
 
 
 hwsync_levthresh=384;  
 
-// **HW ONLY** For a VX1 the infared sensor threshold. the lower the value the more sensitive. You can see the sensor threshold if you run the 'host.exe' application
+// **HW ONLY** For a VX1 the infrared sensor threshold. the lower the value the more sensitive. You can see the sensor threshold if you run the 'host.exe' application
 
 
 
@@ -528,7 +604,7 @@ hwsync_amp1=1.000000; hwsync_pha1=0;
 hwsync_amp2=1.000000; hwsync_pha2=0; 
 hwsync_amp3=1.000000; hwsync_pha3=0; 
 
-// HW only. These setting adjusts the coil's strength and phase invidually. Easier to be asjusted 
+// HW only. These setting adjusts the coil's strength and phase individually. Easier to be adjusted 
 // within the VX menu (have 'showadvnacedmenu=1;' in voxiebox.ini)
 
 
@@ -565,7 +641,7 @@ aspz=0.45;
 aspr=1.41; 
 asprmin=0.14; 
 
-//aspect ratios settings, x,y,z. aspr and asprmin are used for VXR (spinner) diplays where r is the radius if the display, asprmin is the inner radius to hide. 
+//aspect ratios settings, x,y,z. aspr and asprmin are used for VXR (spinner) displays where r is the radius if the display, asprmin is the inner radius to hide. 
 
 
 
@@ -577,7 +653,7 @@ drawstroke=3;
 
 dither=3; 
 
-// dither settings. 0 no dither, 1 height dither only, 2 time dither only, 3 height and time dither (recomended)
+// dither settings. 0 no dither, 1 height dither only, 2 time dither only, 3 height and time dither (recommended)
 
 dotsize=0x10101;
 
@@ -604,9 +680,9 @@ normhang=0;
 normvang=0;
 
 
-// norm values are to do with global normal shading (drawing shadows on 3D imagery) these values are  // the settings to apply on launch. Play with 'global normal shading' settings localed under the 
+// norm values are to do with global normal shading (drawing shadows on 3D imagery) these values are  // the settings to apply on launch. Play with 'global normal shading' settings located under the 
 // 'Misc'  VoxieMenu tab
-// Note from Ken on how its cacluated :
+// Note from Ken on how its calculated :
 // "Currently, I use a single int32 (what used to be reserved0) in voxie_wind_t to store the normal // vector amplitude and direction. It is formatted as:
 // vw.normhax = amp/*0..255*/ + ((hang/*-180..180*/&4095)<<8} + (vang/*-90..90*/<<20);
 
@@ -614,7 +690,7 @@ normvang=0;
 autosleep=0; 
 autosleepsec=300;
 
-// **HW ONLY** auto hiberanation settings. If autosleep is set to 1. A
+// **HW ONLY** auto hibernation settings. If autosleep is set to 1. A
 
 
 flip=0;
@@ -689,48 +765,3 @@ New versions of the Voxon Runtime (and Voxon Developers Kit) can be obtained by 
 our website www.voxon.co
 
 
-### Voxiebox.DLL update history
-
-Here is a list of major updates included in each public version of the VoxieBox.dll
-
-
-**FEB 17 2021 Runtime**
- 
- * DICOS (security version of DICOM data) supported.
- * Set custom capture folder via voxiebox.ini.
- * Vertex colour interpolation for surfaces for all render modes.
- * Global normal shading added.
-
-
-**MAY 21st 2021 Runtime**
-
-* JoyGetPosEx (useJoy=0) now auto detects controllers without pioir movement.
-* Frame Per Vol option removed from Advanced Menu.
-* VCB recording added.
-* Lockscreen password feature added.
-* .Wav files with advanced waveHeader now supported.
-* Temperature throttling enabled.
-* Voxie_debug_drawtile() function added.
-
-
-**SEPTEMBER 27th 2021 Runtime**
-
-* voxie_playsound_seek() function added.
-* .KVS file format now supported.
-  
-  
-**FEBRUARY 8th 2022 Runtime**
-
-* voxie_printalpha_ext() function added.
-* sndfx_nspk setting added for stereo volumetric displays.
-  
-  
-**NOVEMBER 16th 2022 Runtime**
-
-* Individual dotsize adjustment added
-* VCB playback shaper and clearer
-* Audio playback now supports .Wav 24bit format 
-* Global Normal Shading now uses a logarithmic scale instead of linear
-* Exclusive mouse moved from Voxiebox.ini to Voxiebox_menu0.ini
-* Autosleep function added.
-* OBJS with no materials assigned show as pure white instead of blue-ish

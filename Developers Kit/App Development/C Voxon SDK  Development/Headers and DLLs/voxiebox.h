@@ -179,12 +179,15 @@ EXTERN void BEFUN voxie_project      AFFUN (int disp, int dir, float x, float y,
 #define FILLMODE_SOL  3
 typedef struct { float x, y, z; int p2; } pol_t;
 typedef struct { float x, y, z, u, v; int col; } poltex_t;
+typedef struct { float u, v; int col; } uvcol_t;
+typedef struct { int xyzi, uvci; } inds_t; //if (xyzi&0x80000000) start new loop
 typedef struct { float x0, y0, z0, sc, x1, y1, z1, dum; } extents_t;
 EXTERN void BEFUN voxie_drawvox     AFFUN (voxie_frame_t *vf, float fx, float fy, float fz, int col);
 EXTERN void BEFUN voxie_drawbox     AFFUN (voxie_frame_t *vf, float x0, float y0, float z0, float x1, float y1, float z1, int fillmode, int col);
 EXTERN void BEFUN voxie_drawlin     AFFUN (voxie_frame_t *vf, float x0, float y0, float z0, float x1, float y1, float z1, int col);
 EXTERN void BEFUN voxie_drawpol     AFFUN (voxie_frame_t *vf, pol_t *pt, int n, int col);
 EXTERN void BEFUN voxie_drawmeshtex AFFUN (voxie_frame_t *vf, const char *fnam, const poltex_t *vt, int vtn, const int *mesh, int meshn, int flags, int col);
+EXTERN void BEFUN voxie_drawmeshtex_ext AFFUN (voxie_frame_t *vf, const char *texnam, const point3d *xyz, int xyzn, const uvcol_t *uvc, int uvcn, const inds_t *inds, int ninds, int flags, int col);
 EXTERN void BEFUN voxie_drawsph     AFFUN (voxie_frame_t *vf, float fx, float fy, float fz, float rad, int issol, int col);
 EXTERN void BEFUN voxie_drawcone    AFFUN (voxie_frame_t *vf, float x0, float y0, float z0, float r0, float x1, float y1, float z1, float r1, int fillmode, int col);
 EXTERN int  BEFUN voxie_drawspr_getextents AFFUN (const char *fnam, extents_t *zo, int flags);
@@ -313,6 +316,7 @@ int voxie_load (voxie_wind_t *vw)
 	voxie_drawlin      = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,float,float,int))GetProcAddress(hvoxie,"voxie_drawlin");
 	voxie_drawpol      = (  void (__cdecl *)(voxie_frame_t*,pol_t*,int,int))GetProcAddress(hvoxie,"voxie_drawpol");
 	voxie_drawmeshtex  = (  void (__cdecl *)(voxie_frame_t*,const char*,const poltex_t*,int,const int*,int,int,int))GetProcAddress(hvoxie,"voxie_drawmeshtex");
+	voxie_drawmeshtex_ext=( void (__cdecl *)(voxie_frame_t*,const char*,const point3d*,int,const uvcol_t *,int,const inds_t*,int,int,int))GetProcAddress(hvoxie,"voxie_drawmeshtex_ext");
 	voxie_drawsph      = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,int,int))GetProcAddress(hvoxie,"voxie_drawsph");
 	voxie_drawcone     = (  void (__cdecl *)(voxie_frame_t*,float,float,float,float,float,float,float,float,int,int))GetProcAddress(hvoxie,"voxie_drawcone");
 	voxie_drawspr_getextents = (int (__cdecl *)(const char*,extents_t*,int))GetProcAddress(hvoxie,"voxie_drawspr_getextents");

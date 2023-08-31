@@ -1,1 +1,0 @@
-ModelViewer.exe -batchmode
