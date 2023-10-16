@@ -2260,7 +2260,6 @@ int main (int argc, char **argv)
 
 	calcluts();
 
-	if ((vw.nblades > 0) && (vw.aspx == vw.aspy)) vw.clipshape = 1;
 	voxie_init(&vw); //Start video and audio.
 
 	while (!voxie_breath(&in))
@@ -3012,6 +3011,13 @@ dofireworks:;
 					}
 				}
 
+					//Quantize to one of 27 cases (like 3x3 Rubik's cube: corner/edge/center)
+				x = min(max((int)(floor(keystone.curx/vw.aspx*2.f+.5)),-1),1);
+				y = min(max((int)(floor(keystone.cury/vw.aspy*2.f+.5)),-1),1);
+				z = min(max((int)(floor(keystone.curz/vw.aspz*2.f+.5)),-1),1);
+				if (vw.flip&1) { i = x; x = -y; y = i; }
+				if (vw.flip&2) { x *= -1; y *= -1; }
+
 					//Projection compensation GUI
 				if ((!(bstatus&1)) && (!(vx[0].but&0xf000)) && (!(nav[0].but&1)))
 				{
@@ -3024,17 +3030,18 @@ dofireworks:;
 					keystone.curz = min(max(keystone.curz,-vw.aspz),vw.aspz);
 
 					fp.x = keystone.curx; fp.y = keystone.cury; fp.z = keystone.curz;
+
+						//Show preview of which of 27 cases (corner/edge/center) will be selected
+					for(f=fmod(tim*0.5,1.0/16.0);f<=1;f+=1.0/16.0)
+					{
+						voxie_drawsph(&vf,fp.x + ((float)x*vw.aspx - fp.x)*f,
+												fp.y + ((float)y*vw.aspy - fp.y)*f,
+												fp.z + ((float)z*vw.aspz - fp.z)*f,.0025f,0,0xffffff);
+					}
 				}
 				else
 				{
-					if ((!(obstatus&1)) && (!(ovxbut[0]&0xf000)))
-					{
-						grabcornx = (int)(floor(keystone.curx/vw.aspx*2.f+.5));
-						grabcorny = (int)(floor(keystone.cury/vw.aspy*2.f+.5));
-						grabcornz = (int)(floor(keystone.curz/vw.aspz*2.f+.5));
-						if (vw.flip&1) { i = grabcornx; grabcornx = -grabcorny; grabcorny = i; }
-						if (vw.flip&2) { grabcornx *= -1; grabcorny *= -1; }
-					}
+					if ((!(obstatus&1)) && (!(ovxbut[0]&0xf000))) { grabcornx = x; grabcorny = y; grabcornz = z; }
 					gx = (fx*.0025f + vx[0].tx0*+.0000001f + nav[0].dx*dtim*.01f)*(1.f/16.f);
 					gy = (fy*.0025f + vx[0].ty0*-.0000001f + nav[0].dy*dtim*.01f)*(1.f/16.f);
 
@@ -3049,8 +3056,8 @@ dofireworks:;
 							if ((((j&3) == 1) || ((j&3) == 2)) && (grabcornx < 0)) continue;
 							if ((((j&3) == 0) || ((j&3) == 1)) && (grabcorny > 0)) continue;
 							if ((((j&3) == 2) || ((j&3) == 3)) && (grabcorny < 0)) continue;
-							if (( j <  4                     ) && (grabcornz > 0)) continue;
-							if (( j >= 4                     ) && (grabcornz < 0)) continue;
+							if (((j <  4) == (vw.flip < 4)) && (grabcornz > 0)) continue;
+							if (((j >= 4) == (vw.flip < 4)) && (grabcornz < 0)) continue;
 
 							float fx2, fy2;
 							fx2 = vw.disp[i].keyst[j].x; fy2 = vw.disp[i].keyst[j].y;
@@ -3065,11 +3072,9 @@ dofireworks:;
 
 					igind = cornind;
 
-					fp.x = (float)min(max(grabcornx,-1),1);
-					fp.y = (float)min(max(grabcorny,-1),1);
-					fp.z = (float)min(max(grabcornz,-1),1)*vw.aspz;
-					if (vw.flip&1) { f = fp.x; fp.x = fp.y; fp.y = -f; }
-					if (vw.flip&2) { fp.x *= -1; fp.y *= -1; }
+					fp.x = (float)x*vw.aspx;
+					fp.y = (float)y*vw.aspy;
+					fp.z = (float)z*vw.aspz;
 				}
 
 				f = .03f; //Draw cursor
@@ -3095,7 +3100,6 @@ dofireworks:;
 
 					//draw wireframe box
 				voxie_setview(&vf,-vw.aspx,-vw.aspy,-vw.aspz,+vw.aspx,+vw.aspy,+vw.aspz);
-				vw.clipshape = ((vw.nblades > 0) && (vw.aspx == vw.aspy));
 				if (vw.clipshape) voxie_drawbox(&vf,-vw.aspx+1e-3,-vw.aspy+1e-3,-vw.aspz,+vw.aspx-1e-3,+vw.aspy-1e-3,+vw.aspz,1,0xffffff);
 
 				for(x=-3;x<=3;x+=2)
@@ -3202,6 +3206,20 @@ dofireworks:;
 			case RENDMODE_WAVYPLANE:
 				{
 					//wavy texture-mapped flag
+				typedef struct { const char *filnam; int rot90; } flagfil_t;
+				static const flagfil_t flagfil[] =
+				{
+					"usflag.png",           0,
+					"auflag.png",           0,
+					"earth1k.jpg",          0,
+					"voxon.png",            1,
+					"voxonlogo2_small.png", 0,
+				};
+				static int flagind = 0;
+
+				if (voxie_keystat(0xc9) == 1) { flagind--; if (flagind < 0) flagind = sizeof(flagfil)/sizeof(flagfil[0])-1; } //PGUP
+				if (voxie_keystat(0xd1) == 1) { flagind++; if (flagind >= sizeof(flagfil)/sizeof(flagfil[0])) flagind = 0; } //PGDN
+
 				poltex_t vt[4]; int mesh[8];
 				#define XN 10
 				#define YN 10
@@ -3213,14 +3231,15 @@ dofireworks:;
 					{
 						for(i=4-1;i>=0;i--)
 						{
-							vt[i].u = (x+((i==2)||(i==3)))*(1.f/XN);
-							vt[i].v = (y+((i==3)||(i==0)))*(1.f/YN);
+							vt[i].u = (x+(((i  )&2)>>1))*(1.f/XN);
+							vt[i].v = (y+(((i-1)&2)>>1))*(1.f/YN);
 							vt[i].x = vt[i].u*2.f-1.0f;
 							vt[i].y = vt[i].v*1.f-0.5f;
+							if (flagfil[flagind].rot90) { f = vt[i].u; vt[i].u = -vt[i].v; vt[i].v = f; }
 							vt[i].z = cos(vt[i].u*5.f + vt[i].v*5.f + tim*4.f)*vw.aspz*.95f;
 							vt[i].col = 0xffffff;
 						}
-						voxie_drawmeshtex(&vf,"usflag.png",vt,4,mesh,8,2,0x404040);
+						voxie_drawmeshtex(&vf,flagfil[flagind].filnam,vt,4,mesh,8,2,0x404040);
 					}
 				}
 				break;
@@ -3359,8 +3378,6 @@ dofireworks:;
 			case RENDMODE_WAVYPLANE:
 				{
 				static float stupiang = 0.f, stupiz = 0.f;
-
-				vw.clipshape = 1;
 
 				voxie_setview(&vf,-vw.aspx,-vw.aspy,-vw.aspz,+vw.aspx,+vw.aspy,+vw.aspz);
 

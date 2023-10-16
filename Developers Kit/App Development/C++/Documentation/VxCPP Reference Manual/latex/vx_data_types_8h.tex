@@ -1,0 +1,285 @@
+\hypertarget{vx_data_types_8h}{}\doxysection{vx\+Data\+Types.\+h File Reference}
+\label{vx_data_types_8h}\index{vxDataTypes.h@{vxDataTypes.h}}
+
+
+VX++ data types header contains definitions of all Voxon related structs and types.  
+
+
+{\ttfamily \#include $<$windows.\+h$>$}\newline
+{\ttfamily \#include $<$memory$>$}\newline
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structpoint2d}{point2d}}
+\begin{DoxyCompactList}\small\item\em 2 floats (x \& y) usually to describe a point in 2D \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structpoint3d}{point3d}}
+\begin{DoxyCompactList}\small\item\em 3 floats (x, y \& z) usually to describe a point in 3D \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structpol__t}{pol\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{structpoint3d}{point3d}} with index to next point in loop (starting at 0). Similar to \mbox{\hyperlink{structpoltex__t}{poltex\+\_\+t}} but with no texture data. Used by \mbox{\hyperlink{class_voxie_box_a39520956d73a5c0632bc46ae4d590b18}{Voxie\+Box\+::draw\+Poly()}} \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structpoltex__t}{poltex\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em 3D point with texture coordinate and color (ARGB32). Used by \mbox{\hyperlink{class_voxie_box_aa4567dede4c00b5b0dd88350041c7551}{Voxie\+Box\+::draw\+Mesh()}} \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structuvcol__t}{uvcol\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em struct to manage U V colors for Voxie\+Vox\+::draw\+Mesh\+Ext() function \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structinds__t}{inds\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em struct to manage indices for \mbox{\hyperlink{class_voxie_box_a7e0a11d7187557bc421a76c6619bcd76}{Voxie\+Box\+::draw\+Mesh\+Ext()}} function XYZ index and UV + C (color) index ! Important ! when defining a new polygon loop / face use the .xyzi + (1$<$$<$31); to indicate a new face \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structextents__t}{extents\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Extents a datatype to hold size extent of a 3D model. (the range a model extends to) \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structtiletype}{tiletype}}
+\begin{DoxyCompactList}\small\item\em 2D array of pixels can be used with \mbox{\hyperlink{class_voxie_box_aa4567dede4c00b5b0dd88350041c7551}{Voxie\+Box\+::draw\+Mesh}}, \mbox{\hyperlink{class_voxie_box_a2364111ffd69401b54067d8172165ed5}{Voxie\+Box\+::draw\+Height\+Map}} and the 2D display (via \mbox{\hyperlink{structvoxie__frame__t}{voxie\+\_\+frame\+\_\+t}}) \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structvoxie__disp__t}{voxie\+\_\+disp\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Voxon Display Struct -\/ Configuration for a display suitable to render a volumetric image (usually projector) \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structvoxie__wind__t}{voxie\+\_\+wind\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Voxie Window Struct -\/ Configuration for the Voxon Window. This struct manages all the settings to do with the volume. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structvoxie__frame__t}{voxie\+\_\+frame\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Struct which holds all the frame data (frame is a 2D slice of the volumetric image) which gets loaded unto the projector. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structvoxie__input__t}{voxie\+\_\+input\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Struct to manage mouse inputs. Mouse state is updated when \mbox{\hyperlink{class_voxie_box_a0cd2ee2048f4b560910621c693709270}{Voxie\+Box\+::breath()}} is called. ~\newline
+ \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structvoxie__xbox__t}{voxie\+\_\+xbox\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em USB game controller input state struct. Used to manage USB game controller input. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structvoxie__nav__t}{voxie\+\_\+nav\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em 3D Space\+Mouse / Space Navigator by 3DConnexion input state struct. Used to manage Space\+Nav input \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structtouchkey__t}{touchkey\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Manages custom touch keys displayed on the 2D secondary (touch) screen. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structvoxie__dicom__t}{voxie\+\_\+dicom\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em struct for reading DICOM (media data) -\/ used internally; not for developers \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structkzfileinfo__t}{kzfileinfo\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em internal struct used by voxiebox.\+dll to store ziped files information. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structvoxie__rec__t}{voxie\+\_\+rec\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em struct to manage Voxon Volumetric Recordings .REC files -\/ used internally; not for developers \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structvoxie__laser__t}{voxie\+\_\+laser\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Not for developers -\/ Legacy code -\/ This is for an experimental laser controller developed by Voxon which is not used by the public. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structvoxie__input__state__t}{voxie\+\_\+input\+\_\+state\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em used internally by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} class to log various button inputs this struct allows you to view the history of various inputs \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structvoxie__keyboard__history__t}{voxie\+\_\+keyboard\+\_\+history\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em used internally by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} to log various keyboard button inputs this struct allows you to view the history \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structvoxie__xbox__history__t}{voxie\+\_\+xbox\+\_\+history\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em used internally by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} to log various USB game controller button inputs this struct allows you to view the history \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structvoxie__nav__history__t}{voxie\+\_\+nav\+\_\+history\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em used internally by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} to log various Space Nav inputs this struct allows you to view the history of various inputs \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structtouch_point__t}{touch\+Point\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em touch point struct used for holding data associated for a single finger / touch point. Used for advanced touchscreen use. \end{DoxyCompactList}\item 
+struct \mbox{\hyperlink{structtouch_input__t}{touch\+Input\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em touch input struct holds all the touch input data. Used for advanced touchscreen use. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_acde38faa0a57d81980aab864c09920c2}\label{vx_data_types_8h_acde38faa0a57d81980aab864c09920c2}} 
+\#define {\bfseries VX\+\_\+\+DATA\+\_\+\+TYPES}
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_a1a45f4b3c764288b8886296035cfd79a}\label{vx_data_types_8h_a1a45f4b3c764288b8886296035cfd79a}} 
+\#define {\bfseries MAXDISP}~3
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_a1031ff2fcaffbd833b0c91ff01f672f9}\label{vx_data_types_8h_a1031ff2fcaffbd833b0c91ff01f672f9}} 
+\#define {\bfseries VOXIE\+\_\+\+DICOM\+\_\+\+MIPS}~4
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_a2c47b789a035f5d25f1f716ec7818ece}\label{vx_data_types_8h_a2c47b789a035f5d25f1f716ec7818ece}} 
+\#define \mbox{\hyperlink{vx_data_types_8h_a2c47b789a035f5d25f1f716ec7818ece}{VOXIEFRAME\+\_\+\+FLAGS\+\_\+\+BUFFERED}}~0
+\begin{DoxyCompactList}\small\item\em default (buffers voxie gfx commands internally for potential speedup) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_a3e15627a0de39d36deb345154d99c21d}\label{vx_data_types_8h_a3e15627a0de39d36deb345154d99c21d}} 
+\#define \mbox{\hyperlink{vx_data_types_8h_a3e15627a0de39d36deb345154d99c21d}{VOXIEFRAME\+\_\+\+FLAGS\+\_\+\+IMMEDIATE}}~1
+\begin{DoxyCompactList}\small\item\em use this if calling voxie gfx from multiple threads (ex\+: custom user multithread) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_a1031ff2fcaffbd833b0c91ff01f672f9}\label{vx_data_types_8h_a1031ff2fcaffbd833b0c91ff01f672f9}} 
+\#define {\bfseries VOXIE\+\_\+\+DICOM\+\_\+\+MIPS}~4
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_ab09659a71a162c922c65666bb094c46a}\label{vx_data_types_8h_ab09659a71a162c922c65666bb094c46a}} 
+\#define {\bfseries TOUCH\+\_\+\+MAX}~11
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_af20e921bd23143b8b53aa164cc36edc8}\label{vx_data_types_8h_af20e921bd23143b8b53aa164cc36edc8}} 
+\#define {\bfseries TOUCH\+\_\+\+TIME\+\_\+\+OUT}~3
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_a2ead34b073e874d612789e35b3fac294}\label{vx_data_types_8h_a2ead34b073e874d612789e35b3fac294}} 
+\#define {\bfseries TOUCH\+\_\+\+HELD\+\_\+\+TIME}~2
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_aedf1c8ebcc02842b97d2c0ca0370c873}\label{vx_data_types_8h_aedf1c8ebcc02842b97d2c0ca0370c873}} 
+\#define {\bfseries TOUCH\+\_\+\+ANGLE\+\_\+\+DEAD\+\_\+\+ZONE}~0
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_a80ac63f1663e7433ca2517154108d99e}\label{vx_data_types_8h_a80ac63f1663e7433ca2517154108d99e}} 
+\#define {\bfseries TOUCH\+\_\+\+DISTANCE\+\_\+\+DEAD\+\_\+\+ZONE}~1
+\end{DoxyCompactItemize}
+\doxysubsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_a97e4b5e09fad5dd30675d0b622124343}\label{vx_data_types_8h_a97e4b5e09fad5dd30675d0b622124343}} 
+typedef struct \mbox{\hyperlink{structpoint2d}{point2d}} \mbox{\hyperlink{vx_data_types_8h_a97e4b5e09fad5dd30675d0b622124343}{point2d}}
+\begin{DoxyCompactList}\small\item\em 2 floats (x \& y) usually to describe a point in 2D \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_a43e0c184be3712b12c588fdebeedb1e1}\label{vx_data_types_8h_a43e0c184be3712b12c588fdebeedb1e1}} 
+typedef struct \mbox{\hyperlink{structpoint3d}{point3d}} \mbox{\hyperlink{vx_data_types_8h_a43e0c184be3712b12c588fdebeedb1e1}{point3d}}
+\begin{DoxyCompactList}\small\item\em 3 floats (x, y \& z) usually to describe a point in 3D \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_a89e282eda1559e1f7ca029d72fd04eec}\label{vx_data_types_8h_a89e282eda1559e1f7ca029d72fd04eec}} 
+typedef struct \mbox{\hyperlink{structpol__t}{pol\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_a89e282eda1559e1f7ca029d72fd04eec}{pol\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em \mbox{\hyperlink{structpoint3d}{point3d}} with index to next point in loop (starting at 0). Similar to \mbox{\hyperlink{structpoltex__t}{poltex\+\_\+t}} but with no texture data. Used by \mbox{\hyperlink{class_voxie_box_a39520956d73a5c0632bc46ae4d590b18}{Voxie\+Box\+::draw\+Poly()}} \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_a2911724e2f20483c2e9aa7c3701aee89}\label{vx_data_types_8h_a2911724e2f20483c2e9aa7c3701aee89}} 
+typedef struct \mbox{\hyperlink{structpoltex__t}{poltex\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_a2911724e2f20483c2e9aa7c3701aee89}{poltex\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em 3D point with texture coordinate and color (ARGB32). Used by \mbox{\hyperlink{class_voxie_box_aa4567dede4c00b5b0dd88350041c7551}{Voxie\+Box\+::draw\+Mesh()}} \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_a44f3f522b9d0ee9a3a1a8813c2c44395}\label{vx_data_types_8h_a44f3f522b9d0ee9a3a1a8813c2c44395}} 
+typedef struct \mbox{\hyperlink{structuvcol__t}{uvcol\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_a44f3f522b9d0ee9a3a1a8813c2c44395}{uvcol\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em struct to manage U V colors for Voxie\+Vox\+::draw\+Mesh\+Ext() function \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_a69674d570effee8d221d494d0e0b0186}\label{vx_data_types_8h_a69674d570effee8d221d494d0e0b0186}} 
+typedef struct \mbox{\hyperlink{structinds__t}{inds\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_a69674d570effee8d221d494d0e0b0186}{inds\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em struct to manage indices for \mbox{\hyperlink{class_voxie_box_a7e0a11d7187557bc421a76c6619bcd76}{Voxie\+Box\+::draw\+Mesh\+Ext()}} function XYZ index and UV + C (color) index ! Important ! when defining a new polygon loop / face use the .xyzi + (1$<$$<$31); to indicate a new face \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_aa4170f3563de673f81e71fc6c848a31d}\label{vx_data_types_8h_aa4170f3563de673f81e71fc6c848a31d}} 
+typedef struct \mbox{\hyperlink{structextents__t}{extents\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_aa4170f3563de673f81e71fc6c848a31d}{extents\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Extents a datatype to hold size extent of a 3D model. (the range a model extends to) \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_ad7a492b037d1684fa4660224fe4c42b5}\label{vx_data_types_8h_ad7a492b037d1684fa4660224fe4c42b5}} 
+typedef struct \mbox{\hyperlink{structtiletype}{tiletype}} \mbox{\hyperlink{vx_data_types_8h_ad7a492b037d1684fa4660224fe4c42b5}{tiletype}}
+\begin{DoxyCompactList}\small\item\em 2D array of pixels can be used with \mbox{\hyperlink{class_voxie_box_aa4567dede4c00b5b0dd88350041c7551}{Voxie\+Box\+::draw\+Mesh}}, \mbox{\hyperlink{class_voxie_box_a2364111ffd69401b54067d8172165ed5}{Voxie\+Box\+::draw\+Height\+Map}} and the 2D display (via \mbox{\hyperlink{structvoxie__frame__t}{voxie\+\_\+frame\+\_\+t}}) \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structvoxie__disp__t}{voxie\+\_\+disp\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_aae7d713a20264e2a4a94a91444cbc336}{voxie\+\_\+disp\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Voxon Display Struct -\/ Configuration for a display suitable to render a volumetric image (usually projector) \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structvoxie__wind__t}{voxie\+\_\+wind\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_a53e58c5c019abd8172fba4729c4cbca2}{voxie\+\_\+wind\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Voxie Window Struct -\/ Configuration for the Voxon Window. This struct manages all the settings to do with the volume. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structvoxie__frame__t}{voxie\+\_\+frame\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_aff14bc4149a64fdde65553db5e3df451}{voxie\+\_\+frame\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Struct which holds all the frame data (frame is a 2D slice of the volumetric image) which gets loaded unto the projector. \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structvoxie__input__t}{voxie\+\_\+input\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_abb63eb12182f49fb7e8375792dd34d76}{voxie\+\_\+inputs\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Struct to manage mouse inputs. Mouse state is updated when \mbox{\hyperlink{class_voxie_box_a0cd2ee2048f4b560910621c693709270}{Voxie\+Box\+::breath()}} is called. ~\newline
+ \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_a65e5d4022be1692c36b847f8c89c9d7b}\label{vx_data_types_8h_a65e5d4022be1692c36b847f8c89c9d7b}} 
+typedef struct \mbox{\hyperlink{structvoxie__xbox__t}{voxie\+\_\+xbox\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_a65e5d4022be1692c36b847f8c89c9d7b}{voxie\+\_\+xbox\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em USB game controller input state struct. Used to manage USB game controller input. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_afb7f098d7c68b0300ded205baad6fe72}\label{vx_data_types_8h_afb7f098d7c68b0300ded205baad6fe72}} 
+typedef struct \mbox{\hyperlink{structvoxie__nav__t}{voxie\+\_\+nav\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_afb7f098d7c68b0300ded205baad6fe72}{voxie\+\_\+nav\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em 3D Space\+Mouse / Space Navigator by 3DConnexion input state struct. Used to manage Space\+Nav input \end{DoxyCompactList}\item 
+typedef struct \mbox{\hyperlink{structtouchkey__t}{touchkey\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_a92e49ca56b7a735da1c94fe60e3b874d}{touchkey\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Manages custom touch keys displayed on the 2D secondary (touch) screen. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_ad19e01f30e3f4bb5b25b9581cc5e6d17}\label{vx_data_types_8h_ad19e01f30e3f4bb5b25b9581cc5e6d17}} 
+typedef struct \mbox{\hyperlink{structvoxie__dicom__t}{voxie\+\_\+dicom\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_ad19e01f30e3f4bb5b25b9581cc5e6d17}{voxie\+\_\+dicom\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em struct for reading DICOM (media data) -\/ used internally; not for developers \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_ad87e28b390e6f8cf1f6f835eed1de85b}\label{vx_data_types_8h_ad87e28b390e6f8cf1f6f835eed1de85b}} 
+typedef struct \mbox{\hyperlink{structvoxie__rec__t}{voxie\+\_\+rec\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_ad87e28b390e6f8cf1f6f835eed1de85b}{voxie\+\_\+rec\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em struct to manage Voxon Volumetric Recordings .REC files -\/ used internally; not for developers \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_a829685347086633b861352efc938754b}\label{vx_data_types_8h_a829685347086633b861352efc938754b}} 
+typedef struct \mbox{\hyperlink{structvoxie__laser__t}{voxie\+\_\+laser\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_a829685347086633b861352efc938754b}{voxie\+\_\+laser\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em Not for developers -\/ Legacy code -\/ This is for an experimental laser controller developed by Voxon which is not used by the public. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_a75fd203b5b0e5dbf16e0660cf2a011d8}\label{vx_data_types_8h_a75fd203b5b0e5dbf16e0660cf2a011d8}} 
+typedef struct \mbox{\hyperlink{structvoxie__input__state__t}{voxie\+\_\+input\+\_\+state\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_a75fd203b5b0e5dbf16e0660cf2a011d8}{voxie\+\_\+input\+\_\+state\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em used internally by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} class to log various button inputs this struct allows you to view the history of various inputs \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_a6a8c1b9f1a85d38bfca3ca10172e3839}\label{vx_data_types_8h_a6a8c1b9f1a85d38bfca3ca10172e3839}} 
+typedef struct \mbox{\hyperlink{structvoxie__keyboard__history__t}{voxie\+\_\+keyboard\+\_\+history\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_a6a8c1b9f1a85d38bfca3ca10172e3839}{voxie\+\_\+keyboard\+\_\+history\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em used internally by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} to log various keyboard button inputs this struct allows you to view the history \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_ae2b5dc53ea4b3a586a6be4d89894464a}\label{vx_data_types_8h_ae2b5dc53ea4b3a586a6be4d89894464a}} 
+typedef struct \mbox{\hyperlink{structvoxie__xbox__history__t}{voxie\+\_\+xbox\+\_\+history\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_ae2b5dc53ea4b3a586a6be4d89894464a}{voxie\+\_\+xbox\+\_\+history\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em used internally by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} to log various USB game controller button inputs this struct allows you to view the history \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_ae2287375860b2fa2f8fab75e42327d27}\label{vx_data_types_8h_ae2287375860b2fa2f8fab75e42327d27}} 
+typedef struct \mbox{\hyperlink{structvoxie__nav__history__t}{voxie\+\_\+nav\+\_\+history\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_ae2287375860b2fa2f8fab75e42327d27}{voxie\+\_\+nav\+\_\+history\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em used internally by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} to log various Space Nav inputs this struct allows you to view the history of various inputs \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_aa8655a592a10f24e5b9eef03263c79f6}\label{vx_data_types_8h_aa8655a592a10f24e5b9eef03263c79f6}} 
+typedef struct \mbox{\hyperlink{structtouch_point__t}{touch\+Point\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_aa8655a592a10f24e5b9eef03263c79f6}{touch\+Point\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em touch point struct used for holding data associated for a single finger / touch point. Used for advanced touchscreen use. \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{vx_data_types_8h_a84a60250df8675280e5925b9b9e9eb1b}\label{vx_data_types_8h_a84a60250df8675280e5925b9b9e9eb1b}} 
+typedef struct \mbox{\hyperlink{structtouch_input__t}{touch\+Input\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_a84a60250df8675280e5925b9b9e9eb1b}{touch\+Input\+\_\+t}}
+\begin{DoxyCompactList}\small\item\em touch input struct holds all the touch input data. Used for advanced touchscreen use. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_a06fc87d81c62e9abb8790b6e5713c55b}\label{vx_data_types_8h_a06fc87d81c62e9abb8790b6e5713c55b}} 
+enum \{ \newline
+{\bfseries ATTRIB\+\_\+\+ISDIR} = 1
+, {\bfseries ATTRIB\+\_\+\+INZIP} = 2
+, {\bfseries ATTRIB\+\_\+\+RDONLY} = 4
+, {\bfseries ATTRIB\+\_\+\+HIDDEN} = 8
+, \newline
+{\bfseries ATTRIB\+\_\+\+ISDRIVE} = 16
+ \}
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_adf764cbdea00d65edcd07bb9953ad2b7}\label{vx_data_types_8h_adf764cbdea00d65edcd07bb9953ad2b7}} 
+enum \{ \newline
+{\bfseries KPLIB\+\_\+\+NONE} = 0
+, {\bfseries KPLIB\+\_\+\+PNG}
+, {\bfseries KPLIB\+\_\+\+JPG}
+, {\bfseries KPLIB\+\_\+\+GIF}
+, \newline
+{\bfseries KPLIB\+\_\+\+CEL}
+, {\bfseries KPLIB\+\_\+\+BMP}
+, {\bfseries KPLIB\+\_\+\+PCX}
+, {\bfseries KPLIB\+\_\+\+DDS}
+, \newline
+{\bfseries KPLIB\+\_\+\+TGA}
+ \}
+\item 
+\mbox{\Hypertarget{vx_data_types_8h_a99fb83031ce9923c84392b4e92f956b5}\label{vx_data_types_8h_a99fb83031ce9923c84392b4e92f956b5}} 
+enum \{ \newline
+{\bfseries TOUCH\+\_\+\+STATE\+\_\+\+NOT\+\_\+\+PRESSED} = 0
+, {\bfseries TOUCH\+\_\+\+STATE\+\_\+\+IS\+\_\+\+DOWN} = 1
+, {\bfseries TOUCH\+\_\+\+STATE\+\_\+\+IS\+\_\+\+HELD} = 2
+, {\bfseries TOUCH\+\_\+\+STATE\+\_\+\+JUST\+\_\+\+PRESSED} = 3
+, \newline
+{\bfseries TOUCH\+\_\+\+STATE\+\_\+\+ON\+\_\+\+UP} = 4
+ \}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+VX++ data types header contains definitions of all Voxon related structs and types. 
+
+This header is essential to developing VX++ applications using the Vx\+Cpp.\+DLL. This file is kept separate to allow easy integration... 
+
+\doxysubsection{Typedef Documentation}
+\mbox{\Hypertarget{vx_data_types_8h_a92e49ca56b7a735da1c94fe60e3b874d}\label{vx_data_types_8h_a92e49ca56b7a735da1c94fe60e3b874d}} 
+\index{vxDataTypes.h@{vxDataTypes.h}!touchkey\_t@{touchkey\_t}}
+\index{touchkey\_t@{touchkey\_t}!vxDataTypes.h@{vxDataTypes.h}}
+\doxysubsubsection{\texorpdfstring{touchkey\_t}{touchkey\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structtouchkey__t}{touchkey\+\_\+t}} \mbox{\hyperlink{structtouchkey__t}{touchkey\+\_\+t}}}
+
+
+
+Manages custom touch keys displayed on the 2D secondary (touch) screen. 
+
+To make use of this struct in Voxon development see Voxie\+Box\+::touch\+Add\+Key \mbox{\Hypertarget{vx_data_types_8h_aae7d713a20264e2a4a94a91444cbc336}\label{vx_data_types_8h_aae7d713a20264e2a4a94a91444cbc336}} 
+\index{vxDataTypes.h@{vxDataTypes.h}!voxie\_disp\_t@{voxie\_disp\_t}}
+\index{voxie\_disp\_t@{voxie\_disp\_t}!vxDataTypes.h@{vxDataTypes.h}}
+\doxysubsubsection{\texorpdfstring{voxie\_disp\_t}{voxie\_disp\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structvoxie__disp__t}{voxie\+\_\+disp\+\_\+t}} \mbox{\hyperlink{structvoxie__disp__t}{voxie\+\_\+disp\+\_\+t}}}
+
+
+
+Voxon Display Struct -\/ Configuration for a display suitable to render a volumetric image (usually projector) 
+
+This struct manages a projector\textquotesingle{}s display settings which includes keystone (the position coordinates for the display), LED levels and mirror settings. Each display struct (\mbox{\hyperlink{structvoxie__disp__t}{voxie\+\_\+disp\+\_\+t}}) is loaded into the voxie window (\mbox{\hyperlink{structvoxie__wind__t}{voxie\+\_\+wind\+\_\+t}}) during the voxie\+\_\+load() and voxie\+\_\+init() or when a new \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} is constructed \begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_voxie_box_a06195dca9603ea448f72d502808384b2}{Voxie\+Box\+::\+Voxie\+Box()}} 
+
+\mbox{\hyperlink{class_voxie_box_a9df7e95b7c877b5942690affef94d4a6}{Voxie\+Box\+::init()}} 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{vx_data_types_8h_aff14bc4149a64fdde65553db5e3df451}\label{vx_data_types_8h_aff14bc4149a64fdde65553db5e3df451}} 
+\index{vxDataTypes.h@{vxDataTypes.h}!voxie\_frame\_t@{voxie\_frame\_t}}
+\index{voxie\_frame\_t@{voxie\_frame\_t}!vxDataTypes.h@{vxDataTypes.h}}
+\doxysubsubsection{\texorpdfstring{voxie\_frame\_t}{voxie\_frame\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structvoxie__frame__t}{voxie\+\_\+frame\+\_\+t}} \mbox{\hyperlink{structvoxie__frame__t}{voxie\+\_\+frame\+\_\+t}}}
+
+
+
+Struct which holds all the frame data (frame is a 2D slice of the volumetric image) which gets loaded unto the projector. 
+
+It also holds the tiletype data which gets rendered to the 2D secondary screen (touch screen) \mbox{\Hypertarget{vx_data_types_8h_abb63eb12182f49fb7e8375792dd34d76}\label{vx_data_types_8h_abb63eb12182f49fb7e8375792dd34d76}} 
+\index{vxDataTypes.h@{vxDataTypes.h}!voxie\_inputs\_t@{voxie\_inputs\_t}}
+\index{voxie\_inputs\_t@{voxie\_inputs\_t}!vxDataTypes.h@{vxDataTypes.h}}
+\doxysubsubsection{\texorpdfstring{voxie\_inputs\_t}{voxie\_inputs\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structvoxie__input__t}{voxie\+\_\+input\+\_\+t}} \mbox{\hyperlink{vx_data_types_8h_abb63eb12182f49fb7e8375792dd34d76}{voxie\+\_\+inputs\+\_\+t}}}
+
+
+
+Struct to manage mouse inputs. Mouse state is updated when \mbox{\hyperlink{class_voxie_box_a0cd2ee2048f4b560910621c693709270}{Voxie\+Box\+::breath()}} is called. ~\newline
+ 
+
+mouse and keyboard input are managed by \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} class there are many function calls which can be used to interact with the mouse (and keyboard) \begin{DoxySeeAlso}{See also}
+\mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} to see them all. ~\newline
+ for convenience \mbox{\hyperlink{class_voxie_box}{Voxie\+Box}} privately tracks the mouse\+Position 
+
+\mbox{\hyperlink{class_voxie_box_ac567600c40003e62fbcf9ffe1aaf938b}{Voxie\+Box\+::get\+Mouse\+Position()}} as the \mbox{\hyperlink{structvoxie__input__t}{voxie\+\_\+input\+\_\+t}} just tracks movements use 
+
+\mbox{\hyperlink{class_voxie_box_a8fc2b7e9e938d61314aaf8c3b23fbae2}{Voxie\+Box\+::report\+Mouse}} to see a live report 
+\end{DoxySeeAlso}
+\mbox{\Hypertarget{vx_data_types_8h_a53e58c5c019abd8172fba4729c4cbca2}\label{vx_data_types_8h_a53e58c5c019abd8172fba4729c4cbca2}} 
+\index{vxDataTypes.h@{vxDataTypes.h}!voxie\_wind\_t@{voxie\_wind\_t}}
+\index{voxie\_wind\_t@{voxie\_wind\_t}!vxDataTypes.h@{vxDataTypes.h}}
+\doxysubsubsection{\texorpdfstring{voxie\_wind\_t}{voxie\_wind\_t}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structvoxie__wind__t}{voxie\+\_\+wind\+\_\+t}} \mbox{\hyperlink{structvoxie__wind__t}{voxie\+\_\+wind\+\_\+t}}}
+
+
+
+Voxie Window Struct -\/ Configuration for the Voxon Window. This struct manages all the settings to do with the volume. 
+
+Most settings to do with creating a volume are contained here. This struct is passed in when \mbox{\hyperlink{class_voxie_box_a9df7e95b7c877b5942690affef94d4a6}{Voxie\+Box\+::init()}} is called. Most of these settings can be updated while the volume is rendering. Pass the \mbox{\hyperlink{structvoxie__wind__t}{voxie\+\_\+wind\+\_\+t}} struct through Voxie\+Box\+::update() for the settings to be applied to the current volume. \begin{DoxySeeAlso}{See also}
+Voxie\+Box\+::update() 
+
+Voxie\+Box\+::voxie\+\_\+disp\+\_\+t() 
+\end{DoxySeeAlso}

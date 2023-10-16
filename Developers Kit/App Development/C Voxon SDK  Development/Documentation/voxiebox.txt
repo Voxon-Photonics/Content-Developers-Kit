@@ -1,7 +1,38 @@
 (C) 2021 VOXON Photonics. All rights Reserved
 Voxiebox SDK by Ken Silverman: Runs Voxiebox under Windows 7/8/10 64-bit, with support for emulation in a window.
 ----------------------------------------------------------------------------------------------------
+Overly sparse and very incomplete history:
+06/04/2013: Voxiebox SDK first internal release to company.
+06/05/2013: Function documentation written.
+06/10/2013: Update for Java; structure changes.
+07/18/2013: Add voxi_drawheimap(). Add sndfx_aud[] to voxi_wind_t structure.
+07/22/2013: Add voxi_playsound().
+08/27/2013: Add functions for XBox controller; improve voxi_drawcube(); implement voxi_drawbox();
+            add voxi_drawspr().
+12/22/2013: Add voxi_setaudmixcb(), voxi_wind_t:samprate, voxi_wind_t:nchans.
+01/23/2014: Many changes made for initial semi-public release.
+02/19/2014: Rename voxi_* to voxie_* for consistency.
+11/26/2017: Updated lots of stuff, including menus, voxie_drawmeshtex(), .REC file playback functions.
+02/10/2018: Reorganize voxie_wind_t structure for support of multiple displays.
 
+----------------------------------------------------------------------------------------------------
+
+Standard file formats supported:
+   ZIP/TAR/GZ              Archives
+   STL/OBJ/PLY             3D polygon formats
+   PNG/JPG/GIF/BMP/TGA/PCX Image formats
+   DCM/DCS                 DICOM/DICOS medical formats
+   ONI                     Heightmap movie file (from OpenNI2)
+   MOL                     Molecule format
+   WAV/FLAC/VOC            Built-in audio formats
+   MP3/M4A/WMA             Other audio formats provided by Windows Media (IMFSourceReader); others supported.
+
+Voxon's own file formats supported:
+   KV6/KVS                 Ken Silverman's 3D voxel formats: KV6 from Voxlap, KVS surface voxel octrees from PND3D
+   KNI                     A movie file containing color images, depth images, infrared images, and audio. Used for depth cameras. See knife.exe/kniview.exe
+   REC                     A recording of a sequence of Voxiebox graphics and audio commands. Can create a REC file in the runtime Voxiebox menu.
+
+----------------------------------------------------------------------------------------------------
 Window setup functions:
 
 typedef struct { float x, y; } point2d; //Used for 2D points
@@ -401,8 +432,10 @@ void voxie_setleds (int id, int r, int g, int b);
    //If filnam is NULL, writes to the next available nonexistent numbered file: VOXIE0000.PNG, VOXIE0001.PNG, ..
    //volcap_mode: use one of the VOLCAP_* constants.
    //target_vps: fps that will be stored in file (VCBZIP); typically 15.
-   //To stop video capture, call this function again with (0,VOLCAP_OFF).
-enum {VOLCAP_OFF=0, VOLCAP_FRAME_PLY, VOLCAP_FRAME_PNG, VOLCAP_FRAME_REC, VOLCAP_VIDEO_REC, VOLCAP_FRAME_VCB, VOLCAP_VIDEO_VCBZIP};
+   //Notes:
+   //   * PNG and VCB formats are not supported in VXR mode (vw.nblades > 0).
+   //   * To stop video capture, do this: voxie_volcap(0,VOLCAP_OFF,0);
+enum {VOLCAP_OFF=0, VOLCAP_FRAME_PLY, VOLCAP_VIDEO_PLY, VOLCAP_FRAME_PNG, VOLCAP_FRAME_REC, VOLCAP_VIDEO_REC, VOLCAP_FRAME_VCB, VOLCAP_VIDEO_VCBZIP, VOLCAP_NET};
 void voxie_volcap (const char *filnam, int volcap_mode, int target_vps);
 
 ----------------------------------------------------------------------------------------------------

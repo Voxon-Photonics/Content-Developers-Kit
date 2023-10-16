@@ -1,9 +1,0 @@
-﻿  vxPing.cpp
-D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VoxieBoxCPP\VoxieBoxCPP Additional Modules\Ping VS2019\VXPing\VXPing\vxPing.h(49,18): warning C4305: 'initializing': truncation from 'double' to 'float'
-D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VoxieBoxCPP\VoxieBoxCPP Additional Modules\Ping VS2019\VXPing\VXPing\vxPing.cpp(43,76): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VoxieBoxCPP\VoxieBoxCPP Additional Modules\Ping VS2019\VXPing\VXPing\vxPing.cpp(50,76): warning C4244: '+=': conversion from 'double' to 'float', possible loss of data
-D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VoxieBoxCPP\VoxieBoxCPP Additional Modules\Ping VS2019\VXPing\VXPing\vxPing.cpp(53,53): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VoxieBoxCPP\VoxieBoxCPP Additional Modules\Ping VS2019\VXPing\VXPing\vxPing.cpp(59,68): warning C4244: 'argument': conversion from 'double' to 'float', possible loss of data
-D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VoxieBoxCPP\VoxieBoxCPP Additional Modules\Ping VS2019\VXPing\VXPing\vxPing.cpp(99,43): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VoxieBoxCPP\VoxieBoxCPP Additional Modules\Ping VS2019\VXPing\VXPing\vxPing.cpp(136,17): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
-  VXPing.vcxproj -> D:\MatDev\DEV\DEVELOPMENT VISUAL STUDIO\VoxieBoxCPP\VoxieBoxCPP Additional Modules\Ping VS2019\VXPing\x64\Debug\VXPing.exe

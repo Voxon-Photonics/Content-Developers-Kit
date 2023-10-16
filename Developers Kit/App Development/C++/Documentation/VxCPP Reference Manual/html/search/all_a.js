@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['joy_5fa_224',['JOY_A',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a3b2532e71e50fc5b23abb765f7cc375f',1,'vxInputTypes.h']]],
+  ['joy_5fb_225',['JOY_B',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71afd2fd33989331c5c3f6cbaafd659fc0e',1,'vxInputTypes.h']]],
+  ['joy_5fback_226',['JOY_BACK',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a8a14e48fc98f75fce6ea3091640c479f',1,'vxInputTypes.h']]],
+  ['joy_5fdpad_5fdown_227',['JOY_DPAD_DOWN',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a1a96d8b7369f417a2020867fb689be27',1,'vxInputTypes.h']]],
+  ['joy_5fdpad_5fleft_228',['JOY_DPAD_LEFT',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a57de2e342358f6b51ad5b29704998639',1,'vxInputTypes.h']]],
+  ['joy_5fdpad_5fright_229',['JOY_DPAD_RIGHT',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a1c36fc68c54e6af791b757ea9fcbbe5d',1,'vxInputTypes.h']]],
+  ['joy_5fdpad_5fup_230',['JOY_DPAD_UP',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a1e5f0402ae84760be6e4153b03374e46',1,'vxInputTypes.h']]],
+  ['joy_5fleft_5fshoulder_231',['JOY_LEFT_SHOULDER',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a382999b07513373278bc6628cdab81b9',1,'vxInputTypes.h']]],
+  ['joy_5fleft_5fstick_5fx_232',['JOY_LEFT_STICK_X',['../vx_input_types_8h.html#a0fa7818ea73e62e1cacf9825fc5bb352ac1f5490e79758fae3c1fb33f35ac64fe',1,'vxInputTypes.h']]],
+  ['joy_5fleft_5fstick_5fy_233',['JOY_LEFT_STICK_Y',['../vx_input_types_8h.html#a0fa7818ea73e62e1cacf9825fc5bb352af209471e91ac467f41b39c798599d0f0',1,'vxInputTypes.h']]],
+  ['joy_5fleft_5fthumb_234',['JOY_LEFT_THUMB',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71ad3307ecb484de2e96a337702f64e1c6c',1,'vxInputTypes.h']]],
+  ['joy_5fleft_5ftrigger_235',['JOY_LEFT_TRIGGER',['../vx_input_types_8h.html#a8110a6d44da262f812006011ce131d7fa1dc0b7156ae6572ccb3dc7f55bd8001b',1,'vxInputTypes.h']]],
+  ['joy_5fright_5fshoulder_236',['JOY_RIGHT_SHOULDER',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a8fe0e6383b068ac1392af48ee1b409ee',1,'vxInputTypes.h']]],
+  ['joy_5fright_5fstick_5fx_237',['JOY_RIGHT_STICK_X',['../vx_input_types_8h.html#a0fa7818ea73e62e1cacf9825fc5bb352a25c7efcacd8b7e98c2e6c5fd325e5fda',1,'vxInputTypes.h']]],
+  ['joy_5fright_5fstick_5fy_238',['JOY_RIGHT_STICK_Y',['../vx_input_types_8h.html#a0fa7818ea73e62e1cacf9825fc5bb352a4d48d4dcd58f0c3d7348250b3b25e115',1,'vxInputTypes.h']]],
+  ['joy_5fright_5fthumb_239',['JOY_RIGHT_THUMB',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71adbed9caf3f74f4dd6a63ad1adde0f06c',1,'vxInputTypes.h']]],
+  ['joy_5fright_5ftrigger_240',['JOY_RIGHT_TRIGGER',['../vx_input_types_8h.html#a8110a6d44da262f812006011ce131d7fa57c34f31cf8168e13d786377ea368469',1,'vxInputTypes.h']]],
+  ['joy_5fstart_241',['JOY_START',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71af72bd99cb770b18c5e67af5a7d92046d',1,'vxInputTypes.h']]],
+  ['joy_5fx_242',['JOY_X',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a87b77c7c47ce3655395a01d7bc11f196',1,'vxInputTypes.h']]],
+  ['joy_5fy_243',['JOY_Y',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71a932411966eb4ce17b26d4834beb016a0',1,'vxInputTypes.h']]],
+  ['joybuttoncodes_244',['JoyButtonCodes',['../vx_input_types_8h.html#ab31b573afe7cc1dbdb9a847431f2cd71',1,'vxInputTypes.h']]]
+];
