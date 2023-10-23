@@ -1,0 +1,14 @@
+This is a solution to play backing music while an sequence of animations are played in VoxieOS via autocycle. put the start and stop scenes (a zip file containing an empty .ply) in the folder of your animations
+
+edit the batch file with the name of your assets and place the batch file, playwav in C:\Voxon\System\Runtime\
+
+VoxieOS has a unique option in voxieOS.ini to make a system call while it opens a media file. 
+Here we use it to call a batch file that will play a sound and stop a sound.
+
+requires:
+
+* the batch script and playwav.exe file to be included in the systems PATH variable (just copy them into the C:\Voxon\System\Runtime folder as that is included in the PATH variable
+
+* Full path to the sound assets you want to be played (or relative to where the media is being played)
+
+* Setting VoxieOS.ini to do the system call
