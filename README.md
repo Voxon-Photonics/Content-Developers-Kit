@@ -1,3 +1,16 @@
+# Notice #
+
+We have moved our development to the VLED platform. The VoxieBox SDK is no longer being developed. 
+
+You can get the latest version here :
+
+http://voxon-public-releases.s3-website-ap-southeast-2.amazonaws.com/
+
+Look under VX1 / VoxieBox releases. 
+
+if you have any enquires please contact voxon at www.voxon.co
+
+
 # Voxon Developers Kit
 
 Welcome to the Voxon Developers Kit. the official pathway **to developing content for Voxon’s volumetric technology.**  Inside the Developers Kit are a range of tools, documents, and examples to develop volumetric media and software. 
