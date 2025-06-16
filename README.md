@@ -1,15 +1,16 @@
+
 # Notice #
 
-We have moved our development to the VLED platform. The VoxieBox SDK is no longer being developed. 
+This SDK is for our older **VX1 / Voxiebox** platform, which is no longer actively developed or released.  
+If you're looking for the latest **VLED SDK**, please visit our website: [www.voxon.co](http://www.voxon.co).
 
-You can get the latest version here :
+Development has since moved to the **VLED platform**, and the VoxieBox SDK is no longer being maintained.
 
-http://voxon-public-releases.s3-website-ap-southeast-2.amazonaws.com/
+You can download the final version of the VX1 / VoxieBox SDK here:  
+[http://voxon-public-releases.s3-website-ap-southeast-2.amazonaws.com/](http://voxon-public-releases.s3-website-ap-southeast-2.amazonaws.com/)  
+*(See the VX1 / VoxieBox section)*
 
-Look under VX1 / VoxieBox releases. 
-
-if you have any enquires please contact voxon at www.voxon.co
-
+If you have any enquiries, please contact us via [www.voxon.co](http://www.voxon.co).
 
 # Voxon Developers Kit
 
